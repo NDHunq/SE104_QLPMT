@@ -69,7 +69,7 @@ public class HelloController implements Initializable {
 //load khambenh.fxml
         Parent content = null;
         try {
-            content = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/kham_benh.fxml"));
+            content = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/KhamBenh/kham_benh.fxml"));
         } catch (IOException e) {
             System.exit(0);
         }
@@ -95,7 +95,7 @@ public class HelloController implements Initializable {
             // Load the content from kham_benh.fxml
             Parent khamBenhContent = null;
             try {
-                khamBenhContent = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/kham_benh.fxml"));
+                khamBenhContent = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/KhamBenh/kham_benh.fxml"));
             } catch (IOException e) {
                 System.exit(0);
             }
@@ -126,7 +126,7 @@ public class HelloController implements Initializable {
             // Load the content from kham_benh.fxml
             Parent khamBenhContent = null;
             try {
-                khamBenhContent = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/kham_benh.fxml"));
+                khamBenhContent = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/KhamBenh/kham_benh.fxml"));
             } catch (IOException e) {
                 System.exit(0);
             }

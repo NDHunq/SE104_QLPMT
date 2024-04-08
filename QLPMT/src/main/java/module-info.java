@@ -13,4 +13,6 @@ module com.example.qlpmt {
 
     opens com.example.qlpmt to javafx.fxml;
     exports com.example.qlpmt;
+    exports com.example.qlpmt.KhamBenh;
+    opens com.example.qlpmt.KhamBenh to javafx.fxml;
 }

@@ -15,12 +15,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="607.0" prefWidth="920.0" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.KhamBenh.kham_benhController">
-    <VBox layoutX="13.0" layoutY="20.0" prefHeight="400.0" prefWidth="600.0" styleClass="mainBackground" stylesheets="@../../../style.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="12.600000000000023" AnchorPane.topAnchor="10.0">
+<AnchorPane prefHeight="607.0" prefWidth="920.0" stylesheets="@../../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.KhamBenh.kham_benhController">
+    <VBox layoutX="13.0" layoutY="20.0" prefHeight="400.0" prefWidth="600.0" styleClass="mainBackground" stylesheets="@../../../../style.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="12.600000000000023" AnchorPane.topAnchor="10.0">
       <children>
          <BorderPane prefHeight="46.0" prefWidth="828.0">
             <right>
-               <Label prefHeight="19.0" prefWidth="150.0" stylesheets="@../../../style.css" text="04/04/2024" BorderPane.alignment="CENTER">
+               <Label prefHeight="19.0" prefWidth="150.0" stylesheets="@../../../../style.css" text="04/04/2024" BorderPane.alignment="CENTER">
                   <padding>
                      <Insets bottom="3.0" left="10.0" right="5.0" top="3.0" />
                   </padding>
@@ -37,14 +37,14 @@
                   <graphic>
                      <ImageView fitHeight="27.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                           <Image url="@images/calendar.png" />
+                           <Image url="@../images/calendar.png" />
                         </image>
                      </ImageView>
                   </graphic>
                </Label>
             </right>
             <left>
-               <Label prefHeight="34.0" prefWidth="300.0" styleClass="header" stylesheets="@../../../style.css" text="Danh sách khám bệnh" BorderPane.alignment="CENTER">
+               <Label prefHeight="34.0" prefWidth="300.0" styleClass="header" stylesheets="@../../../../style.css" text="Danh sách khám bệnh" BorderPane.alignment="CENTER">
                   <font>
                      <Font name="System Bold" size="30.0" />
                   </font>
@@ -59,7 +59,7 @@
          </BorderPane>
          <BorderPane prefHeight="38.0" prefWidth="828.0">
             <right>
-               <ComboBox fx:id="sort_cbb" prefHeight="34.0" prefWidth="150.0" promptText="Sort" style="-fx-font-size: 18;" stylesheets="@../../../style.css" BorderPane.alignment="BOTTOM_LEFT">
+               <ComboBox fx:id="sort_cbb" prefHeight="34.0" prefWidth="150.0" promptText="Sort" style="-fx-font-size: 18; -fx-arrow-fill: red;" stylesheets="@../../../../style.css" BorderPane.alignment="BOTTOM_LEFT">
                   <BorderPane.margin>
                      <Insets right="20.0" />
                   </BorderPane.margin>
@@ -70,16 +70,16 @@
                </ComboBox>
             </right>
             <left>
-               <HBox prefHeight="38.0" prefWidth="482.0" styleClass="TextBorder" stylesheets="@../../../style.css" BorderPane.alignment="CENTER">
+               <HBox prefHeight="38.0" prefWidth="482.0" styleClass="TextBorder" stylesheets="@../../../../style.css" BorderPane.alignment="CENTER">
                   <children>
-                     <TextField cache="true" prefHeight="38.0" prefWidth="448.0" styleClass="square-border-pane-none" stylesheets="@../../../style.css">
+                     <TextField prefHeight="38.0" prefWidth="448.0" styleClass="square-border-pane-none" stylesheets="@../../../../style.css" text="jttjjjjjjjjjjjjjjjj">
                         <font>
                            <Font name=".VnTimeH" size="17.0" />
                         </font>
                      </TextField>
                      <ImageView fitHeight="31.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                           <Image url="@images/finding.png" />
+                           <Image url="@../images/finding.png" />
                         </image>
                         <HBox.margin>
                            <Insets top="3.0" />
@@ -95,16 +95,16 @@
                <Insets />
             </VBox.margin>
          </BorderPane>
-         <VBox prefHeight="421.0" prefWidth="854.0" styleClass="TextBorder" stylesheets="@../../../style.css">
+         <VBox prefHeight="421.0" prefWidth="854.0" styleClass="TextBorder" stylesheets="@../../../../style.css">
             <children>
                <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="788.0">
                   <children>
-                     <Label contentDisplay="CENTER" prefHeight="20.0" prefWidth="38.0" styleClass="header" stylesheets="@../../../style.css" text="STT">
+                     <Label contentDisplay="CENTER" prefHeight="20.0" prefWidth="38.0" styleClass="header" stylesheets="@../../../../style.css" text="STT">
                         <font>
                            <Font size="18.0" />
                         </font>
                      </Label>
-                     <Label alignment="CENTER" prefHeight="20.0" prefWidth="57.0" styleClass="header" stylesheets="@../../../style.css" text="Họ tên">
+                     <Label alignment="CENTER" prefHeight="20.0" prefWidth="57.0" styleClass="header" stylesheets="@../../../../style.css" text="Họ tên">
                         <font>
                            <Font size="18.0" />
                         </font>
@@ -112,7 +112,7 @@
                            <Insets left="55.0" right="40.0" />
                         </HBox.margin>
                      </Label>
-                     <Label alignment="CENTER" prefHeight="20.0" prefWidth="57.0" styleClass="header" stylesheets="@../../../style.css" text="CCCD">
+                     <Label alignment="CENTER" prefHeight="20.0" prefWidth="57.0" styleClass="header" stylesheets="@../../../../style.css" text="CCCD">
                         <font>
                            <Font size="18.0" />
                         </font>
@@ -120,7 +120,7 @@
                            <Insets left="35.0" right="35.0" />
                         </HBox.margin>
                      </Label>
-                     <Label alignment="CENTER" prefHeight="20.0" prefWidth="74.0" styleClass="header" stylesheets="@../../../style.css" text="Giới tính">
+                     <Label alignment="CENTER" prefHeight="20.0" prefWidth="74.0" styleClass="header" stylesheets="@../../../../style.css" text="Giới tính">
                         <font>
                            <Font size="18.0" />
                         </font>
@@ -128,7 +128,7 @@
                            <Insets left="20.0" />
                         </HBox.margin>
                      </Label>
-                     <Label alignment="CENTER" prefWidth="82.0" styleClass="header" stylesheets="@../../../style.css" text="Năm sinh">
+                     <Label alignment="CENTER" prefWidth="82.0" styleClass="header" stylesheets="@../../../../style.css" text="Năm sinh">
                         <font>
                            <Font size="18.0" />
                         </font>
@@ -136,7 +136,7 @@
                            <Insets left="25.0" right="10.0" />
                         </HBox.margin>
                      </Label>
-                     <Label alignment="CENTER" prefHeight="20.0" prefWidth="60.0" styleClass="header" stylesheets="@../../../style.css" text="Địa chỉ">
+                     <Label alignment="CENTER" prefHeight="20.0" prefWidth="60.0" styleClass="header" stylesheets="@../../../../style.css" text="Địa chỉ">
                         <font>
                            <Font size="18.0" />
                         </font>
@@ -144,7 +144,7 @@
                            <Insets left="30.0" right="40.0" />
                         </HBox.margin>
                      </Label>
-                     <Label alignment="CENTER" prefHeight="20.0" prefWidth="130.0" styleClass="header" stylesheets="@../../../style.css" text="Phiếu khám bệnh">
+                     <Label alignment="CENTER" prefHeight="20.0" prefWidth="130.0" styleClass="header" stylesheets="@../../../../style.css" text="Phiếu khám bệnh">
                         <font>
                            <Font size="18.0" />
                         </font>
@@ -154,7 +154,7 @@
                      <Insets left="30.0" />
                   </padding>
                </HBox>
-               <ScrollPane prefHeight="389.0" prefWidth="786.0" styleClass="square-border-pane-none" stylesheets="@../../../style.css">
+               <ScrollPane prefHeight="389.0" prefWidth="786.0" styleClass="square-border-pane-none" stylesheets="@../../../../style.css">
                   <VBox.margin>
                      <Insets left="1.0" right="1.0" />
                   </VBox.margin>
@@ -173,7 +173,7 @@
          </VBox>
          <BorderPane prefHeight="58.0" prefWidth="854.0">
             <right>
-               <Button fx:id="add_butt" mnemonicParsing="false" onAction="#add" prefHeight="40.0" prefWidth="40.0" styleClass="buttonPlus" stylesheets="@../../../style.css" text="+" textFill="WHITE" BorderPane.alignment="CENTER">
+               <Button fx:id="add_butt" mnemonicParsing="false" onAction="#add" prefHeight="40.0" prefWidth="40.0" styleClass="buttonPlus" stylesheets="@../../../../style.css" text="+" textFill="WHITE" BorderPane.alignment="CENTER">
                   <font>
                      <Font name="Times New Roman Bold" size="23.0" />
                   </font>

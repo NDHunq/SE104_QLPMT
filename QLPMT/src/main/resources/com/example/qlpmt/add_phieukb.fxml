@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="684.0" styleClass="TextBorder" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.KhamBenh.AddPhieuKBController">
+   <children>
+      <Label styleClass="header" stylesheets="@../../../style.css" text="Phiếu khám bệnh">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+      </Label>
+      <VBox prefHeight="542.0" prefWidth="315.0" style="-fx-background-radius: 10;" styleClass="mainBackground" stylesheets="@../../../style.css">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <VBox prefHeight="174.0" prefWidth="340.0">
+                     <children>
+                        <Label styleClass="header" stylesheets="@../../../style.css" text="Label">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <TextField stylesheets="@../../../style.css">
+                           <VBox.margin>
+                              <Insets bottom="5.0" right="20.0" />
+                           </VBox.margin>
+                           <styleClass>
+                              <String fx:value="TextBorder" />
+                              <String fx:value="fontStd" />
+                           </styleClass>
+                        </TextField>
+                        <Label styleClass="header" stylesheets="@../../../style.css" text="Label">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <TextField stylesheets="@../../../style.css">
+                           <VBox.margin>
+                              <Insets bottom="5.0" right="20.0" />
+                           </VBox.margin>
+                           <styleClass>
+                              <String fx:value="TextBorder" />
+                              <String fx:value="fontStd" />
+                           </styleClass>
+                        </TextField>
+                        <Label styleClass="header" stylesheets="@../../../style.css" text="Label">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <ComboBox prefHeight="26.0" prefWidth="348.0" styleClass="TextBorder" stylesheets="@../../../style.css">
+                           <VBox.margin>
+                              <Insets right="20.0" />
+                           </VBox.margin></ComboBox>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="162.0" prefWidth="301.0">
+                     <children>
+                        <Label styleClass="header" stylesheets="@../../../style.css" text="Label">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <TextField prefHeight="33.0" prefWidth="298.0" stylesheets="@../../../style.css">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                           <styleClass>
+                              <String fx:value="TextBorder" />
+                              <String fx:value="fontStd" />
+                           </styleClass>
+                        </TextField>
+                        <Label styleClass="header" stylesheets="@../../../style.css" text="Label">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <DatePicker stylesheets="@../../../style.css">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                           <styleClass>
+                              <String fx:value="TextBorder" />
+                              <String fx:value="fontStd" />
+                           </styleClass>
+                        </DatePicker>
+                        <Label styleClass="header" stylesheets="@../../../style.css" text="Label">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <ComboBox prefHeight="26.0" prefWidth="348.0" styleClass="TextBorder" stylesheets="@../../../style.css" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <VBox prefHeight="421.0" prefWidth="854.0" styleClass="TextBorder" stylesheets="@../../../style.css">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="788.0">
+                     <children>
+                        <Label contentDisplay="CENTER" prefHeight="20.0" prefWidth="42.0" styleClass="header" stylesheets="@../../../style.css" text="STT">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" prefHeight="20.0" prefWidth="57.0" styleClass="header" stylesheets="@../../../style.css" text="Thuốc">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="40.0" right="40.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label alignment="CENTER" prefHeight="20.0" prefWidth="57.0" styleClass="header" stylesheets="@../../../style.css" text="Đơn vị">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="30.0" right="35.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label alignment="CENTER" prefHeight="20.0" prefWidth="84.0" styleClass="header" stylesheets="@../../../style.css" text="Số lượng">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                        <Label alignment="CENTER" prefHeight="20.0" prefWidth="84.0" styleClass="header" stylesheets="@../../../style.css" text="Cách dùng">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="50.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets left="30.0" />
+                     </padding>
+                  </HBox>
+                  <ScrollPane prefHeight="389.0" prefWidth="786.0" styleClass="square-border-pane-none" stylesheets="@../../../style.css">
+                     <VBox.margin>
+                        <Insets left="1.0" right="1.0" />
+                     </VBox.margin>
+                     <content>
+                        <VBox id="kb_layout" fx:id="pkb_layout" prefHeight="282.0" prefWidth="635.0">
+                           <padding>
+                              <Insets left="1.0" />
+                           </padding>
+                           <children>
+                              <HBox prefHeight="38.0" prefWidth="634.0">
+                                 <children>
+                                    <Label id="stt" fx:id="stt" contentDisplay="CENTER" prefHeight="34.0" prefWidth="30.0" text="001" textAlignment="CENTER">
+                                       <font>
+                                          <Font name="Times New Roman" size="16.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="30.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label id="stt" fx:id="stt1" contentDisplay="CENTER" prefHeight="34.0" prefWidth="106.0" text="Paracetamol" textAlignment="CENTER">
+                                       <font>
+                                          <Font name="Times New Roman" size="16.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="40.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label id="stt" fx:id="stt2" contentDisplay="CENTER" prefHeight="34.0" prefWidth="37.0" text="Viên" textAlignment="CENTER">
+                                       <font>
+                                          <Font name="Times New Roman" size="16.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="45.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label id="stt" fx:id="stt3" contentDisplay="CENTER" prefHeight="34.0" prefWidth="18.0" text="10" textAlignment="CENTER">
+                                       <font>
+                                          <Font name="Times New Roman" size="16.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="70.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label id="stt" fx:id="stt31" contentDisplay="CENTER" prefHeight="34.0" prefWidth="183.0" text="Sáng: 1 viên, chiều: 1 viên" textAlignment="CENTER">
+                                       <font>
+                                          <Font name="Times New Roman" size="16.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="50.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
+               </children>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </VBox>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </VBox>
+      <BorderPane prefHeight="51.0" prefWidth="315.0">
+         <right>
+            <HBox prefHeight="33.0" prefWidth="134.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="33.0" prefWidth="65.0" style="-fx-background-color: BCE29E;" stylesheets="@../../../style.css" text="Xong">
+                     <styleClass>
+                        <String fx:value="header" />
+                        <String fx:value="TextBorder" />
+                     </styleClass>
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="53.0" style="-fx-background-color: FF8787;" stylesheets="@../../../style.css" text="Hủy">
+                     <styleClass>
+                        <String fx:value="header" />
+                        <String fx:value="TextBorder" />
+                     </styleClass>
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Button>
+               </children>
+               <BorderPane.margin>
+                  <Insets top="10.0" />
+               </BorderPane.margin>
+            </HBox>
+         </right>
+      </BorderPane>
+   </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+</VBox>
