@@ -6,3 +6,9 @@
     -fx-shape: "M0,0h100a10,10 0 0 1 10,10v100a10,10 0 0 1 -10,10h-100a10,10 0 0 1 -10,-10v-100a10,10 0 0 1 10,-10z";
     -fx-background-color:  #FFFFFF;
 }
+
+/*Custom lai mau cho paginated table view*/
+.mfx-pagination .mfx-page:selected {
+    -fx-background-color: #2264D1;
+    -fx-text-fill: white;
+}
