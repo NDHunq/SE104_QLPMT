@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="332.0" styleClass="TextBorder" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.KhamBenh.AddKhamBenhController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="332.0" styleClass="TextBorder" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.KhamBenh.AddKhamBenhController">
    <children>
       <Label styleClass="header" stylesheets="@../../../style.css" text="Thêm khách hàng chờ khám">
          <font>
@@ -51,7 +46,7 @@
                </font></Label>
             <HBox prefHeight="30.0" prefWidth="315.0">
                <children>
-                  <RadioButton mnemonicParsing="false" style="-fx-font-size: 13;" styleClass="header" stylesheets="@../../../style.css" text="Nam">
+                  <RadioButton mnemonicParsing="false" style="-fx-font-size: 16;" styleClass="header" stylesheets="@../../../style.css" text="Nam">
                      <HBox.margin>
                         <Insets bottom="5.0" right="5.0" />
                      </HBox.margin>
@@ -59,16 +54,16 @@
                         <Insets />
                      </opaqueInsets>
                      <font>
-                        <Font size="17.0" />
+                        <Font size="30.0" />
                      </font></RadioButton>
-                  <RadioButton mnemonicParsing="false" style="-fx-font-size: 13;" styleClass="header" stylesheets="@../../../style.css" text="Nữ">
+                  <RadioButton mnemonicParsing="false" style="-fx-font-size: 16;" styleClass="header" stylesheets="@../../../style.css" text="Nữ">
                      <HBox.margin>
                         <Insets right="5.0" />
                      </HBox.margin>
                      <font>
                         <Font size="117.0" />
                      </font></RadioButton>
-                  <RadioButton mnemonicParsing="false" style="-fx-font-size: 13;" styleClass="header" stylesheets="@../../../style.css" text="Khác">
+                  <RadioButton mnemonicParsing="false" style="-fx-font-size: 16;" styleClass="header" stylesheets="@../../../style.css" text="Khác">
                      <font>
                         <Font size="17.0" />
                      </font></RadioButton>
@@ -114,7 +109,7 @@
                <right>
                   <HBox prefHeight="33.0" prefWidth="134.0" styleClass="square-border-pane" BorderPane.alignment="CENTER">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="33.0" prefWidth="65.0" style="-fx-background-color: BCE29E;" stylesheets="@../../../style.css" text="Xong">
+                        <Button fx:id="XongBtn" mnemonicParsing="false" prefHeight="33.0" prefWidth="65.0" style="-fx-background-color: BCE29E; -fx-text-fill: white;" stylesheets="@../../../style.css" text="Xong">
                            <styleClass>
                               <String fx:value="header" />
                               <String fx:value="TextBorder" />
@@ -124,15 +119,21 @@
                            </HBox.margin>
                            <font>
                               <Font size="16.0" />
-                           </font></Button>
-                        <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="53.0" style="-fx-background-color: FF8787;" stylesheets="@../../../style.css" text="Hủy">
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Button>
+                        <Button fx:id="HuyBtn" mnemonicParsing="false" prefHeight="32.0" prefWidth="53.0" style="-fx-background-color: FF8787; -fx-text-fill: white;" stylesheets="@../../../style.css" text="Hủy">
                            <styleClass>
                               <String fx:value="header" />
                               <String fx:value="TextBorder" />
                            </styleClass>
                            <font>
                               <Font size="16.0" />
-                           </font></Button>
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor></Button>
                      </children>
                   </HBox>
                </right>
