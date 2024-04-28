@@ -1,8 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
+<?import io.github.palexdev.materialfx.controls.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
+<?import com.sun.javafx.scene.control.ContextMenuContent.ArrowMenuItem?>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #D4F2FF" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.benh_nhanController">
+    <Text fill="#2264D1" layoutX="14.0" layoutY="26.0" text="Danh sách bệnh nhân">
+      <font>
+         <Font name="Times New Roman Bold" size="24.0" />
+      </font>
+    </Text>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: Red;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.benh_nhanController">
+    <MFXPaginatedTableView fx:id="pkb" id="myTableView" maxWidth="-Infinity" minWidth="-Infinity" layoutX="8.0" layoutY="99.0" pagesToShow="10" prefHeight="294.0" prefWidth="582.0" rowsPerPage="10" scaleShape="false">
+
+    </MFXPaginatedTableView>
+
+    <MFXTextField floatMode="DISABLED" layoutX="8.0" layoutY="61.0" prefHeight="30.0" prefWidth="582.0">
+        
+    </MFXTextField>
 
 </AnchorPane>
