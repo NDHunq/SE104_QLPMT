@@ -1,23 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import io.github.palexdev.materialfx.controls.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import io.github.palexdev.materialfx.controls.MFXPaginatedTableView?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<?import com.sun.javafx.scene.control.ContextMenuContent.ArrowMenuItem?>
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #D4F2FF" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.benh_nhanController">
-    <Text fill="#2264D1" layoutX="14.0" layoutY="26.0" text="Danh sách bệnh nhân">
+
+<AnchorPane prefHeight="600.0" prefWidth="930.0" style="-fx-background-color: #D4F2FF" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.benh_nhanController">
+    <Text fill="#2264D1" layoutX="23.0" layoutY="41.0" text="Danh sách bệnh nhân" wrappingWidth="278.9054412841797">
       <font>
-         <Font name="Times New Roman Bold" size="24.0" />
+         <Font name="Times New Roman Bold" size="30.0" />
       </font>
     </Text>
 
-    <MFXPaginatedTableView fx:id="pkb" id="myTableView" maxWidth="-Infinity" minWidth="-Infinity" layoutX="8.0" layoutY="99.0" pagesToShow="10" prefHeight="294.0" prefWidth="582.0" rowsPerPage="10" scaleShape="false">
+    <MFXPaginatedTableView id="myTableView" fx:id="pkb" layoutX="23.0" layoutY="99.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="494.0" prefWidth="883.0" rowsPerPage="12">
 
     </MFXPaginatedTableView>
 
-    <MFXTextField floatMode="DISABLED" layoutX="8.0" layoutY="61.0" prefHeight="30.0" prefWidth="582.0">
-        
-    </MFXTextField>
+    <Text fill="#2264D1" layoutX="23.0" layoutY="81.0" text="Tổng số bệnh nhân:" wrappingWidth="223.7054443359375">
+       <font>
+          <Font name="Times New Roman" size="24.0" />
+       </font>
+    </Text>
+
+    <Text fx:id="soBenhNhan" layoutX="216.0" layoutY="81.0" text="1000">
+       <font>
+          <Font name="Times New Roman" size="24.0" />
+       </font>
+    </Text>
+
+    <StackPane layoutX="567.0" layoutY="58.0" >
+        <MFXTextField disable="true" floatMode="DISABLED" prefHeight="30.0" prefWidth="338.0">
+
+        </MFXTextField>
+    </StackPane>
+
 
 </AnchorPane>

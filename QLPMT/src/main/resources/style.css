@@ -12,3 +12,8 @@
     -fx-background-color: #2264D1;
     -fx-text-fill: white;
 }
+
+/*Custom font cho paginated paginated table view*/
+.mfx-pagination-table-view {
+    -fx-font-family: "Times New Roman";
+}
