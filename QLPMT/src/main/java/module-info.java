@@ -10,6 +10,7 @@ module com.example.qlpmt {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires MaterialFX;
 
     opens com.example.qlpmt to javafx.fxml;
     exports com.example.qlpmt;
