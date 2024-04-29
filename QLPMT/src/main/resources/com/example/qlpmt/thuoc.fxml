@@ -1,11 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
+<?import io.github.palexdev.materialfx.controls.MFXPaginatedTableView?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
+<BorderPane style="-fx-background-color: #D4F2FF;-fx-border-color: black; -fx-border-width: 2;                    -fx-border-radius: 5px; -fx-background-radius: 5px" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.thuocController">
+   <top>
+        <VBox BorderPane.alignment="CENTER">
+            <HBox>
+                <Text fill="#2264D1" text="Báo cáo sử dụng thuốc" wrappingWidth="445.3853039741516">
+                    <font>
+                        <Font name="Times New Roman Bold" size="24.0" />
+                    </font>
+                </Text>
 
-<?import io.github.palexdev.materialfx.controls.MFXButton?>
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: pink;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.thuocController">
-<MFXButton>
+            </HBox>
+<HBox>
+    <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="422.0" style="-fx-border-color: black; -fx-border-width: 2;                   -fx-background-color: White;                    -fx-border-radius: 5px; -fx-background-radius: 5px">
+        <children>
+            <MFXTextField maxHeight="30.0" maxWidth="390.0" minHeight="10.0" minWidth="300.0" prefHeight="30.0" prefWidth="390.0" style="-fx-border-width: 0; -fx-background-color: none; -fx-border-radius: 5px" />
+            <ImageView fitHeight="25.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@images/search.png" />
+                </image>
+            </ImageView>
+        </children>
+        <VBox.margin>
+            <Insets bottom="20.0" />
+        </VBox.margin>
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+    </HBox>
 
-</MFXButton>
-</AnchorPane>
+    <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="137.0" style="-fx-border-color: black; -fx-border-width: 2;                   -fx-background-color: White;                    -fx-border-radius: 5px; -fx-background-radius: 5px">
+        <children>
+            <Text fill="#2264D1" text="07/03/2024" wrappingWidth="100">
+                <font>
+                    <Font name="Times New Roman Bold" size="18.0" />
+                </font>
+            </Text>
+            <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@images/schedule.png" />
+                </image>
+            </ImageView>
+        </children>
+        <VBox.margin>
+            <Insets bottom="20.0" />
+        </VBox.margin>
+    </HBox>
+
+</HBox>
+
+            <MFXPaginatedTableView id="myTableView" fx:id="thuoc" layoutX="8.0" layoutY="99.0" maxWidth="-Infinity" minWidth="-Infinity" pagesToShow="10" prefHeight="294.0" prefWidth="582.0" rowsPerPage="10" scaleShape="false">
+            </MFXPaginatedTableView>
+         <BorderPane.margin>
+            <Insets left="50.0" />
+         </BorderPane.margin>
+
+        </VBox>
+   </top>
+</BorderPane>
