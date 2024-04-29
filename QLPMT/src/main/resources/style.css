@@ -38,3 +38,11 @@
     -fx-font-family: "Times New Roman";
     -fx-text-fill: -mfx-gray;
 }
+
+.mfx-combo-box .caret .mfx-ripple-generator {
+    -mfx-ripple-color: #D4F2FF;
+}
+
+.mfx-combo-box:focus-within .caret .mfx-font-icon {
+    -mfx-color: #2264D1;
+}

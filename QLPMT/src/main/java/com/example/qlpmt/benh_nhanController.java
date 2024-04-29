@@ -66,9 +66,9 @@ public class benh_nhanController implements Initializable{
         benh_nhan_root_node.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                // Check if the clicked target is not the MFXTextField
+                // Kiem tra xem search_txtbox co dang duoc focus hay khong
                 if (mouseEvent.getTarget() != search_txtbox) {
-                    // If it's not, request focus on the root node
+                    // Neu khong thi unfocus search_txtbox
                     benh_nhan_root_node.requestFocus();
                 }
             }
