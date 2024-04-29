@@ -84,7 +84,7 @@
          </BorderPane>
          <BorderPane prefHeight="429.0" prefWidth="894.0">
             <center>
-               <MFXPaginatedTableView fx:id="table_bn" prefHeight="409.0" prefWidth="846.0" rowsPerPage="11" BorderPane.alignment="CENTER" />
+               <MFXPaginatedTableView fx:id="table_bn" prefHeight="395.0" prefWidth="850.0" rowsPerPage="11" BorderPane.alignment="CENTER" />
             </center>
          </BorderPane>
          <BorderPane prefHeight="58.0" prefWidth="854.0">
