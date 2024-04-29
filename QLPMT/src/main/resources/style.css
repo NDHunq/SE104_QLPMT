@@ -29,6 +29,7 @@
     -fx-border-radius: 5;
 }
 
+
 /*Custom lai mau cho paginated table view*/
 .mfx-pagination .mfx-page:selected {
     -fx-background-color: #2264D1;
@@ -67,4 +68,6 @@
 
 .mfx-combo-box:focus-within .caret .mfx-font-icon {
     -mfx-color: #2264D1;
+
 }
+
