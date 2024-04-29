@@ -2,13 +2,13 @@
 
 <?import io.github.palexdev.materialfx.controls.MFXPaginatedTableView?>
 <?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="600.0" prefWidth="930.0" style="-fx-background-color: #D4F2FF" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.benh_nhanController">
+<AnchorPane fx:id="benh_nhan_root_node" prefHeight="600.0" prefWidth="930.0" style="-fx-background-color: #D4F2FF" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.benh_nhanController">
     <Text fill="#2264D1" layoutX="23.0" layoutY="41.0" text="Danh sách bệnh nhân" wrappingWidth="278.9054412841797">
       <font>
          <Font name="Times New Roman Bold" size="30.0" />
@@ -31,11 +31,13 @@
        </font>
     </Text>
 
-    <StackPane layoutX="567.0" layoutY="58.0" >
-        <MFXTextField disable="true" floatMode="DISABLED" prefHeight="30.0" prefWidth="338.0">
-
-        </MFXTextField>
-    </StackPane>
-
-
+    <MFXTextField id="search_txtbox" fx:id="search_txtbox" floatMode="DISABLED" layoutX="567.0" layoutY="58.0" prefHeight="30.0" prefWidth="338.0">
+        <leadingIcon>
+            <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@images/search.png" />
+                </image>
+            </ImageView>
+        </leadingIcon>
+    </MFXTextField>
 </AnchorPane>

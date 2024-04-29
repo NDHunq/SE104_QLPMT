@@ -13,7 +13,28 @@
     -fx-text-fill: white;
 }
 
-/*Custom font cho paginated paginated table view*/
+/*Custom lai font cho paginated table view*/
 .mfx-pagination-table-view {
     -fx-font-family: "Times New Roman";
+}
+
+/*Doi mau vien cho mfx textfield khi duoc focus (cái nó báo lỗi là bị lỏ á, đừng fix j hết nha :Đ)*/
+.mfx-text-field:focus-within {
+    -fx-border-color: #2264D1;
+}
+
+
+.mfx-filter-pane .header #filterIcon:hover {
+    -fx-background-color: derive(#D4F2FF, 150%);
+}
+
+.mfx-filter-pane .header #filterIcon:hover .mfx-font-icon {
+    -mfx-color: #D4F2FF;
+}
+
+.mfx-filter-pane .mfx-combo-box {
+    -fx-background-color: #D4F2FF;
+    -fx-border-color: #ebebeb;
+    -fx-font-family: "Times New Roman";
+    -fx-text-fill: -mfx-gray;
 }
