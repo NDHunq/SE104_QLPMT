@@ -2,10 +2,8 @@
 
 <?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
 <?import io.github.palexdev.materialfx.controls.MFXPaginatedTableView?>
-<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -33,29 +31,8 @@
             <VBox.margin>
                <Insets top="5.0" />
             </VBox.margin>
-            <right>
-               <MFXDatePicker prefHeight="17.0" prefWidth="150.0" styleClass="mfx-date-picker" stylesheets="@../../../../style.css" BorderPane.alignment="CENTER">
-                  <opaqueInsets>
-                     <Insets />
-                  </opaqueInsets>
-                  <BorderPane.margin>
-                     <Insets right="20.0" />
-                  </BorderPane.margin>
-               </MFXDatePicker>
-            </right>
          </BorderPane>
          <BorderPane prefHeight="38.0" prefWidth="828.0">
-            <right>
-               <ComboBox fx:id="sort_cbb" prefHeight="34.0" prefWidth="150.0" promptText="Sort" style="-fx-font-size: 18; -fx-arrow-fill: red;" stylesheets="@../../../../style.css" BorderPane.alignment="BOTTOM_LEFT">
-                  <BorderPane.margin>
-                     <Insets right="20.0" />
-                  </BorderPane.margin>
-                  <styleClass>
-                     <String fx:value="TextBorder" />
-                     <String fx:value="header" />
-                  </styleClass>
-               </ComboBox>
-            </right>
             <left>
                <HBox prefHeight="38.0" prefWidth="482.0" styleClass="TextBorder" stylesheets="@../../../../style.css" BorderPane.alignment="CENTER">
                   <children>
@@ -81,11 +58,28 @@
             <VBox.margin>
                <Insets />
             </VBox.margin>
+            <right>
+               <MFXDatePicker prefHeight="17.0" prefWidth="150.0" styleClass="mfx-date-picker" stylesheets="@../../../../style.css" BorderPane.alignment="CENTER">
+                  <opaqueInsets>
+                     <Insets />
+                  </opaqueInsets>
+                  <BorderPane.margin>
+                     <Insets right="20.0" />
+                  </BorderPane.margin>
+               </MFXDatePicker>
+            </right>
          </BorderPane>
-         <BorderPane prefHeight="429.0" prefWidth="894.0">
+         <BorderPane prefHeight="414.0" prefWidth="894.0">
             <center>
-               <MFXPaginatedTableView fx:id="table_bn" prefHeight="395.0" prefWidth="850.0" rowsPerPage="11" BorderPane.alignment="CENTER" />
+               <MFXPaginatedTableView fx:id="table_bn" prefHeight="395.0" prefWidth="850.0" rowsPerPage="10" styleClass="font15" stylesheets="@../../../../style.css" BorderPane.alignment="CENTER">
+                  <padding>
+                     <Insets bottom="10.0" top="10.0" />
+                  </padding>
+               </MFXPaginatedTableView>
             </center>
+            <VBox.margin>
+               <Insets top="10.0" />
+            </VBox.margin>
          </BorderPane>
          <BorderPane prefHeight="58.0" prefWidth="854.0">
             <right>

@@ -18,6 +18,10 @@
     -fx-font-size: 17;
     -fx-font-family: "Times New Roman";
 }
+.font15 {
+    -fx-font-size: 15;
+    -fx-font-family: "Times New Roman";
+}
 .TextBorder {
     -fx-background-color: #FFFFFF;
     -fx-border-color: #000000;
@@ -70,4 +74,5 @@
     -mfx-color: #2264D1;
 
 }
+
 
