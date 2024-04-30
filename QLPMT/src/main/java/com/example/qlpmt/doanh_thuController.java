@@ -19,8 +19,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
+import javafx.scene.layout.Pane;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -34,8 +39,15 @@ public class doanh_thuController implements Initializable {
     private boolean isBangSoLieu = true;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
 
+    //Tao cac truc toa do cho bieu do
+    final CategoryAxis xAxis = new CategoryAxis();
+    final NumberAxis yAxis = new NumberAxis();
+
     @FXML
     private AnchorPane doanh_thu_root_node;
+
+    @FXML
+    private Pane line_chart_pane;
 
     @FXML
     private MFXButton bangSoLieu;
@@ -49,6 +61,9 @@ public class doanh_thuController implements Initializable {
     @FXML
     private MFXTextField search_txtbox;
 
+    @FXML
+    private LineChart<String, Number> doanhThu_line_chart = new LineChart<String, Number>(xAxis, yAxis);
+
     private ObservableList<DoanhThu> doanhThuList;
 
     //Ham khoi tao
@@ -57,6 +72,7 @@ public class doanh_thuController implements Initializable {
         setButton();
         setVisible();
         buttonClickEvent();
+        setupChart();
 
         //Khoi tao paginated tableview
         setupPaginated();
@@ -131,9 +147,14 @@ public class doanh_thuController implements Initializable {
         if(isBangSoLieu){
             doanhThu.setVisible(true);
             search_txtbox.setVisible(true);
+            doanhThu_line_chart.setVisible(false);
+            line_chart_pane.setVisible(false);
+
         } else {
             doanhThu.setVisible(false);
             search_txtbox.setVisible(false);
+            doanhThu_line_chart.setVisible(true);
+            line_chart_pane.setVisible(true);
         }
     }
 
@@ -193,10 +214,11 @@ public class doanh_thuController implements Initializable {
         );
 
     }
+
     public void setupPaginated(){
         //Tao cac cot cua tableview
         MFXTableColumn<DoanhThu> stt = new MFXTableColumn<>("STT", false, Comparator.comparing(DoanhThu::getId));
-        MFXTableColumn<DoanhThu> ngaykham = new MFXTableColumn<>("Ngày khám", false, Comparator.comparing(DoanhThu::getNgayKham_string));
+        MFXTableColumn<DoanhThu> ngaykham = new MFXTableColumn<>("Ngày khám", false, Comparator.comparing(DoanhThu::getNgayKham));
         MFXTableColumn<DoanhThu> doanhthu = new MFXTableColumn<>("Doanh thu", false, Comparator.comparing(DoanhThu::getDoanhThu));
         MFXTableColumn<DoanhThu> soluong = new MFXTableColumn<>("Số lượng bệnh nhân", false, Comparator.comparing(DoanhThu::getSoLuongBenhNhan));
         MFXTableColumn<DoanhThu> tile = new MFXTableColumn<>("Tỉ lệ", false, Comparator.comparing(DoanhThu::getTiLe));
@@ -223,5 +245,49 @@ public class doanh_thuController implements Initializable {
         //Them du lieu vao tableview
         setData();
         doanhThu.setItems(doanhThuList);
+    }
+
+    public void setupChart(){
+        int month = 7;
+        doanhThu_line_chart.setTitle("Biểu đồ doanh thu tháng " + month);
+
+        XYChart.Series<String, Number> series= new XYChart.Series<String, Number>();
+        series.setName("Doanh thu");
+
+        xAxis.setLabel("Thời gian (Ngày)");
+
+        series.getData().add(new XYChart.Data<String, Number>("1", 2508060));
+        series.getData().add(new XYChart.Data<String, Number>("2", 6820043));
+        series.getData().add(new XYChart.Data<String, Number>("3", 1174516));
+        series.getData().add(new XYChart.Data<String, Number>("4", 2513369));
+        series.getData().add(new XYChart.Data<String, Number>("5", 9626838));
+        series.getData().add(new XYChart.Data<String, Number>("6", 3487137));
+        series.getData().add(new XYChart.Data<String, Number>("7", 2366582));
+        series.getData().add(new XYChart.Data<String, Number>("8", 517915));
+        series.getData().add(new XYChart.Data<String, Number>("9", 2665481));
+        series.getData().add(new XYChart.Data<String, Number>("10", 0));
+        series.getData().add(new XYChart.Data<String, Number>("11", 8151507));
+        series.getData().add(new XYChart.Data<String, Number>("12", 8976275));
+        series.getData().add(new XYChart.Data<String, Number>("13", 5311370));
+        series.getData().add(new XYChart.Data<String, Number>("14", 4333728));
+        series.getData().add(new XYChart.Data<String, Number>("15", 7398367));
+        series.getData().add(new XYChart.Data<String, Number>("16", 2572029));
+        series.getData().add(new XYChart.Data<String, Number>("17", 0));
+        series.getData().add(new XYChart.Data<String, Number>("18", 3607426));
+        series.getData().add(new XYChart.Data<String, Number>("19", 5863342));
+        series.getData().add(new XYChart.Data<String, Number>("20", 4830826));
+        series.getData().add(new XYChart.Data<String, Number>("21", 4011452));
+        series.getData().add(new XYChart.Data<String, Number>("22", 819606));
+        series.getData().add(new XYChart.Data<String, Number>("23", 6062521));
+        series.getData().add(new XYChart.Data<String, Number>("24", 3389291));
+        series.getData().add(new XYChart.Data<String, Number>("25", 534570));
+        series.getData().add(new XYChart.Data<String, Number>("26", 7456915));
+        series.getData().add(new XYChart.Data<String, Number>("27", 9385957));
+        series.getData().add(new XYChart.Data<String, Number>("28", 3464504));
+        series.getData().add(new XYChart.Data<String, Number>("29", 596957));
+        series.getData().add(new XYChart.Data<String, Number>("30", 3797033));
+        series.getData().add(new XYChart.Data<String, Number>("31", 5284519));
+
+        doanhThu_line_chart.getData().add(series);
     }
 }

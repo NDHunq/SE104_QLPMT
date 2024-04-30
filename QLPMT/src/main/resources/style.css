@@ -58,3 +58,10 @@
 .mfx-combo-box:focus-within .caret .mfx-font-icon {
     -mfx-color: #2264D1;
 }
+
+.chart-title {
+    -fx-font-size: 20px;
+    -fx-font-family: "Times New Roman";
+    -fx-text-fill: #000000;
+    -fx-font-weight: bold;
+}

@@ -4,9 +4,13 @@
 <?import io.github.palexdev.materialfx.controls.MFXComboBox?>
 <?import io.github.palexdev.materialfx.controls.MFXPaginatedTableView?>
 <?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -17,7 +21,7 @@
         </font>
     </Text>
 
-    <MFXPaginatedTableView fx:id="doanhThu" layoutX="23.0" layoutY="160.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="434.0" prefWidth="883.0" rowsPerPage="10">
+    <MFXPaginatedTableView fx:id="doanhThu" id="doanhThu_table" layoutX="23.0" layoutY="160.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="434.0" prefWidth="883.0" rowsPerPage="10">
 
     </MFXPaginatedTableView>
 
@@ -45,5 +49,21 @@
          <Font name="Times New Roman" size="12.0" />
       </font>
     </MFXTextField>
-   <MFXComboBox floatMode="DISABLED" layoutX="23.0" layoutY="119.0" prefHeight="32.0" prefWidth="130.0" />
+
+   <MFXComboBox fx:id="month_combobox" floatMode="DISABLED" layoutX="23.0" layoutY="119.0" prefHeight="32.0" prefWidth="130.0" />
+
+   <MFXComboBox fx:id="year_combobox" floatMode="DISABLED" layoutX="180.0" layoutY="119.0" prefHeight="32.0" prefWidth="130.0" />
+
+
+   <Pane fx:id="line_chart_pane" layoutX="23.0" layoutY="160.0" prefHeight="434.0" prefWidth="883.0" style="-fx-background-color: #FFFFFF; -fx-border-radius: 10px; -fx-background-radius: 10px">
+       <LineChart fx:id="doanhThu_line_chart" prefHeight="434.0" prefWidth="883.0">
+           <xAxis>
+               <CategoryAxis side="BOTTOM" />
+           </xAxis>
+           <yAxis>
+               <NumberAxis side="LEFT" />
+           </yAxis>
+       </LineChart>
+   </Pane>
+
 </AnchorPane>
