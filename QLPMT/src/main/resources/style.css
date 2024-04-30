@@ -45,20 +45,10 @@
     -fx-border-color: #2264D1;
 }
 
-
-.mfx-filter-pane .header #filterIcon:hover {
-    -fx-background-color: derive(#D4F2FF, 150%);
-}
-
-.mfx-filter-pane .header #filterIcon:hover .mfx-font-icon {
-    -mfx-color: #D4F2FF;
-}
-
-.mfx-filter-pane .mfx-combo-box {
-    -fx-background-color: #D4F2FF;
+/*Custom lai mau cho combobox*/
+.mfx-combo-box {
     -fx-border-color: #ebebeb;
     -fx-font-family: "Times New Roman";
-    -fx-text-fill: -mfx-gray;
 }
 
 .mfx-combo-box .caret .mfx-ripple-generator {

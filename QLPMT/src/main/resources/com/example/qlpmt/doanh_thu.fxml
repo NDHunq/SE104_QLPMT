@@ -10,14 +10,14 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="600.0" prefWidth="930.0" style="-fx-background-color: #D4F2FF" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.doanh_thuController">
+<AnchorPane fx:id="doanh_thu_root_node" prefHeight="600.0" prefWidth="930.0" style="-fx-background-color: #D4F2FF" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.doanh_thuController">
     <Text fill="#2264D1" layoutX="23.0" layoutY="41.0" text="Danh sách bệnh nhân" wrappingWidth="278.9054412841797">
         <font>
             <Font name="Times New Roman Bold" size="30.0" />
         </font>
     </Text>
 
-    <MFXPaginatedTableView id="myTableView" fx:id="pkb" layoutX="23.0" layoutY="160.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="434.0" prefWidth="883.0" rowsPerPage="12">
+    <MFXPaginatedTableView fx:id="doanhThu" layoutX="23.0" layoutY="160.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="434.0" prefWidth="883.0" rowsPerPage="10">
 
     </MFXPaginatedTableView>
 
