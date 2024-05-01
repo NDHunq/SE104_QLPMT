@@ -7,7 +7,10 @@
 <?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -15,11 +18,31 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="684.0" styleClass="TextBorder" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.KhamBenh.AddPhieuKBController">
    <children>
-      <Label styleClass="header" stylesheets="@../../../style.css" text="Phiếu khám bệnh">
-         <font>
-            <Font name="System Bold" size="25.0" />
-         </font>
-      </Label>
+      <BorderPane prefHeight="46.0" prefWidth="662.0">
+         <left>
+            <Label styleClass="header" stylesheets="@../../../style.css" text="Phiếu khám bệnh" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+               <BorderPane.margin>
+                  <Insets left="7.0" />
+               </BorderPane.margin>
+            </Label>
+         </left>
+         <right>
+            <ImageView fx:id="close" fitHeight="32.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+               <image>
+                  <Image url="@images/close.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+         </right>
+      </BorderPane>
       <VBox prefHeight="542.0" prefWidth="315.0" style="-fx-background-radius: 10;" styleClass="mainBackground" stylesheets="@../../../style.css">
          <children>
             <HBox prefHeight="100.0" prefWidth="200.0">
@@ -86,7 +109,7 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <MFXDatePicker maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" stylesheets="@../../../style.css">
+                        <MFXDatePicker maxHeight="32.0" minHeight="32.0" prefHeight="32.0" prefWidth="177.0" stylesheets="@../../../style.css">
                            <VBox.margin>
                               <Insets bottom="5.0" />
                            </VBox.margin>
@@ -94,6 +117,9 @@
                               <String fx:value="TextBorder" />
                               <String fx:value="fontStd" />
                            </styleClass>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </MFXDatePicker>
                         <Label styleClass="header" stylesheets="@../../../style.css" text="Người khám">
                            <font>
@@ -105,7 +131,7 @@
                   </VBox>
                </children>
             </HBox>
-            <MFXTableView fx:id="table_thuoc" prefHeight="310.0" prefWidth="642.0">
+            <MFXTableView fx:id="table_thuoc" prefHeight="310.0" prefWidth="642.0" styleClass="font15" stylesheets="@../../../style.css">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
@@ -121,7 +147,7 @@
                <children>
                   <MFXButton fx:id="XongBtn" mnemonicParsing="false" prefHeight="33.0" prefWidth="65.0" style="-fx-background-color: BCE29E;" stylesheets="@../../../style.css" text="Xong">
                      <styleClass>
-                        <String fx:value="header" />
+                        <String fx:value="fontButton" />
                         <String fx:value="TextBorder" />
                      </styleClass>
                      <HBox.margin>
@@ -130,15 +156,21 @@
                      <font>
                         <Font size="16.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </MFXButton>
                   <MFXButton fx:id="HuyBtn" mnemonicParsing="false" prefHeight="35.0" prefWidth="64.0" style="-fx-background-color: FF8787;" stylesheets="@../../../style.css" text="Hủy">
                      <styleClass>
-                        <String fx:value="header" />
+                        <String fx:value="fontButton" />
                         <String fx:value="TextBorder" />
                      </styleClass>
                      <font>
                         <Font size="16.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </MFXButton>
                </children>
                <BorderPane.margin>
