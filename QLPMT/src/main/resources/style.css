@@ -35,11 +35,6 @@
     -fx-text-fill: white;
 }
 
-/*Custom lai font cho paginated table view*/
-.mfx-pagination-table-view {
-    -fx-font-family: "Times New Roman";
-}
-
 /*Doi mau vien cho mfx textfield khi duoc focus (cái nó báo lỗi là bị lỏ á, đừng fix j hết nha :Đ)*/
 .mfx-text-field:focus-within {
     -fx-border-color: #2264D1;
@@ -76,6 +71,7 @@
     -fx-text-fill: #2264D1;
     -fx-font-weight: bold;
     -fx-font-family: "Times New Roman";
+    -fx-font-size: 16px;
 }
 
 /*Custom line chart*/
@@ -83,4 +79,18 @@
     -fx-font-family: "Times New Roman";
     -fx-text-fill: #000000;
     -fx-font-weight: bold;
+}
+
+/*Custom cho table view header*/
+.mfx-table-column {
+    -fx-font-size: 16px;
+    -fx-font-family: "Times New Roman";
+    -fx-text-fill: #000000;
+    -fx-font-weight: bold;
+}
+
+/*Custom font cho paginated table view*/
+.mfx-paginated-table-view {
+    -fx-font-size: 14px;
+    -fx-font-family: "Times New Roman";
 }

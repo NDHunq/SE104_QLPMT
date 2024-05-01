@@ -125,10 +125,10 @@ public class benh_nhanController implements Initializable{
 
         //Tao cac cot cua tableview
         MFXTableColumn<PhieuKhamBenh> cccd = new MFXTableColumn<>("CCCD", false, Comparator.comparing(PhieuKhamBenh::getCccd));
-        MFXTableColumn<PhieuKhamBenh> hoten = new MFXTableColumn<>("Ho Ten", false, Comparator.comparing(PhieuKhamBenh::getHoTen));
-        MFXTableColumn<PhieuKhamBenh> loaibenh = new MFXTableColumn<>("Loai benh", false, Comparator.comparing(PhieuKhamBenh::getLoaiBenh));
-        MFXTableColumn<PhieuKhamBenh> trieuchung = new MFXTableColumn<>("Trieu chung", false, Comparator.comparing(PhieuKhamBenh::getTrieuChung));
-        MFXTableColumn<PhieuKhamBenh> ngaykham = new MFXTableColumn<>("Ngay kham", false, Comparator.comparing(PhieuKhamBenh::getNgayKham));
+        MFXTableColumn<PhieuKhamBenh> hoten = new MFXTableColumn<>("Họ tên", false, Comparator.comparing(PhieuKhamBenh::getHoTen));
+        MFXTableColumn<PhieuKhamBenh> loaibenh = new MFXTableColumn<>("Loại bệnh", false, Comparator.comparing(PhieuKhamBenh::getLoaiBenh));
+        MFXTableColumn<PhieuKhamBenh> trieuchung = new MFXTableColumn<>("Triệu chứng", false, Comparator.comparing(PhieuKhamBenh::getTrieuChung));
+        MFXTableColumn<PhieuKhamBenh> ngaykham = new MFXTableColumn<>("Ngày khám", false, Comparator.comparing(PhieuKhamBenh::getNgayKham));
 
         //Tao cac dong cho cot cua tableview
         cccd.setRowCellFactory(phieukhambenh -> new MFXTableRowCell<>(PhieuKhamBenh::getCccd));
