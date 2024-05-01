@@ -1,10 +1,14 @@
 package com.example.qlpmt.KhamBenh;
 
+import io.github.palexdev.materialfx.controls.MFXButton;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -14,8 +18,16 @@ import java.util.ResourceBundle;
 public class ViewPhieuKBController implements Initializable {
     @FXML
     private VBox pkb_layout;
+
+    @FXML
+    private MFXButton HoaDon;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        HoaDon.setOnAction((ActionEvent event) -> {
+            Node source = (Node) event.getSource();
+            Stage stage = (Stage) source.getScene().getWindow();
+            stage.close();
+        });
         List<PhieuKhamBenh> ls=new ArrayList<>(pkb());
         for (int i=0;i<ls.size();i++){
             FXMLLoader loader=new FXMLLoader();

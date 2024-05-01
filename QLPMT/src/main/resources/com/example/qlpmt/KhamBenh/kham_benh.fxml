@@ -73,7 +73,7 @@
             <center>
                <MFXPaginatedTableView fx:id="table_bn" prefHeight="395.0" prefWidth="850.0" rowsPerPage="10" styleClass="font15" stylesheets="@../../../../style.css" BorderPane.alignment="CENTER">
                   <padding>
-                     <Insets bottom="10.0" top="10.0" />
+                     <Insets bottom="7.0" top="7.0" />
                   </padding>
                </MFXPaginatedTableView>
             </center>

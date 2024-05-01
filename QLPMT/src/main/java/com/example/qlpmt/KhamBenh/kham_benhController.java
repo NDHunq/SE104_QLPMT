@@ -8,15 +8,14 @@ import io.github.palexdev.materialfx.utils.others.observables.When;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -24,7 +23,6 @@ import io.github.palexdev.materialfx.controls.MFXPaginatedTableView;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.*;
 
 public class kham_benhController implements Initializable {
@@ -77,6 +75,52 @@ public class kham_benhController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+    public void AddPKB(){
+        FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("add_phieukb.fxml"));
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.UNDECORATED);
+        root.setOnMousePressed(event -> {
+            x = event.getSceneX();
+            y = event.getSceneY();
+        });
+        root.setOnMouseDragged(event -> {
+            stage.setX(event.getScreenX() - x);
+            stage.setY(event.getScreenY() - y);
+        });
+        Scene scene = new Scene(root, 710, 500);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
+        stage.setScene(scene);
+        stage.show();
+    }
+    public void XemPKB(){
+        FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("view_phieukb.fxml"));
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.UNDECORATED);
+        root.setOnMousePressed(event -> {
+            x = event.getSceneX();
+            y = event.getSceneY();
+        });
+        root.setOnMouseDragged(event -> {
+            stage.setX(event.getScreenX() - x);
+            stage.setY(event.getScreenY() - y);
+        });
+        Scene scene = new Scene(root, 710, 500);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
+        stage.setScene(scene);
+        stage.show();
+    }
     private void setupPaginated() {
 
         //Tao cac cot cua tableview
@@ -87,16 +131,30 @@ public class kham_benhController implements Initializable {
         MFXTableColumn<KhamBenh> namsinh = new MFXTableColumn<>("Năm sinh", false, Comparator.comparing( KhamBenh::getNamSinh));
         MFXTableColumn<KhamBenh> diachi = new MFXTableColumn<>("Địa chỉ", false, Comparator.comparing( KhamBenh::getDiaChi));
         MFXTableColumn<KhamBenh> pkb = new MFXTableColumn<>("Phiếu khám bệnh", false, Comparator.comparing( KhamBenh::getImgPkb));
+        MFXTableColumn<KhamBenh> imageCol = new MFXTableColumn<>("Image");
 
-        //Tao cac dong cho cot cua tableview
         stt.setRowCellFactory(khambenh -> new MFXTableRowCell<>(KhamBenh::getSTT));
         hoten.setRowCellFactory(khambenh -> new MFXTableRowCell<>(KhamBenh::getHoTen));
         cccd.setRowCellFactory(khambenh -> new MFXTableRowCell<>(KhamBenh::getCCCD));
         gioitinh.setRowCellFactory(khambenh -> new MFXTableRowCell<>(KhamBenh::getGioiTinh));
         namsinh.setRowCellFactory(khambenh -> new MFXTableRowCell<>(KhamBenh::getNamSinh));
         diachi.setRowCellFactory(khambenh -> new MFXTableRowCell<>(KhamBenh::getDiaChi));
-        pkb.setRowCellFactory(khambenh -> new MFXTableRowCell<>(KhamBenh::getImgPkb));
-
+        pkb.setRowCellFactory(khambenh -> {
+            MFXTableRowCell<KhamBenh, String> cell = new MFXTableRowCell<>(KhamBenh::getImgPkb);
+            cell.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    if (event.getClickCount() == 1) {
+                        if(cell.getText()=="Tạo"){
+                            AddPKB();
+                        }
+                        else{
+                            XemPKB();
+                        }}
+                }
+            });
+            return cell;
+        });
         //Them cac cot vao tableview
         table_bn.getTableColumns().addAll(stt, hoten, cccd, gioitinh, namsinh, diachi, pkb);
 
@@ -113,33 +171,35 @@ public class kham_benhController implements Initializable {
         //Them du lieu vao tableview
         setData();
         table_bn.setItems(bn_list);
+
+
     }
     public void setData(){
         bn_list = FXCollections.observableArrayList(
-                new KhamBenh("1", "Nguyen Van A", "09010235718", "Nam", "12/07/1999", "Ha Noi", "img1"),
-                new KhamBenh("2", "Nguyen Van B", "09010235718", "Nam", "12/07/1999", "Ha Noi", "img2"),
-                new KhamBenh("3", "Nguyen Van C", "09010235718", "Nam", "12/07/1999", "Ha Noi", "img3"),
-                new KhamBenh("4", "Nguyen Van D", "09010235718", "Nam", "12/07/1999", "Ha Noi", "img4"),
-                new KhamBenh("5", "Nguyen Van E", "09010235718", "Nam", "12/07/1999", "Ha Noi", "img5"),
-                new KhamBenh("6", "Nguyen Van F", "09010235718", "Nam", "12/07/1999", "Ha Noi", "img6"),
-                new KhamBenh("7", "Nguyen Van G", "09010235718", "Nam", "12/07/1999", "Ha Noi", "img7"),
-                new KhamBenh("8", "Nguyen Van H", "09010235718", "Nam", "12/07/1999", "Ha Noi", "img8"),
-                new KhamBenh("9", "Nguyen Van I", "09010235718", "Nam", "12/07/1999", "Ha Noi", "img9"),
-                new KhamBenh("10", "Nguyen Van K", "09010235718", "Nam", "12/07/1999", "Ha Noi", "img10"),
-                new KhamBenh("11", "Nguyen Van L", "09010235718", "Nam", "12/07/1999", "Ha Noi", "img11"),
-                new KhamBenh("12", "Nguyen Van M", "09010235718", "Nam", "12/07/1999", "Ha Noi", "img12"),
-                new KhamBenh("13", "Nguyen Van N", "09010235718", "Nam", "12/07/1999", "Ha Noi", "img13"),
-                new KhamBenh("14", "Nguyen Van O", "09010235718", "Nam", "12/07/1999", "Ha Noi", "img14"),
-                new KhamBenh("15", "Nguyen Van P", "09010235718", "Nam", "12/07/1999", "Ha Noi", "img15"),
-                new KhamBenh("16", "Nguyen Van Q", "09010235718", "Nam", "12/07/1999", "Ha Noi", "img16"),
-                new KhamBenh("17", "Nguyen Van R", "09010235718", "Nam", "12/07/1999", "Ha Noi", "img17"),
-                new KhamBenh("18", "Nguyen Van S", "09010235718", "Nam", "12/07/1999", "Ha Noi", "img18"),
-                new KhamBenh("19", "Nguyen Van T", "09010235718", "Nam", "12/07/1999", "Ha Noi", "img19"),
-                new KhamBenh("20", "Nguyen Van U", "09010235718", "Nam", "12/07/1999", "Ha Noi", "img20"),
-                new KhamBenh("21", "Nguyen Van V", "09010235718", "Nam", "12/07/1999", "Ha Noi", "img21"),
-                new KhamBenh("22", "Nguyen Van X", "09010235718", "Nam", "12/07/1999", "Ha Noi", "img22"),
-                new KhamBenh("23", "Nguyen Van Y", "09010235718", "Nam", "12/07/1999", "Ha Noi", "img23"),
-                new KhamBenh("24", "Nguyen Van Z", "09010235718", "Nam", "12/07/1999", "Ha Noi", "img24")
+                new KhamBenh("1", "Nguyen Van A", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Tạo"),
+                new KhamBenh("2", "Nguyen Van B", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Xem"),
+                new KhamBenh("3", "Nguyen Van C", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Tạo"),
+                new KhamBenh("4", "Nguyen Van D", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Xem"),
+                new KhamBenh("5", "Nguyen Van E", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Tạo"),
+                new KhamBenh("6", "Nguyen Van F", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Tạo"),
+                new KhamBenh("7", "Nguyen Van G", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Xem"),
+                new KhamBenh("8", "Nguyen Van H", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Xem"),
+                new KhamBenh("9", "Nguyen Van I", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Xem"),
+                new KhamBenh("10", "Nguyen Van K", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Tạo"),
+                new KhamBenh("11", "Nguyen Van L", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Xem"),
+                new KhamBenh("12", "Nguyen Van M", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Tạo"),
+                new KhamBenh("13", "Nguyen Van N", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Xem"),
+                new KhamBenh("14", "Nguyen Van O", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Xem"),
+                new KhamBenh("15", "Nguyen Van P", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Tạo"),
+                new KhamBenh("16", "Nguyen Van Q", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Tạo"),
+                new KhamBenh("17", "Nguyen Van R", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Tạo"),
+                new KhamBenh("18", "Nguyen Van S", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Xem"),
+                new KhamBenh("19", "Nguyen Van T", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Tạo"),
+                new KhamBenh("20", "Nguyen Van U", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Tạo"),
+                new KhamBenh("21", "Nguyen Van V", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Xem"),
+                new KhamBenh("22", "Nguyen Van X", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Tạo"),
+                new KhamBenh("23", "Nguyen Van Y", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Xem"),
+                new KhamBenh("24", "Nguyen Van Z", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Tạo")
         );
     }
 }
