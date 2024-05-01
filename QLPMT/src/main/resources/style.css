@@ -6,3 +6,29 @@
     -fx-shape: "M0,0h100a10,10 0 0 1 10,10v100a10,10 0 0 1 -10,10h-100a10,10 0 0 1 -10,-10v-100a10,10 0 0 1 10,-10z";
     -fx-background-color:  #FFFFFF;
 }
+.button {
+        -fx-background-radius: 10px;
+
+    -fx-background-color:  #2264D1;
+}
+.rounded-anchor-pane {
+    -fx-background-radius: 12px;
+    -fx-background-color:  #FFFFFF;
+}
+.rounded-anchor-pane2 {
+    -fx-background-radius: 10px;
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+    -fx-background-color:  #E1F8F6;
+}
+.chooser {
+    -fx-background-radius: 10px;
+    -fx-border-color: #2264d1;
+    -fx-border-width: 2px;
+    -fx-border-radius: 10px;
+
+}
+.text-field:focused {
+    -fx-prompt-text-fill: black;
+}
