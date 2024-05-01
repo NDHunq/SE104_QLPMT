@@ -2,10 +2,7 @@ package com.example.qlpmt;
 
 import Model.DoanhThu;
 import Model.PhieuKhamBenh;
-import io.github.palexdev.materialfx.controls.MFXButton;
-import io.github.palexdev.materialfx.controls.MFXPaginatedTableView;
-import io.github.palexdev.materialfx.controls.MFXTableColumn;
-import io.github.palexdev.materialfx.controls.MFXTextField;
+import io.github.palexdev.materialfx.controls.*;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import io.github.palexdev.materialfx.filter.DoubleFilter;
 import io.github.palexdev.materialfx.filter.FloatFilter;
@@ -26,7 +23,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.layout.Pane;
-
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -42,6 +38,15 @@ public class doanh_thuController implements Initializable {
     //Tao cac truc toa do cho bieu do
     final CategoryAxis xAxis = new CategoryAxis();
     final NumberAxis yAxis = new NumberAxis();
+
+    private ObservableList<String> month_List;
+    private ObservableList<String> year_List;
+
+    @FXML
+    private MFXComboBox<String> month_combobox;
+
+    @FXML
+    private MFXComboBox<String> year_combobox;
 
     @FXML
     private AnchorPane doanh_thu_root_node;
@@ -73,6 +78,7 @@ public class doanh_thuController implements Initializable {
         setVisible();
         buttonClickEvent();
         setupChart();
+        setComboBox();
 
         //Khoi tao paginated tableview
         setupPaginated();
@@ -289,5 +295,18 @@ public class doanh_thuController implements Initializable {
         series.getData().add(new XYChart.Data<String, Number>("31", 5284519));
 
         doanhThu_line_chart.getData().add(series);
+    }
+
+    public void setComboBox(){
+        month_List = FXCollections.observableArrayList(
+                "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "Tất cả"
+        );
+
+        year_List = FXCollections.observableArrayList(
+                "2021", "2022", "2023", "2024", "2025"
+        );
+
+        month_combobox.setItems(month_List);
+        year_combobox.setItems(year_List);
     }
 }

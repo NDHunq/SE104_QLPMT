@@ -15,13 +15,13 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="doanh_thu_root_node" prefHeight="600.0" prefWidth="930.0" style="-fx-background-color: #D4F2FF" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.doanh_thuController">
-    <Text fill="#2264D1" layoutX="23.0" layoutY="41.0" text="Danh sách bệnh nhân" wrappingWidth="278.9054412841797">
+    <Text fill="#2264D1" layoutX="23.0" layoutY="41.0" text="Doanh thu theo tháng" wrappingWidth="282.10545349121094">
         <font>
             <Font name="Times New Roman Bold" size="30.0" />
         </font>
     </Text>
 
-    <MFXPaginatedTableView fx:id="doanhThu" id="doanhThu_table" layoutX="23.0" layoutY="160.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="434.0" prefWidth="883.0" rowsPerPage="10">
+    <MFXPaginatedTableView id="doanhThu_table" fx:id="doanhThu" layoutX="23.0" layoutY="160.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="434.0" prefWidth="883.0" rowsPerPage="10">
 
     </MFXPaginatedTableView>
 
@@ -50,13 +50,13 @@
       </font>
     </MFXTextField>
 
-   <MFXComboBox fx:id="month_combobox" floatMode="DISABLED" layoutX="23.0" layoutY="119.0" prefHeight="32.0" prefWidth="130.0" />
+   <MFXComboBox fx:id="month_combobox" floatingText="Tháng" layoutX="23.0" layoutY="119.0" prefHeight="32.0" prefWidth="130.0" />
 
-   <MFXComboBox fx:id="year_combobox" floatMode="DISABLED" layoutX="180.0" layoutY="119.0" prefHeight="32.0" prefWidth="130.0" />
+   <MFXComboBox fx:id="year_combobox" floatingText="Năm" layoutX="180.0" layoutY="119.0" prefHeight="32.0" prefWidth="130.0" />
 
 
    <Pane fx:id="line_chart_pane" layoutX="23.0" layoutY="160.0" prefHeight="434.0" prefWidth="883.0" style="-fx-background-color: #FFFFFF; -fx-border-radius: 10px; -fx-background-radius: 10px">
-       <LineChart fx:id="doanhThu_line_chart" prefHeight="434.0" prefWidth="883.0">
+       <LineChart fx:id="doanhThu_line_chart" layoutY="15.0" prefHeight="419.0" prefWidth="883.0">
            <xAxis>
                <CategoryAxis side="BOTTOM" />
            </xAxis>
