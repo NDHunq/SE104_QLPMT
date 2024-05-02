@@ -1,6 +1,6 @@
 package com.example.qlpmt;
 
-import com.almasb.fxgl.net.Connection;
+import java.sql.Connection;
 
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -13,9 +13,12 @@ public class DBConnection {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             // ten database
-            String url = "jdbc:sqlserver://localhost:1433;databaseName=QLPK";
+            String url = "jdbc:sqlserver://DESKTOP-MR3E6H4\\SQLEXPRESS:1433;databaseName=QLPK";
+            String user = "sa"; // replace with your username
+            String password = "hhhhhhhh444"; // replace with your password
 
-            connection= (Connection) DriverManager.getConnection(url);
+            connection = (Connection) DriverManager.getConnection(url, user, password);
+
 
         } catch (ClassNotFoundException | java.sql.SQLException e) {
             Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, e);
