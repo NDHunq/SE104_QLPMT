@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="500.0" maxWidth="370.0" minHeight="450.0" minWidth="370.0" prefHeight="570.0" prefWidth="370.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.loginController">
+   <AnchorPane layoutY="-5.0" maxHeight="570.0" maxWidth="370.0" minHeight="510.0" minWidth="370.0" prefHeight="510.0" prefWidth="370.0" styleClass="rounded-anchor-pane">
+      <children>
+         <Text fill="#2264d1" layoutX="111.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quản lý phòng mạch tư" wrappingWidth="192.1367473602295">
+            <font>
+               <Font name="Times New Roman Bold" size="25.0" />
+            </font>
+         </Text>
+         <ImageView fitHeight="63.0" fitWidth="61.0" layoutX="27.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@images/cong.png" />
+            </image>
+         </ImageView>
+         <ImageView fx:id="exit" fitHeight="25.0" fitWidth="25.0" layoutX="367.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="12.0">
+            <image>
+               <Image url="@images/close.png" />
+            </image>
+         </ImageView>
+         <ImageView fx:id="minimize" fitHeight="20.0" fitWidth="19.0" layoutX="434.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="17.0">
+            <image>
+               <Image url="@images/minus (1).png" />
+            </image>
+         </ImageView>
+         <Text fill="#2264d1" layoutX="33.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mật khẩu" wrappingWidth="192.1367473602295">
+            <font>
+               <Font name="Times New Roman Bold" size="22.0" />
+            </font>
+         </Text>
+         <Text fill="#2264d1" layoutX="33.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tài khoản" wrappingWidth="192.1367473602295">
+            <font>
+               <Font name="Times New Roman Bold" size="22.0" />
+            </font>
+         </Text>
+         <BorderPane layoutX="27.0" layoutY="166.0" maxWidth="416.0" minWidth="325.0" prefHeight="57.0" prefWidth="325.0">
+            <top>
+               <MFXTextField maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="303.0" prefHeight="40.0" prefWidth="303.0" style="-fx-background-color: #E1F8F6;" BorderPane.alignment="CENTER">
+                  <BorderPane.margin>
+                     <Insets bottom="2.0" left="5.0" right="5.0" top="2.0" />
+                  </BorderPane.margin>
+                  <font>
+                     <Font name="Times New Roman" size="20.0" />
+                  </font></MFXTextField>
+            </top>
+         </BorderPane>
+         <AnchorPane layoutY="315.0" maxHeight="57.0" maxWidth="345.0" minHeight="0.0" minWidth="345.0" prefHeight="57.0" prefWidth="345.0">
+            <opaqueInsets>
+               <Insets />
+            </opaqueInsets>
+            <children>
+               <Text fill="#2264d1" layoutX="152.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quên mật khẩu" textAlignment="RIGHT" wrappingWidth="192.1367473602295">
+                  <font>
+                     <Font name="Times New Roman" size="20.0" />
+                  </font>
+               </Text>
+            </children>
+         </AnchorPane>
+         <Button fx:id="login" layoutX="28.0" layoutY="380.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="313.0" styleClass="button" text="Đăng nhập" textFill="WHITE">
+            <font>
+               <Font name="Times New Roman Bold" size="28.0" />
+            </font>
+         </Button>
+         <Text fx:id="signin" fill="#2264d1" layoutX="148.0" layoutY="469.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Đăng ký" textAlignment="RIGHT" wrappingWidth="192.1367473602295">
+            <font>
+               <Font name="Times New Roman Bold" size="25.0" />
+            </font>
+         </Text>
+         <MFXPasswordField layoutX="33.0" layoutY="275.0" maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="303.0" prefHeight="40.0" prefWidth="313.0" style="-fx-background-color: #E1F8F6;" BorderPane.alignment="CENTER">
+              <font>
+                   <Font name="Times New Roman" size="20.0" />
+              </font>
+         </MFXPasswordField>
+        
+      </children>
+
+   </AnchorPane>
+
+</AnchorPane>

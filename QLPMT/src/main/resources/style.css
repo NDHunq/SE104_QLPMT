@@ -9,7 +9,6 @@
 
 .button {
     -fx-background-radius: 10px;
-
     -fx-background-color:  #2264D1;
 }
 .rounded-anchor-pane {
@@ -108,9 +107,6 @@
     -mfx-color: #2264D1;
 
 }
-
-
-
 
 .mfx-combo-box-cell:hover {
     -fx-background-color: #D4F2FF;
