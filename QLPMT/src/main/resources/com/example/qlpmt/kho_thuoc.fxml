@@ -1,8 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
+<?import io.github.palexdev.materialfx.controls.MFXPaginatedTableView?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
+<BorderPane prefHeight="325.0" prefWidth="753.0" style="-fx-background-color: #D4F2FF;-fx-border-color: black; -fx-border-width: 2;                    -fx-border-radius: 5px; -fx-background-radius: 5px" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.kho_thuocController">
+    <top>
+        <VBox BorderPane.alignment="CENTER">
+            <HBox>
+                <Text fill="#2264D1" text="Quản lý kho thuốc" wrappingWidth="445.3853039741516">
+                    <font>
+                        <Font name="Times New Roman Bold" size="24.0" />
+                    </font>
+               <HBox.margin>
+                  <Insets bottom="20.0" />
+               </HBox.margin>
+                </Text>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: green;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.kho_thuocController">
+            </HBox>
 
-</AnchorPane>
+                <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="422.0" style="-fx-border-color: black; -fx-border-width: 2;                   -fx-background-color: White;                    -fx-border-radius: 5px; -fx-background-radius: 5px">
+                    <children>
+                        <MFXTextField maxHeight="30.0" maxWidth="390.0" minHeight="10.0" minWidth="300.0" prefHeight="30.0" prefWidth="390.0" style="-fx-border-width: 0; -fx-background-color: none; -fx-border-radius: 5px" />
+                        <ImageView fitHeight="25.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@images/search.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                    <VBox.margin>
+                        <Insets bottom="20.0" />
+                    </VBox.margin>
+                    <HBox.margin>
+                        <Insets right="20.0" />
+                    </HBox.margin>
+                </HBox>
+            <MFXPaginatedTableView id="myTableView" fx:id="khothuoc" layoutX="8.0" layoutY="99.0" maxWidth="-Infinity" minWidth="-Infinity" pagesToShow="10" prefHeight="145.0" prefWidth="663.0" rowsPerPage="10" scaleShape="false">
+            </MFXPaginatedTableView>
+            <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+                <ImageView fx:id="Add" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@images/add.png" />
+                    </image>
+                </ImageView>
+            </HBox>
+            <BorderPane.margin>
+                <Insets left="50.0" />
+            </BorderPane.margin>
+
+        </VBox>
+    </top>
+    <bottom>
+
+    </bottom>
+</BorderPane>

@@ -56,7 +56,7 @@ public class thuocController implements Initializable {
         MFXTableColumn<Thuoc> ten_thuoc = new MFXTableColumn<>("Tên Thuốc",false, Comparator.comparing(Thuoc::getTenthuoc));
         MFXTableColumn<Thuoc> don_vi = new MFXTableColumn<>("Đơn Vị",false, Comparator.comparing(Thuoc::getDonvi));
         MFXTableColumn<Thuoc> so_luong = new MFXTableColumn<>("Số Lượng",false, Comparator.comparing(Thuoc::getSoluong));
-        MFXTableColumn<Thuoc> solandung = new MFXTableColumn<>("Đơn Giá",false, Comparator.comparing(Thuoc::getSolandung));
+        MFXTableColumn<Thuoc> solandung = new MFXTableColumn<>("Số lần dùng",false, Comparator.comparing(Thuoc::getSolandung));
 
         stt.setRowCellFactory(device-> new MFXTableRowCell<>(Thuoc::getStt));
         ten_thuoc.setRowCellFactory(device-> new MFXTableRowCell<>(Thuoc::getTenthuoc));
