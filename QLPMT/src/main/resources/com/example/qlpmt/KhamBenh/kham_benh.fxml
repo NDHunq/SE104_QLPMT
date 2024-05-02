@@ -3,6 +3,7 @@
 <?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
 <?import io.github.palexdev.materialfx.controls.MFXPaginatedTableView?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -48,6 +49,9 @@
                         <HBox.margin>
                            <Insets top="3.0" />
                         </HBox.margin>
+                        <cursor>
+                           <Cursor fx:constant="HAND" />
+                        </cursor>
                      </ImageView>
                   </children>
                   <BorderPane.margin>
@@ -66,6 +70,9 @@
                   <BorderPane.margin>
                      <Insets right="20.0" />
                   </BorderPane.margin>
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor>
                </MFXDatePicker>
             </right>
          </BorderPane>
@@ -89,7 +96,10 @@
                   </font>
                   <BorderPane.margin>
                      <Insets top="8.0" />
-                  </BorderPane.margin></Button>
+                  </BorderPane.margin>
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor></Button>
             </right>
             <VBox.margin>
                <Insets left="20.0" right="20.0" />
