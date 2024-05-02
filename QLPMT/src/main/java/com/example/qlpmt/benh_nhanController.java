@@ -1,9 +1,7 @@
 package com.example.qlpmt;
 
 import Model.PhieuKhamBenh;
-import io.github.palexdev.materialfx.controls.MFXPaginatedTableView;
-import io.github.palexdev.materialfx.controls.MFXTableColumn;
-import io.github.palexdev.materialfx.controls.MFXTextField;
+import io.github.palexdev.materialfx.controls.*;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import io.github.palexdev.materialfx.filter.StringFilter;
 import io.github.palexdev.materialfx.utils.others.observables.When;
@@ -16,6 +14,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
@@ -153,4 +153,26 @@ public class benh_nhanController implements Initializable{
         setData();
         pkb.setItems(pkb_list);
     }
+
+//    public void setupContextMenu(){
+//        MFXContextMenu contextMenu = new MFXContextMenu(pkb);
+//        MFXContextMenuItem edit = new MFXContextMenuItem("Chỉnh sửa");
+//        MFXContextMenuItem delete = new MFXContextMenuItem("Xóa");
+//        contextMenu.getItems().addAll(edit, delete);
+//
+//        // Set the row factory
+//        pkb.setTableRowFactory(tv -> {
+//            MFXTableRowCell<PhieuKhamBenh, Void> row = new MFXTableRowCell<>();
+//            row.addEventHandler(ContextMenuEvent.CONTEXT_MENU_REQUESTED, event -> {
+//                contextMenu.show(row, event.getScreenX(), event.getScreenY());
+//                event.consume();
+//            });
+//            row.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+//                if (event.getButton() == MouseButton.PRIMARY) {
+//                    contextMenu.hide();
+//                }
+//            });
+//            return row;
+//        });
+//    }
 }
