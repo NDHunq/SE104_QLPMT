@@ -94,3 +94,8 @@
     -fx-font-size: 14px;
     -fx-font-family: "Times New Roman";
 }
+
+mfx-context-menu .mfx-scroll-pane .scroll-bar:vertical {
+    -fx-pref-width: 0;
+    -fx-pref-height: 0;
+}

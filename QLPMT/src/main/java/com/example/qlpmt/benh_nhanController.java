@@ -46,6 +46,7 @@ public class benh_nhanController implements Initializable{
     public void initialize(URL location, ResourceBundle resources){
         //Khoi tao paginated tableview
         setupPaginated();
+        setupContextMenu();
 
         //chia deu kich thuoc cac cot de vua voi chieu rong cua tableview
         double tableViewWidth = pkb.getPrefWidth();
@@ -154,25 +155,26 @@ public class benh_nhanController implements Initializable{
         pkb.setItems(pkb_list);
     }
 
-//    public void setupContextMenu(){
-//        MFXContextMenu contextMenu = new MFXContextMenu(pkb);
-//        MFXContextMenuItem edit = new MFXContextMenuItem("Chỉnh sửa");
-//        MFXContextMenuItem delete = new MFXContextMenuItem("Xóa");
-//        contextMenu.getItems().addAll(edit, delete);
-//
-//        // Set the row factory
-//        pkb.setTableRowFactory(tv -> {
-//            MFXTableRowCell<PhieuKhamBenh, Void> row = new MFXTableRowCell<>();
-//            row.addEventHandler(ContextMenuEvent.CONTEXT_MENU_REQUESTED, event -> {
-//                contextMenu.show(row, event.getScreenX(), event.getScreenY());
-//                event.consume();
-//            });
-//            row.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-//                if (event.getButton() == MouseButton.PRIMARY) {
-//                    contextMenu.hide();
-//                }
-//            });
-//            return row;
-//        });
-//    }
+    public void setupContextMenu(){
+        MFXContextMenu contextMenu = new MFXContextMenu(pkb);
+        MFXContextMenuItem edit = new MFXContextMenuItem("Chỉnh sửa");
+        MFXContextMenuItem delete = new MFXContextMenuItem("Xóa");
+        contextMenu.getItems().addAll(edit, delete);
+        edit.setStyle("-fx-text-fill: #2264D1; -fx-font-size: 16px; -fx-font-family: 'Times New Roman'");
+        delete.setStyle("-fx-text-fill: red; -fx-font-size: 16px; -fx-font-family: 'Times New Roman'");
+
+        pkb.setTableRowFactory(phieukhambenh -> {
+            MFXTableRow<PhieuKhamBenh> row = new MFXTableRow<>(pkb, new PhieuKhamBenh("","","","", LocalDate.now()));
+            row.addEventHandler(ContextMenuEvent.CONTEXT_MENU_REQUESTED, event -> {
+                contextMenu.show(row, event.getScreenX(), event.getScreenY());
+                event.consume();
+            });
+            row.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                if (event.getButton() == MouseButton.PRIMARY) {
+                    contextMenu.hide();
+                }
+            });
+            return row;
+        });
+    }
 }
