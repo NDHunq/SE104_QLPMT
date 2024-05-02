@@ -32,16 +32,7 @@ public class SigninController   implements Initializable {
     private Text bstxt;
     @FXML
     private Text nvtxt;
-    @FXML
-    private PasswordField passwordField;
-    private boolean isPasswordVisible = false;
-    @FXML
-    private TextField textField;
-    @FXML
-    private PasswordField passwordField1;
-    private boolean isPasswordVisible1 = false;
-    @FXML
-    private TextField textField1;
+
 
 
 
@@ -74,35 +65,7 @@ public class SigninController   implements Initializable {
 
 
         });
-        see.setOnMouseClicked(event -> {
-            if (!isPasswordVisible) {
-                see.setImage(new Image(getClass().getResource("/com/example/qlpmt/images/see.png").toExternalForm()));
-                textField.setText(passwordField.getText());
-                textField.setVisible(true);
-                passwordField.setVisible(false);
-                isPasswordVisible = true;
-            } else {
-                see.setImage(new Image(getClass().getResource("/com/example/qlpmt/images/eye.png").toExternalForm()));
-                passwordField.setText(textField.getText());
-                passwordField.setVisible(true);
-                textField.setVisible(false);
-                isPasswordVisible = false;
-            }
-        });
-        see1.setOnMouseClicked(event -> {
-            if (!isPasswordVisible1) {
-                see1.setImage(new Image(getClass().getResource("/com/example/qlpmt/images/see.png").toExternalForm()));
-                textField1.setText(passwordField1.getText());
-                textField1.setVisible(true);
-                passwordField1.setVisible(false);
-                isPasswordVisible1 = true;
-            } else {
-                see1.setImage(new Image(getClass().getResource("/com/example/qlpmt/images/eye.png").toExternalForm()));
-                passwordField1.setText(textField1.getText());
-                passwordField1.setVisible(true);
-                textField1.setVisible(false);
-                isPasswordVisible1 = false;
-            }
-        });
+
+
     }
 }

@@ -35,11 +35,10 @@ public class loginController  implements Initializable {
     @FXML
     private ImageView see;
     @FXML
-    private PasswordField passwordField;
+
     private boolean isPasswordVisible = false;
     @FXML
-    private TextField textField;
-    @FXML
+
     private Button login;
 
 
@@ -109,21 +108,6 @@ public class loginController  implements Initializable {
               e.printStackTrace();
           }
       });
-      textField.setVisible(false);
-        see.setOnMouseClicked(event -> {
-            if (!isPasswordVisible) {
-                see.setImage(new Image(getClass().getResource("/com/example/qlpmt/images/see.png").toExternalForm()));
-                textField.setText(passwordField.getText());
-                textField.setVisible(true);
-                passwordField.setVisible(false);
-                isPasswordVisible = true;
-            } else {
-                see.setImage(new Image(getClass().getResource("/com/example/qlpmt/images/eye.png").toExternalForm()));
-                passwordField.setText(textField.getText());
-                passwordField.setVisible(true);
-                textField.setVisible(false);
-                isPasswordVisible = false;
-            }
-        });
+
     }
 }

@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import io.github.palexdev.materialfx.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="670.0" maxWidth="400.0" minHeight="670.0" minWidth="400.0" prefHeight="670.0" prefWidth="400.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.SigninController">
+<AnchorPane maxHeight="670.0" maxWidth="400.0" minHeight="670.0" minWidth="400.0" prefHeight="670.0" prefWidth="400.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.SigninController">
     <AnchorPane maxHeight="670.0" maxWidth="400.0" minHeight="670.0" minWidth="400.0" prefHeight="670.0" prefWidth="400.0" styleClass="rounded-anchor-pane">
         <children>
             <Text fill="#2264d1" layoutX="27.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Đăng ký" wrappingWidth="192.1367473602295">
@@ -34,44 +30,23 @@
                     <Font name="Times New Roman Bold" size="22.0" />
                 </font>
             </Text>
-            <Text fill="#2264d1" layoutX="27.0" layoutY="491.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nhập lại mật khẩu" wrappingWidth="192.1367473602295">
+            <Text fill="#2264d1" layoutX="27.0" layoutY="472.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nhập lại mật khẩu" wrappingWidth="192.1367473602295">
                 <font>
                     <Font name="Times New Roman Bold" size="22.0" />
                 </font>
             </Text>
-            <BorderPane layoutX="27.0" layoutY="289.0" maxWidth="416.0" minWidth="345.0" prefHeight="57.0" prefWidth="345.0" styleClass="rounded-anchor-pane2">
-                <center>
-                    <TextField maxHeight="53.0" maxWidth="416.0" minHeight="53.0" minWidth="312.0" prefHeight="53.0" prefWidth="312.0" style="-fx-background-color: #E1F8F6;" BorderPane.alignment="CENTER">
+            <BorderPane layoutX="27.0" layoutY="289.0" maxWidth="416.0" minWidth="345.0" prefHeight="57.0" prefWidth="345.0" >
+            <top>
+                    <MFXTextField maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="312.0" prefHeight="40.0" prefWidth="312.0" style="-fx-background-color: #E1F8F6;" BorderPane.alignment="CENTER">
                         <BorderPane.margin>
                             <Insets bottom="2.0" left="5.0" right="5.0" top="2.0" />
                         </BorderPane.margin>
                         <font>
                             <Font name="Times New Roman" size="20.0" />
-                        </font></TextField>
-                </center>
+                        </font></MFXTextField>
+            </top>
             </BorderPane>
-            <AnchorPane layoutX="27.0" layoutY="401.0" maxHeight="57.0" maxWidth="345.0" minHeight="0.0" minWidth="345.0" prefHeight="57.0" prefWidth="345.0" styleClass="rounded-anchor-pane2">
-                <children>
-                    <TextField fx:id="textField" layoutX="8.0" layoutY="4.0" prefHeight="49.0" prefWidth="283.0" style="-fx-background-color: #E1F8F6;">
-                        <font>
-                            <Font name="Times New Roman" size="20.0" />
-                        </font></TextField>
-                    <PasswordField fx:id="passwordField" layoutX="8.0" layoutY="4.0" maxHeight="365.0" maxWidth="365.0" minWidth="258.0" prefHeight="49.0" prefWidth="283.0" style="-fx-background-color: #E1F8F6;">
-                        <font>
-                            <Font name="Times New Roman" size="20.0" />
-                        </font>
-                    </PasswordField>
-                    <ImageView fx:id="see" fitHeight="35.0" fitWidth="31.0" layoutX="300.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                            <Image url="@images/eye.png" />
-                        </image>
-                    </ImageView>
-                </children>
-                <opaqueInsets>
-                    <Insets />
-                </opaqueInsets>
-            </AnchorPane>
-            <Button layoutX="27.0" layoutY="595.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="345.0" styleClass="button" text="Tạo tài khoản" textFill="WHITE">
+            <Button layoutX="30.0" layoutY="579.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="345.0" styleClass="button" text="Tạo tài khoản" textFill="WHITE">
                 <font>
                     <Font name="Times New Roman Bold" size="28.0" />
                 </font>
@@ -104,45 +79,35 @@
                <Font name="Times New Roman Bold" size="22.0" />
             </font>
          </Text>
-         <BorderPane layoutX="27.0" layoutY="186.0" maxWidth="416.0" minWidth="345.0" prefHeight="57.0" prefWidth="345.0" styleClass="rounded-anchor-pane2">
-            <center>
-               <TextField maxHeight="53.0" maxWidth="416.0" minHeight="53.0" minWidth="312.0" prefHeight="53.0" prefWidth="312.0" style="-fx-background-color: #E1F8F6;" BorderPane.alignment="CENTER">
+         <BorderPane layoutX="27.0" layoutY="186.0" maxWidth="416.0" minWidth="345.0" prefHeight="57.0" prefWidth="345.0" >
+            <top>
+               <MFXTextField maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="312.0" prefHeight="40.0" prefWidth="312.0" style="-fx-background-color: #E1F8F6;" BorderPane.alignment="CENTER">
                   <BorderPane.margin>
                      <Insets bottom="2.0" left="5.0" right="5.0" top="2.0" />
                   </BorderPane.margin>
                   <font>
                      <Font name="Times New Roman" size="20.0" />
                   </font>
-               </TextField>
-            </center>
+               </MFXTextField>
+            </top>
          </BorderPane>
          <Text fill="#2264d1" layoutX="27.0" layoutY="378.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mật khẩu" wrappingWidth="192.1367473602295">
             <font>
                <Font name="Times New Roman Bold" size="22.0" />
             </font>
          </Text>
-         <AnchorPane layoutX="27.0" layoutY="505.0" maxHeight="57.0" maxWidth="345.0" minHeight="0.0" minWidth="345.0" prefHeight="57.0" prefWidth="345.0" styleClass="rounded-anchor-pane2">
-            <children>
-               <TextField fx:id="textField1" layoutX="8.0" layoutY="4.0" prefHeight="49.0" prefWidth="283.0" style="-fx-background-color: #E1F8F6;">
-                  <font>
-                     <Font name="Times New Roman" size="20.0" />
-                  </font>
-               </TextField>
-               <PasswordField fx:id="passwordField1" layoutX="8.0" layoutY="4.0" maxHeight="365.0" maxWidth="365.0" minWidth="258.0" prefHeight="49.0" prefWidth="283.0" style="-fx-background-color: #E1F8F6;">
-                  <font>
-                     <Font name="Times New Roman" size="20.0" />
-                  </font>
-               </PasswordField>
-               <ImageView fx:id="see1" fitHeight="35.0" fitWidth="31.0" layoutX="300.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@images/eye.png" />
-                  </image>
-               </ImageView>
-            </children>
-            <opaqueInsets>
-               <Insets />
-            </opaqueInsets>
-         </AnchorPane>
+            <MFXPasswordField layoutX="33.0" layoutY="496.0" maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="303.0" prefHeight="40.0" prefWidth="339.0" style="-fx-background-color: #E1F8F6;" BorderPane.alignment="CENTER">
+                <font>
+                    <Font name="Times New Roman" size="20.0" />
+                </font>
+            </MFXPasswordField>
+            <MFXPasswordField layoutX="33.0" layoutY="391.0" maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="303.0" prefHeight="40.0" prefWidth="339.0" style="-fx-background-color: #E1F8F6;" BorderPane.alignment="CENTER">
+                <font>
+                    <Font name="Times New Roman" size="20.0" />
+                </font>
+            </MFXPasswordField>
+
+
         </children>
     </AnchorPane>
 
