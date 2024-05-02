@@ -3,106 +3,105 @@ go
 use  QLPK
 go
 CREATE TABLE DSKB (
-  DSKB_ID varchar(50) PRIMARY KEY,
-  STT int,
-  NgayKham datetime NOT NULL,
-  HoTen nvarchar(50) NOT NULL,
-  CCCD varchar(20) NOT NULL,
-  GioiTinh int NOT NULL,
-  NamSinh int NOT NULL,
-  DiaChi varchar(255),
-  CoPKB INT
+                      DSKB_ID varchar(50) PRIMARY KEY,
+                      STT int,
+                      NgayKham datetime NOT NULL,
+                      HoTen nvarchar(50) NOT NULL,
+                      CCCD varchar(20) NOT NULL,
+                      GioiTinh int NOT NULL,
+                      NamSinh int NOT NULL,
+                      DiaChi varchar(255),
+                      CoPKB INT
 );
 
 CREATE TABLE TaiKhoan (
-  username varchar(50) PRIMARY KEY,
-  mk varchar(255) NOT NULL,
-  ChucVu nvarchar(50) NOT NULL,
-  HoTen nvarchar(50) NOT NULL,
-  Email varchar(100)
+                          username varchar(50) PRIMARY KEY,
+                          mk varchar(255) NOT NULL,
+                          ChucVu nvarchar(50) NOT NULL,
+                          HoTen nvarchar(50) NOT NULL,
+                          Email varchar(100)
 );
 CREATE TABLE CachDung (
-  CachDung_ID varchar(50) PRIMARY KEY,
-  TenCachDung nvarchar(50) NOT NULL
+                          CachDung_ID varchar(50) PRIMARY KEY,
+                          TenCachDung nvarchar(50) NOT NULL
 );
 CREATE TABLE DonViThuoc (
-  DVTHuoc_ID varchar(50) PRIMARY KEY,
-   TenDVTHuoc nvarchar(50)
-  );
-  CREATE TABLE LoaiBenh (
-  LoaiBenh_ID varchar(50) PRIMARY KEY,
-   TenBenh nvarchar(50)
-  );
+                            DVTHuoc_ID varchar(50) PRIMARY KEY,
+                            TenDVTHuoc nvarchar(50)
+);
+CREATE TABLE LoaiBenh (
+                          LoaiBenh_ID varchar(50) PRIMARY KEY,
+                          TenBenh nvarchar(50)
+);
 CREATE TABLE PKB (
-  PKB_ID varchar(50) PRIMARY KEY,
-  LoaiBenh_ID varchar(50) NOT NULL,
-  TrieuChung nvarchar(255),
-  NguoiKham varchar(50) NOT NULL,
-  DSKB_ID varchar(50) NOT NULL,
-  STT int,
+                     PKB_ID varchar(50) PRIMARY KEY,
+                     LoaiBenh_ID varchar(50) NOT NULL,
+                     TrieuChung nvarchar(255),
+                     NguoiKham varchar(50) NOT NULL,
+                     DSKB_ID varchar(50) NOT NULL,
+                     STT int,
 
-  FOREIGN KEY (LoaiBenh_ID) REFERENCES LoaiBenh(LoaiBenh_ID),
-  FOREIGN KEY (NguoiKham) REFERENCES TaiKhoan(username),
-  FOREIGN KEY (DSKB_ID) REFERENCES DSKB(DSKB_ID)
+                     FOREIGN KEY (LoaiBenh_ID) REFERENCES LoaiBenh(LoaiBenh_ID),
+                     FOREIGN KEY (NguoiKham) REFERENCES TaiKhoan(username),
+                     FOREIGN KEY (DSKB_ID) REFERENCES DSKB(DSKB_ID)
 );
 CREATE TABLE Thuoc (
-  Thuoc_ID varchar(50) PRIMARY KEY,
-  TenThuoc varchar(50) NOT NULL,
-  GiaMua money NOT NULL,
-  GiaBan money NOT NULL,
-  TonKho int NOT NULL,
-  CachDung_ID varchar(50),
-  DonViThuoc_ID varchar(50),
+                       Thuoc_ID varchar(50) PRIMARY KEY,
+                       TenThuoc varchar(50) NOT NULL,
+                       GiaMua money NOT NULL,
+                       GiaBan money NOT NULL,
+                       TonKho int NOT NULL,
+                       CachDung_ID varchar(50),
+                       DonViThuoc_ID varchar(50),
 
-  FOREIGN KEY (CachDung_ID) REFERENCES CachDung(CachDung_ID),
-  FOREIGN KEY (DonViThuoc_ID) REFERENCES DonViThuoc(DVTHuoc_ID)
+                       FOREIGN KEY (CachDung_ID) REFERENCES CachDung(CachDung_ID),
+                       FOREIGN KEY (DonViThuoc_ID) REFERENCES DonViThuoc(DVTHuoc_ID)
 );
 CREATE TABLE DSTHuoc_PKB (
-  PKB_ID varchar(50) NOT NULL,
-  Thuoc_ID varchar(50) NOT NULL,
-  SoLuong int NOT NULL,
+                             PKB_ID varchar(50) NOT NULL,
+                             Thuoc_ID varchar(50) NOT NULL,
+                             SoLuong int NOT NULL,
 
-  PRIMARY KEY (PKB_ID, Thuoc_ID),
+                             PRIMARY KEY (PKB_ID, Thuoc_ID),
 
-  FOREIGN KEY (PKB_ID) REFERENCES PKB(PKB_ID),
-  FOREIGN KEY (Thuoc_ID) REFERENCES Thuoc(Thuoc_ID)
+                             FOREIGN KEY (PKB_ID) REFERENCES PKB(PKB_ID),
+                             FOREIGN KEY (Thuoc_ID) REFERENCES Thuoc(Thuoc_ID)
 );
 CREATE TABLE HD (
-  HD_ID varchar(50) PRIMARY KEY,
-  PKB_ID varchar(50) NOT NULL,
-  TienKham money NOT NULL,
-  TienThuoc money NOT NULL,
+                    HD_ID varchar(50) PRIMARY KEY,
+                    PKB_ID varchar(50) NOT NULL,
+                    TienKham money NOT NULL,
+                    TienThuoc money NOT NULL,
 
-  FOREIGN KEY (PKB_ID) REFERENCES PKB(PKB_ID)
+                    FOREIGN KEY (PKB_ID) REFERENCES PKB(PKB_ID)
 );
 CREATE TABLE DoanhThu (
-  Ngay int NOT NULL,
-  Thang int NOT NULL,
-  SoBenhNhan int NOT NULL,
-  DoanhThu money NOT NULL,
+                          NgayDT datetime not null,
+                          SoBenhNhan int NOT NULL,
+                          DoanhThu money NOT NULL,
 
-  PRIMARY KEY (Ngay, Thang)
+                          PRIMARY KEY (NgayDT)
 );
 
 CREATE TABLE BCT (
-  Thang int NOT NULL,
-  Nam int NOT NULL,
-  Thuoc_ID varchar(50) NOT NULL,
-  SoLuong int NOT NULL,
-  SoLanDung int NOT NULL,
+                     Thang int NOT NULL,
+                     Nam int NOT NULL,
+                     Thuoc_ID varchar(50) NOT NULL,
+                     SoLuong int NOT NULL,
+                     SoLanDung int NOT NULL,
 
-  PRIMARY KEY (Thang,Nam,Thuoc_ID),
+                     PRIMARY KEY (Thang,Nam,Thuoc_ID),
 
-  FOREIGN KEY (Thuoc_ID) REFERENCES Thuoc(Thuoc_ID)
+                     FOREIGN KEY (Thuoc_ID) REFERENCES Thuoc(Thuoc_ID)
 );
 
 CREATE TABLE ThongTinPK (
-IdTT varchar(10) NOT NULL,
-TenTT varchar(50) not null,
-Gtri int not null,
-  PRIMARY KEY (IdTT)
-  );
-  GO
+                            IdTT varchar(10) NOT NULL,
+                            TenTT varchar(50) not null,
+                            Gtri int not null,
+                            PRIMARY KEY (IdTT)
+);
+GO
 
 INSERT INTO TaiKhoan (username,mk,ChucVu,HoTen,Email)
 VALUES ('hung123','hung123','Quản lý','Nguyễn Duy Hưng','hung07092004@gmail.com'),
@@ -111,7 +110,7 @@ VALUES ('hung123','hung123','Quản lý','Nguyễn Duy Hưng','hung07092004@gmai
  GO
 
  INSERT INTO DSKB (DSKB_ID, STT,NgayKham,HoTen,CCCD,GioiTinh,NamSinh,DiaChi,CoPKB)
- VALUES 
+ VALUES
  ('KB001',1,'2024-04-20','Phạm Khải Hưng','084204011380',1,2004,'Hồ Chí Minh',1),
 ('KB002',1,'2024-04-20','Trần Hồng Quyền','084204011381',1,2004,'Đồng Nai',0),
 ('KB003',1,'2024-04-20','Phạm Hoàng Duy','084204011382',1,2003,'Hồ Chí Minh',1),
@@ -185,7 +184,7 @@ VALUES ('T001','Accupril', 20000,23000,100,'CD01','DV02'),
 
  GO
  INSERT INTO PKB(PKB_ID,LoaiBenh_ID,TrieuChung,NguoiKham,DSKB_ID,STT)
- VALUES 
+ VALUES
  ('PKB001','LB01','Đau thắt ngực','quyen123','KB001',1),
  ('PKB002','LB03','Đau tức vùng ngực','duy123','KB003',2),
  ('PKB003','LB04','Tim đập nhanh, đánh trống ngực','quyen123','KB006',3),
@@ -195,7 +194,7 @@ VALUES ('T001','Accupril', 20000,23000,100,'CD01','DV02'),
  ('PKB007','LB01','Đau thắt ngực','duy123','KB014',7),
  ('PKB008','LB02','Khó thở cấp tính','quyen123','KB017',8)
 
- GO 
+ GO
  INSERT INTO DSTHuoc_PKB (PKB_ID,Thuoc_ID,SoLuong)
  VALUES ('PKB001','T001', 3),
  ('PKB001','T003', 4),
@@ -233,42 +232,42 @@ VALUES ('T001','Accupril', 20000,23000,100,'CD01','DV02'),
  ('HD007','PKB007',30000,290000),
  ('HD008','PKB008',30000,350000)
 
- GO 
- INSERT INTO DoanhThu (Ngay,Thang,SoBenhNhan,DoanhThu)
- VALUES (1,3,50,15000000),
- (2,3,50,15000000),
- (3,3,50,16000000),
- (4,3,50,15000000),
- (5,3,50,19000000),
- (6,3,50,25000000),
- (8,3,50,20000000),
- (9,3,50,15000000),
- (10,3,50,14000000),
- (11,3,50,16000000),
- (12,3,50,18000000),
- (13,3,50,15000000),
- (14,3,50,17000000),
- (15,3,50,19000000),
- (17,3,50,15000000),
- (18,3,50,16000000),
- (19,3,50,14000000),
- (20,3,50,15000000),
- (21,3,50,14000000),
- (22,3,50,13000000),
- (24,3,50,15000000),
- (25,3,50,18000000),
- (26,3,50,10000000),
- (27,3,50,16000000),
- (28,3,50,15000000),
- (29,3,50,16000000),
- (30,3,50,18000000),
- (1,4,50,10000000),
- (2,4,50,15000000),
- (3,4,50,16000000),
- (4,4,50,18000000),
- (5,4,50,19000000),
- (6,4,50,25000000),
- (7,4,50,19000000)
+ GO
+ INSERT INTO DoanhThu (NgayDT,SoBenhNhan,DoanhThu)
+ VALUES ('2024-3-1',50,15000000),
+ ('2024-3-2',50,15000000),
+ ('2024-3-3',50,16000000),
+ ('2024-3-4',50,15000000),
+ ('2024-3-5',50,19000000),
+ ('2024-3-6',50,25000000),
+ ('2024-3-8',50,20000000),
+ ('2024-3-9',50,15000000),
+ ('2024-3-10',50,14000000),
+ ('2024-3-11',50,16000000),
+ ('2024-3-12',50,18000000),
+ ('2024-3-13',50,15000000),
+ ('2024-3-15',50,17000000),
+ ('2024-3-16',50,19000000),
+ ('2024-3-17',50,15000000),
+ ('2024-3-18',50,16000000),
+ ('2024-3-19',50,14000000),
+ ('2024-3-20',50,15000000),
+ ('2024-3-22',50,14000000),
+ ('2024-3-23',50,13000000),
+ ('2024-3-24',50,15000000),
+ ('2024-3-25',50,18000000),
+ ('2024-3-26',50,10000000),
+ ('2024-3-27',50,16000000),
+ ('2024-3-29',50,15000000),
+ ('2024-3-30',50,16000000),
+ ('2024-3-31',50,18000000),
+ ('2024-4-1',50,10000000),
+ ('2024-4-2',50,15000000),
+ ('2024-4-3',50,16000000),
+ ('2024-4-5',50,18000000),
+ ('2024-4-6',50,19000000),
+ ('2024-4-7',50,25000000),
+ ('2024-4-8',50,19000000)
 
  GO
  INSERT INTO BCT (Thang,Nam,Thuoc_ID,SoLuong,SoLanDung)
