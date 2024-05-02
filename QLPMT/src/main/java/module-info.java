@@ -11,6 +11,7 @@ module com.example.qlpmt {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
     requires MaterialFX;
+    requires java.sql;
 
     opens com.example.qlpmt to javafx.fxml;
     exports com.example.qlpmt;
