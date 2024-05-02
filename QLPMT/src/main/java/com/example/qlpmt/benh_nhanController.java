@@ -1,9 +1,7 @@
 package com.example.qlpmt;
 
 import Model.PhieuKhamBenh;
-import io.github.palexdev.materialfx.controls.MFXPaginatedTableView;
-import io.github.palexdev.materialfx.controls.MFXTableColumn;
-import io.github.palexdev.materialfx.controls.MFXTextField;
+import io.github.palexdev.materialfx.controls.*;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import io.github.palexdev.materialfx.filter.StringFilter;
 import io.github.palexdev.materialfx.utils.others.observables.When;
@@ -16,6 +14,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
@@ -46,6 +46,7 @@ public class benh_nhanController implements Initializable{
     public void initialize(URL location, ResourceBundle resources){
         //Khoi tao paginated tableview
         setupPaginated();
+        setupContextMenu();
 
         //chia deu kich thuoc cac cot de vua voi chieu rong cua tableview
         double tableViewWidth = pkb.getPrefWidth();
@@ -125,10 +126,10 @@ public class benh_nhanController implements Initializable{
 
         //Tao cac cot cua tableview
         MFXTableColumn<PhieuKhamBenh> cccd = new MFXTableColumn<>("CCCD", false, Comparator.comparing(PhieuKhamBenh::getCccd));
-        MFXTableColumn<PhieuKhamBenh> hoten = new MFXTableColumn<>("Ho Ten", false, Comparator.comparing(PhieuKhamBenh::getHoTen));
-        MFXTableColumn<PhieuKhamBenh> loaibenh = new MFXTableColumn<>("Loai benh", false, Comparator.comparing(PhieuKhamBenh::getLoaiBenh));
-        MFXTableColumn<PhieuKhamBenh> trieuchung = new MFXTableColumn<>("Trieu chung", false, Comparator.comparing(PhieuKhamBenh::getTrieuChung));
-        MFXTableColumn<PhieuKhamBenh> ngaykham = new MFXTableColumn<>("Ngay kham", false, Comparator.comparing(PhieuKhamBenh::getNgayKham_string));
+        MFXTableColumn<PhieuKhamBenh> hoten = new MFXTableColumn<>("Họ tên", false, Comparator.comparing(PhieuKhamBenh::getHoTen));
+        MFXTableColumn<PhieuKhamBenh> loaibenh = new MFXTableColumn<>("Loại bệnh", false, Comparator.comparing(PhieuKhamBenh::getLoaiBenh));
+        MFXTableColumn<PhieuKhamBenh> trieuchung = new MFXTableColumn<>("Triệu chứng", false, Comparator.comparing(PhieuKhamBenh::getTrieuChung));
+        MFXTableColumn<PhieuKhamBenh> ngaykham = new MFXTableColumn<>("Ngày khám", false, Comparator.comparing(PhieuKhamBenh::getNgayKham));
 
         //Tao cac dong cho cot cua tableview
         cccd.setRowCellFactory(phieukhambenh -> new MFXTableRowCell<>(PhieuKhamBenh::getCccd));
@@ -152,5 +153,28 @@ public class benh_nhanController implements Initializable{
         //Them du lieu vao tableview
         setData();
         pkb.setItems(pkb_list);
+    }
+
+    public void setupContextMenu(){
+        MFXContextMenu contextMenu = new MFXContextMenu(pkb);
+        MFXContextMenuItem edit = new MFXContextMenuItem("Chỉnh sửa");
+        MFXContextMenuItem delete = new MFXContextMenuItem("Xóa");
+        contextMenu.getItems().addAll(edit, delete);
+        edit.setStyle("-fx-text-fill: #2264D1; -fx-font-size: 16px; -fx-font-family: 'Times New Roman'");
+        delete.setStyle("-fx-text-fill: red; -fx-font-size: 16px; -fx-font-family: 'Times New Roman'");
+
+        pkb.setTableRowFactory(phieukhambenh -> {
+            MFXTableRow<PhieuKhamBenh> row = new MFXTableRow<>(pkb, new PhieuKhamBenh("","","","", LocalDate.now()));
+            row.addEventHandler(ContextMenuEvent.CONTEXT_MENU_REQUESTED, event -> {
+                contextMenu.show(row, event.getScreenX(), event.getScreenY());
+                event.consume();
+            });
+            row.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                if (event.getButton() == MouseButton.PRIMARY) {
+                    contextMenu.hide();
+                }
+            });
+            return row;
+        });
     }
 }
