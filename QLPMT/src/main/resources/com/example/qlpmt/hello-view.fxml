@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="645.0" prefWidth="975.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.HelloController">
+<AnchorPane prefHeight="645.0" prefWidth="975.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.HelloController">
    <children>
       <AnchorPane prefHeight="40.0" prefWidth="975.0" style="-fx-background-color: #D4F2FF;">
          <children>
@@ -116,6 +112,24 @@
                      </VBox.margin>
                      <left>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Kho Thuốc" BorderPane.alignment="CENTER">
+                           <font>
+                              <Font name="Times New Roman" size="16.0" />
+                           </font>
+                           <BorderPane.margin>
+                              <Insets left="30.0" right="10.0" />
+                           </BorderPane.margin>
+                        </Text>
+                     </left>
+                  </BorderPane>
+                  <BorderPane fx:id="txt7" maxHeight="50.0" minHeight="50.0" prefHeight="509.0" prefWidth="194.0">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <VBox.margin>
+                        <Insets right="5.0" top="5.0" />
+                     </VBox.margin>
+                     <left>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nhân viên" BorderPane.alignment="CENTER">
                            <font>
                               <Font name="Times New Roman" size="16.0" />
                            </font>
@@ -237,6 +251,21 @@
                            </BorderPane.margin>
                            <image>
                               <Image url="@images/kho_thuoc.png" />
+                           </image>
+                        </ImageView>
+                     </center>
+                  </BorderPane>
+                  <BorderPane fx:id="bd7" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" prefHeight="50.0" prefWidth="61.0" styleClass="square-border-pane">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" />
+                     </VBox.margin>
+                     <center>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                           <BorderPane.margin>
+                              <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+                           </BorderPane.margin>
+                           <image>
+                              <Image url="@images/nhan_vien.png" />
                            </image>
                         </ImageView>
                      </center>
