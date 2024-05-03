@@ -134,8 +134,16 @@ public class EditPhieuKBController implements Initializable {
         delete.setStyle("-fx-text-fill: red; -fx-font-size: 16px; -fx-font-family: 'Times New Roman'");
 
         // Them su kien cho nut chinh sua
-        edit.setOnAction(event -> {
-
+        edit.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                // Handle the click event here
+                try {
+                    SuaThuoc(event);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         });
 
         // Them menu context o moi dong cho paginated tableview
