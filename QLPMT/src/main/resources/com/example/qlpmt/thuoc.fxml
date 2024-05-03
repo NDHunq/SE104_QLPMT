@@ -45,12 +45,12 @@
 
     <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="137.0" style="-fx-border-color: black; -fx-border-width: 2;                   -fx-background-color: White;                    -fx-border-radius: 5px; -fx-background-radius: 5px">
         <children>
-            <Text fill="#2264D1" text="07/03/2024" wrappingWidth="100">
+            <Text fx:id="hienlich" fill="#2264D1" text="07/03/2024" wrappingWidth="100">
                 <font>
                     <Font name="Times New Roman Bold" size="18.0" />
                 </font>
             </Text>
-            <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="lich" fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                 <image>
                     <Image url="@images/schedule.png" />
                 </image>

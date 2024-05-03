@@ -6,9 +6,91 @@
     -fx-shape: "M0,0h100a10,10 0 0 1 10,10v100a10,10 0 0 1 -10,10h-100a10,10 0 0 1 -10,-10v-100a10,10 0 0 1 10,-10z";
     -fx-background-color:  #FFFFFF;
 }
+.mainBackground {
+    -fx-background-color: #D4F2FF;
+    -fx-background-radius: 20;
+}
+.header {
+    -fx-text-fill: #2264D1;
+    -fx-font-family: "Times New Roman";
+}
+.fontStd {
+    -fx-font-size: 17;
+    -fx-font-family: "Times New Roman";
+}
+.TextBorder {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #000000;
+    -fx-border-radius: 5;
+}
+.buttonPlus {
+    -fx-background-color: #2264D1;
+    -fx-border-color: #000000;
+    -fx-border-radius: 5;
+}
 
 /*Custom lai mau cho paginated table view*/
 .mfx-pagination .mfx-page:selected {
     -fx-background-color: #2264D1;
     -fx-text-fill: white;
+}
+
+/*Doi mau vien cho mfx textfield khi duoc focus (cái nó báo lỗi là bị lỏ á, đừng fix j hết nha :Đ)*/
+.mfx-text-field:focus-within {
+    -fx-border-color: #2264D1;
+}
+
+/*Custom lai mau cho combobox*/
+.mfx-combo-box {
+    -fx-border-color: #ebebeb;
+    -fx-font-family: "Times New Roman";
+}
+
+.mfx-combo-box .caret .mfx-ripple-generator {
+    -mfx-ripple-color: #D4F2FF;
+}
+
+.mfx-combo-box:focus-within .caret .mfx-font-icon {
+    -mfx-color: #2264D1;
+}
+
+.mfx-combo-box-cell:hover {
+    -fx-background-color: #D4F2FF;
+}
+
+.mfx-combo-box-cell:selected {
+    -fx-background-color: #2264D1;
+    -fx-text-fill: white;
+}
+
+.mfx-combo-box-cell .data-label {
+    -fx-font-family: "Times New Roman";
+}
+
+.mfx-combo-box .floating-text{
+    -fx-text-fill: #2264D1;
+    -fx-font-weight: bold;
+    -fx-font-family: "Times New Roman";
+    -fx-font-size: 16px;
+}
+
+/*Custom line chart*/
+.chart-title {
+    -fx-font-family: "Times New Roman";
+    -fx-text-fill: #000000;
+    -fx-font-weight: bold;
+}
+
+/*Custom cho table view header*/
+.mfx-table-column {
+    -fx-font-size: 16px;
+    -fx-font-family: "Times New Roman";
+    -fx-text-fill: #000000;
+    -fx-font-weight: bold;
+}
+
+/*Custom font cho paginated table view*/
+.mfx-paginated-table-view {
+    -fx-font-size: 14px;
+    -fx-font-family: "Times New Roman";
 }
