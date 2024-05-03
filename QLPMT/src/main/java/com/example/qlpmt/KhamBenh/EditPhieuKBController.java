@@ -1,9 +1,7 @@
 package com.example.qlpmt.KhamBenh;
 
-import io.github.palexdev.materialfx.controls.MFXButton;
-import io.github.palexdev.materialfx.controls.MFXTableColumn;
-import io.github.palexdev.materialfx.controls.MFXTableView;
-import io.github.palexdev.materialfx.controls.MFXTextField;
+import Model.PhieuKhamBenh;
+import io.github.palexdev.materialfx.controls.*;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import io.github.palexdev.materialfx.filter.StringFilter;
 import io.github.palexdev.materialfx.utils.others.observables.When;
@@ -17,6 +15,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -24,6 +24,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -65,6 +66,7 @@ public class EditPhieuKBController implements Initializable {
             stage.close();
         });
         setupPaginated();
+        setupContextMenu();
 
         table_thuoc.autosizeColumnsOnInitialization();
         table_thuoc.getTableColumns().get(4).setPrefWidth(200);
@@ -119,5 +121,34 @@ public class EditPhieuKBController implements Initializable {
                 new ThuocPKB(13, "Thuốc N", "Viên", 130, "Uống 13 lần/ngày"),
                 new ThuocPKB(14, "Thuốc O", "Viên", 140, "Uống 14 lần/ngày")
         );
+    }
+
+    public void setupContextMenu(){
+        MFXContextMenu contextMenu = new MFXContextMenu(table_thuoc);
+        MFXContextMenuItem edit = new MFXContextMenuItem("Chỉnh sửa");
+        MFXContextMenuItem delete = new MFXContextMenuItem("Xóa");
+        contextMenu.getItems().addAll(edit, delete);
+        edit.setStyle("-fx-text-fill: #2264D1; -fx-font-size: 16px; -fx-font-family: 'Times New Roman'");
+        delete.setStyle("-fx-text-fill: red; -fx-font-size: 16px; -fx-font-family: 'Times New Roman'");
+
+        // Them su kien cho nut chinh sua
+        edit.setOnAction(event -> {
+
+        });
+
+        // Them menu context o moi dong cho paginated tableview
+        table_thuoc.setTableRowFactory(thuocpkb -> {
+            MFXTableRow<ThuocPKB> row = new MFXTableRow<>(table_thuoc, new ThuocPKB(-1,"","",-1, ""));
+            row.addEventHandler(ContextMenuEvent.CONTEXT_MENU_REQUESTED, event -> {
+                contextMenu.show(row, event.getScreenX(), event.getScreenY());
+                event.consume();
+            });
+            row.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                if (event.getButton() == MouseButton.PRIMARY) {
+                    contextMenu.hide();
+                }
+            });
+            return row;
+        });
     }
 }
