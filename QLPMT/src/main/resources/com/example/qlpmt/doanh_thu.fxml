@@ -21,7 +21,7 @@
         </font>
     </Text>
 
-    <MFXPaginatedTableView id="doanhThu_table" fx:id="doanhThu" layoutX="23.0" layoutY="160.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="434.0" prefWidth="883.0" rowsPerPage="10">
+    <MFXPaginatedTableView id="doanhThu_table" fx:id="doanhThu" layoutX="23.0" layoutY="175.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="419.0" prefWidth="883.0" rowsPerPage="10">
 
     </MFXPaginatedTableView>
 
@@ -55,7 +55,7 @@
    <MFXComboBox fx:id="year_combobox" floatingText="Năm" layoutX="180.0" layoutY="119.0" prefHeight="32.0" prefWidth="130.0" />
 
 
-   <Pane fx:id="line_chart_pane" layoutX="23.0" layoutY="160.0" prefHeight="434.0" prefWidth="883.0" style="-fx-background-color: #FFFFFF; -fx-border-radius: 10px; -fx-background-radius: 10px">
+   <Pane fx:id="line_chart_pane" layoutX="23.0" layoutY="175.0" prefHeight="419.0" prefWidth="883.0" style="-fx-background-color: #FFFFFF; -fx-border-radius: 10px; -fx-background-radius: 10px">
        <LineChart fx:id="doanhThu_line_chart" layoutY="15.0" prefHeight="419.0" prefWidth="883.0">
            <xAxis>
                <CategoryAxis side="BOTTOM" />

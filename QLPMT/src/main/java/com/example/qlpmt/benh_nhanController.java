@@ -9,9 +9,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
@@ -20,13 +22,17 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.awt.*;
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class benh_nhanController implements Initializable{
@@ -41,6 +47,7 @@ public class benh_nhanController implements Initializable{
     private MFXPaginatedTableView<PhieuKhamBenh> pkb;
 
     private ObservableList<PhieuKhamBenh> pkb_list;
+    private double x,y=0;
 
     //Ham khoi tao khi khoi dong
     public void initialize(URL location, ResourceBundle resources){
@@ -155,6 +162,7 @@ public class benh_nhanController implements Initializable{
         pkb.setItems(pkb_list);
     }
 
+    //Ham khoi tao context menu
     public void setupContextMenu(){
         MFXContextMenu contextMenu = new MFXContextMenu(pkb);
         MFXContextMenuItem edit = new MFXContextMenuItem("Chỉnh sửa");
@@ -163,6 +171,12 @@ public class benh_nhanController implements Initializable{
         edit.setStyle("-fx-text-fill: #2264D1; -fx-font-size: 16px; -fx-font-family: 'Times New Roman'");
         delete.setStyle("-fx-text-fill: red; -fx-font-size: 16px; -fx-font-family: 'Times New Roman'");
 
+        // Them su kien cho nut chinh sua
+        edit.setOnAction(event -> {
+            EditPKB();
+        });
+
+        // Them menu context o moi dong cho paginated tableview
         pkb.setTableRowFactory(phieukhambenh -> {
             MFXTableRow<PhieuKhamBenh> row = new MFXTableRow<>(pkb, new PhieuKhamBenh("","","","", LocalDate.now()));
             row.addEventHandler(ContextMenuEvent.CONTEXT_MENU_REQUESTED, event -> {
@@ -176,5 +190,29 @@ public class benh_nhanController implements Initializable{
             });
             return row;
         });
+    }
+
+    public void EditPKB(){
+        FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("edit_phieukb.fxml"));
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.UNDECORATED);
+        root.setOnMousePressed(event -> {
+            x = event.getSceneX();
+            y = event.getSceneY();
+        });
+        root.setOnMouseDragged(event -> {
+            stage.setX(event.getScreenX() - x);
+            stage.setY(event.getScreenY() - y);
+        });
+        Scene scene = new Scene(root, 684, 539);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
+        stage.setScene(scene);
+        stage.show();
     }
 }
