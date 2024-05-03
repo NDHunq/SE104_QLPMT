@@ -12,11 +12,13 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import io.github.palexdev.materialfx.controls.MFXPaginatedTableView;
@@ -75,29 +77,6 @@ public class kham_benhController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-    public void AddPKB(){
-        FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("add_phieukb.fxml"));
-        Parent root = null;
-        try {
-            root = loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Stage stage = new Stage();
-        stage.initStyle(StageStyle.UNDECORATED);
-        root.setOnMousePressed(event -> {
-            x = event.getSceneX();
-            y = event.getSceneY();
-        });
-        root.setOnMouseDragged(event -> {
-            stage.setX(event.getScreenX() - x);
-            stage.setY(event.getScreenY() - y);
-        });
-        Scene scene = new Scene(root, 710, 500);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
-        stage.setScene(scene);
-        stage.show();
-    }
     public void XemPKB(){
         FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("view_phieukb.fxml"));
         Parent root = null;
@@ -116,11 +95,35 @@ public class kham_benhController implements Initializable {
             stage.setX(event.getScreenX() - x);
             stage.setY(event.getScreenY() - y);
         });
-        Scene scene = new Scene(root, 710, 500);
+        Scene scene = new Scene(root, 680, 500);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
+    public void AddPKB(){
+        FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("add_phieukb.fxml"));
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.UNDECORATED);
+        root.setOnMousePressed(event -> {
+            x = event.getSceneX();
+            y = event.getSceneY();
+        });
+        root.setOnMouseDragged(event -> {
+            stage.setX(event.getScreenX() - x);
+            stage.setY(event.getScreenY() - y);
+        });
+        Scene scene = new Scene(root, 680, 500);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
+        stage.setScene(scene);
+        stage.show();
+    }
+
     private void setupPaginated() {
 
         //Tao cac cot cua tableview
@@ -141,6 +144,9 @@ public class kham_benhController implements Initializable {
         diachi.setRowCellFactory(khambenh -> new MFXTableRowCell<>(KhamBenh::getDiaChi));
         pkb.setRowCellFactory(khambenh -> {
             MFXTableRowCell<KhamBenh, String> cell = new MFXTableRowCell<>(KhamBenh::getImgPkb);
+            cell.setTextFill(Color.BLUE);
+            cell.setCursor(Cursor.HAND);
+            cell.setUnderline(true);
             cell.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
@@ -148,13 +154,16 @@ public class kham_benhController implements Initializable {
                         if(cell.getText()=="Tạo"){
                             AddPKB();
                         }
-                        else{
+                        if(cell.getText()=="Xem"){
                             XemPKB();
-                        }}
+                        }
+                    }
                 }
             });
             return cell;
         });
+
+
         //Them cac cot vao tableview
         table_bn.getTableColumns().addAll(stt, hoten, cccd, gioitinh, namsinh, diachi, pkb);
 

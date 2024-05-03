@@ -3,6 +3,7 @@ package com.example.qlpmt.KhamBenh;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTableColumn;
 import io.github.palexdev.materialfx.controls.MFXTableView;
+import io.github.palexdev.materialfx.controls.MFXTextField;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import io.github.palexdev.materialfx.filter.StringFilter;
 import io.github.palexdev.materialfx.utils.others.observables.When;
@@ -14,8 +15,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -26,9 +29,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class AddPhieuKBController implements Initializable {
+public class EditPhieuKBController implements Initializable {
     @FXML
-    private VBox pkb_layout;
+    private VBox vbox_layout;
 
     @FXML
     private MFXButton HuyBtn;
@@ -63,19 +66,8 @@ public class AddPhieuKBController implements Initializable {
         });
         setupPaginated();
 
-        //chia deu kich thuoc cac cot de vua voi chieu rong cua tableview
-//        double tableViewWidth = table_thuoc.getPrefWidth();
-//        int numberOfColumns = table_thuoc.getTableColumns().size();
-//        for (MFXTableColumn column : table_thuoc.getTableColumns()) {
-//            column.setPrefWidth(tableViewWidth / numberOfColumns);
-//        }
-
-       table_thuoc.autosizeColumnsOnInitialization();
+        table_thuoc.autosizeColumnsOnInitialization();
         table_thuoc.getTableColumns().get(4).setPrefWidth(200);
-        //Tu dong dieu chinh kich thuoc cac cot de phu hop voi noi dung
-       //When.onChanged(table_thuoc.currentPageProperty()).then((oldValue, newValue) -> table_thuoc.autosizeColumns()).listen();
-
-
     }
     private void setupPaginated() {
 
@@ -112,21 +104,20 @@ public class AddPhieuKBController implements Initializable {
     }
     public void setData(){
         list = FXCollections.observableArrayList(
-               new ThuocPKB(1, "Thuốc A", "Viên", 10, "Uống 3 lần/ngày"),
-                    new ThuocPKB(2, "Thuốc B", "Viên", 20, "Uống 2 lần/ngày"),
-                    new ThuocPKB(3, "Thuốc C", "Viên", 30, "Uống 1 lần/ngày"),
-                    new ThuocPKB(4, "Thuốc D", "Viên", 40, "Uống 4 lần/ngày"),
-                    new ThuocPKB(5, "Thuốc E", "Viên", 50, "Uống 5 lần/ngày"),
-                    new ThuocPKB(6, "Thuốc F", "Viên", 60, "Uống 6 lần/ngày"),
-                    new ThuocPKB(7, "Thuốc G", "Viên", 70, "Uống 7 lần/ngày"),
-                    new ThuocPKB(8, "Thuốc H", "Viên", 80, "Uống 8 lần/ngày"),
-                    new ThuocPKB(9, "Thuốc I", "Viên", 90, "Uống 9 lần/ngày"),
-                    new ThuocPKB(10, "Thuốc K", "Viên", 100, "Uống 10 lần/ngày"),
-                    new ThuocPKB(11, "Thuốc L", "Viên", 110, "Uống 11 lần/ngày"),
-                    new ThuocPKB(12, "Thuốc M", "Viên", 120, "Uống 12 lần/ngày"),
-                    new ThuocPKB(13, "Thuốc N", "Viên", 130, "Uống 13 lần/ngày"),
-                    new ThuocPKB(14, "Thuốc O", "Viên", 140, "Uống 14 lần/ngày")
+                new ThuocPKB(1, "Thuốc A", "Viên", 10, "Uống 3 lần/ngày"),
+                new ThuocPKB(2, "Thuốc B", "Viên", 20, "Uống 2 lần/ngày"),
+                new ThuocPKB(3, "Thuốc C", "Viên", 30, "Uống 1 lần/ngày"),
+                new ThuocPKB(4, "Thuốc D", "Viên", 40, "Uống 4 lần/ngày"),
+                new ThuocPKB(5, "Thuốc E", "Viên", 50, "Uống 5 lần/ngày"),
+                new ThuocPKB(6, "Thuốc F", "Viên", 60, "Uống 6 lần/ngày"),
+                new ThuocPKB(7, "Thuốc G", "Viên", 70, "Uống 7 lần/ngày"),
+                new ThuocPKB(8, "Thuốc H", "Viên", 80, "Uống 8 lần/ngày"),
+                new ThuocPKB(9, "Thuốc I", "Viên", 90, "Uống 9 lần/ngày"),
+                new ThuocPKB(10, "Thuốc K", "Viên", 100, "Uống 10 lần/ngày"),
+                new ThuocPKB(11, "Thuốc L", "Viên", 110, "Uống 11 lần/ngày"),
+                new ThuocPKB(12, "Thuốc M", "Viên", 120, "Uống 12 lần/ngày"),
+                new ThuocPKB(13, "Thuốc N", "Viên", 130, "Uống 13 lần/ngày"),
+                new ThuocPKB(14, "Thuốc O", "Viên", 140, "Uống 14 lần/ngày")
         );
     }
-
 }

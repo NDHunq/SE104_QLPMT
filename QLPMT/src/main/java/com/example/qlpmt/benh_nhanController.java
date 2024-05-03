@@ -1,9 +1,7 @@
 package com.example.qlpmt;
 
 import Model.PhieuKhamBenh;
-import io.github.palexdev.materialfx.controls.MFXPaginatedTableView;
-import io.github.palexdev.materialfx.controls.MFXTableColumn;
-import io.github.palexdev.materialfx.controls.MFXTextField;
+import io.github.palexdev.materialfx.controls.*;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import io.github.palexdev.materialfx.filter.StringFilter;
 import io.github.palexdev.materialfx.utils.others.observables.When;
@@ -11,22 +9,30 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.awt.*;
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class benh_nhanController implements Initializable{
@@ -41,11 +47,13 @@ public class benh_nhanController implements Initializable{
     private MFXPaginatedTableView<PhieuKhamBenh> pkb;
 
     private ObservableList<PhieuKhamBenh> pkb_list;
+    private double x,y=0;
 
     //Ham khoi tao khi khoi dong
     public void initialize(URL location, ResourceBundle resources){
         //Khoi tao paginated tableview
         setupPaginated();
+        setupContextMenu();
 
         //chia deu kich thuoc cac cot de vua voi chieu rong cua tableview
         double tableViewWidth = pkb.getPrefWidth();
@@ -125,10 +133,10 @@ public class benh_nhanController implements Initializable{
 
         //Tao cac cot cua tableview
         MFXTableColumn<PhieuKhamBenh> cccd = new MFXTableColumn<>("CCCD", false, Comparator.comparing(PhieuKhamBenh::getCccd));
-        MFXTableColumn<PhieuKhamBenh> hoten = new MFXTableColumn<>("Ho Ten", false, Comparator.comparing(PhieuKhamBenh::getHoTen));
-        MFXTableColumn<PhieuKhamBenh> loaibenh = new MFXTableColumn<>("Loai benh", false, Comparator.comparing(PhieuKhamBenh::getLoaiBenh));
-        MFXTableColumn<PhieuKhamBenh> trieuchung = new MFXTableColumn<>("Trieu chung", false, Comparator.comparing(PhieuKhamBenh::getTrieuChung));
-        MFXTableColumn<PhieuKhamBenh> ngaykham = new MFXTableColumn<>("Ngay kham", false, Comparator.comparing(PhieuKhamBenh::getNgayKham_string));
+        MFXTableColumn<PhieuKhamBenh> hoten = new MFXTableColumn<>("Họ tên", false, Comparator.comparing(PhieuKhamBenh::getHoTen));
+        MFXTableColumn<PhieuKhamBenh> loaibenh = new MFXTableColumn<>("Loại bệnh", false, Comparator.comparing(PhieuKhamBenh::getLoaiBenh));
+        MFXTableColumn<PhieuKhamBenh> trieuchung = new MFXTableColumn<>("Triệu chứng", false, Comparator.comparing(PhieuKhamBenh::getTrieuChung));
+        MFXTableColumn<PhieuKhamBenh> ngaykham = new MFXTableColumn<>("Ngày khám", false, Comparator.comparing(PhieuKhamBenh::getNgayKham));
 
         //Tao cac dong cho cot cua tableview
         cccd.setRowCellFactory(phieukhambenh -> new MFXTableRowCell<>(PhieuKhamBenh::getCccd));
@@ -152,5 +160,59 @@ public class benh_nhanController implements Initializable{
         //Them du lieu vao tableview
         setData();
         pkb.setItems(pkb_list);
+    }
+
+    //Ham khoi tao context menu
+    public void setupContextMenu(){
+        MFXContextMenu contextMenu = new MFXContextMenu(pkb);
+        MFXContextMenuItem edit = new MFXContextMenuItem("Chỉnh sửa");
+        MFXContextMenuItem delete = new MFXContextMenuItem("Xóa");
+        contextMenu.getItems().addAll(edit, delete);
+        edit.setStyle("-fx-text-fill: #2264D1; -fx-font-size: 16px; -fx-font-family: 'Times New Roman'");
+        delete.setStyle("-fx-text-fill: red; -fx-font-size: 16px; -fx-font-family: 'Times New Roman'");
+
+        // Them su kien cho nut chinh sua
+        edit.setOnAction(event -> {
+            EditPKB();
+        });
+
+        // Them menu context o moi dong cho paginated tableview
+        pkb.setTableRowFactory(phieukhambenh -> {
+            MFXTableRow<PhieuKhamBenh> row = new MFXTableRow<>(pkb, new PhieuKhamBenh("","","","", LocalDate.now()));
+            row.addEventHandler(ContextMenuEvent.CONTEXT_MENU_REQUESTED, event -> {
+                contextMenu.show(row, event.getScreenX(), event.getScreenY());
+                event.consume();
+            });
+            row.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                if (event.getButton() == MouseButton.PRIMARY) {
+                    contextMenu.hide();
+                }
+            });
+            return row;
+        });
+    }
+
+    public void EditPKB(){
+        FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("edit_phieukb.fxml"));
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.UNDECORATED);
+        root.setOnMousePressed(event -> {
+            x = event.getSceneX();
+            y = event.getSceneY();
+        });
+        root.setOnMouseDragged(event -> {
+            stage.setX(event.getScreenX() - x);
+            stage.setY(event.getScreenY() - y);
+        });
+        Scene scene = new Scene(root, 684, 539);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
+        stage.setScene(scene);
+        stage.show();
     }
 }
