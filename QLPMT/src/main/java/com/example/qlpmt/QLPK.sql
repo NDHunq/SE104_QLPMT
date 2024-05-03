@@ -1,4 +1,4 @@
-﻿Create database QLPK
+Create database QLPK
 go
 use  QLPK
 go
@@ -76,11 +76,13 @@ CREATE TABLE HD (
                     FOREIGN KEY (PKB_ID) REFERENCES PKB(PKB_ID)
 );
 CREATE TABLE DoanhThu (
+
                           NgayDT datetime not null,
                           SoBenhNhan int NOT NULL,
                           DoanhThu money NOT NULL,
 
                           PRIMARY KEY (NgayDT)
+
 );
 
 CREATE TABLE BCT (
@@ -232,7 +234,9 @@ VALUES ('T001','Accupril', 20000,23000,100,'CD01','DV02'),
  ('HD007','PKB007',30000,290000),
  ('HD008','PKB008',30000,350000)
 
- GO
+
+ GO 
+
  INSERT INTO DoanhThu (NgayDT,SoBenhNhan,DoanhThu)
  VALUES ('2024-3-1',50,15000000),
  ('2024-3-2',50,15000000),

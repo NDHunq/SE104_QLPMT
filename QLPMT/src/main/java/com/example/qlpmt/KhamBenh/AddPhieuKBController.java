@@ -1,8 +1,8 @@
 package com.example.qlpmt.KhamBenh;
 
-import io.github.palexdev.materialfx.controls.MFXButton;
-import io.github.palexdev.materialfx.controls.MFXTableColumn;
-import io.github.palexdev.materialfx.controls.MFXTableView;
+import Model.PhieuKhamBenh;
+import com.example.qlpmt.HelloApplication;
+import io.github.palexdev.materialfx.controls.*;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import io.github.palexdev.materialfx.filter.StringFilter;
 import io.github.palexdev.materialfx.utils.others.observables.When;
@@ -14,17 +14,21 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
+import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.time.LocalDate;
+import java.util.*;
 
 public class AddPhieuKBController implements Initializable {
     @FXML
@@ -35,13 +39,15 @@ public class AddPhieuKBController implements Initializable {
 
     @FXML
     private MFXButton XongBtn;
-
+    @FXML
+    private MFXButton add_butt;
     @FXML
     private ImageView close;
 
     @FXML
     private MFXTableView<ThuocPKB> table_thuoc;
     private ObservableList<ThuocPKB> list;
+    double x,y=0;
 
 
     @Override
@@ -61,6 +67,14 @@ public class AddPhieuKBController implements Initializable {
             Stage stage = (Stage) source.getScene().getWindow();
             stage.close();
         });
+        add_butt.setOnAction((ActionEvent event) -> {
+            try {
+                AddThuoc(event);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        setupContextMenu();
         setupPaginated();
 
         //chia deu kich thuoc cac cot de vua voi chieu rong cua tableview
@@ -109,6 +123,82 @@ public class AddPhieuKBController implements Initializable {
         table_thuoc.setItems(list);
 
 
+    }
+
+    public void SuaThuoc(ActionEvent events) throws IOException {
+        FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("sua_thuoc_pkb.fxml"));
+        Parent root = loader.load();
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.UNDECORATED);
+        root.setOnMousePressed(event -> {
+            x = event.getSceneX();
+            y = event.getSceneY();
+        });
+        root.setOnMouseDragged(event -> {
+            stage.setX(event.getScreenX() - x);
+            stage.setY(event.getScreenY() - y);
+        });
+        Scene scene = new Scene(root, 320, 340);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
+        stage.setScene(scene);
+        stage.show();
+    }
+    public void AddThuoc(ActionEvent events) throws IOException {
+        FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("add_thuoc_pkb.fxml"));
+        Parent root = loader.load();
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.UNDECORATED);
+        root.setOnMousePressed(event -> {
+            x = event.getSceneX();
+            y = event.getSceneY();
+        });
+        root.setOnMouseDragged(event -> {
+            stage.setX(event.getScreenX() - x);
+            stage.setY(event.getScreenY() - y);
+        });
+        Scene scene = new Scene(root, 320, 340);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
+        stage.setScene(scene);
+        stage.show();
+    }
+    public void setupContextMenu(){
+        MFXContextMenu contextMenu = new MFXContextMenu(table_thuoc);
+        MFXContextMenuItem edit = new MFXContextMenuItem("Chỉnh sửa");
+        MFXContextMenuItem delete = new MFXContextMenuItem("Xóa");
+        contextMenu.getItems().addAll(edit, delete);
+        edit.setStyle("-fx-text-fill: #2264D1; -fx-font-size: 16px; -fx-font-family: 'Times New Roman'");
+        delete.setStyle("-fx-text-fill: red; -fx-font-size: 16px; -fx-font-family: 'Times New Roman'");
+        edit.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                // Handle the click event here
+                try {
+                    SuaThuoc(event);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        delete.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                // Handle the click event here
+                System.out.println("Xóa clicked");
+            }
+        });
+        table_thuoc.setTableRowFactory(phieukhambenh -> {
+            MFXTableRow<ThuocPKB> row = new MFXTableRow<>(table_thuoc, new ThuocPKB(0, "", "", 0, ""));
+            row.addEventHandler(ContextMenuEvent.CONTEXT_MENU_REQUESTED, event -> {
+                contextMenu.show(row, event.getScreenX(), event.getScreenY());
+                event.consume();
+            });
+            row.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                if (event.getButton() == MouseButton.PRIMARY) {
+                    contextMenu.hide();
+                }
+            });
+            return row;
+        });
     }
     public void setData(){
         list = FXCollections.observableArrayList(

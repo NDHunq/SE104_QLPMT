@@ -1,7 +1,8 @@
 package com.example.qlpmt.KhamBenh;
 
+import Model.PhieuKhamBenh;
 import com.example.qlpmt.HelloApplication;
-import io.github.palexdev.materialfx.controls.MFXTableColumn;
+import io.github.palexdev.materialfx.controls.*;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import io.github.palexdev.materialfx.filter.StringFilter;
 import io.github.palexdev.materialfx.utils.others.observables.When;
@@ -16,15 +17,17 @@ import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import io.github.palexdev.materialfx.controls.MFXPaginatedTableView;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.*;
 
 public class kham_benhController implements Initializable {
@@ -39,9 +42,8 @@ public class kham_benhController implements Initializable {
     private ObservableList<KhamBenh> bn_list;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        setupContextMenu();
         setupPaginated();
-
         //chia deu kich thuoc cac cot de vua voi chieu rong cua tableview
         double tableViewWidth = table_bn.getPrefWidth();
         int numberOfColumns = table_bn.getTableColumns().size();
@@ -72,7 +74,25 @@ public class kham_benhController implements Initializable {
             stage.setX(event.getScreenX() - x);
             stage.setY(event.getScreenY() - y);
         });
-        Scene scene = new Scene(root, 400, 460);
+        Scene scene = new Scene(root, 330, 440);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
+        stage.setScene(scene);
+        stage.show();
+    }
+    public void Sua(ActionEvent events) throws IOException {
+        FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("sua_khambenh.fxml"));
+        Parent root = loader.load();
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.UNDECORATED);
+        root.setOnMousePressed(event -> {
+            x = event.getSceneX();
+            y = event.getSceneY();
+        });
+        root.setOnMouseDragged(event -> {
+            stage.setX(event.getScreenX() - x);
+            stage.setY(event.getScreenY() - y);
+        });
+        Scene scene = new Scene(root, 330, 440);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.setScene(scene);
         stage.show();
@@ -210,5 +230,44 @@ public class kham_benhController implements Initializable {
                 new KhamBenh("23", "Nguyen Van Y", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Xem"),
                 new KhamBenh("24", "Nguyen Van Z", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Tạo")
         );
+    }
+    public void setupContextMenu(){
+        MFXContextMenu contextMenu = new MFXContextMenu(table_bn);
+        MFXContextMenuItem edit = new MFXContextMenuItem("Chỉnh sửa");
+        MFXContextMenuItem delete = new MFXContextMenuItem("Xóa");
+        contextMenu.getItems().addAll(edit, delete);
+        edit.setStyle("-fx-text-fill: #2264D1; -fx-font-size: 16px; -fx-font-family: 'Times New Roman'");
+        delete.setStyle("-fx-text-fill: red; -fx-font-size: 16px; -fx-font-family: 'Times New Roman'");
+        edit.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                // Handle the click event here
+                try {
+                    Sua(event);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        delete.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                // Handle the click event here
+                System.out.println("Xóa clicked");
+            }
+        });
+        table_bn.setTableRowFactory(phieukhambenh -> {
+            MFXTableRow<KhamBenh> row = new MFXTableRow<>(table_bn, new KhamBenh("", "", "", "", "", "", ""));
+            row.addEventHandler(ContextMenuEvent.CONTEXT_MENU_REQUESTED, event -> {
+                contextMenu.show(row, event.getScreenX(), event.getScreenY());
+                event.consume();
+            });
+            row.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                if (event.getButton() == MouseButton.PRIMARY) {
+                    contextMenu.hide();
+                }
+            });
+            return row;
+        });
     }
 }

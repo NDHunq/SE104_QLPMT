@@ -20,7 +20,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-public class AddKhamBenhController implements Initializable {
+public class SuaKhamBenhController implements Initializable {
     @FXML
     Button XongBtn;
     @FXML

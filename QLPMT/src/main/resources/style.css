@@ -8,8 +8,7 @@
 }
 
 .button {
-        -fx-background-radius: 10px;
-
+    -fx-background-radius: 10px;
     -fx-background-color:  #2264D1;
 }
 .rounded-anchor-pane {
@@ -109,5 +108,43 @@
 
 }
 
+.mfx-combo-box-cell:hover {
+    -fx-background-color: #D4F2FF;
+}
 
+.mfx-combo-box-cell:selected {
+    -fx-background-color: #2264D1;
+    -fx-text-fill: white;
+}
 
+.mfx-combo-box-cell .data-label {
+    -fx-font-family: "Times New Roman";
+}
+
+.mfx-combo-box .floating-text{
+    -fx-text-fill: #2264D1;
+    -fx-font-weight: bold;
+    -fx-font-family: "Times New Roman";
+    -fx-font-size: 16px;
+}
+
+/*Custom line chart*/
+.chart-title {
+    -fx-font-family: "Times New Roman";
+    -fx-text-fill: #000000;
+    -fx-font-weight: bold;
+}
+
+/*Custom cho table view header*/
+.mfx-table-column {
+    -fx-font-size: 16px;
+    -fx-font-family: "Times New Roman";
+    -fx-text-fill: #000000;
+    -fx-font-weight: bold;
+}
+
+/*Custom font cho paginated table view*/
+.mfx-paginated-table-view {
+    -fx-font-size: 14px;
+    -fx-font-family: "Times New Roman";
+}
