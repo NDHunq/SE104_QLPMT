@@ -169,7 +169,7 @@
         <BorderPane prefHeight="51.0" prefWidth="315.0" />
           <HBox layoutX="490.0" layoutY="491.0" prefHeight="37.0" prefWidth="188.0">
               <children>
-                  <MFXButton fx:id="XongBtn" buttonType="RAISED" mnemonicParsing="false" prefHeight="37.0" prefWidth="81.0" style="-fx-background-color: #459244; -fx-text-fill: white; -fx-font-family: 'Times New Roman'; -fx-font-size: 17px; -fx-font-weight: bold" stylesheets="@../../../style.css" text="XONG">
+                  <MFXButton fx:id="XongBtn" buttonType="RAISED" mnemonicParsing="false" prefHeight="37.0" prefWidth="81.0" style="-fx-background-color: #459244; -fx-text-fill: white; -fx-font-family: 'Times New Roman'; -fx-font-size: 17px; -fx-font-weight: bold; -fx-stroke-width: 2px" stylesheets="@../../../style.css" text="XONG">
                       <HBox.margin>
                           <Insets right="15.0" />
                       </HBox.margin>
@@ -182,7 +182,7 @@
                           <Cursor fx:constant="HAND" />
                       </cursor>
                   </MFXButton>
-                  <MFXButton fx:id="HuyBtn" buttonType="RAISED" mnemonicParsing="false" prefHeight="37.0" prefWidth="81.0" style="-fx-background-color: #EE0E36;-fx-text-fill: white; -fx-font-family: 'Times New Roman'; -fx-font-size: 17px; -fx-font-weight: bold" stylesheets="@../../../style.css" text="HỦY">
+                  <MFXButton fx:id="HuyBtn" buttonType="RAISED" mnemonicParsing="false" prefHeight="37.0" prefWidth="81.0" style="-fx-background-color: #EE0E36;-fx-text-fill: white; -fx-font-family: 'Times New Roman'; -fx-font-size: 17px; -fx-font-weight: bold; -fx-stroke-width: 2px" stylesheets="@../../../style.css" text="HỦY">
                       <styleClass>
                           <String fx:value="fontButton" />
                       </styleClass>
