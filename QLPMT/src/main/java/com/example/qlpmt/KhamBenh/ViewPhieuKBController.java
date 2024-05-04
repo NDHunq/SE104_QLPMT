@@ -1,9 +1,8 @@
 package com.example.qlpmt.KhamBenh;
 
+import com.example.qlpmt.DBConnection;
 import com.example.qlpmt.HelloApplication;
-import io.github.palexdev.materialfx.controls.MFXButton;
-import io.github.palexdev.materialfx.controls.MFXTableColumn;
-import io.github.palexdev.materialfx.controls.MFXTableView;
+import io.github.palexdev.materialfx.controls.*;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import io.github.palexdev.materialfx.filter.StringFilter;
 import javafx.collections.FXCollections;
@@ -23,12 +22,36 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.*;
 
 public class ViewPhieuKBController implements Initializable {
 
+
+    @FXML
+    private MFXTextField CCCDTxt;
+
+    @FXML
+    private MFXTextField HoTenTxt;
+
     @FXML
     private MFXButton HoaDon;
+
+    @FXML
+    private MFXTextField LoaibenhTxt;
+
+    @FXML
+    private MFXDatePicker NgayKhamPicker;
+
+    @FXML
+    private MFXTextField NguoiKhamTxt;
+
+    @FXML
+    private MFXTextField TrieuChungTxt;
 
     @FXML
     private ImageView close;
@@ -36,9 +59,15 @@ public class ViewPhieuKBController implements Initializable {
     @FXML
     private MFXTableView<ThuocPKB> table_thuoc;
     private ObservableList<ThuocPKB> list;
-double x,y;
+    Connection con;
+    private PreparedStatement pst=null;
+    private ResultSet rs=null;
+    double x,y;
+    String DSKB_id;
+    String PKB_id;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        con= DBConnection.getConnection();
         HoaDon.setOnAction((ActionEvent event) -> {
             HoaDon();
         });
@@ -47,15 +76,6 @@ double x,y;
             Stage stage = (Stage) source.getScene().getWindow();
             stage.close();
         });
-        setupPaginated();
-
-
-        table_thuoc.autosizeColumnsOnInitialization();
-        table_thuoc.getTableColumns().get(4).setPrefWidth(200);
-        //Tu dong dieu chinh kich thuoc cac cot de phu hop voi noi dung
-        //When.onChanged(table_thuoc.currentPageProperty()).then((oldValue, newValue) -> table_thuoc.autosizeColumns()).listen();
-
-
     }
     public void HoaDon(){
         FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("hoa_don_stage.fxml"));
@@ -96,7 +116,8 @@ double x,y;
         cachdung.setRowCellFactory(khambenh -> new MFXTableRowCell<>(ThuocPKB::getCachDung));
 
         //Them cac cot vao tableview
-        table_thuoc.getTableColumns().addAll(stt, tenthuoc, donvi, soluong, cachdung);
+        if(table_thuoc.getTableColumns().isEmpty())
+            table_thuoc.getTableColumns().addAll(stt, tenthuoc, donvi, soluong, cachdung);
 
         //Them cac filter cho tableview
         table_thuoc.getFilters().addAll(
@@ -110,26 +131,71 @@ double x,y;
         //Them du lieu vao tableview
         setData();
         table_thuoc.setItems(list);
-
+        double tableViewWidth = table_thuoc.getPrefWidth();
+        int numberOfColumns = table_thuoc.getTableColumns().size();
+        for (MFXTableColumn column : table_thuoc.getTableColumns()) {
+            column.setPrefWidth(tableViewWidth / numberOfColumns);
+        }
 
     }
     public void setData(){
-        list = FXCollections.observableArrayList(
-                new ThuocPKB(1, "Thuốc A", "Viên", 10, "Uống 3 lần/ngày"),
-                new ThuocPKB(2, "Thuốc B", "Viên", 20, "Uống 2 lần/ngày"),
-                new ThuocPKB(3, "Thuốc C", "Viên", 30, "Uống 1 lần/ngày"),
-                new ThuocPKB(4, "Thuốc D", "Viên", 40, "Uống 4 lần/ngày"),
-                new ThuocPKB(5, "Thuốc E", "Viên", 50, "Uống 5 lần/ngày"),
-                new ThuocPKB(6, "Thuốc F", "Viên", 60, "Uống 6 lần/ngày"),
-                new ThuocPKB(7, "Thuốc G", "Viên", 70, "Uống 7 lần/ngày"),
-                new ThuocPKB(8, "Thuốc H", "Viên", 80, "Uống 8 lần/ngày"),
-                new ThuocPKB(9, "Thuốc I", "Viên", 90, "Uống 9 lần/ngày"),
-                new ThuocPKB(10, "Thuốc K", "Viên", 100, "Uống 10 lần/ngày"),
-                new ThuocPKB(11, "Thuốc L", "Viên", 110, "Uống 11 lần/ngày"),
-                new ThuocPKB(12, "Thuốc M", "Viên", 120, "Uống 12 lần/ngày"),
-                new ThuocPKB(13, "Thuốc N", "Viên", 130, "Uống 13 lần/ngày"),
-                new ThuocPKB(14, "Thuốc O", "Viên", 140, "Uống 14 lần/ngày")
-        );
+        try {
+            list= FXCollections.observableArrayList();
+            String sql="SELECT Thuoc.TenThuoc, DonViThuoc.TenDVTHuoc as TenDV, DSTHuoc_PKB.SoLuong, CachDung.TenCachDung " +
+                    "FROM DSTHuoc_PKB " +
+                    "JOIN Thuoc ON DSTHuoc_PKB.Thuoc_ID = Thuoc.Thuoc_ID " +
+                    "JOIN DonViThuoc ON Thuoc.DonViThuoc_ID = DonViThuoc.DVTHuoc_ID " +
+                    "JOIN CachDung ON Thuoc.CachDung_ID = CachDung.CachDung_ID " +
+                    "WHERE PKB_ID = ?";
+            pst=con.prepareStatement(sql);
+            pst.setString(1, PKB_id);
+            rs=pst.executeQuery();
+            int stt = 1;
+            while(rs.next()){
+                list.add(new ThuocPKB(stt++,rs.getString("TenThuoc"),rs.getString("TenDV"),rs.getInt("SoLuong"),rs.getString("TenCachDung")));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
+    public void InitData(KhamBenh kb, LocalDate ngayKham) {
+        HoTenTxt.setText(kb.getHoTen());
+        CCCDTxt.setText(kb.getCCCD());
+        NgayKhamPicker.setValue(ngayKham);
+
+        try {
+            // Get DSKB_ID
+            String sql = "SELECT DSKB_ID FROM DSKB WHERE NgayKham = ? AND STT = ?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setDate(1, java.sql.Date.valueOf(ngayKham));
+            pst.setInt(2, Integer.parseInt(kb.getSTT()));
+
+            // Execute query and get the result
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                DSKB_id = rs.getString("DSKB_ID");
+            }
+
+            // Get PKB_ID, TrieuChung, NguoiKham, TenLoaiBenh from PKB and LoaiBenh
+            sql = "SELECT PKB.PKB_ID, PKB.TrieuChung, PKB.NguoiKham, LoaiBenh.TenBenh " +
+                    "FROM PKB JOIN LoaiBenh ON PKB.LoaiBenh_ID = LoaiBenh.LoaiBenh_ID " +
+                    "WHERE PKB.DSKB_ID = ?";
+            pst = con.prepareStatement(sql);
+            pst.setString(1, DSKB_id);
+
+            // Execute query and get the result
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                PKB_id = rs.getString("PKB_ID");
+                TrieuChungTxt.setText(rs.getString("TrieuChung"));
+                NguoiKhamTxt.setText(rs.getString("NguoiKham"));
+                LoaibenhTxt.setText(rs.getString("TenBenh"));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        setupPaginated();
+    }
+
 
 }

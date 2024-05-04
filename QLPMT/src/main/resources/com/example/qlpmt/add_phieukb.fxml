@@ -54,7 +54,7 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <MFXTextField maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" stylesheets="@../../../style.css">
+                        <MFXTextField fx:id="CCCDTxt" maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" stylesheets="@../../../style.css">
                            <VBox.margin>
                               <Insets bottom="5.0" right="20.0" />
                            </VBox.margin>
@@ -68,21 +68,17 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <MFXComboBox fx:id="TrieuChungCBB" maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" stylesheets="@../../../style.css">
+                        <MFXTextField fx:id="TrieuChungTxt" maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" styleClass="fontStd" stylesheets="@../../../style.css">
                            <VBox.margin>
                               <Insets bottom="5.0" right="20.0" />
                            </VBox.margin>
-                           <styleClass>
-                              <String fx:value="TextBorder" />
-                              <String fx:value="fontStd" />
-                           </styleClass>
-                        </MFXComboBox>
+                        </MFXTextField>
                         <Label styleClass="header" stylesheets="@../../../style.css" text="Dự đoán loại bệnh">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <MFXComboBox maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" prefHeight="26.0" prefWidth="348.0" styleClass="TextBorder" stylesheets="@../../../style.css">
+                        <MFXComboBox fx:id="LoaiBenhCBB" maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" prefHeight="26.0" prefWidth="348.0" styleClass="fontStd" stylesheets="@../../../style.css">
                            <VBox.margin>
                               <Insets right="20.0" />
                            </VBox.margin></MFXComboBox>
@@ -95,7 +91,7 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <MFXTextField maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" prefHeight="33.0" prefWidth="298.0" stylesheets="@../../../style.css">
+                        <MFXTextField fx:id="HoTenTxt" maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" prefHeight="33.0" prefWidth="298.0" stylesheets="@../../../style.css">
                            <VBox.margin>
                               <Insets bottom="5.0" />
                            </VBox.margin>
@@ -109,7 +105,7 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <MFXDatePicker maxHeight="32.0" minHeight="32.0" prefHeight="32.0" prefWidth="177.0" stylesheets="@../../../style.css">
+                        <MFXDatePicker fx:id="NgayKhamPicker" maxHeight="32.0" minHeight="32.0" prefHeight="32.0" prefWidth="177.0" stylesheets="@../../../style.css">
                            <VBox.margin>
                               <Insets bottom="5.0" />
                            </VBox.margin>
@@ -126,7 +122,7 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <MFXComboBox maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" prefHeight="26.0" prefWidth="348.0" styleClass="TextBorder" stylesheets="@../../../style.css" />
+                        <MFXComboBox fx:id="NguoiKhamCBB" maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" prefHeight="26.0" prefWidth="348.0" styleClass="TextBorder" stylesheets="@../../../style.css" />
                      </children>
                   </VBox>
                </children>

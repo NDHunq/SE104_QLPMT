@@ -37,7 +37,7 @@
             <left>
                <HBox prefHeight="38.0" prefWidth="482.0" styleClass="TextBorder" stylesheets="@../../../../style.css" BorderPane.alignment="CENTER">
                   <children>
-                     <TextField prefHeight="38.0" prefWidth="448.0" styleClass="square-border-pane-none" stylesheets="@../../../../style.css" text="jttjjjjjjjjjjjjjjjj">
+                     <TextField fx:id="SearchTxt" prefHeight="38.0" prefWidth="448.0" styleClass="square-border-pane-none" stylesheets="@../../../../style.css" text="jttjjjjjjjjjjjjjjjj">
                         <font>
                            <Font name=".VnTimeH" size="17.0" />
                         </font>
@@ -63,7 +63,7 @@
                <Insets />
             </VBox.margin>
             <right>
-               <MFXDatePicker prefHeight="17.0" prefWidth="150.0" styleClass="mfx-date-picker" stylesheets="@../../../../style.css" BorderPane.alignment="CENTER">
+               <MFXDatePicker fx:id="NgayKhamPicker" prefHeight="17.0" prefWidth="150.0" styleClass="mfx-date-picker" stylesheets="@../../../../style.css" BorderPane.alignment="CENTER">
                   <opaqueInsets>
                      <Insets />
                   </opaqueInsets>
@@ -92,7 +92,7 @@
             <right>
                <Button fx:id="add_butt" mnemonicParsing="false" onAction="#add" prefHeight="40.0" prefWidth="40.0" styleClass="buttonPlus" stylesheets="@../../../../style.css" text="+" textFill="WHITE" BorderPane.alignment="CENTER">
                   <font>
-                     <Font name="Times New Roman Bold" size="23.0" />
+                     <Font name="Times New Roman Bold" size="24.0" />
                   </font>
                   <BorderPane.margin>
                      <Insets top="8.0" />

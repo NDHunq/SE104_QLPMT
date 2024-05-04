@@ -1,6 +1,7 @@
 package com.example.qlpmt.KhamBenh;
 
 import Model.PhieuKhamBenh;
+import com.example.qlpmt.DBConnection;
 import com.example.qlpmt.HelloApplication;
 import io.github.palexdev.materialfx.controls.*;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
@@ -17,6 +18,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -27,21 +29,32 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.*;
 
 public class kham_benhController implements Initializable {
     @FXML
     private VBox kb_layout;
-
     @FXML
     private Button add_butt;
+    @FXML
+    private MFXDatePicker NgayKhamPicker;
+    @FXML
+    private TextField SearchTxt;
     @FXML
     private MFXPaginatedTableView<KhamBenh> table_bn;
     double x,y=0;
     private ObservableList<KhamBenh> bn_list;
+    private Connection con=null;
+    private PreparedStatement pst=null;
+    private ResultSet rs=null;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        con= DBConnection.getConnection();
+        NgayKhamPicker.setValue(LocalDate.of(2024, 4, 20));
         setupContextMenu();
         setupPaginated();
         //chia deu kich thuoc cac cot de vua voi chieu rong cua tableview
@@ -57,8 +70,13 @@ public class kham_benhController implements Initializable {
         When.onChanged(table_bn.currentPageProperty())
                 .then((oldValue, newValue) -> table_bn.autosizeColumns())
                 .listen();
-
-
+        NgayKhamPicker.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                LoadData();
+                table_bn.setItems(bn_list);
+            }
+        });
     }
 
     public void add(ActionEvent events) throws IOException {
@@ -97,7 +115,7 @@ public class kham_benhController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-    public void XemPKB(){
+    public void XemPKB(KhamBenh kb, LocalDate ngaykham){
         FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("view_phieukb.fxml"));
         Parent root = null;
         try {
@@ -105,6 +123,8 @@ public class kham_benhController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        ViewPhieuKBController controller = loader.getController();
+        controller.InitData(kb,ngaykham);
         Stage stage = new Stage();
         stage.initStyle(StageStyle.UNDECORATED);
         root.setOnMousePressed(event -> {
@@ -120,7 +140,7 @@ public class kham_benhController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-    public void AddPKB(){
+    public void AddPKB(KhamBenh kb, LocalDate ngaykham){
         FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("add_phieukb.fxml"));
         Parent root = null;
         try {
@@ -128,8 +148,11 @@ public class kham_benhController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        AddPhieuKBController controller = loader.getController();
+        controller.InitData(kb,ngaykham);
         Stage stage = new Stage();
         stage.initStyle(StageStyle.UNDECORATED);
+        controller.setKhamBenhKBController(this);
         root.setOnMousePressed(event -> {
             x = event.getSceneX();
             y = event.getSceneY();
@@ -143,9 +166,11 @@ public class kham_benhController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-
+    public void refreshPage() {
+        initialize(null, null);
+        setupPaginated();
+    }
     private void setupPaginated() {
-
         //Tao cac cot cua tableview
         MFXTableColumn<KhamBenh> stt = new MFXTableColumn<>("STT", false, Comparator.comparing(KhamBenh::getSTT));
         MFXTableColumn<KhamBenh> hoten = new MFXTableColumn<>("Họ tên", false, Comparator.comparing(KhamBenh::getHoTen));
@@ -154,7 +179,6 @@ public class kham_benhController implements Initializable {
         MFXTableColumn<KhamBenh> namsinh = new MFXTableColumn<>("Năm sinh", false, Comparator.comparing( KhamBenh::getNamSinh));
         MFXTableColumn<KhamBenh> diachi = new MFXTableColumn<>("Địa chỉ", false, Comparator.comparing( KhamBenh::getDiaChi));
         MFXTableColumn<KhamBenh> pkb = new MFXTableColumn<>("Phiếu khám bệnh", false, Comparator.comparing( KhamBenh::getImgPkb));
-        MFXTableColumn<KhamBenh> imageCol = new MFXTableColumn<>("Image");
 
         stt.setRowCellFactory(khambenh -> new MFXTableRowCell<>(KhamBenh::getSTT));
         hoten.setRowCellFactory(khambenh -> new MFXTableRowCell<>(KhamBenh::getHoTen));
@@ -171,11 +195,12 @@ public class kham_benhController implements Initializable {
                 @Override
                 public void handle(MouseEvent event) {
                     if (event.getClickCount() == 1) {
+                        KhamBenh kb=table_bn.getSelectionModel().getSelectedValues().get(0);
                         if(cell.getText()=="Tạo"){
-                            AddPKB();
+                            AddPKB(kb,NgayKhamPicker.getValue());
                         }
                         if(cell.getText()=="Xem"){
-                            XemPKB();
+                            XemPKB(kb,NgayKhamPicker.getValue());
                         }
                     }
                 }
@@ -185,7 +210,8 @@ public class kham_benhController implements Initializable {
 
 
         //Them cac cot vao tableview
-        table_bn.getTableColumns().addAll(stt, hoten, cccd, gioitinh, namsinh, diachi, pkb);
+        if(table_bn.getTableColumns().isEmpty())
+            table_bn.getTableColumns().addAll(stt, hoten, cccd, gioitinh, namsinh, diachi, pkb);
 
         //Them cac filter cho tableview
         table_bn.getFilters().addAll(
@@ -198,39 +224,10 @@ public class kham_benhController implements Initializable {
         );
 
         //Them du lieu vao tableview
-        setData();
+        LoadData();
         table_bn.setItems(bn_list);
-
-
     }
-    public void setData(){
-        bn_list = FXCollections.observableArrayList(
-                new KhamBenh("1", "Nguyen Van A", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Tạo"),
-                new KhamBenh("2", "Nguyen Van B", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Xem"),
-                new KhamBenh("3", "Nguyen Van C", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Tạo"),
-                new KhamBenh("4", "Nguyen Van D", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Xem"),
-                new KhamBenh("5", "Nguyen Van E", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Tạo"),
-                new KhamBenh("6", "Nguyen Van F", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Tạo"),
-                new KhamBenh("7", "Nguyen Van G", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Xem"),
-                new KhamBenh("8", "Nguyen Van H", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Xem"),
-                new KhamBenh("9", "Nguyen Van I", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Xem"),
-                new KhamBenh("10", "Nguyen Van K", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Tạo"),
-                new KhamBenh("11", "Nguyen Van L", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Xem"),
-                new KhamBenh("12", "Nguyen Van M", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Tạo"),
-                new KhamBenh("13", "Nguyen Van N", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Xem"),
-                new KhamBenh("14", "Nguyen Van O", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Xem"),
-                new KhamBenh("15", "Nguyen Van P", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Tạo"),
-                new KhamBenh("16", "Nguyen Van Q", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Tạo"),
-                new KhamBenh("17", "Nguyen Van R", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Tạo"),
-                new KhamBenh("18", "Nguyen Van S", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Xem"),
-                new KhamBenh("19", "Nguyen Van T", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Tạo"),
-                new KhamBenh("20", "Nguyen Van U", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Tạo"),
-                new KhamBenh("21", "Nguyen Van V", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Xem"),
-                new KhamBenh("22", "Nguyen Van X", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Tạo"),
-                new KhamBenh("23", "Nguyen Van Y", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Xem"),
-                new KhamBenh("24", "Nguyen Van Z", "09010235718", "Nam", "12/07/1999", "Ha Noi", "Tạo")
-        );
-    }
+
     public void setupContextMenu(){
         MFXContextMenu contextMenu = new MFXContextMenu(table_bn);
         MFXContextMenuItem edit = new MFXContextMenuItem("Chỉnh sửa");
@@ -257,7 +254,7 @@ public class kham_benhController implements Initializable {
             }
         });
         table_bn.setTableRowFactory(phieukhambenh -> {
-            MFXTableRow<KhamBenh> row = new MFXTableRow<>(table_bn, new KhamBenh("", "", "", "", "", "", ""));
+            MFXTableRow<KhamBenh> row = new MFXTableRow<>(table_bn, new KhamBenh("", "", "", 0, "", "", 0));
             row.addEventHandler(ContextMenuEvent.CONTEXT_MENU_REQUESTED, event -> {
                 contextMenu.show(row, event.getScreenX(), event.getScreenY());
                 event.consume();
@@ -270,4 +267,19 @@ public class kham_benhController implements Initializable {
             return row;
         });
     }
-}
+    public void LoadData(){
+        try {
+            bn_list= FXCollections.observableArrayList();
+            String sql="select * from DSKB where NgayKham=?";
+            pst=con.prepareStatement(sql);
+            java.sql.Date sqlDate = java.sql.Date.valueOf(NgayKhamPicker.getValue());
+            pst.setDate(1, sqlDate);
+            rs=pst.executeQuery();
+            while(rs.next()){
+                bn_list.add(new KhamBenh(String.valueOf(rs.getInt("STT")), rs.getString("HoTen"), rs.getString("CCCD"), rs.getInt("GioiTinh"), String.valueOf(rs.getInt("NamSinh")), rs.getString("DiaChi"), (rs.getInt("CoPkb"))));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    }}

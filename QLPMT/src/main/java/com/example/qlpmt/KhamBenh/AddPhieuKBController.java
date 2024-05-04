@@ -1,6 +1,7 @@
 package com.example.qlpmt.KhamBenh;
 
 import Model.PhieuKhamBenh;
+import com.example.qlpmt.DBConnection;
 import com.example.qlpmt.HelloApplication;
 import io.github.palexdev.materialfx.controls.*;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
@@ -27,6 +28,7 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -45,13 +47,37 @@ public class AddPhieuKBController implements Initializable {
     private ImageView close;
 
     @FXML
+    private MFXTextField CCCDTxt;
+
+    @FXML
+    private MFXTextField HoTenTxt;
+    @FXML
+    private MFXComboBox<String> LoaiBenhCBB;
+
+    @FXML
+    private MFXDatePicker NgayKhamPicker;
+
+    @FXML
+    private MFXComboBox<String> NguoiKhamCBB;
+
+    @FXML
+    private MFXTextField TrieuChungTxt;
+    @FXML
     private MFXTableView<ThuocPKB> table_thuoc;
     private ObservableList<ThuocPKB> list;
     double x,y=0;
+    Connection con;
+    private PreparedStatement pst=null;
+    private ResultSet rs=null;
 
-
+    String DSKB_id;
+    String PKB_id;
+    String loaiBenhID;
+    kham_benhController controller=new kham_benhController();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        con= DBConnection.getConnection();
+
         close.setOnMouseClicked(event -> {
             Node source = (Node) event.getSource();
             Stage stage = (Stage) source.getScene().getWindow();
@@ -65,6 +91,30 @@ public class AddPhieuKBController implements Initializable {
         XongBtn.setOnAction((ActionEvent event) -> {
             Node source = (Node) event.getSource();
             Stage stage = (Stage) source.getScene().getWindow();
+            String sql = "INSERT INTO PKB(PKB_ID, DSKB_ID, TrieuChung, LoaiBenh_ID, NguoiKham,STT) VALUES(?, ?, ?, ?, ?, ?)";
+            try {
+                pst = con.prepareStatement(sql);
+                pst.setString(1, PKB_id);
+                pst.setString(2, DSKB_id);
+                pst.setString(3, TrieuChungTxt.getText());
+                pst.setString(4, loaiBenhID);
+                pst.setString(5, "hung123");
+                int stt = Integer.parseInt(PKB_id.substring(3)); // Extract the number part from PKB_id
+                pst.setInt(6, stt);
+                pst.executeUpdate();
+                stage.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            String sql2 = "UPDATE DSKB SET CoPKB = 1 WHERE DSKB_ID = ?";
+            try {
+                pst = con.prepareStatement(sql2);
+                pst.setString(1, DSKB_id);
+                pst.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            controller.refreshPage();
             stage.close();
         });
         add_butt.setOnAction((ActionEvent event) -> {
@@ -74,25 +124,45 @@ public class AddPhieuKBController implements Initializable {
                 throw new RuntimeException(e);
             }
         });
+        LoaiBenhCBB.getSelectionModel().selectedItemProperty().addListener((options, oldValue, newValue) -> {
+            String selectedBenh = newValue;
+            String sql = "SELECT LoaiBenh_ID FROM LoaiBenh WHERE TenBenh = ?";
+            try {
+                PreparedStatement pst = con.prepareStatement(sql);
+                pst.setString(1, selectedBenh);
+                ResultSet rs = pst.executeQuery();
+                if (rs.next()) {
+                    loaiBenhID = rs.getString("LoaiBenh_ID");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
         setupContextMenu();
-        setupPaginated();
-
-        //chia deu kich thuoc cac cot de vua voi chieu rong cua tableview
-//        double tableViewWidth = table_thuoc.getPrefWidth();
-//        int numberOfColumns = table_thuoc.getTableColumns().size();
-//        for (MFXTableColumn column : table_thuoc.getTableColumns()) {
-//            column.setPrefWidth(tableViewWidth / numberOfColumns);
-//        }
-
-       table_thuoc.autosizeColumnsOnInitialization();
-        table_thuoc.getTableColumns().get(4).setPrefWidth(200);
-        //Tu dong dieu chinh kich thuoc cac cot de phu hop voi noi dung
-       //When.onChanged(table_thuoc.currentPageProperty()).then((oldValue, newValue) -> table_thuoc.autosizeColumns()).listen();
-
-
     }
-    private void setupPaginated() {
+    public void refreshPage() {
+        initialize(null, null);
+        setupPaginated();
+    }
+    public void setKhamBenhKBController(kham_benhController controller) {
+        this.controller = controller;
+    }
+    public void loadData() {
+        try {
+            String sql = "SELECT TenBenh FROM LoaiBenh";
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
 
+            // 3. Get the result and add to the ComboBox
+            while (resultSet.next()) {
+                String t = resultSet.getString("TenBenh");
+                LoaiBenhCBB.getItems().add(t);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void setupPaginated() {
         //Tao cac cot cua tableview
         MFXTableColumn<ThuocPKB> stt = new MFXTableColumn<>("STT", false, Comparator.comparing(ThuocPKB::getStt));
         MFXTableColumn<ThuocPKB> tenthuoc = new MFXTableColumn<>("Thuốc", false, Comparator.comparing(ThuocPKB::getTenThuoc));
@@ -106,9 +176,9 @@ public class AddPhieuKBController implements Initializable {
         soluong.setRowCellFactory(khambenh -> new MFXTableRowCell<>(ThuocPKB::getSoLuong));
         cachdung.setRowCellFactory(khambenh -> new MFXTableRowCell<>(ThuocPKB::getCachDung));
 
-        //Them cac cot vao tableview
-        table_thuoc.getTableColumns().addAll(stt, tenthuoc, donvi, soluong, cachdung);
-
+        if (table_thuoc.getTableColumns().isEmpty()) {
+            table_thuoc.getTableColumns().addAll(stt, tenthuoc, donvi, soluong, cachdung);
+        }
         //Them cac filter cho tableview
         table_thuoc.getFilters().addAll(
                 //new StringFilter<>("STT", (ThuocPKB::getStt) ),
@@ -120,9 +190,14 @@ public class AddPhieuKBController implements Initializable {
 
         //Them du lieu vao tableview
         setData();
+        loadData();
         table_thuoc.setItems(list);
 
-
+        double tableViewWidth = table_thuoc.getPrefWidth();
+        int numberOfColumns = table_thuoc.getTableColumns().size();
+        for (MFXTableColumn column : table_thuoc.getTableColumns()) {
+            column.setPrefWidth(tableViewWidth / numberOfColumns);
+        }
     }
 
     public void SuaThuoc(ActionEvent events) throws IOException {
@@ -148,6 +223,9 @@ public class AddPhieuKBController implements Initializable {
         Parent root = loader.load();
         Stage stage = new Stage();
         stage.initStyle(StageStyle.UNDECORATED);
+        AddThuocPKBController controller = loader.getController();
+        controller.InitData(PKB_id);
+        controller.setAddPhieuKBController(this);
         root.setOnMousePressed(event -> {
             x = event.getSceneX();
             y = event.getSceneY();
@@ -201,22 +279,62 @@ public class AddPhieuKBController implements Initializable {
         });
     }
     public void setData(){
-        list = FXCollections.observableArrayList(
-               new ThuocPKB(1, "Thuốc A", "Viên", 10, "Uống 3 lần/ngày"),
-                    new ThuocPKB(2, "Thuốc B", "Viên", 20, "Uống 2 lần/ngày"),
-                    new ThuocPKB(3, "Thuốc C", "Viên", 30, "Uống 1 lần/ngày"),
-                    new ThuocPKB(4, "Thuốc D", "Viên", 40, "Uống 4 lần/ngày"),
-                    new ThuocPKB(5, "Thuốc E", "Viên", 50, "Uống 5 lần/ngày"),
-                    new ThuocPKB(6, "Thuốc F", "Viên", 60, "Uống 6 lần/ngày"),
-                    new ThuocPKB(7, "Thuốc G", "Viên", 70, "Uống 7 lần/ngày"),
-                    new ThuocPKB(8, "Thuốc H", "Viên", 80, "Uống 8 lần/ngày"),
-                    new ThuocPKB(9, "Thuốc I", "Viên", 90, "Uống 9 lần/ngày"),
-                    new ThuocPKB(10, "Thuốc K", "Viên", 100, "Uống 10 lần/ngày"),
-                    new ThuocPKB(11, "Thuốc L", "Viên", 110, "Uống 11 lần/ngày"),
-                    new ThuocPKB(12, "Thuốc M", "Viên", 120, "Uống 12 lần/ngày"),
-                    new ThuocPKB(13, "Thuốc N", "Viên", 130, "Uống 13 lần/ngày"),
-                    new ThuocPKB(14, "Thuốc O", "Viên", 140, "Uống 14 lần/ngày")
-        );
+        try {
+            list= FXCollections.observableArrayList();
+            String sql="SELECT Thuoc.TenThuoc, DonViThuoc.TenDVTHuoc as TenDV, DSTHuoc_PKB.SoLuong, CachDung.TenCachDung " +
+                    "FROM DSTHuoc_PKB " +
+                    "JOIN Thuoc ON DSTHuoc_PKB.Thuoc_ID = Thuoc.Thuoc_ID " +
+                    "JOIN DonViThuoc ON Thuoc.DonViThuoc_ID = DonViThuoc.DVTHuoc_ID " +
+                    "JOIN CachDung ON Thuoc.CachDung_ID = CachDung.CachDung_ID " +
+                    "WHERE PKB_ID = ?";
+            pst=con.prepareStatement(sql);
+            pst.setString(1, PKB_id);
+            rs=pst.executeQuery();
+            int stt = 1;
+            while(rs.next()){
+                list.add(new ThuocPKB(stt++,rs.getString("TenThuoc"),rs.getString("TenDV"),rs.getInt("SoLuong"),rs.getString("TenCachDung")));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    public void InitData(KhamBenh kb, LocalDate ngayKham) {
+        HoTenTxt.setText(kb.getHoTen());
+        CCCDTxt.setText(kb.getCCCD());
+        NgayKhamPicker.setValue(ngayKham);
+
+        try {
+            // Get DSKB_ID
+            String sql = "SELECT DSKB_ID FROM DSKB WHERE NgayKham = ? AND STT = ?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setDate(1, java.sql.Date.valueOf(ngayKham));
+            pst.setInt(2, Integer.parseInt(kb.getSTT()));
+
+            // Execute query and get the result
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                DSKB_id = rs.getString("DSKB_ID");
+            }
+
+            // Get the next PKB_id
+            sql = "SELECT MAX(PKB_id) AS MaxPKB_id FROM PKB";
+            pst = con.prepareStatement(sql);
+
+            // Execute query and get the result
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                String maxPKB_id = rs.getString("MaxPKB_id");
+                System.out.println(maxPKB_id);
+                int num = Integer.parseInt(maxPKB_id.substring(3)); // Get the number part
+                num++; // Increment the number
+                PKB_id = "PKB" + String.format("%03d", num); // Format the new number with leading zeros and prepend "PKB"
+                System.out.println(PKB_id);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        setupPaginated();
+
     }
 
 }

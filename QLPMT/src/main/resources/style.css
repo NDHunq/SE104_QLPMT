@@ -48,7 +48,7 @@
 .fontButton {
     -fx-font-size: 17;
     -fx-font-family: "Times New Roman";
-    -fx-font-style: bold;
+    -fx-font-weight: bold;
     -fx-text-fill: #FFFFFF;
 }
 .font15 {
@@ -62,7 +62,6 @@
 }
 .buttonPlus {
     -fx-background-color: #2264D1;
-    -fx-border-color: #000000;
     -fx-border-radius: 5;
 }
 
