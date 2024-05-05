@@ -17,6 +17,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
 import java.net.URL;
+import java.sql.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.Locale;
@@ -33,6 +34,7 @@ public class NhanVienController implements Initializable {
     @FXML
     private MFXPaginatedTableView<NhanVien> pkb;
     private ObservableList<NhanVien> pkb_list;
+
     @Override
     public void initialize (URL url, ResourceBundle resourceBundle) {
         setupPaginated();
@@ -55,7 +57,7 @@ public class NhanVienController implements Initializable {
         // Them su kien unfocus cho search_txtbox khi click ra ngoai bang cach requestFocus den node khac
         nhanvien_root.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent mouseEvent) {
+            public void handle (MouseEvent mouseEvent) {
                 // Kiem tra xem search_txtbox co dang duoc focus hay khong
                 if (mouseEvent.getTarget() != search_txtbox) {
                     // Neu khong thi unfocus search_txtbox
@@ -67,7 +69,8 @@ public class NhanVienController implements Initializable {
         // Cap nhat so luong benh nhan luc khoi tao
         soNhanVien.setText(String.valueOf(pkb_list.size()));
     }
-    private void setupPaginated() {
+
+    private void setupPaginated () {
 
         //Tao cac cot cua tableview
 
@@ -98,12 +101,23 @@ public class NhanVienController implements Initializable {
         setData();
         pkb.setItems(pkb_list);
     }
-    public void setData(){
-        pkb_list = FXCollections.observableArrayList(
-                new NhanVien("09010235718", "Nguyen Van A", "Ung thu co tu cung", "Dai ra mau"),
-                new NhanVien("09010235718", "Nguyen Van A", "Ung thu co tu cung", "Dai ra mau")
 
-        );
+    public void setData () {
+        pkb_list = FXCollections.observableArrayList();
+        try {
+            Connection connection = DBConnectionQuyen.getConnection();
+            String sql = "SELECT * FROM TaiKhoan";
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+            while (rs.next()) {
+                NhanVien nhanvien = new NhanVien(rs.getString("HoTen"), rs.getString("ChucVu"), rs.getString("username"), rs.getString("Email"));
+                pkb_list.add(nhanvien);
+            }
+            connection.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
-
 }

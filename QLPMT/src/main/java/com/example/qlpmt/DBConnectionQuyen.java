@@ -7,18 +7,15 @@ import java.sql.DriverManager;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class DBConnection {
+public class DBConnectionQuyen {
     public static Connection getConnection () {
         Connection connection = null;
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             // ten database
+            String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=QLPK;user=sa;password=123456789;encrypt=true;trustServerCertificate=true";
 
-            String url = "jdbc:sqlserver://REDRUM\\REDRUM:1433;databaseName=QLPK;integratedSecurity=true;";
-
-            connection = (Connection) DriverManager.getConnection(url);
-            System.out.println("Connected to the database");
-
+            connection = DriverManager.getConnection(connectionUrl);
 
         } catch (ClassNotFoundException | java.sql.SQLException e) {
             Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, e);
