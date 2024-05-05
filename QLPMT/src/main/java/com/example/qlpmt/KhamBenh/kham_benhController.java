@@ -285,8 +285,9 @@ public class kham_benhController implements Initializable {
         edit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                KhamBenh kb=table_bn.getSelectionModel().getSelectedValues().get(0);
-
+                //KhamBenh kb=table_bn.getSelectionModel().getSelectedValues().get(0);
+                MFXTableRow<KhamBenh> row = (MFXTableRow<KhamBenh>) contextMenu.getOwnerNode();
+                KhamBenh kb = row.getData();
                 // Handle the click event here
                 try {
                     Sua(event, getDSKB_id(kb),kb);
@@ -298,7 +299,8 @@ public class kham_benhController implements Initializable {
         delete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                KhamBenh kb = table_bn.getSelectionModel().getSelectedValues().get(0);
+                MFXTableRow<KhamBenh> row = (MFXTableRow<KhamBenh>) contextMenu.getOwnerNode();
+                KhamBenh kb = row.getData();
                 String DSKB_id = getDSKB_id(kb);
 
                 try {

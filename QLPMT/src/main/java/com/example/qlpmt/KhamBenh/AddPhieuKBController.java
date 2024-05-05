@@ -123,6 +123,32 @@ public class AddPhieuKBController implements Initializable {
                 e.printStackTrace();
             }
             controller.refreshPage();
+            LocalDate selectedDate = NgayKhamPicker.getValue();
+            if (selectedDate != null) {
+                try {
+                    String checkSql = "SELECT * FROM DoanhThu WHERE NgayDT = ?";
+                    PreparedStatement pst = con.prepareStatement(checkSql);
+                    pst.setDate(1, java.sql.Date.valueOf(selectedDate));
+                    rs = pst.executeQuery();
+                    if (rs.next()) {
+                        // Ngày đã tồn tại trong bảng DoanhThu
+                        String updateSql = "UPDATE DoanhThu SET DoanhThu = DoanhThu + ?, SoBenhNhan = SoBenhNhan + 1 WHERE NgayDT = ?";
+                        pst = con.prepareStatement(updateSql);
+                        pst.setDouble(1, calculateTotalCost());
+                        pst.setDate(2, java.sql.Date.valueOf(selectedDate));
+                        pst.executeUpdate();
+                    } else {
+                        // Ngày chưa tồn tại trong bảng DoanhThu
+                        String insertSql = "INSERT INTO DoanhThu(NgayDT, DoanhThu, SoBenhNhan) VALUES(?, ?, 1)";
+                        pst = con.prepareStatement(insertSql);
+                        pst.setDate(1, java.sql.Date.valueOf(selectedDate));
+                        pst.setDouble(2, calculateTotalCost());
+                        pst.executeUpdate();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
             stage.close();
         });
         add_butt.setOnAction((ActionEvent event) -> {
@@ -147,6 +173,23 @@ public class AddPhieuKBController implements Initializable {
             }
         });
         setupContextMenu();
+    }
+    private double calculateTotalCost() {
+        double totalCost = 0;
+        for (ThuocPKB thuoc : list) {
+            String sql = "SELECT GiaBan FROM Thuoc WHERE TenThuoc = ?";
+            try {
+                pst = con.prepareStatement(sql);
+                pst.setString(1, thuoc.getTenThuoc());
+                rs = pst.executeQuery();
+                if (rs.next()) {
+                    totalCost += rs.getDouble("GiaBan") * thuoc.getSoLuong();
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        return totalCost;
     }
     public void refreshPage() {
         initialize(null, null);
