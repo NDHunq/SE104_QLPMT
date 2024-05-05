@@ -27,8 +27,9 @@ public class SuaKhamBenhController implements Initializable {
     private Button HuyBtn;
     @FXML
     private MFXTextField CCCDTxt;
+
     @FXML
-    private MFXDatePicker DOBPicker;
+    private MFXTextField NamSinhTxt;
     @FXML
     private MFXTextField DiaChiTxt;
     @FXML
@@ -37,97 +38,90 @@ public class SuaKhamBenhController implements Initializable {
     private MFXRadioButton NamChBx;
     @FXML
     private MFXRadioButton NuChBx;
-    @FXML
-    private MFXTextField SDTTxt;
     Connection connection = null;
     private PreparedStatement preparedStatement = null;
+    String DSKB_id;
+    KhamBenh kb;
+    kham_benhController khamBenhController=new kham_benhController();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+            connection = (Connection) DBConnection.getConnection();
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
         HuyBtn.setOnAction((ActionEvent event) -> {
             Node source = (Node) event.getSource();
             Stage stage = (Stage) source.getScene().getWindow();
             stage.close();
         });
         XongBtn.setOnAction((ActionEvent event) -> {
-            String sql="INSERT INTO DSKB (DSKB_ID, STT, NgayKham, HoTen, CCCD, GioiTinh,NamSinh,DiaChi,CoPKB) VALUES (?,?,?,?,?,?,?,?,?)";
-            try {
+            // Get the values from the text fields and radio buttons
+            String hoTen = HoTenTxt.getText();
+            String cccd = CCCDTxt.getText();
+            String diaChi = DiaChiTxt.getText();
+            int namSinh = Integer.parseInt(NamSinhTxt.getText());
+            int gioiTinh = NamChBx.isSelected() ? 1 : 0;
 
-                preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setString(1, getNextDSKB_ID() );
-                preparedStatement.setInt(2, getNextSTT());
-                java.sql.Date currentDate = java.sql.Date.valueOf(LocalDate.now());
-                preparedStatement.setDate(3, currentDate);
-                preparedStatement.setString(4, HoTenTxt.getText());
-                preparedStatement.setString(5, CCCDTxt.getText());
-                if (NamChBx.isSelected()) {
-                    preparedStatement.setInt(6, 1);
-                } else {
-                    preparedStatement.setInt(6, 0);
-                }
-                LocalDate localDate = DOBPicker.getValue();
-                int year = localDate.getYear();
-                preparedStatement.setInt(7, year);
-                preparedStatement.setString(8, DiaChiTxt.getText());
-                preparedStatement.setInt(9, 0);
-                int state=preparedStatement.executeUpdate();
-                if(state>0){
-                    System.out.println("Success");
-                }else{
-                    System.out.println("Failed");
-                }
-            } catch (Exception e) {
+            // Create an SQL update statement
+            String sql = "UPDATE DSKB SET HoTen = ?, CCCD = ?, DiaChi = ?, NamSinh = ?, GioiTinh = ? WHERE DSKB_id = ?";
+
+            try {
+                // Prepare the statement with the connection object
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+                // Set the parameters in the prepared statement
+                preparedStatement.setString(1, hoTen);
+                preparedStatement.setString(2, cccd);
+                preparedStatement.setString(3, diaChi);
+                preparedStatement.setInt(4, namSinh);
+                preparedStatement.setInt(5, gioiTinh);
+                preparedStatement.setString(6, DSKB_id);
+
+                // Execute the update operation
+                preparedStatement.executeUpdate();
+
+            } catch (SQLException e) {
                 System.out.println("Error: " + e);
             }
+            // Close the stage
             Node source = (Node) event.getSource();
             Stage stage = (Stage) source.getScene().getWindow();
+            khamBenhController.refreshPage();
             stage.close();
         });
 
         ToggleGroup group = new ToggleGroup();
         NamChBx.setToggleGroup(group);
         NuChBx.setToggleGroup(group);
-        //connect to database
-        try {
-            connection = (Connection) DBConnection.getConnection();
-        } catch (Exception e) {
-            System.out.println("Error: " + e);
-        }
-
-
     }
-    public String getMaxDSKB_ID() {
-        String sql = "SELECT MAX(DSKB_ID) AS MaxID FROM DSKB";
-        String maxID = "";
+    public void InitData(String DSKB_id, KhamBenh kb, kham_benhController khamBenhController)
+    {
+        this.DSKB_id = DSKB_id;
+        this.kb = kb;
+        this.khamBenhController = khamBenhController;
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                maxID = resultSet.getString("MaxID");
+            String sql = "SELECT * FROM DSKB WHERE DSKB_id = ?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, DSKB_id);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                HoTenTxt.setText(rs.getString("HoTen"));
+                CCCDTxt.setText(rs.getString("CCCD"));
+                DiaChiTxt.setText(rs.getString("DiaChi"));
+                NamSinhTxt.setText(String.valueOf(rs.getInt("NamSinh")));
+                if(rs.getInt("GioiTinh")==1)
+                {
+                    NamChBx.setSelected(true);
+                }
+                else
+                {
+                    NuChBx.setSelected(true);
+                }
             }
         } catch (SQLException e) {
             System.out.println("Error: " + e);
         }
-        return maxID;
     }
-    public String getNextDSKB_ID() {
-        String maxID = getMaxDSKB_ID();
-        String nextID = "KB" + String.format("%03d", Integer.parseInt(maxID.substring(2)) + 1);
-        return nextID;
-    }
-    public int getNextSTT() {
-        java.sql.Date currentDate = java.sql.Date.valueOf(LocalDate.now());
-        String sql = "SELECT MAX(STT) AS MaxSTT FROM DSKB WHERE NgayKham = ?";
-        int maxSTT = 0;
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setDate(1, currentDate);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                maxSTT = resultSet.getInt("MaxSTT");
-            }
-        } catch (SQLException e) {
-            System.out.println("Error: " + e);
-        }
-        return maxSTT + 1;
-    }
+
 }

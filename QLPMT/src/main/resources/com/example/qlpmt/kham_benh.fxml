@@ -2,25 +2,24 @@
 
 <?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
 <?import io.github.palexdev.materialfx.controls.MFXPaginatedTableView?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="607.0" prefWidth="920.0" stylesheets="@../../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.KhamBenh.kham_benhController">
-    <VBox layoutX="13.0" layoutY="20.0" prefHeight="400.0" prefWidth="600.0" styleClass="mainBackground" stylesheets="@../../../../style.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="12.600000000000023" AnchorPane.topAnchor="10.0">
+<AnchorPane prefHeight="607.0" prefWidth="920.0" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.KhamBenh.kham_benhController">
+    <VBox layoutX="-0.8" layoutY="0.8" prefHeight="607.0" prefWidth="926.0" style="-fx-background-color: #D4F2FF;" stylesheets="@../../../style.css" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="-5.0" AnchorPane.topAnchor="1.0">
       <children>
-         <BorderPane prefHeight="46.0" prefWidth="828.0">
+         <BorderPane prefHeight="46.0" prefWidth="894.0">
             <left>
-               <Label prefHeight="34.0" prefWidth="300.0" styleClass="header" stylesheets="@../../../../style.css" text="Danh sách khám bệnh" BorderPane.alignment="CENTER">
+               <Label prefHeight="34.0" prefWidth="300.0" styleClass="header" stylesheets="@../../../style.css" text="Danh sách khám bệnh" BorderPane.alignment="CENTER">
                   <font>
                      <Font name="System Bold" size="30.0" />
                   </font>
@@ -35,35 +34,24 @@
          </BorderPane>
          <BorderPane prefHeight="38.0" prefWidth="828.0">
             <left>
-               <HBox prefHeight="38.0" prefWidth="482.0" styleClass="TextBorder" stylesheets="@../../../../style.css" BorderPane.alignment="CENTER">
-                  <children>
-                     <TextField fx:id="SearchTxt" prefHeight="38.0" prefWidth="448.0" styleClass="square-border-pane-none" stylesheets="@../../../../style.css" text="jttjjjjjjjjjjjjjjjj">
-                        <font>
-                           <Font name=".VnTimeH" size="17.0" />
-                        </font>
-                     </TextField>
-                     <ImageView fitHeight="31.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+               <MFXTextField id="search_txtbox" fx:id="search_txtbox" floatMode="DISABLED" layoutX="567.0" layoutY="58.0" prefHeight="39.0" prefWidth="391.0">
+                  <leadingIcon>
+                     <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                           <Image url="@../images/finding.png" />
+                           <Image url="@images/search.png" />
                         </image>
-                        <HBox.margin>
-                           <Insets top="3.0" />
-                        </HBox.margin>
-                        <cursor>
-                           <Cursor fx:constant="HAND" />
-                        </cursor>
                      </ImageView>
-                  </children>
+                  </leadingIcon>
                   <BorderPane.margin>
                      <Insets left="20.0" />
                   </BorderPane.margin>
-               </HBox>
+               </MFXTextField>
             </left>
             <VBox.margin>
                <Insets />
             </VBox.margin>
             <right>
-               <MFXDatePicker fx:id="NgayKhamPicker" prefHeight="17.0" prefWidth="150.0" styleClass="mfx-date-picker" stylesheets="@../../../../style.css" BorderPane.alignment="CENTER">
+               <MFXDatePicker fx:id="NgayKhamPicker" prefHeight="17.0" prefWidth="150.0" styleClass="mfx-date-picker" stylesheets="@../../../style.css" BorderPane.alignment="CENTER">
                   <opaqueInsets>
                      <Insets />
                   </opaqueInsets>
@@ -76,9 +64,9 @@
                </MFXDatePicker>
             </right>
          </BorderPane>
-         <BorderPane prefHeight="414.0" prefWidth="894.0">
+         <BorderPane prefHeight="446.0" prefWidth="926.0">
             <center>
-               <MFXPaginatedTableView fx:id="table_bn" prefHeight="395.0" prefWidth="850.0" rowsPerPage="10" styleClass="font15" stylesheets="@../../../../style.css" BorderPane.alignment="CENTER">
+               <MFXPaginatedTableView fx:id="table_bn" prefHeight="443.0" prefWidth="888.0" rowsPerPage="10" styleClass="font15" stylesheets="@../../../style.css" BorderPane.alignment="CENTER">
                   <padding>
                      <Insets bottom="7.0" top="7.0" />
                   </padding>
@@ -88,9 +76,9 @@
                <Insets top="10.0" />
             </VBox.margin>
          </BorderPane>
-         <BorderPane prefHeight="58.0" prefWidth="854.0">
+         <BorderPane prefHeight="51.0" prefWidth="886.0">
             <right>
-               <Button fx:id="add_butt" mnemonicParsing="false" onAction="#add" prefHeight="40.0" prefWidth="40.0" styleClass="buttonPlus" stylesheets="@../../../../style.css" text="+" textFill="WHITE" BorderPane.alignment="CENTER">
+               <Button fx:id="add_butt" mnemonicParsing="false" onAction="#add" prefHeight="40.0" prefWidth="40.0" styleClass="buttonPlus" stylesheets="@../../../style.css" text="+" textFill="WHITE" BorderPane.alignment="CENTER">
                   <font>
                      <Font name="Times New Roman Bold" size="24.0" />
                   </font>

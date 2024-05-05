@@ -21,6 +21,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -33,6 +34,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -44,7 +46,7 @@ public class kham_benhController implements Initializable {
     @FXML
     private MFXDatePicker NgayKhamPicker;
     @FXML
-    private TextField SearchTxt;
+    private MFXTextField search_txtbox;
     @FXML
     private MFXPaginatedTableView<KhamBenh> table_bn;
     double x,y=0;
@@ -78,6 +80,30 @@ public class kham_benhController implements Initializable {
                 table_bn.setItems(bn_list);
             }
         });
+        search_txtbox.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
+            String searchText = search_txtbox.getText();
+            LocalDate selectedDate = NgayKhamPicker.getValue();
+            if (!searchText.isEmpty() && selectedDate != null) {
+                try {
+                    bn_list = FXCollections.observableArrayList();
+                    String sql = "SELECT * FROM DSKB WHERE (HoTen LIKE ? OR CCCD LIKE ?) AND NgayKham = ?";
+                    pst = con.prepareStatement(sql);
+                    pst.setString(1, "%" + searchText + "%");
+                    pst.setString(2, "%" + searchText + "%");
+                    pst.setDate(3, java.sql.Date.valueOf(selectedDate));
+                    rs = pst.executeQuery();
+                    while (rs.next()) {
+                        bn_list.add(new KhamBenh(String.valueOf(rs.getInt("STT")), rs.getString("HoTen"), rs.getString("CCCD"), rs.getInt("GioiTinh"), String.valueOf(rs.getInt("NamSinh")), rs.getString("DiaChi"), (rs.getInt("CoPkb"))));
+                    }
+                    table_bn.setItems(bn_list);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            } else {
+                LoadData();
+                table_bn.setItems(bn_list);
+            }
+        });
     }
 
     public void add(ActionEvent events) throws IOException {
@@ -93,16 +119,18 @@ public class kham_benhController implements Initializable {
             stage.setX(event.getScreenX() - x);
             stage.setY(event.getScreenY() - y);
         });
-        Scene scene = new Scene(root, 330, 440);
+        Scene scene = new Scene(root, 330, 380);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
-    public void Sua(ActionEvent events) throws IOException {
+    public void Sua(ActionEvent events, String DSKB_id,KhamBenh kb) throws IOException {
         FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("sua_khambenh.fxml"));
         Parent root = loader.load();
         Stage stage = new Stage();
         stage.initStyle(StageStyle.UNDECORATED);
+        SuaKhamBenhController controller = loader.getController();
+        controller.InitData(DSKB_id,kb,this);
         root.setOnMousePressed(event -> {
             x = event.getSceneX();
             y = event.getSceneY();
@@ -111,7 +139,7 @@ public class kham_benhController implements Initializable {
             stage.setX(event.getScreenX() - x);
             stage.setY(event.getScreenY() - y);
         });
-        Scene scene = new Scene(root, 330, 440);
+        Scene scene = new Scene(root, 330, 380);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.setScene(scene);
         stage.show();
@@ -232,7 +260,21 @@ public class kham_benhController implements Initializable {
         LoadData();
         table_bn.setItems(bn_list);
     }
-
+    public String getDSKB_id(KhamBenh kb) {
+        String DSKB_id = "";
+        try {
+            String sql = "SELECT DSKB_id FROM DSKB WHERE CCCD = ?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, kb.getCCCD());
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                DSKB_id = rs.getString("DSKB_id");
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return DSKB_id;
+    }
     public void setupContextMenu(){
         MFXContextMenu contextMenu = new MFXContextMenu(table_bn);
         MFXContextMenuItem edit = new MFXContextMenuItem("Chỉnh sửa");
@@ -243,9 +285,11 @@ public class kham_benhController implements Initializable {
         edit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                KhamBenh kb=table_bn.getSelectionModel().getSelectedValues().get(0);
+
                 // Handle the click event here
                 try {
-                    Sua(event);
+                    Sua(event, getDSKB_id(kb),kb);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -254,8 +298,46 @@ public class kham_benhController implements Initializable {
         delete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                // Handle the click event here
-                System.out.println("Xóa clicked");
+                KhamBenh kb = table_bn.getSelectionModel().getSelectedValues().get(0);
+                String DSKB_id = getDSKB_id(kb);
+
+                try {
+                    con.setAutoCommit(false); // Start transaction
+
+                    // Delete from DSTHuoc_PKB
+                    String sql = "DELETE FROM DSTHuoc_PKB WHERE PKB_id IN (SELECT PKB_id FROM PKB WHERE DSKB_id = ?)";
+                    PreparedStatement pst = con.prepareStatement(sql);
+                    pst.setString(1, DSKB_id);
+                    pst.executeUpdate();
+
+                    // Delete from PKB
+                    sql = "DELETE FROM PKB WHERE DSKB_id = ?";
+                    pst = con.prepareStatement(sql);
+                    pst.setString(1, DSKB_id);
+                    pst.executeUpdate();
+
+                    // Delete from DSKB
+                    sql = "DELETE FROM DSKB WHERE DSKB_id = ?";
+                    pst = con.prepareStatement(sql);
+                    pst.setString(1, DSKB_id);
+                    pst.executeUpdate();
+
+                    con.commit(); // Commit transaction
+                } catch (Exception e) {
+                    try {
+                        con.rollback(); // Rollback transaction on error
+                    } catch (SQLException e1) {
+                        e1.printStackTrace();
+                    }
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        con.setAutoCommit(true); // End transaction
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+                refreshPage();
             }
         });
         table_bn.setTableRowFactory(phieukhambenh -> {

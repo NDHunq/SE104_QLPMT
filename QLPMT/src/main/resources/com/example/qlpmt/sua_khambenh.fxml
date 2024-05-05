@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
-<?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
 <?import io.github.palexdev.materialfx.controls.MFXRadioButton?>
 <?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import java.lang.String?>
@@ -14,14 +13,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="332.0" styleClass="TextBorder" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.KhamBenh.SuaKhamBenhController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="410.0" prefWidth="332.0" styleClass="TextBorder" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.KhamBenh.SuaKhamBenhController">
     <children>
         <Label styleClass="header" stylesheets="@../../../style.css" text="Sửa thông tin khách hàng ">
             <font>
                 <Font name="System Bold" size="25.0" />
             </font>
         </Label>
-        <VBox prefHeight="542.0" prefWidth="315.0" style="-fx-background-radius: 10;" styleClass="mainBackground" stylesheets="@../../../style.css">
+        <VBox prefHeight="353.0" prefWidth="310.0" style="-fx-background-radius: 10;" styleClass="mainBackground" stylesheets="@../../../style.css">
             <children>
                 <Label styleClass="header" stylesheets="@../../../style.css" text="Họ tên">
                     <font>
@@ -54,15 +53,11 @@
                         <MFXRadioButton fx:id="NuChBx" style="-fx-font-size: 16;" styleClass="font15" stylesheets="@../../../style.css" text="Nu" />
                     </children>
                 </HBox>
-                <Label styleClass="header" stylesheets="@../../../style.css" text="Ngày sinh">
+                <Label styleClass="header" stylesheets="@../../../style.css" text="Năm sinh">
                     <font>
                         <Font name="System Bold" size="18.0" />
                     </font></Label>
-                <MFXDatePicker fx:id="DOBPicker" maxHeight="32.0" minHeight="32.0">
-                    <VBox.margin>
-                        <Insets bottom="5.0" />
-                    </VBox.margin>
-                </MFXDatePicker>
+            <MFXTextField fx:id="NamSinhTxt" maxHeight="32.0" maxWidth="-Infinity" minHeight="32.0" minWidth="-Infinity" prefHeight="32.0" prefWidth="140.0" styleClass="fontStd" stylesheets="@../../../style.css" />
                 <Label styleClass="header" stylesheets="@../../../style.css" text="Địa chỉ">
                     <font>
                         <Font name="System Bold" size="18.0" />
@@ -72,10 +67,6 @@
                         <Insets bottom="5.0" />
                     </VBox.margin>
                 </MFXTextField>
-                <Label styleClass="header" stylesheets="@../../../style.css" text="SĐT">
-                    <font>
-                        <Font name="System Bold" size="18.0" />
-                    </font></Label>
                 <BorderPane prefHeight="51.0" prefWidth="315.0">
                     <right>
                         <HBox prefHeight="33.0" prefWidth="134.0" styleClass="square-border-pane" BorderPane.alignment="CENTER">
@@ -108,13 +99,6 @@
                             </children>
                         </HBox>
                     </right>
-                    <top>
-                        <MFXTextField fx:id="SDTTxt" maxHeight="32.0" maxWidth="Infinity" minHeight="32.0" minWidth="-Infinity" styleClass="fontStd" stylesheets="@../../../style.css" BorderPane.alignment="CENTER">
-                            <BorderPane.margin>
-                                <Insets bottom="10.0" />
-                            </BorderPane.margin>
-                        </MFXTextField>
-                    </top>
                 </BorderPane>
             </children>
             <padding>

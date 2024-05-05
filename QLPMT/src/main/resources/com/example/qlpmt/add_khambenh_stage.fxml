@@ -14,14 +14,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="332.0" styleClass="TextBorder" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.KhamBenh.AddKhamBenhController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="386.0" prefWidth="332.0" styleClass="TextBorder" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.KhamBenh.AddKhamBenhController">
    <children>
       <Label styleClass="header" stylesheets="@../../../style.css" text="Thêm khách hàng chờ khám">
          <font>
             <Font name="System Bold" size="25.0" />
          </font>
       </Label>
-      <VBox prefHeight="542.0" prefWidth="315.0" style="-fx-background-radius: 10;" styleClass="mainBackground" stylesheets="@../../../style.css">
+      <VBox prefHeight="276.0" prefWidth="310.0" style="-fx-background-radius: 10;" styleClass="mainBackground" stylesheets="@../../../style.css">
          <children>
             <Label styleClass="header" stylesheets="@../../../style.css" text="Họ tên">
                <font>
@@ -72,10 +72,6 @@
                   <Insets bottom="5.0" />
                </VBox.margin>
             </MFXTextField>
-            <Label styleClass="header" stylesheets="@../../../style.css" text="SĐT">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font></Label>
             <BorderPane prefHeight="51.0" prefWidth="315.0">
                <right>
                   <HBox prefHeight="33.0" prefWidth="134.0" styleClass="square-border-pane" BorderPane.alignment="CENTER">
@@ -108,13 +104,6 @@
                      </children>
                   </HBox>
                </right>
-               <top>
-                  <MFXTextField fx:id="SDTTxt" maxHeight="32.0" maxWidth="Infinity" minHeight="32.0" minWidth="-Infinity" styleClass="fontStd" stylesheets="@../../../style.css" BorderPane.alignment="CENTER">
-                     <BorderPane.margin>
-                        <Insets bottom="10.0" />
-                     </BorderPane.margin>
-                  </MFXTextField>
-               </top>
             </BorderPane>
          </children>
          <padding>

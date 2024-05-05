@@ -37,8 +37,6 @@ public class AddKhamBenhController implements Initializable {
     private MFXRadioButton NamChBx;
     @FXML
     private MFXRadioButton NuChBx;
-    @FXML
-    private MFXTextField SDTTxt;
     Connection connection = null;
     private PreparedStatement preparedStatement = null;
     @Override
