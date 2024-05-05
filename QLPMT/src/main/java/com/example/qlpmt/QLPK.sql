@@ -10,7 +10,7 @@ CREATE TABLE DSKB (
   CCCD varchar(20) NOT NULL,
   GioiTinh int NOT NULL,
   NamSinh int NOT NULL,
-  DiaChi varchar(255),
+  DiaChi nvarchar(255),
   CoPKB INT
 );
 
@@ -63,7 +63,6 @@ CREATE TABLE DSTHuoc_PKB (
   SoLuong int NOT NULL,
 
   PRIMARY KEY (PKB_ID, Thuoc_ID),
-
   FOREIGN KEY (Thuoc_ID) REFERENCES Thuoc(Thuoc_ID)
 );
 CREATE TABLE HD (
@@ -103,50 +102,50 @@ Gtri int not null,
   GO
 
 INSERT INTO TaiKhoan (username,mk,ChucVu,HoTen,Email)
-VALUES ('hung123','hung123','Quản lý','Nguyễn Duy Hưng','hung07092004@gmail.com'),
-('duy123','duy123','Nhân viên','Phạm Hoàng Duy','duy07092004@gmail.com'),
-('quyen123','quyen123','Nhân viên','Trần Hồng Quyền','quyen07092004@gmail.com')
+VALUES ('hung123','hung123',N'Quản lý',N'Nguyễn Duy Hưng','hung07092004@gmail.com'),
+('duy123','duy123',N'Nhân viên',N'Phạm Hoàng Duy','duy07092004@gmail.com'),
+('quyen123','quyen123',N'Nhân viên',N'Trần Hồng Quyền','quyen07092004@gmail.com')
  GO
 
  INSERT INTO DSKB (DSKB_ID, STT,NgayKham,HoTen,CCCD,GioiTinh,NamSinh,DiaChi,CoPKB)
  VALUES 
- ('KB001',1,'2024-04-20','Phạm Khải Hưng','084204011380',1,2004,'Hồ Chí Minh',1),
-('KB002',2,'2024-04-20','Trần Hồng Quyền','084204011381',1,2004,'Đồng Nai',0),
-('KB003',3,'2024-04-20','Phạm Hoàng Duy','084204011382',1,2003,'Hồ Chí Minh',1),
-('KB004',4,'2024-04-20','Ngô Duy Hưng','084204011280',1,2002,'Hồ Chí Minh',0),
-('KB005',5,'2024-04-20','Bùi Thái Hoàng','084204021380',1,2000,'Đồng Nai',0),
-('KB006',6,'2024-04-20','Cao Văn Hoàng','084204011384',1,2007,'Bình Dương',1),
-('KB007',7,'2024-04-20','Mai Hoàng Hưng','084224011385',1,1987,'Hồ Chí Minh',0),
-('KB008',8,'2024-04-20','Lê Huy Hoàng','084204011387',1,1999,'Bình Dương',0),
-('KB009',9,'2024-04-20','Nguyễn Thanh Tùng','084204011386',1,2004,'Hồ Chí Minh',1),
-('KB010',10,'2024-04-20','Vũ Đinh Trọng Thắng','084204011787',1,2004,'Bình Dương',0),
-('KB011',11,'2024-04-20','Hà Anh Tuấn','084204017380',1,1980,'Bình Dương',1),
-('KB012',12,'2024-04-20','Phan Thị Mỹ Tâm','084204011370',0,1997,'Hồ Chí Minh',1),
-('KB013',1,'2024-04-21','Trịnh Trần Phương Tuấn','084704011380',1,1998,'Đồng Nai',0),
-('KB014',2,'2024-04-21','Mai Hồng Ngọc','084204011780',0,2002,'Hồ Chí Minh',1),
-('KB015',3,'2024-04-21','Bích Lệ Ái Liên','084204071380',0,2002,'Đồng Nai',0),
-('KB016',4,'2024-04-21','Bùi Anh Tuấn','084204011370',1,2001,'Đồng Nai',0),
-('KB017',5,'2024-04-21','Nguyễn Duy Hưng','084204011380',1,2004,'Trà Vinh',1)
+ ('KB001',1,'2024-04-20',N'Phạm Khải Hưng','084204011380',1,2004,N'Hồ Chí Minh',1),
+('KB002',2,'2024-04-20',N'Trần Hồng Quyền','084204011381',1,2004,N'Đồng Nai',0),
+('KB003',3,'2024-04-20',N'Phạm Hoàng Duy','084204011382',1,2003,N'Hồ Chí Minh',1),
+('KB004',4,'2024-04-20',N'Ngô Duy Hưng','084204011280',1,2002,N'Hồ Chí Minh',0),
+('KB005',5,'2024-04-20',N'Bùi Thái Hoàng','084204021380',1,2000,N'Đồng Nai',0),
+('KB006',6,'2024-04-20',N'Cao Văn Hoàng','084204011384',1,2007,N'Bình Dương',1),
+('KB007',7,'2024-04-20',N'Mai Hoàng Hưng','084224011385',1,1987,N'Hồ Chí Minh',0),
+('KB008',8,'2024-04-20',N'Lê Huy Hoàng','084204011387',1,1999,N'Bình Dương',0),
+('KB009',9,'2024-04-20',N'Nguyễn Thanh Tùng','084204011386',1,2004,N'Hồ Chí Minh',1),
+('KB010',10,'2024-04-20',N'Vũ Đinh Trọng Thắng','084204011787',1,2004,N'Bình Dương',0),
+('KB011',11,'2024-04-20',N'Hà Anh Tuấn','084204017380',1,1980,N'Bình Dương',1),
+('KB012',12,'2024-04-20',N'Phan Thị Mỹ Tâm','084204011370',0,1997,N'Hồ Chí Minh',1),
+('KB013',1,'2024-04-21',N'Trịnh Trần Phương Tuấn','084704011380',1,1998,N'Đồng Nai',0),
+('KB014',2,'2024-04-21',N'Mai Hồng Ngọc','084204011780',0,2002,N'Hồ Chí Minh',1),
+('KB015',3,'2024-04-21',N'Bích Lệ Ái Liên','084204071380',0,2002,N'Đồng Nai',0),
+('KB016',4,'2024-04-21',N'Bùi Anh Tuấn','084204011370',1,2001,N'Đồng Nai',0),
+('KB017',5,'2024-04-21',N'Nguyễn Duy Hưng','084204011380',1,2004,N'Trà Vinh',1)
 
 GO
 INSERT INTO DonViThuoc (DVTHuoc_ID,	TenDVTHuoc)
-VALUES ('DV01','Viên'),
-('DV02','Chai')
+VALUES ('DV01',N'Viên'),
+('DV02',N'Chai')
 
 GO
 INSERT INTO CachDung (CachDung_ID,TenCachDung)
-VALUES ('CD01','Uống'),
-('CD02','Bôi da'),
-('CD03','Ngậm'),
-('CD04','Hít')
+VALUES ('CD01',N'Uống'),
+('CD02',N'Bôi da'),
+('CD03',N'Ngậm'),
+('CD04',N'Hít')
 
 GO
 INSERT INTO LoaiBenh(LoaiBenh_ID,TenBenh)
-VALUES ('LB01','Bệnh mạch vành'),
-('LB02','Suy tim'),
-('LB03','Rối loạn nhịp tim'),
-('LB04','Bệnh van tim'),
-('LB05','Cao huyết áp')
+VALUES ('LB01',N'Bệnh mạch vành'),
+('LB02',N'Suy tim'),
+('LB03',N'Rối loạn nhịp tim'),
+('LB04',N'Bệnh van tim'),
+('LB05',N'Cao huyết áp')
 
 GO
 INSERT INTO Thuoc(Thuoc_ID,TenThuoc,GiaMua,GiaBan,TonKho,CachDung_ID,DonViThuoc_ID)
@@ -184,14 +183,14 @@ VALUES ('T001','Accupril', 20000,23000,100,'CD01','DV02'),
  GO
  INSERT INTO PKB(PKB_ID,LoaiBenh_ID,TrieuChung,NguoiKham,DSKB_ID,STT)
  VALUES 
- ('PKB001','LB01','Đau thắt ngực','quyen123','KB001',1),
- ('PKB002','LB03','Đau tức vùng ngực','duy123','KB003',2),
- ('PKB003','LB04','Tim đập nhanh, đánh trống ngực','quyen123','KB006',3),
- ('PKB004','LB02','Khó thở cấp tính','duy123','KB009',4),
- ('PKB005','LB01','Đau thắt ngực','quyen123','KB011',5),
- ('PKB006','LB05','Nhức đầu, hoa mắt, chóng mặt, ù tai','quyen123','KB012',6),
- ('PKB007','LB01','Đau thắt ngực','duy123','KB014',7),
- ('PKB008','LB02','Khó thở cấp tính','quyen123','KB017',8)
+ ('PKB001','LB01',N'Đau thắt ngực','quyen123','KB001',1),
+ ('PKB002','LB03',N'Đau tức vùng ngực','duy123','KB003',2),
+ ('PKB003','LB04',N'Tim đập nhanh, đánh trống ngực','quyen123','KB006',3),
+ ('PKB004','LB02',N'Khó thở cấp tính','duy123','KB009',4),
+ ('PKB005','LB01',N'Đau thắt ngực','quyen123','KB011',5),
+ ('PKB006','LB05',N'Nhức đầu, hoa mắt, chóng mặt, ù tai','quyen123','KB012',6),
+ ('PKB007','LB01',N'Đau thắt ngực','duy123','KB014',7),
+ ('PKB008','LB02',N'Khó thở cấp tính','quyen123','KB017',8)
 
  GO 
  INSERT INTO DSTHuoc_PKB (PKB_ID,Thuoc_ID,SoLuong)
@@ -296,5 +295,5 @@ VALUES ('T001','Accupril', 20000,23000,100,'CD01','DV02'),
 
  GO
  INSERT INTO ThongTinPK(IdTT,TenTT,Gtri)
- VALUES ('TT01','Tiền khám', 30000),
- ('TT02','Bệnh nhân tối đa', 40)
+ VALUES ('TT01',N'Tiền khám', 30000),
+ ('TT02',N'Bệnh nhân tối đa', 40)
