@@ -15,84 +15,86 @@ CREATE TABLE DSKB (
 );
 
 CREATE TABLE TaiKhoan (
-  username varchar(50) PRIMARY KEY,
-  mk varchar(255) NOT NULL,
-  ChucVu nvarchar(50) NOT NULL,
-  HoTen nvarchar(50) NOT NULL,
-  Email varchar(100)
+                          username varchar(50) PRIMARY KEY,
+                          mk varchar(255) NOT NULL,
+                          ChucVu nvarchar(50) NOT NULL,
+                          HoTen nvarchar(50) NOT NULL,
+                          Email varchar(100)
 );
 CREATE TABLE CachDung (
-  CachDung_ID varchar(50) PRIMARY KEY,
-  TenCachDung nvarchar(50) NOT NULL
+                          CachDung_ID varchar(50) PRIMARY KEY,
+                          TenCachDung nvarchar(50) NOT NULL
 );
 CREATE TABLE DonViThuoc (
-  DVTHuoc_ID varchar(50) PRIMARY KEY,
-   TenDVTHuoc nvarchar(50)
-  );
-  CREATE TABLE LoaiBenh (
-  LoaiBenh_ID varchar(50) PRIMARY KEY,
-   TenBenh nvarchar(50)
-  );
+                            DVTHuoc_ID varchar(50) PRIMARY KEY,
+                            TenDVTHuoc nvarchar(50)
+);
+CREATE TABLE LoaiBenh (
+                          LoaiBenh_ID varchar(50) PRIMARY KEY,
+                          TenBenh nvarchar(50)
+);
 CREATE TABLE PKB (
-  PKB_ID varchar(50) PRIMARY KEY,
-  LoaiBenh_ID varchar(50) NOT NULL,
-  TrieuChung nvarchar(255),
-  NguoiKham varchar(50) NOT NULL,
-  DSKB_ID varchar(50) NOT NULL,
-  STT int,
+                     PKB_ID varchar(50) PRIMARY KEY,
+                     LoaiBenh_ID varchar(50) NOT NULL,
+                     TrieuChung nvarchar(255),
+                     NguoiKham varchar(50) NOT NULL,
+                     DSKB_ID varchar(50) NOT NULL,
+                     STT int,
 
-  FOREIGN KEY (LoaiBenh_ID) REFERENCES LoaiBenh(LoaiBenh_ID),
-  FOREIGN KEY (NguoiKham) REFERENCES TaiKhoan(username),
-  FOREIGN KEY (DSKB_ID) REFERENCES DSKB(DSKB_ID)
+                     FOREIGN KEY (LoaiBenh_ID) REFERENCES LoaiBenh(LoaiBenh_ID),
+                     FOREIGN KEY (NguoiKham) REFERENCES TaiKhoan(username),
+                     FOREIGN KEY (DSKB_ID) REFERENCES DSKB(DSKB_ID)
 );
 CREATE TABLE Thuoc (
-  Thuoc_ID varchar(50) PRIMARY KEY,
-  TenThuoc varchar(50) NOT NULL,
-  GiaMua money NOT NULL,
-  GiaBan money NOT NULL,
-  TonKho int NOT NULL,
-  CachDung_ID varchar(50),
-  DonViThuoc_ID varchar(50),
+                       Thuoc_ID varchar(50) PRIMARY KEY,
+                       TenThuoc varchar(50) NOT NULL,
+                       GiaMua money NOT NULL,
+                       GiaBan money NOT NULL,
+                       TonKho int NOT NULL,
+                       CachDung_ID varchar(50),
+                       DonViThuoc_ID varchar(50),
 
-  FOREIGN KEY (CachDung_ID) REFERENCES CachDung(CachDung_ID),
-  FOREIGN KEY (DonViThuoc_ID) REFERENCES DonViThuoc(DVTHuoc_ID)
+                       FOREIGN KEY (CachDung_ID) REFERENCES CachDung(CachDung_ID),
+                       FOREIGN KEY (DonViThuoc_ID) REFERENCES DonViThuoc(DVTHuoc_ID)
 );
 CREATE TABLE DSTHuoc_PKB (
-  PKB_ID varchar(50) NOT NULL,
-  Thuoc_ID varchar(50) NOT NULL,
-  SoLuong int NOT NULL,
+                             PKB_ID varchar(50) NOT NULL,
+                             Thuoc_ID varchar(50) NOT NULL,
+                             SoLuong int NOT NULL,
 
   PRIMARY KEY (PKB_ID, Thuoc_ID),
   FOREIGN KEY (Thuoc_ID) REFERENCES Thuoc(Thuoc_ID)
 );
 
 CREATE TABLE DoanhThu (
-  NgayDT datetime not null,
-  SoBenhNhan int NOT NULL,
-  DoanhThu money NOT NULL,
 
-  PRIMARY KEY (NgayDT)
+                          NgayDT datetime not null,
+                          SoBenhNhan int NOT NULL,
+                          DoanhThu money NOT NULL,
+
+                          PRIMARY KEY (NgayDT)
+
 );
 
 CREATE TABLE BCT (
-  Thang int NOT NULL,
-  Nam int NOT NULL,
-  Thuoc_ID varchar(50) NOT NULL,
-  SoLuong int NOT NULL,
-  SoLanDung int NOT NULL,
+                     Thang int NOT NULL,
+                     Nam int NOT NULL,
+                     Thuoc_ID varchar(50) NOT NULL,
+                     SoLuong int NOT NULL,
+                     SoLanDung int NOT NULL,
 
-  PRIMARY KEY (Thang,Nam,Thuoc_ID),
+                     PRIMARY KEY (Thang,Nam,Thuoc_ID),
 
-  FOREIGN KEY (Thuoc_ID) REFERENCES Thuoc(Thuoc_ID)
+                     FOREIGN KEY (Thuoc_ID) REFERENCES Thuoc(Thuoc_ID)
 );
 
 CREATE TABLE ThongTinPK (
-IdTT varchar(10) NOT NULL,
-TenTT varchar(50) not null,
-Gtri int not null,
-  PRIMARY KEY (IdTT)
-  );
-  GO
+                            IdTT varchar(10) NOT NULL,
+                            TenTT varchar(50) not null,
+                            Gtri int not null,
+                            PRIMARY KEY (IdTT)
+);
+GO
 
 INSERT INTO TaiKhoan (username,mk,ChucVu,HoTen,Email)
 VALUES ('hung123','hung123',N'Quản lý',N'Nguyễn Duy Hưng','hung07092004@gmail.com'),
@@ -185,7 +187,7 @@ VALUES ('T001','Accupril', 20000,23000,100,'CD01','DV02'),
  ('PKB007','LB01',N'Đau thắt ngực','duy123','KB014',7),
  ('PKB008','LB02',N'Khó thở cấp tính','quyen123','KB017',8)
 
- GO 
+ GO
  INSERT INTO DSTHuoc_PKB (PKB_ID,Thuoc_ID,SoLuong)
  VALUES ('PKB001','T001', 3),
  ('PKB001','T003', 4),
@@ -213,6 +215,7 @@ VALUES ('T001','Accupril', 20000,23000,100,'CD01','DV02'),
  ('PKB008','T009', 2)
 
  GO 
+
  INSERT INTO DoanhThu (NgayDT,SoBenhNhan,DoanhThu)
  VALUES ('2024-3-1',50,15000000),
  ('2024-3-2',50,15000000),
@@ -279,3 +282,4 @@ VALUES ('T001','Accupril', 20000,23000,100,'CD01','DV02'),
  INSERT INTO ThongTinPK(IdTT,TenTT,Gtri)
  VALUES ('TT01',N'Tiền khám', 30000),
  ('TT02',N'Bệnh nhân tối đa', 40)
+

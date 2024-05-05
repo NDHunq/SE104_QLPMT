@@ -13,9 +13,11 @@ public class DBConnectionQuyen {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             // ten database
-            String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=QLPK;user=sa;password=123456789;encrypt=true;trustServerCertificate=true";
+            String url = "jdbc:sqlserver://DESKTOP-MR3E6H4\\SQLEXPRESS:1433;databaseName=QLPK";
+            String user = "sa"; // replace with your username
+            String password = "hhhhhhhh444"; // replace with your password
 
-            connection = DriverManager.getConnection(connectionUrl);
+            connection = (Connection) DriverManager.getConnection(url, user, password);
 
         } catch (ClassNotFoundException | java.sql.SQLException e) {
             Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, e);

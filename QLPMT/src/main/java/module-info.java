@@ -12,6 +12,7 @@ module com.example.qlpmt {
     requires com.almasb.fxgl.all;
     requires MaterialFX;
     requires java.sql;
+    requires itextpdf;
 
     opens com.example.qlpmt to javafx.fxml;
     exports com.example.qlpmt;
