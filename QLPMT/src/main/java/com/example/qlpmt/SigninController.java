@@ -1,5 +1,6 @@
 package com.example.qlpmt;
-
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXPasswordField;
 import io.github.palexdev.materialfx.controls.MFXTextField;
@@ -18,6 +19,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
@@ -44,6 +46,8 @@ public class SigninController   implements Initializable {
     private MFXTextField username;
     @FXML
     private MFXTextField Email;
+    @FXML
+    private MFXTextField hoten;
     @FXML
     private MFXPasswordField matkhau;
     @FXML
@@ -81,6 +85,9 @@ public class SigninController   implements Initializable {
 
 
         });
+        dangky.setOnAction(event -> {
+            insertData();
+        });
 
 
     }
@@ -91,10 +98,41 @@ public class SigninController   implements Initializable {
             return;
         }
 
+        // Kiểm tra xem tất cả các trường đã được điền chưa
+        if (matkhau.getText().isEmpty() || matkhau2.getText().isEmpty() || username.getText().isEmpty() || Email.getText().isEmpty() || hoten.getText().isEmpty()) {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Lỗi");
+            alert.setHeaderText(null);
+            alert.setContentText("Vui lòng nhập đầy đủ thông tin");
+            alert.showAndWait();
+            return;
+        }
+
         // Kiểm tra mật khẩu
         if (!matkhau.getText().equals(matkhau2.getText())) {
-            // Mật khẩu không khớp
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Lỗi");
+            alert.setHeaderText(null);
+            alert.setContentText("Sai mật khẩu");
+            alert.showAndWait();
             return;
+        }
+
+        // Kiểm tra xem tên người dùng đã tồn tại chưa
+        try {
+            PreparedStatement checkUserStatement = connection.prepareStatement("SELECT * FROM TaiKhoan WHERE username = ?");
+            checkUserStatement.setString(1, username.getText());
+            ResultSet resultSet = checkUserStatement.executeQuery();
+            if (resultSet.next()) {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Lỗi");
+                alert.setHeaderText(null);
+                alert.setContentText("Tên người dùng đã tồn tại");
+                alert.showAndWait();
+                return;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
         // Xác định chức vụ
@@ -104,16 +142,32 @@ public class SigninController   implements Initializable {
         }
 
         // Tạo câu truy vấn SQL
-        String sql = "INSERT INTO TaiKhoan (username, Email, mk, ChucVu) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO TaiKhoan (username, Email, mk, ChucVu, HoTen) VALUES (?, ?, ?, ?, ?)";
 
         try {
-            PreparedStatement statement = ((Connection) connection).prepareStatement(sql);
+            PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, username.getText());
             statement.setString(2, Email.getText());
             statement.setString(3, matkhau.getText());
             statement.setString(4, chucVu);
+            statement.setString(5, hoten.getText());
 
             statement.executeUpdate();
+
+            // Show success message
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Thành công");
+            alert.setHeaderText(null);
+            alert.setContentText("Thêm thành công");
+            alert.showAndWait();
+
+            // Clear all input fields
+            username.clear();
+            Email.clear();
+            matkhau.clear();
+            matkhau2.clear();
+            hoten.clear();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -125,5 +179,4 @@ public class SigninController   implements Initializable {
             e.printStackTrace();
         }
     }
-
 }

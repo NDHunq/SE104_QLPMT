@@ -11,16 +11,26 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
+import java.io.IOException;
 import java.net.URL;
+import java.nio.Buffer;
 import java.sql.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class NhanVienController implements Initializable {
@@ -33,6 +43,8 @@ public class NhanVienController implements Initializable {
     private MFXTextField search_txtbox;
     @FXML
     private MFXPaginatedTableView<NhanVien> pkb;
+    @FXML
+    private Button add;
     private ObservableList<NhanVien> pkb_list;
 
     @Override
@@ -68,6 +80,38 @@ public class NhanVienController implements Initializable {
 
         // Cap nhat so luong benh nhan luc khoi tao
         soNhanVien.setText(String.valueOf(pkb_list.size()));
+        add.setOnAction(event -> {
+            try {
+                // Load the FXML file
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/signin.fxml"));
+
+                // Create a new stage and set the scene
+                Stage stage = new Stage(StageStyle.UNDECORATED);
+                Parent root = loader.load();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+
+                // Make the window draggable
+                final double[] xOffset = new double[1];
+                final double[] yOffset = new double[1];
+                root.setOnMousePressed(mouseEvent -> {
+                    xOffset[0] = mouseEvent.getSceneX();
+                    yOffset[0] = mouseEvent.getSceneY();
+                });
+                root.setOnMouseDragged(mouseEvent -> {
+                    stage.setX(mouseEvent.getScreenX() - xOffset[0]);
+                    stage.setY(mouseEvent.getScreenY() - yOffset[0]);
+                });
+
+                // Set the title of the window
+                stage.setTitle("Sign In");
+
+                // Show the stage
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     private void setupPaginated () {
