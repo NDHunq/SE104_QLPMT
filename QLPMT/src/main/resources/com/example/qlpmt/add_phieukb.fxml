@@ -141,7 +141,7 @@
          <right>
             <HBox prefHeight="26.0" prefWidth="218.0" BorderPane.alignment="CENTER">
                <children>
-                  <MFXButton fx:id="add_butt" maxHeight="36.0" minHeight="36.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="33.0" style="-fx-font-style: bold;" stylesheets="@../../../style.css" text="+" textFill="WHITE" BorderPane.alignment="CENTER">
+                  <MFXButton fx:id="add_butt" maxHeight="36.0" minHeight="36.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="33.0" style="-fx-font-weight: bold;" stylesheets="@../../../style.css" text="+" textFill="WHITE" BorderPane.alignment="CENTER">
                      <font>
                         <Font name="Times New Roman Bold" size="23.0" />
                      </font>

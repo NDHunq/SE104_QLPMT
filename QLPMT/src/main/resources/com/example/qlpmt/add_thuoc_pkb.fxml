@@ -34,7 +34,7 @@
                     <font>
                         <Font name="System Bold" size="18.0" />
                     </font></Label>
-                <MFXComboBox fx:id="DonViCBB" maxHeight="32.0" maxWidth="Infinity" minHeight="32.0" minWidth="-Infinity" styleClass="fontStd" stylesheets="@../../../style.css">
+                <MFXComboBox fx:id="DonViCBB" disable="true" editable="false" maxHeight="32.0" maxWidth="Infinity" minHeight="32.0" minWidth="-Infinity" styleClass="fontStd" stylesheets="@../../../style.css">
                     <VBox.margin>
                         <Insets bottom="5.0" />
                     </VBox.margin></MFXComboBox>
@@ -84,7 +84,7 @@
                         </HBox>
                     </right>
                     <top>
-                        <MFXComboBox fx:id="CachDungCBB" maxHeight="32.0" maxWidth="Infinity" minHeight="32.0" minWidth="-Infinity" styleClass="fontStd" stylesheets="@../../../style.css" BorderPane.alignment="CENTER">
+                        <MFXComboBox fx:id="CachDungCBB" disable="true" maxHeight="32.0" maxWidth="Infinity" minHeight="32.0" minWidth="-Infinity" styleClass="fontStd" stylesheets="@../../../style.css" BorderPane.alignment="CENTER">
                             <BorderPane.margin>
                                 <Insets bottom="10.0" />
                             </BorderPane.margin>

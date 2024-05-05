@@ -85,6 +85,8 @@ public class ViewPhieuKBController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        HoaDonController controller = loader.getController();
+        controller.InitData(PKB_id,DSKB_id);
         Stage stage = new Stage();
         stage.initStyle(StageStyle.UNDECORATED);
         root.setOnMousePressed(event -> {

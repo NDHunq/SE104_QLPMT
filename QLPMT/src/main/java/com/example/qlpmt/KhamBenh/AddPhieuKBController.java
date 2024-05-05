@@ -86,7 +86,15 @@ public class AddPhieuKBController implements Initializable {
         HuyBtn.setOnAction((ActionEvent event) -> {
             Node source = (Node) event.getSource();
             Stage stage = (Stage) source.getScene().getWindow();
-            stage.close();
+            String sql = "DELETE FROM DSTHuoc_PKB WHERE PKB_ID = ?";
+            try {
+                pst = con.prepareStatement(sql);
+                pst.setString(1, PKB_id);
+                pst.executeUpdate();
+                stage.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
         XongBtn.setOnAction((ActionEvent event) -> {
             Node source = (Node) event.getSource();
@@ -324,11 +332,9 @@ public class AddPhieuKBController implements Initializable {
             rs = pst.executeQuery();
             if (rs.next()) {
                 String maxPKB_id = rs.getString("MaxPKB_id");
-                System.out.println(maxPKB_id);
                 int num = Integer.parseInt(maxPKB_id.substring(3)); // Get the number part
                 num++; // Increment the number
                 PKB_id = "PKB" + String.format("%03d", num); // Format the new number with leading zeros and prepend "PKB"
-                System.out.println(PKB_id);
             }
         } catch (Exception e) {
             e.printStackTrace();

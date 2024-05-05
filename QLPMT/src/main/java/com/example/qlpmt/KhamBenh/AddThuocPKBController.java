@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -79,6 +80,27 @@ public class AddThuocPKBController implements Initializable {
         ThuocCBB.getItems().addAll(fetchData("Thuoc", "TenThuoc"));
         DonViCBB.getItems().addAll(fetchData("donvithuoc", "TenDVThuoc"));
         CachDungCBB.getItems().addAll(fetchData("cachdung", "TencachDung"));
+        ThuocCBB.setOnAction((ActionEvent event) -> {
+            String selectedThuoc = ThuocCBB.getSelectionModel().getSelectedItem();
+            try {
+                // Fetch ID corresponding to the selected name
+                String idThuoc = fetchId("Thuoc", "TenThuoc", "Thuoc_ID", selectedThuoc);
+
+                // Fetch corresponding DonVi from database
+                String sql = "SELECT DonViThuoc.TenDVThuoc, CachDung.TenCachDung FROM Thuoc JOIN DonViThuoc ON Thuoc.DonViThuoc_ID = DonViThuoc.DVThuoc_ID JOIN CachDung ON Thuoc.CachDung_ID = CachDung.CachDung_ID WHERE Thuoc.Thuoc_ID = ?";
+                PreparedStatement pst = con.prepareStatement(sql);
+                pst.setString(1, idThuoc);
+                ResultSet rs = pst.executeQuery();
+                if (rs.next()) {
+                    String donVi = rs.getString("TenDVThuoc");
+                    String cachDung = rs.getString("TenCachDung");
+                    DonViCBB.setValue(donVi);
+                    CachDungCBB.setValue(cachDung);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
     public void setAddPhieuKBController(AddPhieuKBController controller) {
         this.addPhieuKBController = controller;
