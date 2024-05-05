@@ -145,7 +145,7 @@
                   </BorderPane>
                </children>
             </VBox>
-            <BorderPane layoutX="2.0" layoutY="551.0" prefHeight="41.0" prefWidth="145.0" AnchorPane.bottomAnchor="15.0">
+            <BorderPane fx:id="lotxt" layoutX="2.0" layoutY="551.0" prefHeight="41.0" prefWidth="145.0" AnchorPane.bottomAnchor="15.0">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>

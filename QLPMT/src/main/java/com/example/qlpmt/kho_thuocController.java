@@ -18,17 +18,20 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 import Model.KhoThuoc;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class kho_thuocController implements Initializable {
 @FXML
-    public ImageView Add;
+    public Button Add;
 
     DateTimeFormatter string_formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -40,6 +43,12 @@ public class kho_thuocController implements Initializable {
     private ObservableList<KhoThuoc> KhoThuoc_list;
     public void initialize(URL location, ResourceBundle resources){
         setupPaginated();
+        double tableViewWidth = khothuoc.getPrefWidth();
+        int numberOfColumns = khothuoc.getTableColumns().size();
+        System.out.println(numberOfColumns);
+        for (MFXTableColumn column : khothuoc.getTableColumns()) {
+            column.setPrefWidth(tableViewWidth / numberOfColumns);
+        }
         khothuoc.autosizeColumnsOnInitialization();
 
         When.onChanged(khothuoc.currentPageProperty())
@@ -65,8 +74,20 @@ public class kho_thuocController implements Initializable {
     {
 
         KhoThuoc_list = FXCollections.observableArrayList(
-                new KhoThuoc(1,"Paracetamol", "Viên", 40, "5"),
-                new KhoThuoc(2,"Panadol", "Viên", 20, "2.5")
+                new KhoThuoc(1,"Paracetamol", "Viên", 40, "5","Sửa"),
+                new KhoThuoc(2,"Panadol", "Viên", 20, "2.5","Sửa"),
+                new KhoThuoc(2,"Panadol", "Viên", 20, "2.5","Sửa"),
+                new KhoThuoc(2,"Panadol", "Viên", 20, "2.5","Sửa"),
+                new KhoThuoc(2,"Panadol", "Viên", 20, "2.5","Sửa"),
+                new KhoThuoc(2,"Panadol", "Viên", 20, "2.5","Sửa"),
+                new KhoThuoc(2,"Panadol", "Viên", 20, "2.5","Sửa"),
+                new KhoThuoc(2,"Panadol", "Viên", 20, "2.5","Sửa"),
+                new KhoThuoc(2,"Panadol", "Viên", 20, "2.5","Sửa"),
+                new KhoThuoc(2,"Panadol", "Viên", 20, "2.5","Sửa"),
+                new KhoThuoc(2,"Panadol", "Viên", 20, "2.5","Sửa"),
+                new KhoThuoc(2,"Panadol", "Viên", 20, "2.5","Sửa"),
+                new KhoThuoc(2,"Panadol", "Viên", 20, "2.5","Sửa"),
+                new KhoThuoc(2,"Panadol", "Viên", 20, "2.5","Sửa")
 
         );
 
@@ -78,12 +99,21 @@ public class kho_thuocController implements Initializable {
         MFXTableColumn<KhoThuoc> don_vi = new MFXTableColumn<>("Đơn Vị",false, Comparator.comparing(KhoThuoc::getDonvi));
         MFXTableColumn<KhoThuoc> so_luong = new MFXTableColumn<>("Số Lượng",false, Comparator.comparing(KhoThuoc::getSoluong));
         MFXTableColumn<KhoThuoc> dongia = new MFXTableColumn<>("Đơn giá nhập",false, Comparator.comparing(KhoThuoc::getDongia));
+        MFXTableColumn<KhoThuoc> img = new MFXTableColumn<>("Chỉnh sửa",false, Comparator.comparing(KhoThuoc::getImgThuoc));
 
 
-        stt.setRowCellFactory(khoThuoc -> {
-            MFXTableRowCell<KhoThuoc, Integer> cell = new MFXTableRowCell<>(KhoThuoc::getStt);
+        stt.setRowCellFactory(khoThuoc ->  new MFXTableRowCell<>(KhoThuoc::getStt));
+        tenthuoc.setRowCellFactory(khoThuoc ->  new MFXTableRowCell<>(KhoThuoc::getTenthuoc));
+        don_vi.setRowCellFactory(khoThuoc -> new MFXTableRowCell<>(KhoThuoc::getDonvi));
+        so_luong.setRowCellFactory(khoThuoc ->  new MFXTableRowCell<>(KhoThuoc::getSoluong));
+        dongia.setRowCellFactory(khoThuoc ->  new MFXTableRowCell<>(KhoThuoc::getDongia));
+        img.setRowCellFactory(khoThuoc -> {
+            MFXTableRowCell<KhoThuoc, String> cell = new MFXTableRowCell<>(KhoThuoc::getImgThuoc); cell.setTextFill(Color.BLUE);
+            cell.setCursor(Cursor.HAND);
+            cell.setUnderline(true);
+
             cell.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2) {
+                if (event.getClickCount() == 1) {
                     KhoThuoc rowData = khoThuoc;
                     // rowData is the KhoThuoc object of the clicked row
                     try {
@@ -102,39 +132,16 @@ public class kho_thuocController implements Initializable {
                         e.printStackTrace();
                     }
 
-                    // Now you can use these variables as needed
                 }
             });
             return cell;
         });
-        tenthuoc.setRowCellFactory(khoThuoc -> {
-            MFXTableRowCell<KhoThuoc,String> cell = new MFXTableRowCell<>(KhoThuoc::getTenthuoc);
-
-            return cell;
-        });
-        don_vi.setRowCellFactory(khoThuoc -> {
-            MFXTableRowCell<KhoThuoc,String> cell = new MFXTableRowCell<>(KhoThuoc::getDonvi);
-
-            return cell;
-        });
-        so_luong.setRowCellFactory(khoThuoc -> {
-            MFXTableRowCell<KhoThuoc,Integer> cell = new MFXTableRowCell<>(KhoThuoc::getSoluong);
-
-            return cell;
-        });
-        dongia.setRowCellFactory(khoThuoc -> {
-            MFXTableRowCell<KhoThuoc,String> cell = new MFXTableRowCell<>(KhoThuoc::getDongia);
-
-            return cell;
-        });
-
-        khothuoc.getTableColumns().addAll(stt,tenthuoc,don_vi,so_luong,dongia);
+        khothuoc.getTableColumns().addAll(stt,tenthuoc,don_vi,so_luong,dongia,img);
         khothuoc.getFilters().addAll(
-                new IntegerFilter<>("stt",KhoThuoc::getStt),
-                new StringFilter<>("tenthuoc",KhoThuoc::getTenthuoc),
-                new StringFilter<>("donvi",KhoThuoc::getDonvi),
-                new IntegerFilter<>("soluong",KhoThuoc::getSoluong),
-                new StringFilter<>("dongia",KhoThuoc::getDongia)
+                new StringFilter<>("Tên Thuốc",KhoThuoc::getTenthuoc),
+                new StringFilter<>("Đơn vị",KhoThuoc::getDonvi),
+                new IntegerFilter<>("Số lượng",KhoThuoc::getSoluong),
+                new StringFilter<>("Đơn giá",KhoThuoc::getDongia)
 
         );
         setData();

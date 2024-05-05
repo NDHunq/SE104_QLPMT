@@ -8,16 +8,24 @@ public class KhoThuoc {
     private String donvi;
     private Integer soluong;
     private  String dongia;
+    private  String imgThuoc;
 
 
+    public String getImgThuoc() {
+        return imgThuoc;
+    }
 
+    public void setImgThuoc(String imgThuoc) {
+        this.imgThuoc = imgThuoc;
+    }
 
-    public KhoThuoc(Integer stt, String tenthuoc, String donvi, Integer soluong, String dongia ) {
+    public KhoThuoc(Integer stt, String tenthuoc, String donvi, Integer soluong, String dongia , String imgThuoc) {
         this.tenthuoc = tenthuoc;
         this.donvi = donvi;
         this.soluong = soluong;
         this.dongia=dongia;
         this.stt=stt;
+        this.imgThuoc=imgThuoc;
 
     }
 

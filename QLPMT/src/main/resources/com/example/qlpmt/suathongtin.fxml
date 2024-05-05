@@ -22,7 +22,7 @@
       </TextField>
       <HBox alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="575.0">
          <children>
-            <MFXButton fx:id="themthuoc" prefHeight="35.0" prefWidth="81.0" style="-fx-background-color: #BCE29E;-fx-border-radius: 2px" text="Xong">
+            <MFXButton fx:id="xong" prefHeight="35.0" prefWidth="81.0" style="-fx-background-color: #BCE29E;-fx-border-radius: 2px" text="Xong">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>

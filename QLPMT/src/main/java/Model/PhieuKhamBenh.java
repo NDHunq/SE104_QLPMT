@@ -3,6 +3,7 @@ package Model;
 import javafx.collections.ObservableArray;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class PhieuKhamBenh{
@@ -12,6 +13,7 @@ public class PhieuKhamBenh{
     private String LoaiBenh;
     private String TrieuChung;
     private LocalDate NgayKham;
+    DateTimeFormatter string_formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public PhieuKhamBenh(String Cccd, String HoTen, String LoaiBenh, String TrieuChung, LocalDate NgayKham) {
         this.Cccd = Cccd;
@@ -58,7 +60,7 @@ public class PhieuKhamBenh{
     }
 
     public String getNgayKham_string(){
-        return NgayKham.toString();
+        return String.format("%s", NgayKham.format(string_formatter));
     }
 
     public void setNgayKham(LocalDate NgayKham) {

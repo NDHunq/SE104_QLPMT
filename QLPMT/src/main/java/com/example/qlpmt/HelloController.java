@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -15,6 +16,7 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 public class HelloController implements Initializable {
 
@@ -56,23 +58,85 @@ public class HelloController implements Initializable {
     private BorderPane txt6;
     @FXML
     private  BorderPane mainview;
+    @FXML
+    private ImageView logout;
+    @FXML
+    private BorderPane lotxt;
+
 
 
 
 
     // Add a boolean variable to track the state of the drawerPane
     private boolean isDrawerOpen = false;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
 //load khambenh.fxml
         Parent content = null;
         try {
-            content = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/kham_benh.fxml"));
+            content = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/KhamBenh/kham_benh.fxml"));
         } catch (IOException e) {
             System.exit(0);
         }
+        bd1.setCursor(javafx.scene.Cursor.HAND);
+        bd2.setCursor(javafx.scene.Cursor.HAND);
+        bd3.setCursor(javafx.scene.Cursor.HAND);
+        bd4.setCursor(javafx.scene.Cursor.HAND);
+        bd5.setCursor(javafx.scene.Cursor.HAND);
+        bd6.setCursor(javafx.scene.Cursor.HAND);
+        txt1.setCursor(javafx.scene.Cursor.HAND);
+        txt2.setCursor(javafx.scene.Cursor.HAND);
+        txt3.setCursor(javafx.scene.Cursor.HAND);
+        txt4.setCursor(javafx.scene.Cursor.HAND);
+        txt5.setCursor(javafx.scene.Cursor.HAND);
+        txt6.setCursor(javafx.scene.Cursor.HAND);
+        logout.setCursor(javafx.scene.Cursor.HAND);
+    lotxt.setCursor(javafx.scene.Cursor.HAND);
+        menu.setCursor(javafx.scene.Cursor.HAND);
+
+        logout.setOnMouseClicked(event -> {
+            try {
+
+                Parent root = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/login.fxml"));
+
+                // Get the current stage
+                Stage stage = (Stage) logout.getScene().getWindow();
+                root.setOnMousePressed(event1 -> {
+                    double x = event1.getSceneX();
+                    double y = event1.getSceneY();
+                    root.setOnMouseDragged(event2 -> {
+                        stage.setX(event2.getScreenX() - x);
+                        stage.setY(event2.getScreenY() - y);
+                    });
+                });
+
+                // Create a new scene and set it on the stage
+                Scene scene = new Scene(root);
+                scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
+                stage.setScene(scene);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        lotxt.setOnMouseClicked(event -> {
+            try {
+
+                Parent root = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/login.fxml"));
+
+                // Get the current stage
+                Stage stage = (Stage) logout.getScene().getWindow();
+
+                // Create a new scene and set it on the stage
+                Scene scene = new Scene(root);
+                scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
+                stage.setScene(scene);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
         // Set the content to the mainView
         mainview.setCenter(content);
@@ -95,7 +159,7 @@ public class HelloController implements Initializable {
             // Load the content from kham_benh.fxml
             Parent khamBenhContent = null;
             try {
-                khamBenhContent = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/kham_benh.fxml"));
+                khamBenhContent = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/KhamBenh/kham_benh.fxml"));
             } catch (IOException e) {
                 System.exit(0);
             }
@@ -126,7 +190,7 @@ public class HelloController implements Initializable {
             // Load the content from kham_benh.fxml
             Parent khamBenhContent = null;
             try {
-                khamBenhContent = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/kham_benh.fxml"));
+                khamBenhContent = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/KhamBenh/kham_benh.fxml"));
             } catch (IOException e) {
                 System.exit(0);
             }
@@ -192,7 +256,7 @@ public class HelloController implements Initializable {
             try {
                 khamBenhContent = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/thuoc.fxml"));
             } catch (IOException e) {
-                System.exit(0);
+                e.printStackTrace();
             }
             mainview.setCenter(khamBenhContent);
 

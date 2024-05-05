@@ -13,16 +13,16 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="870.0" style="-fx-background-color: #D4F2FF" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.cai_datController">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="931.0" style="-fx-background-color: #D4F2FF" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.cai_datController">
    <content>
-      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="802.0" prefWidth="1006.0" style="-fx-background-color: #D4F2FF">
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="931.0" style="-fx-background-color: #D4F2FF">
          <children>
             <Text fill="#2264d1" strokeType="OUTSIDE" strokeWidth="0.0" text="Cài đặt">
                <font>
                   <Font name="Times New Roman Bold" size="24.0" />
                </font>
             </Text>
-            <Line endX="150.49290466308594" startX="-100.0">
+            <Line endX="600" startX="-100.0">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
@@ -119,12 +119,12 @@
                         </HBox>
                      </children>
                      <HBox.margin>
-                        <Insets left="20.0" />
+                        <Insets bottom="20.0" left="20.0" />
                      </HBox.margin>
                   </VBox>
                   <VBox prefHeight="122.0" prefWidth="278.0">
                      <children>
-                        <Text  fill="#2264d1" strokeType="OUTSIDE" strokeWidth="0.0" text=" Họ tên">
+                        <Text fill="#2264d1" strokeType="OUTSIDE" strokeWidth="0.0" text=" Họ tên">
                            <font>
                               <Font name="Times New Roman Bold" size="20.0" />
                            </font>
@@ -187,7 +187,7 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Text>
-            <VBox maxWidth="-Infinity" prefHeight="406.0" prefWidth="676.0" style="-fx-border-width: 2px;-fx-border-color: #2264D1;-fx-border-radius: 5px">
+            <VBox maxWidth="-Infinity" prefHeight="750.0" prefWidth="676.0" style="-fx-border-width: 2px;-fx-border-color: #2264D1;-fx-border-radius: 5px">
                <children>
                   <HBox minHeight="-Infinity" prefHeight="86.0" prefWidth="651.0">
                      <children>
@@ -203,7 +203,7 @@
                               </Text>
                               <HBox prefHeight="41.0" prefWidth="290.0" style="-fx-border-width: 1px;-fx-border-color: Black                         ;-fx-border-radius: 5px">
                                  <children>
-                                    <Text fx:id="tienkham" strokeType="OUTSIDE" strokeWidth="0.0" text="30.000">
+                                    <Text fx:id="tienkham" strokeType="OUTSIDE" strokeWidth="0.0" text="10.000">
                                        <font>
                                           <Font name="Times New Roman Bold" size="16.0" />
                                        </font>
@@ -226,7 +226,7 @@
                         </VBox>
                         <VBox prefHeight="119.0" prefWidth="290.0">
                            <children>
-                              <Text  fill="#2264d1" strokeType="OUTSIDE" strokeWidth="0.0" text="Số bệnh nhân tối đa">
+                              <Text fill="#2264d1" strokeType="OUTSIDE" strokeWidth="0.0" text="Số bệnh nhân tối đa">
                                  <font>
                                     <Font name="Times New Roman Bold" size="18.0" />
                                  </font>
@@ -236,7 +236,7 @@
                               </Text>
                               <HBox prefHeight="42.0" prefWidth="290.0" style="-fx-border-width: 1px;-fx-border-color: Black                         ;-fx-border-radius: 5px">
                                  <children>
-                                    <Text fx:id="bntoida" strokeType="OUTSIDE" strokeWidth="0.0" text="40">
+                                    <Text fx:id="bntoida" strokeType="OUTSIDE" strokeWidth="0.0" text="10">
                                        <font>
                                           <Font name="Times New Roman Bold" size="16.0" />
                                        </font>
@@ -306,7 +306,7 @@
                         <Insets top="10.0" />
                      </VBox.margin>
                   </HBox>
-                  <MFXListView prefHeight="88.0" prefWidth="598.0">
+                  <MFXListView prefHeight="150.0" prefWidth="598.0">
                      <VBox.margin>
                         <Insets bottom="5.0" left="20.0" top="10.0" />
                      </VBox.margin>
@@ -352,7 +352,7 @@
                         <Insets left="20.0" top="10.0" />
                      </VBox.margin>
                   </HBox>
-                  <MFXListView prefHeight="93.0" prefWidth="598.0">
+                  <MFXListView prefHeight="150.0" prefWidth="598.0">
                      <VBox.margin>
                         <Insets bottom="10.0" left="20.0" top="10.0" />
                      </VBox.margin>
@@ -402,9 +402,9 @@
                         <Insets left="20.0" top="10.0" />
                      </VBox.margin>
                   </HBox>
-                  <MFXListView prefHeight="88.0" prefWidth="606.0">
+                  <MFXListView prefHeight="150.0" prefWidth="598.0">
                      <VBox.margin>
-                        <Insets left="20.0" top="10.0" />
+                        <Insets bottom="20.0" left="20.0" top="10.0" />
                      </VBox.margin>
                   </MFXListView>
                </children>

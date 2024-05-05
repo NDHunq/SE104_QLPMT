@@ -7,6 +7,7 @@ public class Thuoc {
     private String soluong;
     private  String solandung;
     public Thuoc(int stt,String tenthuoc, String donvi, String soluong,String solandung) {
+
         this.tenthuoc = tenthuoc;
         this.donvi = donvi;
         this.soluong = soluong;
@@ -47,6 +48,7 @@ public class Thuoc {
     }
 
     public void setSoluong(String soluong) {
+
         this.soluong = soluong;
     }
 }
