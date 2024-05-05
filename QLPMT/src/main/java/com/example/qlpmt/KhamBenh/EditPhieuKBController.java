@@ -223,15 +223,13 @@ public class EditPhieuKBController implements Initializable {
         delete.setStyle("-fx-text-fill: red; -fx-font-size: 16px; -fx-font-family: 'Times New Roman'");
 
         // Them su kien cho nut chinh sua
-        edit.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                // Handle the click event here
-                try {
-                    SuaThuoc(event);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+        edit.setOnAction(event -> {
+            try {
+                MFXTableRow<ThuocPKB> row = (MFXTableRow<ThuocPKB>) contextMenu.getOwnerNode();
+                ThuocPKB rowData = row.getData();
+                SuaThuoc();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
 
@@ -251,7 +249,7 @@ public class EditPhieuKBController implements Initializable {
         });
     }
 
-    public void SuaThuoc(ActionEvent events) throws IOException {
+    public void SuaThuoc() throws IOException {
         FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("sua_thuoc_pkb.fxml"));
         Parent root = loader.load();
         Stage stage = new Stage();
@@ -319,6 +317,22 @@ public class EditPhieuKBController implements Initializable {
         }
         else{
             System.out.println("Nguoi kham is empty");
+        }
+    }
+
+    public void LoadTableView(){
+        String query = "SELECT * FROM DSTHuoc_PKB WHERE PKB_ID = ?";
+        try {
+            Connection conn = DBConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, rowDataProperties.get().getIdPKB());
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                ThuocPKB temp = new ThuocPKB(rs.getInt("STT"),rs.getString("TenThuoc"),rs.getString("DonVi"),rs.getInt("SoLuong"),rs.getString("CachDung"));
+                list.add(temp);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

@@ -309,7 +309,6 @@ public class benh_nhanController implements Initializable{
             dialogContent.setMaxSize(400, 200);
             dialogContent.setHeaderIcon(info_icon);
             dialogContent.setHeaderText(headerText);
-            convertDialogTo("mfx-info-dialog");
             dialog.showDialog();
         });
     }
@@ -327,14 +326,5 @@ public class benh_nhanController implements Initializable{
             e.printStackTrace();
         }
         return false; // PKB_ID không tồn tại trong bảng
-    }
-
-    private void convertDialogTo(String styleClass) {
-        dialogContent.getStyleClass().removeIf(
-                s -> s.equals("mfx-info-dialog") || s.equals("mfx-warn-dialog") || s.equals("mfx-error-dialog")
-        );
-
-        if (styleClass != null)
-            dialogContent.getStyleClass().add(styleClass);
     }
 }
