@@ -13,9 +13,9 @@ public class DBConnectionQuyen {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             // ten database
-            String url = "jdbc:sqlserver://DESKTOP-MR3E6H4\\SQLEXPRESS:1433;databaseName=QLPK";
+            String url = "jdbc:sqlserver://Buddy\\SQLEXPRESS:1433;databaseName=QLPK";
             String user = "sa"; // replace with your username
-            String password = "hhhhhhhh444"; // replace with your password
+            String password = "123"; // replace with your password
 
             connection = (Connection) DriverManager.getConnection(url, user, password);
 
