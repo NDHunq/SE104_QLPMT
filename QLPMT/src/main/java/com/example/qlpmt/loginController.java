@@ -72,10 +72,10 @@ public class loginController  implements Initializable {
                 try {
                     login.setBackground(new javafx.scene.layout.Background(new javafx.scene.layout.BackgroundFill(javafx.scene.paint.Color.valueOf("#134494"), new javafx.scene.layout.CornerRadii(5), new javafx.geometry.Insets(0))));
                     // Load the new FXML file
-                   String link = "/com/example/qlpmt/hello-view2.fxml";
-                   if (quanly == 1) {
-                            link = "/com/example/qlpmt/hello-view.fxml";
-                        }
+                    String link = "/com/example/qlpmt/hello-view2.fxml";
+                    if (quanly == 1) {
+                        link = "/com/example/qlpmt/hello-view.fxml";
+                    }
                     Parent root = FXMLLoader.load(getClass().getResource(link));
 
 
@@ -96,6 +96,7 @@ public class loginController  implements Initializable {
                     Scene scene = new Scene(root);
                     scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
                     stage.setScene(scene);
+                    stage.centerOnScreen();
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -131,6 +132,7 @@ public class loginController  implements Initializable {
                 Scene scene = new Scene(root);
                 scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
                 stage.setScene(scene);
+                stage.centerOnScreen();
             } catch (IOException e) {
                 e.printStackTrace();
             }
