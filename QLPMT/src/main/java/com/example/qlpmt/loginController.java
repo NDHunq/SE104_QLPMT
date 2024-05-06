@@ -53,8 +53,7 @@ public class loginController  implements Initializable {
     private MFXPasswordField passwordField;
 
 
-    @FXML
-    private Text signin;
+
     int quanly = 0;
 
     @Override
@@ -115,26 +114,7 @@ public class loginController  implements Initializable {
             Stage stage = (Stage) ((ImageView) event.getSource()).getScene().getWindow();
             stage.setIconified(true);
         });
-        signin.setOnMouseClicked(event -> {
-            try {
-                signin.setCursor(Cursor.HAND);
-                Parent root = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/signin.fxml"));
-                Stage stage = (Stage) signin.getScene().getWindow();
-                root.setOnMousePressed(event1 -> {
-                    double x = event1.getSceneX();
-                    double y = event1.getSceneY();
-                    root.setOnMouseDragged(event2 -> {
-                        stage.setX(event2.getScreenX() - x);
-                        stage.setY(event2.getScreenY() - y);
-                    });
-                });
-                Scene scene = new Scene(root);
-                scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
-                stage.setScene(scene);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+
 
     }
 

@@ -1,9 +1,7 @@
 package com.example.qlpmt;
 
 import Model.NhanVien;
-import io.github.palexdev.materialfx.controls.MFXPaginatedTableView;
-import io.github.palexdev.materialfx.controls.MFXTableColumn;
-import io.github.palexdev.materialfx.controls.MFXTextField;
+import io.github.palexdev.materialfx.controls.*;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import io.github.palexdev.materialfx.filter.StringFilter;
 import io.github.palexdev.materialfx.utils.others.observables.When;
@@ -16,7 +14,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
@@ -50,7 +52,7 @@ public class NhanVienController implements Initializable {
     @Override
     public void initialize (URL url, ResourceBundle resourceBundle) {
         setupPaginated();
-
+        setupContextMenu();
         //chia deu kich thuoc cac cot de vua voi chieu rong cua tableview
         double tableViewWidth = pkb.getPrefWidth();
         int numberOfColumns = pkb.getTableColumns().size();
@@ -163,5 +165,50 @@ public class NhanVienController implements Initializable {
             e.printStackTrace();
         }
 
+    }
+    public void setupContextMenu(){
+        MFXContextMenu contextMenu = new MFXContextMenu(pkb);
+        MFXContextMenuItem edit = new MFXContextMenuItem("Chỉnh sửa");
+        MFXContextMenuItem delete = new MFXContextMenuItem("Xóa");
+        contextMenu.getItems().addAll(edit, delete);
+        edit.setStyle("-fx-text-fill: #2264D1; -fx-font-size: 16px; -fx-font-family: 'Times New Roman'");
+        delete.setStyle("-fx-text-fill: red; -fx-font-size: 16px; -fx-font-family: 'Times New Roman'");
+
+        delete.setOnAction(event -> {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this item?", ButtonType.YES, ButtonType.NO);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES) {
+
+
+            }
+        });
+
+        pkb.setTableRowFactory(nhanvien -> {
+            MFXTableRow<NhanVien> row = new MFXTableRow<>(pkb, new NhanVien("","","",""));
+            row.addEventHandler(ContextMenuEvent.CONTEXT_MENU_REQUESTED, event -> {
+                contextMenu.show(row, event.getScreenX(), event.getScreenY());
+                event.consume();
+            });
+            row.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                if (event.getButton() == MouseButton.PRIMARY) {
+                    contextMenu.hide();
+                }
+            });
+            return row;
+        });
+    }
+
+    private void deleteNhanVienFromDatabase(NhanVien nhanVien) {
+        try {
+            Connection connection = DBConnectionQuyen.getConnection();
+            String sql = "DELETE FROM TaiKhoan WHERE username = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, nhanVien.getUsername());
+            statement.executeUpdate();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
