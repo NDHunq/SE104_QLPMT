@@ -1,5 +1,6 @@
 package com.example.qlpmt.KhamBenh;
 
+import Model.DSThuoc_PKB;
 import Model.PhieuKhamBenh;
 import com.example.qlpmt.DBConnection;
 import com.example.qlpmt.HelloApplication;
@@ -81,7 +82,15 @@ public class AddPhieuKBController implements Initializable {
         close.setOnMouseClicked(event -> {
             Node source = (Node) event.getSource();
             Stage stage = (Stage) source.getScene().getWindow();
-            stage.close();
+            String sql = "DELETE FROM DSTHuoc_PKB WHERE PKB_ID = ?";
+            try {
+                pst = con.prepareStatement(sql);
+                pst.setString(1, PKB_id);
+                pst.executeUpdate();
+                stage.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
         HuyBtn.setOnAction((ActionEvent event) -> {
             Node source = (Node) event.getSource();
@@ -251,8 +260,13 @@ public class AddPhieuKBController implements Initializable {
         }
     }
 
-    public void SuaThuoc(ActionEvent events) throws IOException {
+    public void SuaThuoc(ActionEvent events,ThuocPKB rowData ) throws IOException {
         FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("sua_thuoc_pkb.fxml"));
+        SuaThuocPKBController2 controller = new SuaThuocPKBController2();
+        loader.setController(controller);
+        SuaThuocPKBController2 controllerr = loader.getController();
+        controllerr.InitData(PKB_id,rowData);
+        controllerr.setAddPhieuKBController(this);
         Parent root = loader.load();
         Stage stage = new Stage();
         stage.initStyle(StageStyle.UNDECORATED);
@@ -268,6 +282,7 @@ public class AddPhieuKBController implements Initializable {
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.setScene(scene);
         stage.show();
+
     }
     public void AddThuoc(ActionEvent events) throws IOException {
         FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("add_thuoc_pkb.fxml"));
@@ -297,12 +312,15 @@ public class AddPhieuKBController implements Initializable {
         contextMenu.getItems().addAll(edit, delete);
         edit.setStyle("-fx-text-fill: #2264D1; -fx-font-size: 16px; -fx-font-family: 'Times New Roman'");
         delete.setStyle("-fx-text-fill: red; -fx-font-size: 16px; -fx-font-family: 'Times New Roman'");
+
         edit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 // Handle the click event here
                 try {
-                    SuaThuoc(event);
+                    MFXTableRow<ThuocPKB> row = (MFXTableRow<ThuocPKB>) contextMenu.getOwnerNode();
+                    ThuocPKB rowData = row.getData();
+                    SuaThuoc(event,rowData);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -311,23 +329,50 @@ public class AddPhieuKBController implements Initializable {
         delete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                // Handle the click event here
-                System.out.println("Xóa clicked");
+                MFXTableRow<ThuocPKB> row = (MFXTableRow<ThuocPKB>) contextMenu.getOwnerNode();
+                ThuocPKB rowData = row.getData();
+                String Thuoc_ID=fetchId("Thuoc","TenThuoc","Thuoc_ID",rowData.getTenThuoc());
+
+                // Delete the record from the DSTHuoc_PKB table
+                String sql = "DELETE FROM DSTHuoc_PKB WHERE PKB_ID = ? AND Thuoc_ID = ?";
+                try {
+                    PreparedStatement pst = con.prepareStatement(sql);
+                    pst.setString(1, PKB_id);
+                    pst.setString(2, Thuoc_ID);
+                    pst.executeUpdate();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                refreshPage();
+                System.out.println("Da xoa<3");
             }
         });
         table_thuoc.setTableRowFactory(phieukhambenh -> {
-            MFXTableRow<ThuocPKB> row = new MFXTableRow<>(table_thuoc, new ThuocPKB(0, "", "", 0, ""));
-            row.addEventHandler(ContextMenuEvent.CONTEXT_MENU_REQUESTED, event -> {
-                contextMenu.show(row, event.getScreenX(), event.getScreenY());
+            MFXTableRow<ThuocPKB> roww = new MFXTableRow<>(table_thuoc, new ThuocPKB(0, "", "", 0, ""));
+            roww.addEventHandler(ContextMenuEvent.CONTEXT_MENU_REQUESTED, event -> {
+                contextMenu.show(roww, event.getScreenX(), event.getScreenY());
                 event.consume();
             });
-            row.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            roww.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                 if (event.getButton() == MouseButton.PRIMARY) {
                     contextMenu.hide();
                 }
             });
-            return row;
+            return roww;
         });
+    }
+    String fetchId(String tableName, String columnName, String idColumnName, String name) {
+        String id = "";
+        try {
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT " + idColumnName + " FROM " + tableName + " WHERE " + columnName + " = '" + name + "'");
+            if (rs.next()) {
+                id = rs.getString(idColumnName);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return id;
     }
     public void setData(){
         try {
