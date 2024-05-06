@@ -9,14 +9,22 @@ public class KhamBenh {
     private String DiaChi;
     private String imgPkb;
 
-    public KhamBenh(String STT, String hoTen, String CCCD, String gioiTinh, String namSinh, String diaChi, String imgPkb) {
+    public KhamBenh(String STT, String hoTen, String CCCD, int gioiTinh, String namSinh, String diaChi, int imgPkb) {
         this.STT = STT;
         HoTen = hoTen;
         this.CCCD = CCCD;
-        GioiTinh = gioiTinh;
+        if(gioiTinh == 1){
+            GioiTinh = "Nam";
+        }else{
+            GioiTinh = "Nữ";
+        }
         NamSinh = namSinh;
         DiaChi = diaChi;
-        this.imgPkb = imgPkb;
+        if(imgPkb == 1){
+            this.imgPkb = "Xem";
+        }else{
+            this.imgPkb = "Tạo";
+        }
     }
 
     public String getImgPkb() {

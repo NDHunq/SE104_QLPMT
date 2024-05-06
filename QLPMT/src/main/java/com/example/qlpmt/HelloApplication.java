@@ -16,7 +16,6 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("login.fxml"));
         Parent root = loader.load();
-
         stage.initStyle(StageStyle.UNDECORATED);
         root.setOnMousePressed(event -> {
             x = event.getSceneX();

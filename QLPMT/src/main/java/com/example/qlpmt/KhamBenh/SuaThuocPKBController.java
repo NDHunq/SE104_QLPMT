@@ -15,7 +15,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

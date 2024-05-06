@@ -48,12 +48,12 @@
                <children>
                   <VBox prefHeight="174.0" prefWidth="340.0">
                      <children>
-                        <Label styleClass="header" stylesheets="@../../../style.css" text="SĐT">
+                        <Label styleClass="header" stylesheets="@../../../style.css" text="CCCD">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <MFXTextField maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" stylesheets="@../../../style.css">
+                        <MFXTextField fx:id="SDTTxt" allowEdit="false" maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" stylesheets="@../../../style.css">
                            <VBox.margin>
                               <Insets bottom="5.0" right="10.0" />
                            </VBox.margin>
@@ -67,7 +67,7 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <MFXDatePicker maxHeight="32.0" minHeight="32.0" stylesheets="@../../../style.css">
+                        <MFXDatePicker fx:id="NgayKhamPicker" allowEdit="false" editable="false" maxHeight="32.0" minHeight="32.0" stylesheets="@../../../style.css">
                            <VBox.margin>
                               <Insets bottom="5.0" />
                            </VBox.margin>
@@ -76,7 +76,7 @@
                               <String fx:value="fontStd" />
                            </styleClass>
                         </MFXDatePicker>
-                        <Label styleClass="header" stylesheets="@../../../style.css" text="Tiền khám: 30000">
+                        <Label fx:id="TienKhamLbl" styleClass="header" stylesheets="@../../../style.css" text="Tiền khám: ">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
@@ -90,7 +90,7 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <MFXTextField maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" prefHeight="32.0" prefWidth="297.0" stylesheets="@../../../style.css">
+                        <MFXTextField fx:id="HoTenTxt" allowEdit="false" maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" prefHeight="32.0" prefWidth="297.0" stylesheets="@../../../style.css">
                            <VBox.margin>
                               <Insets bottom="5.0" />
                            </VBox.margin>
@@ -103,7 +103,7 @@
                   </VBox>
                </children>
             </HBox>
-            <MFXTableView fx:id="table_thuoc" prefHeight="254.0" prefWidth="686.0">
+            <MFXTableView fx:id="table_thuoc" prefHeight="254.0" prefWidth="686.0" styleClass="font15" stylesheets="@../../../style.css">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
@@ -133,14 +133,14 @@
             </HBox>
          </right>
          <center>
-            <Label styleClass="header" stylesheets="@../../../style.css" text="Tổng cộng" BorderPane.alignment="CENTER">
+            <Label fx:id="TongCongLbl" styleClass="header" stylesheets="@../../../style.css" text="Tổng cộng" BorderPane.alignment="CENTER">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
          </center>
          <left>
-            <Label styleClass="header" stylesheets="@../../../style.css" text="Tổng tiền thuốc" BorderPane.alignment="CENTER">
+            <Label fx:id="TienThuocLbl" styleClass="header" stylesheets="@../../../style.css" text="Tổng tiền thuốc" BorderPane.alignment="CENTER">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
