@@ -74,6 +74,7 @@ public class doanh_thuController implements Initializable {
     private LineChart<String, Number> doanhThu_line_chart = new LineChart<String, Number>(xAxis, yAxis);
 
     private ObservableList<DoanhThu> doanhThuList = FXCollections.observableArrayList();
+    ObservableList<TongDoanhThu> tongDoanhThuList = FXCollections.observableArrayList();
 
     //Ham khoi tao
     @Override
@@ -114,6 +115,15 @@ public class doanh_thuController implements Initializable {
             }
         });
 
+        month_combobox.setOnAction(event -> {
+            int month = Integer.parseInt(month_combobox.getSelectionModel().getSelectedItem());
+            reloadTableView(month, Integer.parseInt(year_combobox.getText()));
+        });
+
+        year_combobox.setOnAction(event -> {
+            int year = Integer.parseInt(year_combobox.getSelectionModel().getSelectedItem());
+            reloadTableView(Integer.parseInt(month_combobox.getText()), year);
+        });
     }
 
     //Doi mau button khi chon giua cac tab
@@ -196,7 +206,7 @@ public class doanh_thuController implements Initializable {
         );
 
         //Them du lieu vao tableview
-        LoadTableView();
+        LoadTableView(Integer.parseInt(month_combobox.getText()), Integer.parseInt(year_combobox.getText()));
         doanhThu.setItems(doanhThuList);
     }
 
@@ -265,8 +275,8 @@ public class doanh_thuController implements Initializable {
         year_combobox.setItems(year_List);
     }
 
-    public void LoadTableView(){
-        ObservableList<TongDoanhThu> tongDoanhThuList = FXCollections.observableArrayList();
+    public void LoadTableView(int month, int year){
+        //Tinh tong doanh thu theo thang va nam
         try{
             String query = " SELECT MONTH(NgayDT) AS Thang, YEAR(NgayDT) AS Nam, SUM(DoanhThu) AS TongDT  \n" +
                     " FROM DoanhThu\n" +
@@ -286,8 +296,8 @@ public class doanh_thuController implements Initializable {
             String query = "SELECT * FROM DoanhThu WHERE MONTH(NgayDT) = ? AND YEAR(NgayDT) = ?";
             Connection conn = DBConnection.getConnection();
             PreparedStatement ps = conn.prepareStatement(query);
-            ps.setInt(1, Integer.parseInt(month_combobox.getText()));
-            ps.setInt(2, Integer.parseInt(year_combobox.getText()));
+            ps.setInt(1, month);
+            ps.setInt(2, year);
             ResultSet rs = ps.executeQuery();
             int id = 1;
             while (rs.next()){
@@ -302,5 +312,13 @@ public class doanh_thuController implements Initializable {
         } catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public void reloadTableView(int month, int year){
+        doanhThuList.clear();
+        tongDoanhThuList.clear();
+        LoadTableView(month, year);
+        doanhThu.setItems(doanhThuList);
+        doanhThu.setCurrentPage(0);
     }
 }
