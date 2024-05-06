@@ -59,7 +59,10 @@ public class SigninController   implements Initializable {
     @Override
     public void initialize (URL url, ResourceBundle resourceBundle) {
         exit.setOnMouseClicked(event -> {
-            System.exit(0);
+            // Get the current stage
+            Stage stage = (Stage) ((ImageView) event.getSource()).getScene().getWindow();
+            // Close the stage
+            stage.close();
         });
         nv.setCursor(javafx.scene.Cursor.HAND);
         bs.setCursor(javafx.scene.Cursor.HAND);

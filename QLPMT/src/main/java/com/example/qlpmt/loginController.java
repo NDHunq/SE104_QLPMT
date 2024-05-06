@@ -126,7 +126,7 @@ public class loginController  implements Initializable {
         }
 
         // Tạo câu truy vấn SQL
-        String sql = "SELECT * FROM TaiKhoan WHERE username = ? AND mk = ?";
+        String sql = "SELECT * FROM TaiKhoan WHERE username = ? AND mk = ? AND ChucVu !='NGHI'";
 
         try {
             PreparedStatement statement = connection.prepareStatement(sql);

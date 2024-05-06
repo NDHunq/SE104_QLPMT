@@ -106,6 +106,7 @@ public class NhanVienController implements Initializable {
                 });
 
                 // Set the title of the window
+                scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
                 stage.setTitle("Sign In");
 
                 // Show the stage
@@ -152,7 +153,7 @@ public class NhanVienController implements Initializable {
         pkb_list = FXCollections.observableArrayList();
         try {
             Connection connection = DBConnection.getConnection();
-            String sql = "SELECT * FROM TaiKhoan";
+            String sql = "SELECT * FROM TaiKhoan WHERE ChucVu != 'NGHI' AND ChucVu != N'Quản lý'";
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
@@ -179,8 +180,57 @@ public class NhanVienController implements Initializable {
             alert.showAndWait();
 
             if (alert.getResult() == ButtonType.YES) {
+                MFXTableRow<NhanVien> row= (MFXTableRow<NhanVien>) contextMenu.getOwnerNode();
+                NhanVien selectedNhanVien =row.getData();
+
+                if (selectedNhanVien != null) {
+                    deleteNhanVienFromDatabase(selectedNhanVien);
+                    pkb_list.remove(selectedNhanVien);
+                    Alert deleteAlert = new Alert(Alert.AlertType.INFORMATION);
+                    deleteAlert.setTitle("Delete Confirmation");
+                    deleteAlert.setHeaderText(null);
+                    deleteAlert.setContentText("Deleted: " + selectedNhanVien.getHoten());
+                    deleteAlert.showAndWait();
+                }
+            }
+        });
+        edit.setOnAction(event -> {
+            try {
+                // Load the FXML file
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/signin2.fxml"));
+                Parent root = loader.load();
+
+                // Get the controller and set the usr attribute
+                Inf_TK_controller controller = loader.getController();
+                MFXTableRow<NhanVien> row= (MFXTableRow<NhanVien>) contextMenu.getOwnerNode();
+                NhanVien selectedNhanVien =row.getData();
+                controller.setUsr(selectedNhanVien.getUsername());
+
+                // Create a new stage and set the scene
+                Stage stage = new Stage(StageStyle.UNDECORATED);
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+
+                // Make the window draggable
+                final double[] xOffset = new double[1];
+                final double[] yOffset = new double[1];
+                root.setOnMousePressed(mouseEvent -> {
+                    xOffset[0] = mouseEvent.getSceneX();
+                    yOffset[0] = mouseEvent.getSceneY();
+                });
+                root.setOnMouseDragged(mouseEvent -> {
+                    stage.setX(mouseEvent.getScreenX() - xOffset[0]);
+                    stage.setY(mouseEvent.getScreenY() - yOffset[0]);
+                });
 
 
+
+                // Show the stage
+                scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
+                stage.show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         });
 
@@ -201,8 +251,8 @@ public class NhanVienController implements Initializable {
 
     private void deleteNhanVienFromDatabase(NhanVien nhanVien) {
         try {
-            Connection connection = DBConnectionQuyen.getConnection();
-            String sql = "DELETE FROM TaiKhoan WHERE username = ?";
+            Connection connection = DBConnection.getConnection();
+            String sql = "UPDATE TaiKhoan SET ChucVu = 'NGHI' WHERE username = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, nhanVien.getUsername());
             statement.executeUpdate();

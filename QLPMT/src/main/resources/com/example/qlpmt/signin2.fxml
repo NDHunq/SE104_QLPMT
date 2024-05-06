@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="745.0" maxWidth="400.0" minHeight="577.0" minWidth="400.0" prefHeight="577.0" prefWidth="400.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.SigninController">
+<AnchorPane maxHeight="745.0" maxWidth="400.0" minHeight="577.0" minWidth="400.0" prefHeight="577.0" prefWidth="400.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.Inf_TK_controller">
     <AnchorPane maxHeight="745.0" maxWidth="400.0" minHeight="572.0" minWidth="400.0" prefHeight="572.0" prefWidth="400.0" styleClass="rounded-anchor-pane">
         <children>
             <Text fill="#2264d1" layoutX="27.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Thông tin tài khoản" wrappingWidth="282.13676261901855">
@@ -65,7 +65,7 @@
                </Text>
             </center>
          </BorderPane>
-         <BorderPane fx:id="nv" layoutX="213.0" layoutY="95.0" prefHeight="41.0" prefWidth="166.0">
+         <BorderPane fx:id="nv" layoutX="213.0" layoutY="95.0" prefHeight="41.0" prefWidth="166.0" styleClass="chooser">
             <center>
                <Text fx:id="nvtxt" fill="#7b7b7b" strokeType="OUTSIDE" strokeWidth="0.0" text="Nhân viên" textAlignment="CENTER" wrappingWidth="90.4290828704834" BorderPane.alignment="CENTER">
                   <font>

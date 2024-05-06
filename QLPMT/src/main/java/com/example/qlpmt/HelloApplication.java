@@ -27,6 +27,7 @@ public class HelloApplication extends Application {
             stage.setY(event.getScreenY() - y);
         });Scene scene = new Scene(root, 370, 462
         );
+
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.setScene(scene);
         stage.show();
