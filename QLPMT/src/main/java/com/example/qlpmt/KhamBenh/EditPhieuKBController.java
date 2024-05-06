@@ -6,6 +6,10 @@ import com.example.qlpmt.DBConnection;
 import com.example.qlpmt.HelloApplication;
 import io.github.palexdev.materialfx.controls.*;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
+import io.github.palexdev.materialfx.dialogs.MFXGenericDialog;
+import io.github.palexdev.materialfx.dialogs.MFXGenericDialogBuilder;
+import io.github.palexdev.materialfx.dialogs.MFXStageDialog;
+import io.github.palexdev.materialfx.enums.ScrimPriority;
 import io.github.palexdev.materialfx.filter.IntegerFilter;
 import io.github.palexdev.materialfx.filter.LongFilter;
 import io.github.palexdev.materialfx.filter.StringFilter;
@@ -38,9 +42,13 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.util.*;
 
 public class EditPhieuKBController implements Initializable {
+    private MFXGenericDialog dialogContent = null;
+    private MFXStageDialog dialog = null;
+
     @FXML
     private AnchorPane edit_pkb_root_node = new AnchorPane();
 
@@ -79,6 +87,10 @@ public class EditPhieuKBController implements Initializable {
     @FXML
     private MFXComboBox<TaiKhoanNP> nguoiKham_combobox = new MFXComboBox<>();
 
+    @FXML
+    private ImageView info_icon = new ImageView();
+
+    //Luu du lieu cua dong duoc truyen vao tu benh_nhanController
     private ObjectProperty<PhieuKhamBenh> rowDataProperties = new ObjectPropertyBase<PhieuKhamBenh>() {
         @Override
         public Object getBean() {
@@ -91,10 +103,12 @@ public class EditPhieuKBController implements Initializable {
         }
     };
 
+    //Constructor nhan du lieu tu benh_nhanController
     public EditPhieuKBController(PhieuKhamBenh rowData){
         rowDataProperties.set(rowData);
     }
 
+    //Tim kiem ID cua LoaiBenh dua tren ten benh
     public String findLoaiBenh_ID(String string) {
         // Tìm kiếm đối tượng LoaiBenh dựa trên tên bệnh
         for (LoaiBenh loaiBenh : loaiBenh_combobox.getItems()) {
@@ -224,6 +238,12 @@ public class EditPhieuKBController implements Initializable {
             }
         });
 
+        delete.setOnAction(event -> {
+            MFXTableRow<DSThuoc_PKB> row = (MFXTableRow<DSThuoc_PKB>) contextMenu.getOwnerNode();
+            DSThuoc_PKB rowData = row.getData();
+            createInfoDialog((Stage) edit_pkb_root_node.getScene().getWindow(), "Bạn có chắc chắn muốn xóa thuốc này không?", "Xác nhận xóa", rowData);
+        });
+
         // Them menu context o moi dong cho paginated tableview
         table_thuoc.setTableRowFactory(thuocpkb -> {
             MFXTableRow<DSThuoc_PKB> row = new MFXTableRow<>(table_thuoc, new DSThuoc_PKB());
@@ -242,6 +262,8 @@ public class EditPhieuKBController implements Initializable {
 
     public void SuaThuoc(DSThuoc_PKB rowData) throws IOException {
         FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("sua_thuoc_pkb.fxml"));
+
+        //Tao controller moi de truyen du lieu cua dong duoc chon sang
         SuaThuocPKBController controller = new SuaThuocPKBController(rowData);
         loader.setController(controller);
 
@@ -259,12 +281,18 @@ public class EditPhieuKBController implements Initializable {
         Scene scene = new Scene(root, 320, 340);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.initModality(Modality.APPLICATION_MODAL);
+
+        //reload lai table view sau khi update table
+        stage.setOnHidden(e -> reloadTableView());
         stage.setScene(scene);
         stage.show();
     }
 
+    //Ham dung de cap nhat du lieu duoc lay tu benh_nhanController cho cac node
     public void updateData(){
+        //Lay du lieu tu dong duoc truyen vao tu benh_nhanController
         PhieuKhamBenh data = rowDataProperties.get();
+
         String query = "SELECT * FROM LoaiBenh";
         String query2 = "SELECT * FROM TaiKhoan";
         ObservableList<LoaiBenh> loaiBenh_list = FXCollections.observableArrayList();
@@ -316,7 +344,7 @@ public class EditPhieuKBController implements Initializable {
     }
 
     public void LoadTableView(){
-        String query = " SELECT DSTHuoc_PKB.Thuoc_ID, Thuoc.CachDung_ID, Thuoc.DonViThuoc_ID, TenThuoc, TenDVTHuoc, SoLuong, TenCachDung FROM DSTHuoc_PKB\n" +
+        String query = " SELECT DSTHuoc_PKB.PKB_ID, DSTHuoc_PKB.Thuoc_ID, Thuoc.CachDung_ID, Thuoc.DonViThuoc_ID, TenThuoc, TenDVTHuoc, SoLuong, TenCachDung FROM DSTHuoc_PKB\n" +
                 " INNER JOIN PKB ON DSTHuoc_PKB.PKB_ID = PKB.PKB_ID\n" +
                 " INNER JOIN Thuoc ON DSTHuoc_PKB.Thuoc_ID = Thuoc.Thuoc_ID\n" +
                 " INNER JOIN CachDung ON CachDung.CachDung_ID = Thuoc.CachDung_ID\n" +
@@ -329,11 +357,63 @@ public class EditPhieuKBController implements Initializable {
                 CachDung cd = new CachDung(rs.getString("CachDung_ID"),rs.getString("TenCachDung"));
                 DonViThuoc dvt = new DonViThuoc(rs.getString("DonViThuoc_ID"),rs.getString("TenDVTHuoc"));
                 DSThuoc t = new DSThuoc(rs.getString("Thuoc_ID"),rs.getString("TenThuoc"),0,0,0,cd,dvt);
-                DSThuoc_PKB temp = new DSThuoc_PKB(new PhieuKhamBenh(),t,rs.getInt("SoLuong"));
+                DSThuoc_PKB temp = new DSThuoc_PKB(new PhieuKhamBenh(rs.getString("PKB_ID"),-1,"", "", "", "",LocalDate.now()),t,rs.getInt("SoLuong"));
                 list.add(temp);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    //Ham dung de reload lai tableview sau khi update table
+    public void reloadTableView(){
+        list.clear();
+        LoadTableView();
+        table_thuoc.setItems(list);
+    }
+
+    public void createInfoDialog(Stage stage, String contentText, String headerText, DSThuoc_PKB rowData){
+        Platform.runLater(() -> {
+            this.dialogContent = MFXGenericDialogBuilder.build()
+                    .setContentText(contentText)
+                    .addStyleClasses("mfx-info-dialog")
+                    .makeScrollable(true)
+                    .get();
+            this.dialog = MFXGenericDialogBuilder.build(dialogContent)
+                    .toStageDialogBuilder()
+                    .initOwner(stage)
+                    .initModality(Modality.APPLICATION_MODAL)
+                    .setDraggable(true)
+                    .setTitle("Info Dialog")
+                    .setOwnerNode(edit_pkb_root_node) // replace 'grid' with the parent node of your dialog
+                    .setScrimPriority(ScrimPriority.WINDOW)
+                    .setScrimOwner(true)
+                    .get();
+
+            dialogContent.addActions(
+                    Map.entry(new MFXButton("Xác nhận"), event -> {
+                        String query = "DELETE FROM DSTHuoc_PKB WHERE PKB_ID = ? AND Thuoc_ID = ?";
+                        try{
+                            Connection conn = DBConnection.getConnection();
+                            PreparedStatement ps = conn.prepareStatement(query);
+                            ps.setString(1, rowData.getPhieuKhamBenh().getIdPKB());
+                            ps.setString(2, rowData.getThuoc().getThuoc_ID());
+                            ps.executeUpdate();
+
+                            reloadTableView();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        dialog.close();
+                    }),
+                    Map.entry(new MFXButton("Hủy"), event -> dialog.close())
+            );
+
+            dialogContent.setMaxSize(400, 200);
+            dialogContent.setHeaderIcon(info_icon);
+            dialogContent.setHeaderText(headerText);
+            dialog.showDialog();
+        });
     }
 }

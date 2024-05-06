@@ -124,6 +124,7 @@ public class benh_nhanController implements Initializable{
             }
         });
 
+        // Them su kien cho nut search_txtbox de focus vao search_txtbox
         benh_nhan_root_node.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -174,6 +175,7 @@ public class benh_nhanController implements Initializable{
         //Them du lieu vao tableview
         LoadTableView();
 
+        //Chia kich thuoc cua cot
         stt.autosize();
         cccd.setPrefWidth(167);
         ngaykham.autosize();
@@ -252,6 +254,8 @@ public class benh_nhanController implements Initializable{
         Scene scene = new Scene(root, 684, 539);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.initModality(Modality.APPLICATION_MODAL);
+
+        //reload lai table view sau khi update
         stage.setOnHidden(e -> reloadTableView());
         stage.setScene(scene);
         stage.show();
@@ -302,7 +306,7 @@ public class benh_nhanController implements Initializable{
                     .get();
 
             dialogContent.addActions(
-                    Map.entry(new MFXButton("Confirm"), event -> {
+                    Map.entry(new MFXButton("Xác nhận"), event -> {
                         String query = "DELETE FROM PKB WHERE PKB_ID = ?";
                         String query2 = "DELETE FROM DSThuoc_PKB WHERE PKB_ID = ?";
                         String query3 = "DELETE FROM HD WHERE PKB_ID = ?";
@@ -337,8 +341,10 @@ public class benh_nhanController implements Initializable{
                         }catch (Exception e){
                             e.printStackTrace();
                         }
+
+                        dialog.close();
                     }),
-                    Map.entry(new MFXButton("Cancel"), event -> dialog.close())
+                    Map.entry(new MFXButton("Hủy"), event -> dialog.close())
             );
 
             dialogContent.setMaxSize(400, 200);

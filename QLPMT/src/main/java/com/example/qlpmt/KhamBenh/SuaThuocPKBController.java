@@ -20,6 +20,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 
 public class SuaThuocPKBController implements Initializable {
@@ -36,6 +37,7 @@ public class SuaThuocPKBController implements Initializable {
     @FXML
     private Button HuyBtn = new Button();
 
+    // Luu du lieu cua dong duoc truyen vao tu EditPhieuKBController
     private ObjectProperty<Model.DSThuoc_PKB> rowDataProperties = new ObjectPropertyBase<DSThuoc_PKB>() {
         @Override
         public Object getBean() {
@@ -47,6 +49,17 @@ public class SuaThuocPKBController implements Initializable {
             return "";
         }
     };
+
+    // Hàm tìm kiếm thuốc_ID dựa vào tên thuốc
+    public String findThuoc_ID(String string) {
+        // Tìm kiếm đối tượng DonVi dựa trên tên đơn vị
+        for (DSThuoc thuoc : thuoc_combobox.getItems()) {
+            if (thuoc.getTenThuoc().equals(string)) {
+                return thuoc.getThuoc_ID();
+            }
+        }
+        return null;
+    }
 
     public SuaThuocPKBController(DSThuoc_PKB rowData){
         rowDataProperties.set(rowData);
@@ -60,10 +73,27 @@ public class SuaThuocPKBController implements Initializable {
             stage.close();
         });
         XongBtn.setOnAction((ActionEvent event) -> {
+            String query = "UPDATE DSTHuoc_PKB SET Thuoc_ID = ?, SoLuong = ? WHERE PKB_ID = '"+rowDataProperties.get().getPhieuKhamBenh().getIdPKB()+"' AND Thuoc_ID = '"+rowDataProperties.get().getThuoc().getThuoc_ID()+"'";
 
+            try{
+                Connection conn = DBConnection.getConnection();
+                PreparedStatement ps = conn.prepareStatement(query);
+                ps.setString(1, findThuoc_ID(thuoc_combobox.getText()));
+                ps.setInt(2, Integer.parseInt(soLuong_txtbox.getText()));
+                ps.executeUpdate();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            Node source = (Node) event.getSource();
+            Stage stage = (Stage) source.getScene().getWindow();
+            stage.close();
         });
 
         updateData();
+
+        //Goi ham khi thay doi gia tri cua thuoc_combobox
+        thuoc_combobox_ChangedValue();
     }
 
     public void updateData(){
@@ -117,8 +147,9 @@ public class SuaThuocPKBController implements Initializable {
         thuoc_combobox.setText(rowData.getThuoc().getTenThuoc());
         thuoc_combobox.setValue(rowData.getThuoc());
 
+        //set value cho cachDung_combobox dua vao thuoc_ID
         try {
-            String queery = "SELECT TenCachDung FROM Thuoc INNER JOIN CachDung ON Thuoc.CachDung_ID = CachDung.CachDung_ID WHERE Thuoc_ID = '"+rowData.getThuoc().getThuoc_ID()+"'";
+            String queery = "SELECT TenCachDung FROM Thuoc INNER JOIN CachDung ON Thuoc.CachDung_ID = CachDung.CachDung_ID WHERE Thuoc_ID = '"+rowDataProperties.get().getThuoc().getThuoc_ID()+"'";
             Connection conn = DBConnection.getConnection();
             PreparedStatement ps = conn.prepareStatement(queery);
             ResultSet rs = ps.executeQuery();
@@ -132,8 +163,9 @@ public class SuaThuocPKBController implements Initializable {
             e.printStackTrace();
         }
 
+        //set value cho donVi_combobox dua vao thuoc_ID
         try {
-            String queery = "SELECT TenDVTHuoc FROM Thuoc INNER JOIN DonViThuoc ON Thuoc.DonViThuoc_ID = DonViThuoc.DVTHuoc_ID WHERE Thuoc_ID = '"+rowData.getThuoc().getThuoc_ID()+"'";
+            String queery = "SELECT TenDVTHuoc FROM Thuoc INNER JOIN DonViThuoc ON Thuoc.DonViThuoc_ID = DonViThuoc.DVTHuoc_ID WHERE Thuoc_ID = '"+rowDataProperties.get().getThuoc().getThuoc_ID()+"'";
             Connection conn = DBConnection.getConnection();
             PreparedStatement ps = conn.prepareStatement(queery);
             ResultSet rs = ps.executeQuery();
@@ -150,23 +182,26 @@ public class SuaThuocPKBController implements Initializable {
         soLuong_txtbox.setText(String.valueOf(rowData.getSoLuong()));
     }
 
+    //Ham xu ly su kien khi thay doi gia tri cua thuoc_combobox
     public void thuoc_combobox_ChangedValue(){
+        DSThuoc_PKB rowData = rowDataProperties.get();
         thuoc_combobox.setOnAction((ActionEvent event) -> {
             String selectedThuoc = thuoc_combobox.getSelectionModel().getSelectedItem().getTenThuoc();
             try {
+                Connection con = DBConnection.getConnection();
                 // Fetch ID corresponding to the selected name
                 String idThuoc = fetchId("Thuoc", "TenThuoc", "Thuoc_ID", selectedThuoc);
 
                 // Fetch corresponding DonVi from database
-                String sql = "SELECT DonViThuoc.TenDVThuoc, CachDung.TenCachDung FROM Thuoc JOIN DonViThuoc ON Thuoc.DonViThuoc_ID = DonViThuoc.DVThuoc_ID JOIN CachDung ON Thuoc.CachDung_ID = CachDung.CachDung_ID WHERE Thuoc.Thuoc_ID = ?";
+                String sql = "SELECT Thuoc.DonViThuoc_ID, Thuoc.CachDung_ID, DonViThuoc.TenDVTHuoc, CachDung.TenCachDung FROM Thuoc JOIN DonViThuoc ON Thuoc.DonViThuoc_ID = DonViThuoc.DVThuoc_ID JOIN CachDung ON Thuoc.CachDung_ID = CachDung.CachDung_ID WHERE Thuoc.Thuoc_ID = ?";
                 PreparedStatement pst = con.prepareStatement(sql);
                 pst.setString(1, idThuoc);
                 ResultSet rs = pst.executeQuery();
                 if (rs.next()) {
-                    String donVi = rs.getString("TenDVThuoc");
-                    String cachDung = rs.getString("TenCachDung");
-                    DonViCBB.setValue(donVi);
-                    CachDungCBB.setValue(cachDung);
+                    DonViThuoc donVi = new DonViThuoc(rs.getString("DonViThuoc_ID"), rs.getString("TenDVTHuoc"));
+                    CachDung cachDung = new CachDung(rs.getString("CachDung_ID"), rs.getString("TenCachDung"));
+                    donVi_combobox.setValue(donVi);
+                    cachDung_combobox.setValue(cachDung);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -174,4 +209,18 @@ public class SuaThuocPKBController implements Initializable {
         });
     }
 
+    private String fetchId(String tableName, String columnName, String idColumnName, String name) {
+        String id = "";
+        try {
+            Connection con = DBConnection.getConnection();
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT " + idColumnName + " FROM " + tableName + " WHERE " + columnName + " = '" + name + "'");
+            if (rs.next()) {
+                id = rs.getString(idColumnName);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return id;
+    }
 }
