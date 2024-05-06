@@ -128,11 +128,13 @@
       <artifactId>materialfx</artifactId>
       <version>11.13.5</version>
     </dependency>
+
     <dependency>
       <groupId>com.microsoft.sqlserver</groupId>
       <artifactId>mssql-jdbc</artifactId>
       <version>9.4.0.jre8</version>
     </dependency>
+
   </dependencies>
 
   <build>

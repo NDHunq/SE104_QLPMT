@@ -1,31 +1,44 @@
 package Model;
-import java.time.LocalDate;
-public class Thuoc {
+
+import javafx.scene.image.ImageView;
+
+public class KhoThuoc {
     private Integer stt;
     private String tenthuoc;
     private String donvi;
-    private String soluong;
-    private  String solandung;
+    private Integer soluong;
+    private  String dongia;
+    private  String imgThuoc;
 
-    public Thuoc(int stt,String tenthuoc, String donvi, String soluong,String solandung) {
 
+    public String getImgThuoc() {
+        return imgThuoc;
+    }
+
+    public void setImgThuoc(String imgThuoc) {
+        this.imgThuoc = imgThuoc;
+    }
+
+    public KhoThuoc(Integer stt, String tenthuoc, String donvi, Integer soluong, String dongia , String imgThuoc) {
         this.tenthuoc = tenthuoc;
         this.donvi = donvi;
         this.soluong = soluong;
-        this.solandung=solandung;
+        this.dongia=dongia;
         this.stt=stt;
+        this.imgThuoc=imgThuoc;
+
     }
 
     public Integer getStt() {
         return stt;
     }
 
-    public void setStt(Integer stt) {
+    public void setStt(int stt) {
         this.stt = stt;
     }
 
-    public String getSolandung() {
-        return solandung;
+    public String getDongia() {
+        return dongia;
     }
 
     public String getTenthuoc() {
@@ -44,12 +57,11 @@ public class Thuoc {
         this.donvi = donvi;
     }
 
-    public String getSoluong() {
+    public Integer getSoluong() {
         return soluong;
     }
 
-    public void setSoluong(String soluong) {
-
+    public void setSoluong(int soluong) {
         this.soluong = soluong;
     }
 }

@@ -256,7 +256,7 @@ public class HelloController implements Initializable {
             try {
                 khamBenhContent = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/thuoc.fxml"));
             } catch (IOException e) {
-                System.exit(0);
+                e.printStackTrace();
             }
             mainview.setCenter(khamBenhContent);
 

@@ -30,6 +30,7 @@ public class HelloApplication extends Application {
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.setScene(scene);
         stage.show();
+
     }
 
     public static void main(String[] args) {
