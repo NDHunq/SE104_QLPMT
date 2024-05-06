@@ -24,6 +24,9 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.layout.Pane;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
@@ -39,8 +42,8 @@ public class doanh_thuController implements Initializable {
     final CategoryAxis xAxis = new CategoryAxis();
     final NumberAxis yAxis = new NumberAxis();
 
-    private ObservableList<String> month_List;
-    private ObservableList<String> year_List;
+    private ObservableList<String> month_List = FXCollections.observableArrayList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12");
+    private ObservableList<String> year_List = FXCollections.observableArrayList();
 
     @FXML
     private MFXComboBox<String> month_combobox;
@@ -78,7 +81,7 @@ public class doanh_thuController implements Initializable {
         setVisible();
         buttonClickEvent();
         setupChart();
-        setComboBox();
+        setYearComboBox();
 
         //Khoi tao paginated tableview
         setupPaginated();
@@ -297,14 +300,18 @@ public class doanh_thuController implements Initializable {
         doanhThu_line_chart.getData().add(series);
     }
 
-    public void setComboBox(){
-        month_List = FXCollections.observableArrayList(
-                "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "Tất cả"
-        );
-
-        year_List = FXCollections.observableArrayList(
-                "2021", "2022", "2023", "2024", "2025"
-        );
+    public void setYearComboBox(){
+        try{
+            String query = "SELECT DISTINCT YEAR(NgayDT) AS Nam FROM DoanhThu";
+            Connection conn = DBConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                year_List.add(rs.getString(1));
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
 
         month_combobox.setItems(month_List);
         year_combobox.setItems(year_List);
