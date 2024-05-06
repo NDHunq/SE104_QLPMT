@@ -3,6 +3,7 @@ package com.example.qlpmt;
 import Model.LoaiBenh;
 import Model.PhieuKhamBenh;
 import com.example.qlpmt.KhamBenh.EditPhieuKBController;
+import com.example.qlpmt.KhamBenh.KhamBenh;
 import io.github.palexdev.materialfx.controls.*;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import io.github.palexdev.materialfx.dialogs.MFXDialogs;
@@ -29,6 +30,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -65,12 +67,14 @@ public class benh_nhanController implements Initializable{
 
     private ObservableList<PhieuKhamBenh> pkb_list = FXCollections.observableArrayList();
     private double x,y=0;
-
+    PreparedStatement pst = null;
+    ResultSet rs = null;
     //Ham khoi tao khi khoi dong
     public void initialize(URL location, ResourceBundle resources){
         //Khoi tao paginated tableview
         setupPaginated();
         setupContextMenu();
+        Connection con= DBConnection.getConnection();
 
         //chia deu kich thuoc cac cot de vua voi chieu rong cua tableview
 //        double tableViewWidth = pkb.getPrefWidth();
@@ -90,6 +94,36 @@ public class benh_nhanController implements Initializable{
                 .listen();
 
         // Them su kien unfocus cho search_txtbox khi click ra ngoai bang cach requestFocus den node khac
+        search_txtbox.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
+            String searchText = search_txtbox.getText();
+            if (!searchText.isEmpty()) {
+                try {
+                    pkb_list = FXCollections.observableArrayList();
+                    String sql = "SELECT DSKB.CCCD, DSKB.HoTen, LoaiBenh.TenBenh, PKB.TrieuChung, DSKB.NgayKham " +
+                            "FROM DSKB " +
+                            "JOIN PKB ON DSKB.DSKB_ID = PKB.DSKB_ID " +
+                            "JOIN LoaiBenh ON PKB.LoaiBenh_ID = LoaiBenh.LoaiBenh_ID " +
+                            "WHERE DSKB.HoTen LIKE ? OR DSKB.CCCD LIKE ? " +
+                            "ORDER BY DSKB.HoTen, DSKB.CCCD";
+                    pst = con.prepareStatement(sql);
+                    pst.setString(1, "%" + searchText + "%");
+                    pst.setString(2, "%" + searchText + "%");
+                    rs = pst.executeQuery();
+                    int stt = 1;
+                    while (rs.next()) {
+                        pkb_list.add(new PhieuKhamBenh((stt),  rs.getString("CCCD"),rs.getString("HoTen"), rs.getString("TenBenh"), rs.getString("TrieuChung"), rs.getDate("NgayKham").toLocalDate()));
+                        stt++;
+                    }
+                    pkb.setItems(pkb_list);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            } else {
+                LoadTableView();
+                pkb.setItems(pkb_list);
+            }
+        });
+
         benh_nhan_root_node.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
