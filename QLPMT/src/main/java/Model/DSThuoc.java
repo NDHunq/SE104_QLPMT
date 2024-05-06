@@ -19,6 +19,11 @@ public class DSThuoc {
         donViThuoc = new DonViThuoc();
     }
 
+    @Override
+    public String toString() {
+        return tenThuoc;
+    }
+
     public DSThuoc(String thuoc_ID, String tenThuoc, double giaMua, double giaBan, long tonKho, CachDung cachDung, DonViThuoc donViThuoc) {
         this.thuoc_ID = thuoc_ID;
         this.tenThuoc = tenThuoc;
@@ -69,7 +74,13 @@ public class DSThuoc {
         this.tonKho = tonKho;
     }
 
+    public String getTenCachDung() {
+        return cachDung.getTenCachDung();
+    }
 
+    public String getCachDung_ID() {
+        return cachDung.getCachDung_ID();
+    }
 
     public CachDung getCachDung() {
         return cachDung;
@@ -77,6 +88,14 @@ public class DSThuoc {
 
     public void setCachDung(CachDung cachDung) {
         this.cachDung = cachDung;
+    }
+
+    public String getDonViThuoc_ID() {
+        return donViThuoc.getDonViThuoc_ID();
+    }
+
+    public String getTenDonViThuoc() {
+        return donViThuoc.getTenDonViThuoc();
     }
 
     public DonViThuoc getDonViThuoc() {

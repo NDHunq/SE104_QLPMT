@@ -4,6 +4,11 @@ public class CachDung {
     private String cachDung_ID;
     private String TenCachDung;
 
+    @Override
+    public String toString() {
+        return TenCachDung;
+    }
+
     public CachDung() {
         cachDung_ID = "";
         TenCachDung = "";

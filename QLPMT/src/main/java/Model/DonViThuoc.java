@@ -1,8 +1,15 @@
 package Model;
 
+import javafx.fxml.FXML;
+
 public class DonViThuoc {
     private String DonViThuoc_ID;
     private String TenDonViThuoc;
+
+    @Override
+    public String toString() {
+        return TenDonViThuoc;
+    }
 
     public DonViThuoc() {
         DonViThuoc_ID = "";

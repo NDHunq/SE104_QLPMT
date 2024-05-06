@@ -1,12 +1,13 @@
 package com.example.qlpmt.KhamBenh;
 
-import Model.LoaiBenh;
+import Model.*;
 import Model.PhieuKhamBenh;
-import Model.TaiKhoanNP;
 import com.example.qlpmt.DBConnection;
 import com.example.qlpmt.HelloApplication;
 import io.github.palexdev.materialfx.controls.*;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
+import io.github.palexdev.materialfx.filter.IntegerFilter;
+import io.github.palexdev.materialfx.filter.LongFilter;
 import io.github.palexdev.materialfx.filter.StringFilter;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
@@ -28,6 +29,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -56,8 +58,8 @@ public class EditPhieuKBController implements Initializable {
     private ImageView close = new ImageView();
 
     @FXML
-    private MFXTableView<ThuocPKB> table_thuoc = new MFXTableView<>();
-    private ObservableList<ThuocPKB> list;
+    private MFXTableView<DSThuoc_PKB> table_thuoc = new MFXTableView<>();
+    private ObservableList<DSThuoc_PKB> list = FXCollections.observableArrayList();
 
     @FXML
     private MFXTextField cccd_txtbox = new MFXTextField();
@@ -159,59 +161,48 @@ public class EditPhieuKBController implements Initializable {
         setupContextMenu();
 
         table_thuoc.autosizeColumnsOnInitialization();
-        table_thuoc.getTableColumns().get(4).setPrefWidth(200);
+        table_thuoc.getTableColumns().get(3).setPrefWidth(200);
     }
 
     private void setupPaginated() {
 
         //Tao cac cot cua tableview
-        MFXTableColumn<ThuocPKB> stt = new MFXTableColumn<>("STT", false, Comparator.comparing(ThuocPKB::getStt));
-        MFXTableColumn<ThuocPKB> tenthuoc = new MFXTableColumn<>("Thuốc", false, Comparator.comparing(ThuocPKB::getTenThuoc));
-        MFXTableColumn<ThuocPKB> donvi = new MFXTableColumn<>("Đơn vị", false, Comparator.comparing(ThuocPKB::getDonVi));
-        MFXTableColumn<ThuocPKB> soluong = new MFXTableColumn<>("Số lượng", false, Comparator.comparing(ThuocPKB::getSoLuong));
-        MFXTableColumn<ThuocPKB> cachdung = new MFXTableColumn<>("Cách dùng", false, Comparator.comparing(ThuocPKB::getCachDung));
+        //MFXTableColumn<ThuocPKB> stt = new MFXTableColumn<>("STT", false, Comparator.comparing(ThuocPKB::getStt));
+        MFXTableColumn<DSThuoc_PKB> tenthuoc = new MFXTableColumn<>("Thuốc", false, Comparator.comparing(DSThuoc_PKB::getTenThuoc));
+        MFXTableColumn<DSThuoc_PKB> donvi = new MFXTableColumn<>("Đơn vị", false, Comparator.comparing(DSThuoc_PKB::getThuoc_DVT));
+        MFXTableColumn<DSThuoc_PKB> soluong = new MFXTableColumn<>("Số lượng", false, Comparator.comparing(DSThuoc_PKB::getSoLuong));
+        MFXTableColumn<DSThuoc_PKB> cachdung = new MFXTableColumn<>("Cách dùng", false, Comparator.comparing(DSThuoc_PKB::getThuoc_CachDung));
 
-        stt.setRowCellFactory(khambenh -> new MFXTableRowCell<>(ThuocPKB::getStt));
-        tenthuoc.setRowCellFactory(khambenh -> new MFXTableRowCell<>(ThuocPKB::getTenThuoc));
-        donvi.setRowCellFactory(khambenh -> new MFXTableRowCell<>(ThuocPKB::getDonVi));
-        soluong.setRowCellFactory(khambenh -> new MFXTableRowCell<>(ThuocPKB::getSoLuong));
-        cachdung.setRowCellFactory(khambenh -> new MFXTableRowCell<>(ThuocPKB::getCachDung));
+        //stt.setRowCellFactory(khambenh -> new MFXTableRowCell<>(ThuocPKB::getStt));
+        tenthuoc.setRowCellFactory(khambenh -> new MFXTableRowCell<>(DSThuoc_PKB::getTenThuoc));
+        donvi.setRowCellFactory(khambenh -> new MFXTableRowCell<>(DSThuoc_PKB::getThuoc_DVT));
+        soluong.setRowCellFactory(khambenh -> new MFXTableRowCell<>(DSThuoc_PKB::getSoLuong));
+        cachdung.setRowCellFactory(khambenh -> new MFXTableRowCell<>(DSThuoc_PKB::getThuoc_CachDung));
 
         //Them cac cot vao tableview
-        table_thuoc.getTableColumns().addAll(stt, tenthuoc, donvi, soluong, cachdung);
+        table_thuoc.getTableColumns().addAll(tenthuoc, donvi, soluong, cachdung);
 
         //Them cac filter cho tableview
         table_thuoc.getFilters().addAll(
                 //new StringFilter<>("STT", (ThuocPKB::getStt) ),
-                new StringFilter<>("Thuốc", ThuocPKB::getTenThuoc),
-                new StringFilter<>("Đơn vị", ThuocPKB::getDonVi),
-                //new StringFilter<>("Số lượng", ThuocPKB::getSoLuong),
-                new StringFilter<>("Cách dùng", ThuocPKB::getCachDung)
+                new StringFilter<>("Thuốc", DSThuoc_PKB::getTenThuoc),
+                new StringFilter<>("Đơn vị", DSThuoc_PKB::getThuoc_DVT),
+                new IntegerFilter<>("Số lượng", DSThuoc_PKB::getSoLuong),
+                new StringFilter<>("Cách dùng", DSThuoc_PKB::getThuoc_CachDung)
         );
 
+        //chia deu kich thuoc cac cot de vua voi chieu rong cua tableview
+        double tableViewWidth = table_thuoc.getPrefWidth();
+        int numberOfColumns = table_thuoc.getTableColumns().size();
+        for (MFXTableColumn column : table_thuoc.getTableColumns()) {
+            column.setPrefWidth(tableViewWidth / numberOfColumns);
+        }
+
+        LoadTableView();
         //Them du lieu vao tableview
-        setData();
         table_thuoc.setItems(list);
 
 
-    }
-    public void setData(){
-        list = FXCollections.observableArrayList(
-                new ThuocPKB(1, "Thuốc A", "Viên", 10, "Uống 3 lần/ngày"),
-                new ThuocPKB(2, "Thuốc B", "Viên", 20, "Uống 2 lần/ngày"),
-                new ThuocPKB(3, "Thuốc C", "Viên", 30, "Uống 1 lần/ngày"),
-                new ThuocPKB(4, "Thuốc D", "Viên", 40, "Uống 4 lần/ngày"),
-                new ThuocPKB(5, "Thuốc E", "Viên", 50, "Uống 5 lần/ngày"),
-                new ThuocPKB(6, "Thuốc F", "Viên", 60, "Uống 6 lần/ngày"),
-                new ThuocPKB(7, "Thuốc G", "Viên", 70, "Uống 7 lần/ngày"),
-                new ThuocPKB(8, "Thuốc H", "Viên", 80, "Uống 8 lần/ngày"),
-                new ThuocPKB(9, "Thuốc I", "Viên", 90, "Uống 9 lần/ngày"),
-                new ThuocPKB(10, "Thuốc K", "Viên", 100, "Uống 10 lần/ngày"),
-                new ThuocPKB(11, "Thuốc L", "Viên", 110, "Uống 11 lần/ngày"),
-                new ThuocPKB(12, "Thuốc M", "Viên", 120, "Uống 12 lần/ngày"),
-                new ThuocPKB(13, "Thuốc N", "Viên", 130, "Uống 13 lần/ngày"),
-                new ThuocPKB(14, "Thuốc O", "Viên", 140, "Uống 14 lần/ngày")
-        );
     }
 
     public void setupContextMenu(){
@@ -225,9 +216,9 @@ public class EditPhieuKBController implements Initializable {
         // Them su kien cho nut chinh sua
         edit.setOnAction(event -> {
             try {
-                MFXTableRow<ThuocPKB> row = (MFXTableRow<ThuocPKB>) contextMenu.getOwnerNode();
-                ThuocPKB rowData = row.getData();
-                SuaThuoc();
+                MFXTableRow<DSThuoc_PKB> row = (MFXTableRow<DSThuoc_PKB>) contextMenu.getOwnerNode();
+                DSThuoc_PKB rowData = row.getData();
+                SuaThuoc(rowData);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -235,7 +226,7 @@ public class EditPhieuKBController implements Initializable {
 
         // Them menu context o moi dong cho paginated tableview
         table_thuoc.setTableRowFactory(thuocpkb -> {
-            MFXTableRow<ThuocPKB> row = new MFXTableRow<>(table_thuoc, new ThuocPKB(-1,"","",-1, ""));
+            MFXTableRow<DSThuoc_PKB> row = new MFXTableRow<>(table_thuoc, new DSThuoc_PKB());
             row.addEventHandler(ContextMenuEvent.CONTEXT_MENU_REQUESTED, event -> {
                 contextMenu.show(row, event.getScreenX(), event.getScreenY());
                 event.consume();
@@ -249,8 +240,11 @@ public class EditPhieuKBController implements Initializable {
         });
     }
 
-    public void SuaThuoc() throws IOException {
+    public void SuaThuoc(DSThuoc_PKB rowData) throws IOException {
         FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("sua_thuoc_pkb.fxml"));
+        SuaThuocPKBController controller = new SuaThuocPKBController(rowData);
+        loader.setController(controller);
+
         Parent root = loader.load();
         Stage stage = new Stage();
         stage.initStyle(StageStyle.UNDECORATED);
@@ -264,6 +258,7 @@ public class EditPhieuKBController implements Initializable {
         });
         Scene scene = new Scene(root, 320, 340);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
         stage.show();
     }
@@ -321,14 +316,20 @@ public class EditPhieuKBController implements Initializable {
     }
 
     public void LoadTableView(){
-        String query = "SELECT * FROM DSTHuoc_PKB WHERE PKB_ID = ?";
+        String query = " SELECT DSTHuoc_PKB.Thuoc_ID, Thuoc.CachDung_ID, Thuoc.DonViThuoc_ID, TenThuoc, TenDVTHuoc, SoLuong, TenCachDung FROM DSTHuoc_PKB\n" +
+                " INNER JOIN PKB ON DSTHuoc_PKB.PKB_ID = PKB.PKB_ID\n" +
+                " INNER JOIN Thuoc ON DSTHuoc_PKB.Thuoc_ID = Thuoc.Thuoc_ID\n" +
+                " INNER JOIN CachDung ON CachDung.CachDung_ID = Thuoc.CachDung_ID\n" +
+                " INNER JOIN DonViThuoc ON DonViThuoc.DVTHuoc_ID = Thuoc.DonViThuoc_ID" + " WHERE PKB.PKB_ID = '" + rowDataProperties.get().getIdPKB() + "'";
         try {
             Connection conn = DBConnection.getConnection();
             PreparedStatement ps = conn.prepareStatement(query);
-            ps.setString(1, rowDataProperties.get().getIdPKB());
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                ThuocPKB temp = new ThuocPKB(rs.getInt("STT"),rs.getString("TenThuoc"),rs.getString("DonVi"),rs.getInt("SoLuong"),rs.getString("CachDung"));
+                CachDung cd = new CachDung(rs.getString("CachDung_ID"),rs.getString("TenCachDung"));
+                DonViThuoc dvt = new DonViThuoc(rs.getString("DonViThuoc_ID"),rs.getString("TenDVTHuoc"));
+                DSThuoc t = new DSThuoc(rs.getString("Thuoc_ID"),rs.getString("TenThuoc"),0,0,0,cd,dvt);
+                DSThuoc_PKB temp = new DSThuoc_PKB(new PhieuKhamBenh(),t,rs.getInt("SoLuong"));
                 list.add(temp);
             }
         } catch (Exception e) {

@@ -48,20 +48,20 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class benh_nhanController implements Initializable{
-    private MFXGenericDialog dialogContent;
-    private MFXStageDialog dialog;
+    private MFXGenericDialog dialogContent = null;
+    private MFXStageDialog dialog = null;
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
     @FXML
-    private Text soBenhNhan;
+    private Text soBenhNhan = new Text();
     @FXML
-    private AnchorPane benh_nhan_root_node;
+    private AnchorPane benh_nhan_root_node = new AnchorPane();
     @FXML
-    private MFXTextField search_txtbox;
+    private MFXTextField search_txtbox = new MFXTextField();
     @FXML
-    private MFXPaginatedTableView<PhieuKhamBenh> pkb;
+    private MFXPaginatedTableView<PhieuKhamBenh> pkb = new MFXPaginatedTableView<>();
     @FXML
-    private ImageView info_icon;
+    private ImageView info_icon = new ImageView();
 
     private ObservableList<PhieuKhamBenh> pkb_list = FXCollections.observableArrayList();
     private double x,y=0;
@@ -217,6 +217,7 @@ public class benh_nhanController implements Initializable{
         });
         Scene scene = new Scene(root, 684, 539);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setOnHidden(e -> reloadTableView());
         stage.setScene(scene);
         stage.show();
