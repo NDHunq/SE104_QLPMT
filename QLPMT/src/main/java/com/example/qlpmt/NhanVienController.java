@@ -1,9 +1,7 @@
 package com.example.qlpmt;
 
 import Model.NhanVien;
-import io.github.palexdev.materialfx.controls.MFXPaginatedTableView;
-import io.github.palexdev.materialfx.controls.MFXTableColumn;
-import io.github.palexdev.materialfx.controls.MFXTextField;
+import io.github.palexdev.materialfx.controls.*;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import io.github.palexdev.materialfx.filter.StringFilter;
 import io.github.palexdev.materialfx.utils.others.observables.When;
@@ -11,16 +9,30 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
+import java.io.IOException;
 import java.net.URL;
+import java.nio.Buffer;
 import java.sql.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class NhanVienController implements Initializable {
@@ -33,12 +45,14 @@ public class NhanVienController implements Initializable {
     private MFXTextField search_txtbox;
     @FXML
     private MFXPaginatedTableView<NhanVien> pkb;
+    @FXML
+    private Button add;
     private ObservableList<NhanVien> pkb_list;
 
     @Override
     public void initialize (URL url, ResourceBundle resourceBundle) {
         setupPaginated();
-
+        setupContextMenu();
         //chia deu kich thuoc cac cot de vua voi chieu rong cua tableview
         double tableViewWidth = pkb.getPrefWidth();
         int numberOfColumns = pkb.getTableColumns().size();
@@ -68,6 +82,39 @@ public class NhanVienController implements Initializable {
 
         // Cap nhat so luong benh nhan luc khoi tao
         soNhanVien.setText(String.valueOf(pkb_list.size()));
+        add.setOnAction(event -> {
+            try {
+                // Load the FXML file
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/signin.fxml"));
+
+                // Create a new stage and set the scene
+                Stage stage = new Stage(StageStyle.UNDECORATED);
+                Parent root = loader.load();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+
+                // Make the window draggable
+                final double[] xOffset = new double[1];
+                final double[] yOffset = new double[1];
+                root.setOnMousePressed(mouseEvent -> {
+                    xOffset[0] = mouseEvent.getSceneX();
+                    yOffset[0] = mouseEvent.getSceneY();
+                });
+                root.setOnMouseDragged(mouseEvent -> {
+                    stage.setX(mouseEvent.getScreenX() - xOffset[0]);
+                    stage.setY(mouseEvent.getScreenY() - yOffset[0]);
+                });
+
+                // Set the title of the window
+                scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
+                stage.setTitle("Sign In");
+
+                // Show the stage
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     private void setupPaginated () {
@@ -105,8 +152,8 @@ public class NhanVienController implements Initializable {
     public void setData () {
         pkb_list = FXCollections.observableArrayList();
         try {
-            Connection connection = DBConnectionQuyen.getConnection();
-            String sql = "SELECT * FROM TaiKhoan";
+            Connection connection = DBConnection.getConnection();
+            String sql = "SELECT * FROM TaiKhoan WHERE ChucVu != 'NGHI' AND ChucVu != N'Quản lý'";
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
@@ -119,5 +166,99 @@ public class NhanVienController implements Initializable {
             e.printStackTrace();
         }
 
+    }
+    public void setupContextMenu(){
+        MFXContextMenu contextMenu = new MFXContextMenu(pkb);
+        MFXContextMenuItem edit = new MFXContextMenuItem("Chỉnh sửa");
+        MFXContextMenuItem delete = new MFXContextMenuItem("Xóa");
+        contextMenu.getItems().addAll(edit, delete);
+        edit.setStyle("-fx-text-fill: #2264D1; -fx-font-size: 16px; -fx-font-family: 'Times New Roman'");
+        delete.setStyle("-fx-text-fill: red; -fx-font-size: 16px; -fx-font-family: 'Times New Roman'");
+
+        delete.setOnAction(event -> {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this item?", ButtonType.YES, ButtonType.NO);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES) {
+                MFXTableRow<NhanVien> row= (MFXTableRow<NhanVien>) contextMenu.getOwnerNode();
+                NhanVien selectedNhanVien =row.getData();
+
+                if (selectedNhanVien != null) {
+                    deleteNhanVienFromDatabase(selectedNhanVien);
+                    pkb_list.remove(selectedNhanVien);
+                    Alert deleteAlert = new Alert(Alert.AlertType.INFORMATION);
+                    deleteAlert.setTitle("Delete Confirmation");
+                    deleteAlert.setHeaderText(null);
+                    deleteAlert.setContentText("Deleted: " + selectedNhanVien.getHoten());
+                    deleteAlert.showAndWait();
+                }
+            }
+        });
+        edit.setOnAction(event -> {
+            try {
+                // Load the FXML file
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/signin2.fxml"));
+                Parent root = loader.load();
+
+                // Get the controller and set the usr attribute
+                Inf_TK_controller controller = loader.getController();
+                MFXTableRow<NhanVien> row= (MFXTableRow<NhanVien>) contextMenu.getOwnerNode();
+                NhanVien selectedNhanVien =row.getData();
+                controller.setUsr(selectedNhanVien.getUsername());
+
+                // Create a new stage and set the scene
+                Stage stage = new Stage(StageStyle.UNDECORATED);
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+
+                // Make the window draggable
+                final double[] xOffset = new double[1];
+                final double[] yOffset = new double[1];
+                root.setOnMousePressed(mouseEvent -> {
+                    xOffset[0] = mouseEvent.getSceneX();
+                    yOffset[0] = mouseEvent.getSceneY();
+                });
+                root.setOnMouseDragged(mouseEvent -> {
+                    stage.setX(mouseEvent.getScreenX() - xOffset[0]);
+                    stage.setY(mouseEvent.getScreenY() - yOffset[0]);
+                });
+
+
+
+                // Show the stage
+                scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
+                stage.show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        pkb.setTableRowFactory(nhanvien -> {
+            MFXTableRow<NhanVien> row = new MFXTableRow<>(pkb, new NhanVien("","","",""));
+            row.addEventHandler(ContextMenuEvent.CONTEXT_MENU_REQUESTED, event -> {
+                contextMenu.show(row, event.getScreenX(), event.getScreenY());
+                event.consume();
+            });
+            row.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                if (event.getButton() == MouseButton.PRIMARY) {
+                    contextMenu.hide();
+                }
+            });
+            return row;
+        });
+    }
+
+    private void deleteNhanVienFromDatabase(NhanVien nhanVien) {
+        try {
+            Connection connection = DBConnection.getConnection();
+            String sql = "UPDATE TaiKhoan SET ChucVu = 'NGHI' WHERE username = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, nhanVien.getUsername());
+            statement.executeUpdate();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

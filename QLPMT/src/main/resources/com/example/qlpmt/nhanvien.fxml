@@ -38,7 +38,7 @@
             </ImageView>
         </leadingIcon>
     </MFXTextField>
-   <Button layoutX="853.0" layoutY="534.0" maxHeight="45.0" maxWidth="45.0" minHeight="45.0" minWidth="45.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="450.0" text="+" textFill="WHITE">
+   <Button fx:id="add" layoutX="853.0" layoutY="534.0" maxHeight="45.0" maxWidth="45.0" minHeight="45.0" minWidth="45.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="450.0" text="+" textFill="WHITE">
       <font>
          <Font name="Arial" size="23.0" />
       </font></Button>
