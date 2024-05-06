@@ -113,7 +113,7 @@
 
 .mfx-combo-box-cell:selected {
     -fx-background-color: #2264D1;
-    -fx-text-fill: white;
+    -fx-highlight-text-fill: white;
 }
 
 .mfx-combo-box-cell .data-label {
@@ -146,4 +146,50 @@
 .mfx-paginated-table-view {
     -fx-font-size: 14px;
     -fx-font-family: "Times New Roman";
+}
+
+.mfx-combo-box {
+    -fx-font-size: 17px;
+    -fx-font-family: "Times New Roman";
+}
+
+.mfx-text-field .text-field{
+    -fx-highlight-fill: #D4F2FF;
+}
+
+.mfx-date-picker .mfx-icon-wrapper .mfx-font-icon{
+    -mfx-color: #2264D1;
+}
+
+.mfx-date-picker .mfx-icon-wrapper .mfx-ripple-generator {
+    -mfx-ripple-color: #D4F2FF;
+}
+
+.mfx-date-picker .date-picker-popup .months-combo:focus-within,
+.mfx-date-picker .date-picker-popup .years-combo:focus-within {
+    -fx-text-fill: #2264D1;
+}
+
+.mfx-date-picker .date-picker-popup .months-combo,
+.mfx-date-picker .date-picker-popup .years-combo {
+    -fx-font-family: "Times New Roman";
+}
+
+.mfx-date-cell:current {
+    -fx-text-fill: #2264D1;
+}
+
+.mfx-date-cell:selected {
+    -fx-background-color: #2264D1;
+}
+
+.mfx-info-dialog .header-label {
+    -fx-font-family: "Times New Roman";
+    -fx-font-size: 24;
+}
+
+.mfx-info-dialog .content {
+    -fx-font-family: "Times New Roman";
+    -fx-font-size: 16;
+    -fx-padding: 15, 5, 15, 0;
 }

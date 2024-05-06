@@ -40,4 +40,10 @@
             </ImageView>
         </leadingIcon>
     </MFXTextField>
+
+    <ImageView fx:id="info_icon" fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" visible="false">
+        <image>
+            <Image url="@images/info.png" />
+        </image>
+    </ImageView>
 </AnchorPane>
