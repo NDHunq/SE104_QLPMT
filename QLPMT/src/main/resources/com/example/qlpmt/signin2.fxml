@@ -7,10 +7,10 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="745.0" maxWidth="400.0" minHeight="670.0" minWidth="400.0" prefHeight="745.0" prefWidth="400.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.SigninController">
-    <AnchorPane maxHeight="745.0" maxWidth="400.0" minHeight="670.0" minWidth="400.0" prefHeight="745.0" prefWidth="400.0" styleClass="rounded-anchor-pane">
+<AnchorPane maxHeight="745.0" maxWidth="400.0" minHeight="577.0" minWidth="400.0" prefHeight="577.0" prefWidth="400.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.SigninController">
+    <AnchorPane maxHeight="745.0" maxWidth="400.0" minHeight="572.0" minWidth="400.0" prefHeight="572.0" prefWidth="400.0" styleClass="rounded-anchor-pane">
         <children>
-            <Text fill="#2264d1" layoutX="27.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Đăng ký" wrappingWidth="192.1367473602295">
+            <Text fill="#2264d1" layoutX="27.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Thông tin tài khoản" wrappingWidth="282.13676261901855">
                 <font>
                     <Font name="Times New Roman Bold" size="30.0" />
                 </font>
@@ -25,18 +25,13 @@
                     <Image url="@images/minus (1).png" />
                 </image>
             </ImageView>
-            <Text fill="#2264d1" layoutX="27.0" layoutY="274.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" wrappingWidth="192.1367473602295">
+            <Text fill="#2264d1" layoutX="27.0" layoutY="208.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" wrappingWidth="192.1367473602295">
                 <font>
                     <Font name="Times New Roman Bold" size="22.0" />
                 </font>
             </Text>
-            <Text fill="#2264d1" layoutX="33.0" layoutY="570.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nhập lại mật khẩu" wrappingWidth="192.1367473602295">
-                <font>
-                    <Font name="Times New Roman Bold" size="22.0" />
-                </font>
-            </Text>
-            <BorderPane layoutX="27.0" layoutY="289.0" maxWidth="416.0" minWidth="345.0" prefHeight="57.0" prefWidth="345.0">
-            <top>
+            <BorderPane layoutX="27.0" layoutY="223.0" maxWidth="416.0" minWidth="345.0" prefHeight="57.0" prefWidth="345.0">
+            <center>
                     <MFXTextField fx:id="Email" maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="312.0" prefHeight="40.0" prefWidth="312.0" style="-fx-background-color: #E1F8F6;" BorderPane.alignment="CENTER">
                         <BorderPane.margin>
                             <Insets bottom="2.0" left="5.0" right="5.0" top="2.0" />
@@ -44,11 +39,16 @@
                         <font>
                             <Font name="Times New Roman" size="20.0" />
                         </font></MFXTextField>
-            </top>
+            </center>
             </BorderPane>
-            <Button fx:id="dangky" layoutX="30.0" layoutY="668.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="345.0" style="-fx-background-color: #2264d1;" styleClass="button" text="Tạo tài khoản" textFill="WHITE">
+            <Button fx:id="luu" layoutX="30.0" layoutY="492.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="145.0" style="-fx-background-color: green;" styleClass="button" text="Lưu" textFill="WHITE">
                 <font>
-                    <Font name="Times New Roman Bold" size="28.0" />
+                    <Font name="Times New Roman Bold" size="25.0" />
+                </font>
+            </Button>
+            <Button fx:id="huy" layoutX="231.0" layoutY="492.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="135.0" style="-fx-background-color: red;" styleClass="button" text="Huỷ" textFill="WHITE">
+                <font>
+                    <Font name="Times New Roman Bold" size="25.0" />
                 </font>
             </Button>
          <Text fill="#2264d1" layoutX="27.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vị trí" wrappingWidth="192.1367473602295">
@@ -74,41 +74,33 @@
                </Text>
             </center>
          </BorderPane>
-         <Text fill="#2264d1" layoutX="27.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tài khoản" wrappingWidth="192.1367473602295">
+         <Text fill="#2264d1" layoutX="27.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tài khoản:" wrappingWidth="192.1367473602295">
             <font>
                <Font name="Times New Roman Bold" size="22.0" />
             </font>
          </Text>
-
-               <MFXTextField fx:id="username" layoutX="28.0" layoutY="187.0" maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="312.0" prefHeight="40.0" prefWidth="339.0" style="-fx-background-color: #E1F8F6;" BorderPane.alignment="CENTER">
-                  <BorderPane.margin>
-                     <Insets bottom="2.0" left="5.0" right="5.0" top="2.0" />
-                  </BorderPane.margin>
-                  <font>
-                     <Font name="Times New Roman" size="20.0" />
-                  </font>
-               </MFXTextField>
-         <Text fill="#2264d1" layoutX="33.0" layoutY="466.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mật khẩu" wrappingWidth="192.1367473602295">
-            <font>
-               <Font name="Times New Roman Bold" size="22.0" />
-            </font>
-         </Text>
-            <Text fill="#2264d1" layoutX="33.0" layoutY="366.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Họ Tên" wrappingWidth="192.1367473602295">
+            <Text fx:id="usernamee" layoutX="136.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="username" wrappingWidth="192.1367473602295">
                 <font>
                     <Font name="Times New Roman Bold" size="22.0" />
                 </font>
             </Text>
-            <MFXPasswordField fx:id="matkhau" layoutX="33.0" layoutY="593.0" maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="303.0" prefHeight="40.0" prefWidth="339.0" style="-fx-background-color: #E1F8F6;" BorderPane.alignment="CENTER">
+
+         <Text fill="#2264d1" layoutX="27.0" layoutY="400.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mật khẩu " wrappingWidth="192.1367473602295">
+            <font>
+               <Font name="Times New Roman Bold" size="22.0" />
+            </font>
+         </Text>
+            <Text fill="#2264d1" layoutX="27.0" layoutY="306.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Họ Tên" wrappingWidth="192.1367473602295">
+                <font>
+                    <Font name="Times New Roman Bold" size="22.0" />
+                </font>
+            </Text>
+            <MFXPasswordField fx:id="matkhau" layoutX="30.0" layoutY="420.0" maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="303.0" prefHeight="40.0" prefWidth="339.0" style="-fx-background-color: #E1F8F6;" BorderPane.alignment="CENTER">
                 <font>
                     <Font name="Times New Roman" size="20.0" />
                 </font>
             </MFXPasswordField>
-            <MFXPasswordField fx:id="matkhau2" layoutX="33.0" layoutY="487.0" maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="303.0" prefHeight="40.0" prefWidth="339.0" style="-fx-background-color: #E1F8F6;" BorderPane.alignment="CENTER">
-                <font>
-                    <Font name="Times New Roman" size="20.0" />
-                </font>
-            </MFXPasswordField>
-              <MFXTextField fx:id="hoten" layoutX="30.0" layoutY="390.0" maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="312.0" prefHeight="40.0" prefWidth="339.0" style="-fx-background-color: #E1F8F6;">
+              <MFXTextField fx:id="hoten" layoutX="30.0" layoutY="323.0" maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="312.0" prefHeight="40.0" prefWidth="339.0" style="-fx-background-color: #E1F8F6;">
                   <font>
                       <Font name="Times New Roman" size="20.0" />
                   </font>
