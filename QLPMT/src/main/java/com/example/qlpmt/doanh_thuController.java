@@ -2,6 +2,7 @@ package com.example.qlpmt;
 
 import Model.DoanhThu;
 import Model.PhieuKhamBenh;
+import Model.TongDoanhThu;
 import io.github.palexdev.materialfx.controls.*;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import io.github.palexdev.materialfx.filter.DoubleFilter;
@@ -72,7 +73,7 @@ public class doanh_thuController implements Initializable {
     @FXML
     private LineChart<String, Number> doanhThu_line_chart = new LineChart<String, Number>(xAxis, yAxis);
 
-    private ObservableList<DoanhThu> doanhThuList;
+    private ObservableList<DoanhThu> doanhThuList = FXCollections.observableArrayList();
 
     //Ham khoi tao
     @Override
@@ -81,7 +82,7 @@ public class doanh_thuController implements Initializable {
         setVisible();
         buttonClickEvent();
         setupChart();
-        setYearComboBox();
+        setComboBox();
 
         //Khoi tao paginated tableview
         setupPaginated();
@@ -167,63 +168,6 @@ public class doanh_thuController implements Initializable {
         }
     }
 
-    public void setData(){
-        doanhThuList = FXCollections.observableArrayList(
-                new DoanhThu(1, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(2, LocalDate.parse("11/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(3, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(4, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(5, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(6, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(7, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(8, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(9, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(10, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(11, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(12, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(13, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(14, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(15, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(16, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(17, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(18, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(19, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(20, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(21, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(22, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(23, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(24, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(25, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(26, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(27, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(28, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(29, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(30, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(31, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(32, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(33, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(34, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(35, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(36, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(37, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(38, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(39, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(40, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(41, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(42, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(43, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(44, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(45, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(46, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(47, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(48, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(49, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(50, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(51, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f)
-        );
-
-    }
-
     public void setupPaginated(){
         //Tao cac cot cua tableview
         MFXTableColumn<DoanhThu> stt = new MFXTableColumn<>("STT", false, Comparator.comparing(DoanhThu::getId));
@@ -246,13 +190,13 @@ public class doanh_thuController implements Initializable {
         doanhThu.getFilters().addAll(
                 new IntegerFilter<>("STT", DoanhThu::getId),
                 new StringFilter<>("Ngày khám", DoanhThu::getNgayKham_string),
-                new DoubleFilter<>("Doanh thu", DoanhThu::getDoanhThu),
+                new StringFilter<>("Doanh thu", DoanhThu::getDoanhThu),
                 new IntegerFilter<>("Số lượng bệnh nhân", DoanhThu::getSoLuongBenhNhan),
                 new FloatFilter<>("Tỉ lệ", DoanhThu::getTiLe)
         );
 
         //Them du lieu vao tableview
-        setData();
+        LoadTableView();
         doanhThu.setItems(doanhThuList);
     }
 
@@ -300,7 +244,7 @@ public class doanh_thuController implements Initializable {
         doanhThu_line_chart.getData().add(series);
     }
 
-    public void setYearComboBox(){
+    public void setComboBox(){
         try{
             String query = "SELECT DISTINCT YEAR(NgayDT) AS Nam FROM DoanhThu";
             Connection conn = DBConnection.getConnection();
@@ -312,8 +256,51 @@ public class doanh_thuController implements Initializable {
         } catch (Exception e){
             e.printStackTrace();
         }
+        int currentYear = LocalDate.now().getYear();
+        int currentMonth = LocalDate.now().getMonthValue();
 
         month_combobox.setItems(month_List);
+        month_combobox.setText("3");
+        year_combobox.setText(Integer.toString(currentYear));
         year_combobox.setItems(year_List);
+    }
+
+    public void LoadTableView(){
+        ObservableList<TongDoanhThu> tongDoanhThuList = FXCollections.observableArrayList();
+        try{
+            String query = " SELECT MONTH(NgayDT) AS Thang, YEAR(NgayDT) AS Nam, SUM(DoanhThu) AS TongDT  \n" +
+                    " FROM DoanhThu\n" +
+                    " GROUP BY MONTH(NgayDT), YEAR(NgayDT)";
+            Connection conn = DBConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()){
+                tongDoanhThuList.add(new TongDoanhThu(rs.getInt("Thang"), rs.getInt("Nam"), rs.getString("TongDT")));
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            String query = "SELECT * FROM DoanhThu WHERE MONTH(NgayDT) = ? AND YEAR(NgayDT) = ?";
+            Connection conn = DBConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, Integer.parseInt(month_combobox.getText()));
+            ps.setInt(2, Integer.parseInt(year_combobox.getText()));
+            ResultSet rs = ps.executeQuery();
+            int id = 1;
+            while (rs.next()){
+                float tiLe = 0;
+                for(TongDoanhThu tongDoanhThu : tongDoanhThuList){
+                    if(tongDoanhThu.getThang() == Integer.parseInt(month_combobox.getText()) && tongDoanhThu.getNam() == Integer.parseInt(year_combobox.getText())){
+                        tiLe = Math.round((float) (rs.getDouble("DoanhThu") / Double.parseDouble(tongDoanhThu.getTongDoanhThu())  * 100) * 100.0f) / 100.0f ;}
+                }
+                doanhThuList.add(new DoanhThu(id, rs.getDate(1).toLocalDate(), rs.getInt(2), rs.getString(3), tiLe));
+                id++;
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

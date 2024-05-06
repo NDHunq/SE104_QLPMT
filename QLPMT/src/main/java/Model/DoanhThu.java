@@ -6,12 +6,12 @@ import java.time.format.DateTimeFormatter;
 public class DoanhThu {
     private int id;
     private LocalDate ngayKham;
-    private double doanhThu;
+    private String doanhThu;
     private int soLuongBenhNhan;
     private float tiLe;
     DateTimeFormatter string_formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    public DoanhThu(int id, LocalDate ngayKham, double doanhThu, int soLuongBenhNhan, float tiLe) {
+    public DoanhThu(int id, LocalDate ngayKham, int soLuongBenhNhan, String doanhThu, float tiLe) {
         this.id = id;
         this.ngayKham = ngayKham;
         this.doanhThu = doanhThu;
@@ -43,11 +43,11 @@ public class DoanhThu {
         this.ngayKham = LocalDate.parse(ngayKham, string_formatter);
     }
 
-    public double getDoanhThu() {
+    public String getDoanhThu() {
         return doanhThu;
     }
 
-    public void setDoanhThu(double doanhThu) {
+    public void setDoanhThu(String doanhThu) {
         this.doanhThu = doanhThu;
     }
 
