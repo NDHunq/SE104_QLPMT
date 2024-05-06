@@ -47,28 +47,30 @@ public class kho_thuocController implements Initializable {
     private java.sql.Connection dbConnection = null;
 
     @FXML
-   public TextField search_txtbox;
+   public MFXTextField search_txtbox;
 
 
     private ObservableList<KhoThuoc> KhoThuoc_list;
     public void initialize(URL location, ResourceBundle resources){
         search_txtbox.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
             String searchText = search_txtbox.getText();
-            if(searchText.isEmpty()){
+            if(!searchText.isEmpty()){
+
                try
                {
+                   int STT=0;
                    System.out.println(searchText);
-//                   KhoThuoc_list=FXCollections.observableArrayList();
-//                   String sql="Select*from Thuoc inner join DonViThuoc on Thuoc.DonViThuoc_ID=DonViThuoc.DVTHuoc_ID Where TenThuoc like '%"+searchText+"%'";
-//                   pst=dbConnection.prepareStatement(sql);
-//                   rs=pst.executeQuery();
-//                   while (rs.next())
-//                   {
-//                       int STT=0;
-//                       String img="Sửa";
-//                       KhoThuoc_list.add(new KhoThuoc(STT,rs.getString("TenThuoc"),rs.getString("TenDVTHuoc"),rs.getInt("TonKho"),rs.getString("GiaMua"),img));
-//                   }
-//                     khothuoc.setItems(KhoThuoc_list);
+                   KhoThuoc_list=FXCollections.observableArrayList();
+                   String sql="Select*from Thuoc inner join DonViThuoc on Thuoc.DonViThuoc_ID=DonViThuoc.DVTHuoc_ID Where TenThuoc like '%"+searchText+"%'";
+                   pst=dbConnection.prepareStatement(sql);
+                   rs=pst.executeQuery();
+                   while (rs.next())
+                   {
+                       STT++;
+                       String img="Sửa";
+                       KhoThuoc_list.add(new KhoThuoc(STT,rs.getString("TenThuoc"),rs.getString("TenDVTHuoc"),rs.getInt("TonKho"),rs.getString("GiaMua"),img));
+                   }
+                     khothuoc.setItems(KhoThuoc_list);
                }
                catch (Exception e)
                {

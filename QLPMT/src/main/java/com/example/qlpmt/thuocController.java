@@ -1,4 +1,5 @@
 package com.example.qlpmt;
+import Model.KhoThuoc;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import io.github.palexdev.materialfx.controls.MFXPaginatedTableView;
 import io.github.palexdev.materialfx.controls.MFXTableColumn;
@@ -42,9 +43,12 @@ public class thuocController implements Initializable {
 
     public void initialize(URL location, ResourceBundle resources){
         dbConnection = DBConnection.getConnection();
-
-
-      setComboBox();
+        Platform.runLater(() -> {
+            setComboBox();
+            month_combobox.setText("5");
+            year_combobox.setText("2024");
+            setData();
+        });
 
 
         try {
@@ -72,11 +76,25 @@ public class thuocController implements Initializable {
 
     }
     public void setData()
-    { selectedMonth = month_combobox.getSelectedItem();
-        System.out.println("Month selected: " + selectedMonth);
-        selectedYear = year_combobox.getSelectedItem();
-        System.out.println("Year selected: " + selectedYear);
+    {
+        selectedMonth = month_combobox.getText();
+        selectedYear = year_combobox.getText();
+        System.out.println("Month is"+selectedMonth);
+        System.out.println("year is"+selectedYear);
              int STT=0;
+//             if(selectedMonth==null)
+//             {
+//                 System.out.println("Month is null");
+//                 selectedMonth=String.valueOf(currentDate.getMonthValue());
+//
+//             }
+//             if(selectedYear==null)
+//             {
+//
+//                 System.out.println("Year is null");
+//                 selectedYear=String.valueOf(currentDate.getYear());
+//
+//             }
 
         try {
             Thuoc_list = FXCollections.observableArrayList();
@@ -95,6 +113,7 @@ public class thuocController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
 
     }
     public void setupPaginated()
@@ -123,6 +142,7 @@ public class thuocController implements Initializable {
         thuoc.setItems(Thuoc_list);
     }
     public void setComboBox(){
+        System.out.println(month_combobox.getValue());
         month_List = FXCollections.observableArrayList(
                 "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "Tất cả"
         );
@@ -134,14 +154,14 @@ public class thuocController implements Initializable {
         month_combobox.setItems(month_List);
         year_combobox.setItems(year_List);
         month_combobox.selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-
             setData();
             thuoc.setItems(Thuoc_list);
+            thuoc.setCurrentPage(1);
         });
         year_combobox.selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-
             setData();
             thuoc.setItems(Thuoc_list);
+            thuoc.setCurrentPage(1);
         });
 
     }}
