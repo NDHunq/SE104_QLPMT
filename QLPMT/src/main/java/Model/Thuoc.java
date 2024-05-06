@@ -6,6 +6,7 @@ public class Thuoc {
     private String donvi;
     private String soluong;
     private  String solandung;
+
     public Thuoc(int stt,String tenthuoc, String donvi, String soluong,String solandung) {
 
         this.tenthuoc = tenthuoc;

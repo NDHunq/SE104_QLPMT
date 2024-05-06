@@ -1,4 +1,5 @@
 package com.example.qlpmt;
+import Model.Thuoc;
 import io.github.palexdev.materialfx.controls.MFXPaginatedTableView;
 import io.github.palexdev.materialfx.controls.MFXTableColumn;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
@@ -13,6 +14,8 @@ import javafx.fxml.Initializable;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.ResourceBundle;
@@ -37,15 +40,18 @@ public class kho_thuocController implements Initializable {
 
     @FXML
     private MFXPaginatedTableView<KhoThuoc> khothuoc = new MFXPaginatedTableView<>();
+    public PreparedStatement pst=null;
+    private ResultSet rs=null;
+    private java.sql.Connection dbConnection = null;
 
 
 
     private ObservableList<KhoThuoc> KhoThuoc_list;
     public void initialize(URL location, ResourceBundle resources){
+        dbConnection = DBConnection.getConnection();
         setupPaginated();
         double tableViewWidth = khothuoc.getPrefWidth();
         int numberOfColumns = khothuoc.getTableColumns().size();
-        System.out.println(numberOfColumns);
         for (MFXTableColumn column : khothuoc.getTableColumns()) {
             column.setPrefWidth(tableViewWidth / numberOfColumns);
         }
@@ -72,24 +78,26 @@ public class kho_thuocController implements Initializable {
 
     public void setData()
     {
+int STT=0;
+        try {
+            KhoThuoc_list = FXCollections.observableArrayList();
+            String sql="Select*from Thuoc inner join DonViThuoc on Thuoc.DonViThuoc_ID=DonViThuoc.DVTHuoc_ID";
+            pst=dbConnection.prepareStatement(sql);
 
-        KhoThuoc_list = FXCollections.observableArrayList(
-                new KhoThuoc(1,"Paracetamol", "Viên", 40, "5","Sửa"),
-                new KhoThuoc(2,"Panadol", "Viên", 20, "2.5","Sửa"),
-                new KhoThuoc(2,"Panadol", "Viên", 20, "2.5","Sửa"),
-                new KhoThuoc(2,"Panadol", "Viên", 20, "2.5","Sửa"),
-                new KhoThuoc(2,"Panadol", "Viên", 20, "2.5","Sửa"),
-                new KhoThuoc(2,"Panadol", "Viên", 20, "2.5","Sửa"),
-                new KhoThuoc(2,"Panadol", "Viên", 20, "2.5","Sửa"),
-                new KhoThuoc(2,"Panadol", "Viên", 20, "2.5","Sửa"),
-                new KhoThuoc(2,"Panadol", "Viên", 20, "2.5","Sửa"),
-                new KhoThuoc(2,"Panadol", "Viên", 20, "2.5","Sửa"),
-                new KhoThuoc(2,"Panadol", "Viên", 20, "2.5","Sửa"),
-                new KhoThuoc(2,"Panadol", "Viên", 20, "2.5","Sửa"),
-                new KhoThuoc(2,"Panadol", "Viên", 20, "2.5","Sửa"),
-                new KhoThuoc(2,"Panadol", "Viên", 20, "2.5","Sửa")
+            rs=pst.executeQuery();
+            System.out.println("execute query");
+            while (rs.next())
+            {
+                String img="Sửa";
+                STT++;
+                KhoThuoc_list.add(new KhoThuoc(STT,rs.getString("TenThuoc"),rs.getString("TenDVTHuoc"),rs.getInt("TonKho"),rs.getString("GiaMua"),img));
+            }
+        }
+        catch (Exception e) {
+            System.out.println("An error occurred during data retrieval");
+            e.printStackTrace();
+        }
 
-        );
 
     }
     public void setupPaginated()
