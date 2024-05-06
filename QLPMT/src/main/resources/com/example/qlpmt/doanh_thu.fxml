@@ -1,27 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import io.github.palexdev.materialfx.controls.MFXButton?>
-<?import io.github.palexdev.materialfx.controls.MFXComboBox?>
-<?import io.github.palexdev.materialfx.controls.MFXPaginatedTableView?>
-<?import io.github.palexdev.materialfx.controls.MFXTextField?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
-<?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import io.github.palexdev.materialfx.controls.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="doanh_thu_root_node" prefHeight="600.0" prefWidth="930.0" style="-fx-background-color: #D4F2FF" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.doanh_thuController">
+<AnchorPane fx:id="doanh_thu_root_node" prefHeight="600.0" prefWidth="930.0" style="-fx-background-color: #D4F2FF" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.doanh_thuController">
     <Text fill="#2264D1" layoutX="23.0" layoutY="41.0" text="Doanh thu theo tháng" wrappingWidth="282.10545349121094">
         <font>
             <Font name="Times New Roman Bold" size="30.0" />
         </font>
     </Text>
 
-    <MFXPaginatedTableView id="doanhThu_table" fx:id="doanhThu" layoutX="23.0" layoutY="175.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="419.0" prefWidth="883.0" rowsPerPage="10">
+    <MFXPaginatedTableView id="doanhThu_table" fx:id="doanhThu" layoutX="23.0" layoutY="161.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="411.0" prefWidth="883.0" rowsPerPage="10">
 
     </MFXPaginatedTableView>
 
@@ -50,12 +42,12 @@
       </font>
     </MFXTextField>
 
-   <MFXComboBox fx:id="month_combobox" floatingText="Tháng" layoutX="23.0" layoutY="119.0" prefHeight="32.0" prefWidth="130.0" />
+   <MFXComboBox fx:id="month_combobox" floatingText="Tháng" layoutX="567.0" layoutY="69.0" prefHeight="32.0" prefWidth="130.0" />
 
-   <MFXComboBox fx:id="year_combobox" floatingText="Năm" layoutX="180.0" layoutY="119.0" prefHeight="32.0" prefWidth="130.0" />
+   <MFXComboBox fx:id="year_combobox" floatingText="Năm" layoutX="756.0" layoutY="69.0" prefHeight="32.0" prefWidth="130.0" />
 
 
-   <Pane fx:id="line_chart_pane" layoutX="23.0" layoutY="175.0" prefHeight="419.0" prefWidth="883.0" style="-fx-background-color: #FFFFFF; -fx-border-radius: 10px; -fx-background-radius: 10px">
+   <Pane fx:id="line_chart_pane" layoutX="23.0" layoutY="119.0" prefHeight="475.0" prefWidth="883.0" style="-fx-background-color: #FFFFFF; -fx-border-radius: 10px; -fx-background-radius: 10px">
        <LineChart fx:id="doanhThu_line_chart" layoutY="15.0" prefHeight="419.0" prefWidth="883.0">
            <xAxis>
                <CategoryAxis side="BOTTOM" />

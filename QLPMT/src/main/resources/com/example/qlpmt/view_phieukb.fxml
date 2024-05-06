@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
-<?import io.github.palexdev.materialfx.controls.MFXComboBox?>
 <?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
 <?import io.github.palexdev.materialfx.controls.MFXTableView?>
 <?import io.github.palexdev.materialfx.controls.MFXTextField?>
@@ -9,13 +8,13 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.image.Image?>
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="684.0" styleClass="TextBorder" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.KhamBenh.ViewPhieuKBController">
    <children>
       <BorderPane prefHeight="58.0" prefWidth="662.0">
@@ -48,7 +47,7 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <MFXTextField maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" stylesheets="@../../../style.css">
+                        <MFXTextField fx:id="CCCDTxt" allowEdit="false" maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" stylesheets="@../../../style.css">
                            <VBox.margin>
                               <Insets bottom="5.0" right="20.0" />
                            </VBox.margin>
@@ -62,7 +61,7 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <MFXTextField maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" stylesheets="@../../../style.css">
+                        <MFXTextField fx:id="TrieuChungTxt" allowEdit="false" maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" stylesheets="@../../../style.css">
                            <VBox.margin>
                               <Insets bottom="5.0" right="20.0" />
                            </VBox.margin>
@@ -76,10 +75,14 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <MFXComboBox maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" prefHeight="26.0" prefWidth="348.0" styleClass="TextBorder" stylesheets="@../../../style.css">
+                        <MFXTextField fx:id="LoaibenhTxt" allowEdit="false" maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" prefHeight="26.0" prefWidth="348.0" stylesheets="@../../../style.css">
                            <VBox.margin>
                               <Insets right="20.0" />
-                           </VBox.margin></MFXComboBox>
+                           </VBox.margin>
+                           <styleClass>
+                              <String fx:value="TextBorder" />
+                              <String fx:value="fontStd" />
+                           </styleClass></MFXTextField>
                      </children>
                   </VBox>
                   <VBox prefHeight="162.0" prefWidth="301.0">
@@ -89,7 +92,7 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <MFXTextField maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" prefHeight="33.0" prefWidth="298.0" stylesheets="@../../../style.css">
+                        <MFXTextField fx:id="HoTenTxt" allowEdit="false" maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" prefHeight="33.0" prefWidth="298.0" stylesheets="@../../../style.css">
                            <VBox.margin>
                               <Insets bottom="5.0" />
                            </VBox.margin>
@@ -103,7 +106,7 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <MFXDatePicker maxHeight="32.0" minHeight="32.0" stylesheets="@../../../style.css">
+                        <MFXDatePicker fx:id="NgayKhamPicker" allowEdit="false" maxHeight="32.0" minHeight="32.0" stylesheets="@../../../style.css">
                            <VBox.margin>
                               <Insets bottom="5.0" />
                            </VBox.margin>
@@ -117,7 +120,11 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <MFXComboBox maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" prefHeight="26.0" prefWidth="348.0" styleClass="TextBorder" stylesheets="@../../../style.css" />
+                        <MFXTextField fx:id="NguoiKhamTxt" allowEdit="false" maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" prefHeight="26.0" prefWidth="348.0" stylesheets="@../../../style.css">
+                           <styleClass>
+                              <String fx:value="TextBorder" />
+                              <String fx:value="fontStd" />
+                           </styleClass></MFXTextField>
                      </children>
                   </VBox>
                </children>

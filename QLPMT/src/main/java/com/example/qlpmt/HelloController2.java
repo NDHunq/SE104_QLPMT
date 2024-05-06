@@ -18,7 +18,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
-public class HelloController implements Initializable {
+
+public class HelloController2 implements Initializable {
 
     @FXML
     private AnchorPane Pane1;
@@ -44,8 +45,7 @@ public class HelloController implements Initializable {
     private BorderPane bd5;
     @FXML
     private BorderPane bd6;
-    @FXML
-    private BorderPane bd7;
+
     @FXML
     private BorderPane txt1;
     @FXML
@@ -58,8 +58,7 @@ public class HelloController implements Initializable {
     private BorderPane txt5;
     @FXML
     private BorderPane txt6;
-    @FXML
-    private BorderPane txt7;
+
     @FXML
     private  BorderPane mainview;
     @FXML
@@ -79,7 +78,7 @@ public class HelloController implements Initializable {
 //load khambenh.fxml
         Parent content = null;
         try {
-            content = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/kham_benh.fxml"));
+            content = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/KhamBenh/kham_benh.fxml"));
         } catch (IOException e) {
             System.exit(0);
         }
@@ -92,14 +91,14 @@ public class HelloController implements Initializable {
         bd4.setCursor(javafx.scene.Cursor.HAND);
         bd5.setCursor(javafx.scene.Cursor.HAND);
         bd6.setCursor(javafx.scene.Cursor.HAND);
-        bd7.setCursor(javafx.scene.Cursor.HAND);
+
         txt1.setCursor(javafx.scene.Cursor.HAND);
         txt2.setCursor(javafx.scene.Cursor.HAND);
         txt3.setCursor(javafx.scene.Cursor.HAND);
         txt4.setCursor(javafx.scene.Cursor.HAND);
         txt5.setCursor(javafx.scene.Cursor.HAND);
         txt6.setCursor(javafx.scene.Cursor.HAND);
-        txt7.setCursor(javafx.scene.Cursor.HAND);
+
         logout.setCursor(javafx.scene.Cursor.HAND);
     lotxt.setCursor(javafx.scene.Cursor.HAND);
         menu.setCursor(javafx.scene.Cursor.HAND);
@@ -168,7 +167,7 @@ public class HelloController implements Initializable {
             // Load the content from kham_benh.fxml
             Parent khamBenhContent = null;
             try {
-                khamBenhContent = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/kham_benh.fxml"));
+                khamBenhContent = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/KhamBenh/kham_benh.fxml"));
             } catch (IOException e) {
                 System.exit(0);
             }
@@ -199,7 +198,7 @@ public class HelloController implements Initializable {
             // Load the content from kham_benh.fxml
             Parent khamBenhContent = null;
             try {
-                khamBenhContent = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/kham_benh.fxml"));
+                khamBenhContent = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/KhamBenh/kham_benh.fxml"));
             } catch (IOException e) {
                 System.exit(0);
             }
@@ -265,7 +264,7 @@ public class HelloController implements Initializable {
             try {
                 khamBenhContent = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/thuoc.fxml"));
             } catch (IOException e) {
-                e.printStackTrace();
+                System.exit(0);
             }
             mainview.setCenter(khamBenhContent);
 
@@ -334,34 +333,7 @@ public class HelloController implements Initializable {
             // Set the content to the mainView
             mainview.setCenter(khamBenhContent);
         });
-        bd7.setOnMouseClicked(event -> {
-            handleBorderPaneClick(bd7);
-            Parent khamBenhContent = null;
 
-            try {
-                khamBenhContent = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/nhanvien.fxml"));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-            mainview.setCenter(khamBenhContent);
-
-        });
-        txt7.setOnMouseClicked(event -> {
-            handleBorderPaneClick(bd7);
-            // Load the content from kham_benh.fxml
-            Parent khamBenhContent = null;
-            try {
-                khamBenhContent = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/nhanvien.fxml"));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            txtclick(txt7);
-
-            // Set the content to the mainView
-            mainview.setCenter(khamBenhContent);
-        });
-        // Add event handlers for each BorderPane
 
         // Add event handlers for each BorderPane
 
@@ -426,7 +398,7 @@ public class HelloController implements Initializable {
         bd4.getStyleClass().remove("square-border-pane");
         bd5.getStyleClass().remove("square-border-pane");
         bd6.getStyleClass().remove("square-border-pane");
-        bd7.getStyleClass().remove("square-border-pane");
+
 
         if (isDrawerOpen) {
             Pane1.setVisible(false);
@@ -450,7 +422,6 @@ public class HelloController implements Initializable {
             bd4.getStyleClass().remove("square-border-pane");
             bd5.getStyleClass().remove("square-border-pane");
             bd6.getStyleClass().remove("square-border-pane");
-            bd7.getStyleClass().remove("square-border-pane");
 
             if (isDrawerOpen) {
                 Pane1.setVisible(false);
@@ -472,7 +443,7 @@ public class HelloController implements Initializable {
             bd4.getStyleClass().remove("square-border-pane");
             bd5.getStyleClass().remove("square-border-pane");
             bd6.getStyleClass().remove("square-border-pane");
-            bd7.getStyleClass().remove("square-border-pane");
+
 
             if (isDrawerOpen) {
                 Pane1.setVisible(false);
@@ -494,7 +465,7 @@ public class HelloController implements Initializable {
             bd4.getStyleClass().remove("square-border-pane");
             bd5.getStyleClass().remove("square-border-pane");
             bd6.getStyleClass().remove("square-border-pane");
-            bd7.getStyleClass().remove("square-border-pane");
+
 
             if (isDrawerOpen) {
                 Pane1.setVisible(false);
@@ -516,7 +487,6 @@ public class HelloController implements Initializable {
             bd4.getStyleClass().remove("square-border-pane");
             bd5.getStyleClass().remove("square-border-pane");
             bd6.getStyleClass().remove("square-border-pane");
-            bd7.getStyleClass().remove("square-border-pane");
 
             if (isDrawerOpen) {
                 Pane1.setVisible(false);
@@ -538,7 +508,7 @@ public class HelloController implements Initializable {
             bd4.getStyleClass().remove("square-border-pane");
             bd5.getStyleClass().remove("square-border-pane");
             bd6.getStyleClass().remove("square-border-pane");
-            bd7.getStyleClass().remove("square-border-pane");
+
 
             if (isDrawerOpen) {
                 Pane1.setVisible(false);
@@ -560,7 +530,7 @@ public class HelloController implements Initializable {
             bd4.getStyleClass().remove("square-border-pane");
             bd5.getStyleClass().remove("square-border-pane");
             bd6.getStyleClass().remove("square-border-pane");
-            bd7.getStyleClass().remove("square-border-pane");
+
 
             if (isDrawerOpen) {
                 Pane1.setVisible(false);
@@ -574,29 +544,8 @@ public class HelloController implements Initializable {
             // Add the style to the clicked BorderPane
             bd6.getStyleClass().add("square-border-pane");
         }
-        if(clickedBorderPane==txt7)
-        {
-            bd1.getStyleClass().remove("square-border-pane");
-            bd2.getStyleClass().remove("square-border-pane");
-            bd3.getStyleClass().remove("square-border-pane");
-            bd4.getStyleClass().remove("square-border-pane");
-            bd5.getStyleClass().remove("square-border-pane");
-            bd6.getStyleClass().remove("square-border-pane");
-            bd7.getStyleClass().remove("square-border-pane");
 
-            if (isDrawerOpen) {
-                Pane1.setVisible(false);
-                // If the drawerPane is open, close it
-                TranslateTransition translateTransition1 = new TranslateTransition(Duration.seconds(0.5), drawerPane);
-                translateTransition1.setToX(-600); // Move back to initial position
-                translateTransition1.play();
-                isDrawerOpen = false;
-            }
-
-            // Add the style to the clicked BorderPane
-            bd7.getStyleClass().add("square-border-pane");
         }
     }
 
 
-}

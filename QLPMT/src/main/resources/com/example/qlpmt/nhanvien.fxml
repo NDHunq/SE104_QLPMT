@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="nhanvien_root" prefHeight="600.0" prefWidth="930.0" style="-fx-background-color: #E6F8FF" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.NhanVienController">
+    <Text fill="#2264D1" layoutX="23.0" layoutY="41.0" text="Danh sách nhân viên" wrappingWidth="278.9054412841797">
+        <font>
+            <Font name="Times New Roman Bold" size="30.0" />
+        </font>
+    </Text>
+
+    <MFXPaginatedTableView id="myTableView" fx:id="pkb" layoutX="23.0" layoutY="98.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="491.0" prefWidth="883.0" rowsPerPage="12" AnchorPane.bottomAnchor="80.0" AnchorPane.topAnchor="100.0">
+
+    </MFXPaginatedTableView>
+
+    <Text fill="#2264D1" layoutX="23.0" layoutY="81.0" text="Tổng số nhân viên:" wrappingWidth="223.7054443359375">
+        <font>
+            <Font name="Times New Roman" size="24.0" />
+        </font>
+    </Text>
+
+    <Text fx:id="soNhanVien" layoutX="216.0" layoutY="81.0" text="1000">
+        <font>
+            <Font name="Times New Roman" size="24.0" />
+        </font>
+    </Text>
+
+    <MFXTextField id="search_txtbox" fx:id="search_txtbox" floatMode="DISABLED" layoutX="567.0" layoutY="58.0" prefHeight="30.0" prefWidth="338.0">
+        <leadingIcon>
+            <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@images/search.png" />
+                </image>
+            </ImageView>
+        </leadingIcon>
+    </MFXTextField>
+   <Button fx:id="add" layoutX="853.0" layoutY="534.0" maxHeight="45.0" maxWidth="45.0" minHeight="45.0" minWidth="45.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="450.0" text="+" textFill="WHITE">
+      <font>
+         <Font name="Arial" size="23.0" />
+      </font></Button>
+
+</AnchorPane>

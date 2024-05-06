@@ -144,7 +144,6 @@ public class thuocController implements Initializable {
             thuoc.setItems(Thuoc_list);
         });
 
-    }
+    }}
 
 
-}

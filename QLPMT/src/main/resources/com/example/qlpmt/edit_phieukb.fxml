@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="edit_pkb_root_node" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="539.0" prefWidth="684.0" styleClass="TextBorder" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.KhamBenh.EditPhieuKBController">
+<AnchorPane fx:id="edit_pkb_root_node" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="539.0" prefWidth="684.0" styleClass="TextBorder" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <BorderPane layoutX="15.0" prefHeight="46.0" prefWidth="663.0">
             <left>
@@ -53,7 +53,7 @@
             <children>
                 <HBox prefHeight="100.0" prefWidth="200.0">
                     <children>
-                        <VBox fx:id="vbox_layout" prefHeight="174.0" prefWidth="340.0">
+                        <VBox fx:id="vbox_layout_left" prefHeight="174.0" prefWidth="340.0">
                             <children>
                                 <Label styleClass="header" stylesheets="@../../../style.css" text="CCCD">
                                     <font>
@@ -61,7 +61,7 @@
                                     </font>
                                 </Label>
 
-                                <MFXTextField maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" stylesheets="@../../../style.css">
+                                <MFXTextField fx:id="cccd_txtbox" maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" stylesheets="@../../../style.css">
                                     <VBox.margin>
                                         <Insets bottom="5.0" right="20.0" />
                                     </VBox.margin>
@@ -78,7 +78,7 @@
                                     </font>
                                 </Label>
 
-                                <MFXTextField maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" stylesheets="@../../../style.css">
+                                <MFXTextField fx:id="trieuChung_txtbox" maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" stylesheets="@../../../style.css">
                                     <VBox.margin>
                                         <Insets bottom="5.0" right="20.0" />
                                     </VBox.margin>
@@ -95,14 +95,17 @@
                                     </font>
                                 </Label>
 
-                                <MFXComboBox maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" prefHeight="26.0" prefWidth="348.0" styleClass="TextBorder" stylesheets="@../../../style.css">
+                                <MFXComboBox fx:id="loaiBenh_combobox" floatMode="DISABLED" maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" prefHeight="26.0" prefWidth="348.0" styleClass="TextBorder" stylesheets="@../../../style.css">
                                     <VBox.margin>
                                         <Insets right="20.0" />
                                     </VBox.margin>
+                           <font>
+                              <Font name="Times New Roman" size="17.0" />
+                           </font>
                                 </MFXComboBox>
                             </children>
                         </VBox>
-                        <VBox prefHeight="162.0" prefWidth="301.0">
+                        <VBox fx:id="vbox_layout_right" prefHeight="162.0" prefWidth="301.0">
                             <children>
                                 <Label styleClass="header" stylesheets="@../../../style.css" text="Họ tên">
                                     <font>
@@ -110,7 +113,7 @@
                                     </font>
                                 </Label>
 
-                                <MFXTextField maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" prefHeight="33.0" prefWidth="298.0" stylesheets="@../../../style.css">
+                                <MFXTextField fx:id="hoTen_txtbox" maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" prefHeight="33.0" prefWidth="298.0" stylesheets="@../../../style.css">
                                     <VBox.margin>
                                         <Insets bottom="5.0" />
                                     </VBox.margin>
@@ -127,7 +130,7 @@
                                     </font>
                                 </Label>
 
-                                <MFXDatePicker maxHeight="32.0" minHeight="32.0" prefHeight="32.0" prefWidth="177.0" stylesheets="@../../../style.css">
+                                <MFXDatePicker fx:id="ngayKham_datepicker" maxHeight="32.0" minHeight="32.0" prefHeight="32.0" prefWidth="177.0" stylesheets="@../../../style.css">
                                     <VBox.margin>
                                         <Insets bottom="5.0" />
                                     </VBox.margin>
@@ -140,6 +143,9 @@
                                     <cursor>
                                         <Cursor fx:constant="HAND" />
                                     </cursor>
+                           <font>
+                              <Font name="Times New Roman" size="17.0" />
+                           </font>
                                 </MFXDatePicker>
 
                                 <Label styleClass="header" stylesheets="@../../../style.css" text="Người khám">
@@ -148,7 +154,10 @@
                                     </font>
                                 </Label>
 
-                                <MFXComboBox maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" prefHeight="26.0" prefWidth="348.0" styleClass="TextBorder" stylesheets="@../../../style.css" />
+                                <MFXComboBox fx:id="nguoiKham_combobox" maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" prefHeight="26.0" prefWidth="348.0" styleClass="TextBorder" stylesheets="@../../../style.css">
+                           <font>
+                              <Font name="Times New Roman" size="17.0" />
+                           </font></MFXComboBox>
                             </children>
                         </VBox>
                     </children>
@@ -169,7 +178,7 @@
         <BorderPane prefHeight="51.0" prefWidth="315.0" />
           <HBox layoutX="490.0" layoutY="491.0" prefHeight="37.0" prefWidth="188.0">
               <children>
-                  <MFXButton fx:id="XongBtn" buttonType="RAISED" mnemonicParsing="false" prefHeight="37.0" prefWidth="81.0" style="-fx-background-color: #459244; -fx-text-fill: white; -fx-font-family: 'Times New Roman'; -fx-font-size: 17px; -fx-font-weight: bold" stylesheets="@../../../style.css" text="XONG">
+                  <MFXButton fx:id="XongBtn" buttonType="RAISED" mnemonicParsing="false" prefHeight="37.0" prefWidth="81.0" style="-fx-background-color: #459244; -fx-text-fill: white; -fx-font-family: 'Times New Roman'; -fx-font-size: 17px; -fx-font-weight: bold; -fx-stroke-width: 2px" stylesheets="@../../../style.css" text="XONG">
                       <HBox.margin>
                           <Insets right="15.0" />
                       </HBox.margin>
@@ -182,7 +191,7 @@
                           <Cursor fx:constant="HAND" />
                       </cursor>
                   </MFXButton>
-                  <MFXButton fx:id="HuyBtn" buttonType="RAISED" mnemonicParsing="false" prefHeight="37.0" prefWidth="81.0" style="-fx-background-color: #EE0E36;-fx-text-fill: white; -fx-font-family: 'Times New Roman'; -fx-font-size: 17px; -fx-font-weight: bold" stylesheets="@../../../style.css" text="HỦY">
+                  <MFXButton fx:id="HuyBtn" buttonType="RAISED" mnemonicParsing="false" prefHeight="37.0" prefWidth="81.0" style="-fx-background-color: #EE0E36;-fx-text-fill: white; -fx-font-family: 'Times New Roman'; -fx-font-size: 17px; -fx-font-weight: bold; -fx-stroke-width: 2px" stylesheets="@../../../style.css" text="HỦY">
                       <styleClass>
                           <String fx:value="fontButton" />
                       </styleClass>
@@ -199,4 +208,10 @@
     <padding>
         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
     </padding>
+
+    <ImageView fx:id="info_icon" fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" visible="false">
+        <image>
+            <Image url="@images/info.png" />
+        </image>
+    </ImageView>
 </AnchorPane>

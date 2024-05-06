@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="500.0" maxWidth="370.0" minHeight="299.0" minWidth="370.0" prefHeight="299.0" prefWidth="370.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.QuyenMKController">
+   <AnchorPane layoutY="-5.0" maxHeight="570.0" maxWidth="370.0" minHeight="332.0" minWidth="370.0" prefHeight="332.0" prefWidth="370.0" styleClass="rounded-anchor-pane">
+      <children>
+         <Text fill="#2264d1" layoutX="33.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quên mật khẩu" wrappingWidth="192.1367473602295">
+            <font>
+               <Font name="Times New Roman Bold" size="25.0" />
+            </font>
+         </Text>
+         <ImageView fx:id="exit" fitHeight="25.0" fitWidth="25.0" layoutX="367.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="12.0">
+            <image>
+               <Image url="@images/close.png" />
+            </image>
+         </ImageView>
+         <ImageView fx:id="minimize" fitHeight="20.0" fitWidth="19.0" layoutX="434.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="17.0">
+            <image>
+               <Image url="@images/minus (1).png" />
+            </image>
+         </ImageView>
+         <Text fill="#2264d1" layoutX="33.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tài khoản" wrappingWidth="192.1367473602295">
+            <font>
+               <Font name="Times New Roman Bold" size="22.0" />
+            </font>
+         </Text>
+         <BorderPane layoutX="27.0" layoutY="166.0" maxWidth="416.0" minWidth="313.0" prefHeight="57.0" prefWidth="313.0" />
+         <MFXTextField fx:id="usernameField" layoutX="28.0" layoutY="126.0" maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="300.0" prefHeight="40.0" prefWidth="314.0" style="-fx-background-color: #E1F8F6;">
+            <font>
+               <Font name="Times New Roman" size="20.0" />
+            </font>
+         </MFXTextField>
+         <Button fx:id="login" layoutX="26.0" layoutY="213.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="314.0" styleClass="button" text="Lấy lại mật khẩu" textFill="WHITE">
+            <font>
+               <Font name="Times New Roman Bold" size="28.0" />
+            </font>
+         </Button>
+        
+      </children>
+
+   </AnchorPane>
+
+</AnchorPane>
