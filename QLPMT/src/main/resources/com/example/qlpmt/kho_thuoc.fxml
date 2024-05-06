@@ -14,6 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <AnchorPane prefHeight="607.0" prefWidth="920.0" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.kho_thuocController">
     <VBox layoutX="13.0" layoutY="20.0" prefHeight="400.0" prefWidth="600.0" styleClass="mainBackground" stylesheets="@../../../style.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="12.600000000000023" AnchorPane.topAnchor="10.0">
         <children>
@@ -36,7 +37,7 @@
                 <left>
                     <HBox prefHeight="38.0" prefWidth="482.0" styleClass="TextBorder" stylesheets="@../../../style.css" BorderPane.alignment="CENTER">
                         <children>
-                            <TextField prefHeight="38.0" prefWidth="448.0" styleClass="square-border-pane-none" stylesheets="@../../../style.css" text="jttjjjjjjjjjjjjjjjj">
+                            <TextField fx:id="search_txtbox" prefHeight="38.0" prefWidth="448.0" styleClass="square-border-pane-none" stylesheets="@../../../style.css" text="">
                                 <font>
                                     <Font name=".VnTimeH" size="17.0" />
                                 </font>

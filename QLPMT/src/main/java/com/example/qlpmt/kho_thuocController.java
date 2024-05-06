@@ -2,6 +2,7 @@ package com.example.qlpmt;
 import Model.Thuoc;
 import io.github.palexdev.materialfx.controls.MFXPaginatedTableView;
 import io.github.palexdev.materialfx.controls.MFXTableColumn;
+import io.github.palexdev.materialfx.controls.MFXTextField;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import io.github.palexdev.materialfx.filter.DoubleFilter;
 import io.github.palexdev.materialfx.filter.IntegerFilter;
@@ -12,6 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
+import javafx.scene.input.KeyEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
@@ -44,10 +46,37 @@ public class kho_thuocController implements Initializable {
     private ResultSet rs=null;
     private java.sql.Connection dbConnection = null;
 
+    @FXML
+   public TextField search_txtbox;
 
 
     private ObservableList<KhoThuoc> KhoThuoc_list;
     public void initialize(URL location, ResourceBundle resources){
+        search_txtbox.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
+            String searchText = search_txtbox.getText();
+            if(searchText.isEmpty()){
+               try
+               {
+                   System.out.println(searchText);
+//                   KhoThuoc_list=FXCollections.observableArrayList();
+//                   String sql="Select*from Thuoc inner join DonViThuoc on Thuoc.DonViThuoc_ID=DonViThuoc.DVTHuoc_ID Where TenThuoc like '%"+searchText+"%'";
+//                   pst=dbConnection.prepareStatement(sql);
+//                   rs=pst.executeQuery();
+//                   while (rs.next())
+//                   {
+//                       int STT=0;
+//                       String img="Sửa";
+//                       KhoThuoc_list.add(new KhoThuoc(STT,rs.getString("TenThuoc"),rs.getString("TenDVTHuoc"),rs.getInt("TonKho"),rs.getString("GiaMua"),img));
+//                   }
+//                     khothuoc.setItems(KhoThuoc_list);
+               }
+               catch (Exception e)
+               {
+                   e.printStackTrace();
+               }
+            }
+            // Your code here
+        });
         dbConnection = DBConnection.getConnection();
         setupPaginated();
         double tableViewWidth = khothuoc.getPrefWidth();
