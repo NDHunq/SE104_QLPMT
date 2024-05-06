@@ -13,7 +13,7 @@ public class DBConnectionQuyen {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             // ten database
-            String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=QLPK;user=sa;password=123456789;encrypt=true;trustServerCertificate=true";
+            String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=QLPK;user=sa;password=git;encrypt=true;trustServerCertificate=true";
 
             connection = DriverManager.getConnection(connectionUrl);
 
