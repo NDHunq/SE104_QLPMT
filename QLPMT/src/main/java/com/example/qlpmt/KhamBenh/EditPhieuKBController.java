@@ -68,6 +68,7 @@ public class EditPhieuKBController implements Initializable {
     @FXML
     private MFXTableView<DSThuoc_PKB> table_thuoc = new MFXTableView<>();
     private ObservableList<DSThuoc_PKB> list = FXCollections.observableArrayList();
+    private ObservableList<DSThuoc> thuoc_list = FXCollections.observableArrayList();
 
     @FXML
     private MFXTextField cccd_txtbox = new MFXTextField();
@@ -264,7 +265,7 @@ public class EditPhieuKBController implements Initializable {
         FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("sua_thuoc_pkb.fxml"));
 
         //Tao controller moi de truyen du lieu cua dong duoc chon sang
-        SuaThuocPKBController controller = new SuaThuocPKBController(rowData);
+        SuaThuocPKBController controller = new SuaThuocPKBController(rowData, thuoc_list);
         loader.setController(controller);
 
         Parent root = loader.load();
@@ -359,6 +360,7 @@ public class EditPhieuKBController implements Initializable {
                 DSThuoc t = new DSThuoc(rs.getString("Thuoc_ID"),rs.getString("TenThuoc"),0,0,0,cd,dvt);
                 DSThuoc_PKB temp = new DSThuoc_PKB(new PhieuKhamBenh(rs.getString("PKB_ID"),-1,"", "", "", "",LocalDate.now()),t,rs.getInt("SoLuong"));
                 list.add(temp);
+                thuoc_list.add(t);
             }
         } catch (Exception e) {
             e.printStackTrace();

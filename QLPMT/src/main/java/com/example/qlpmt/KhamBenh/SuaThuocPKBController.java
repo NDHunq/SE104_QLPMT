@@ -36,6 +36,9 @@ public class SuaThuocPKBController implements Initializable {
     @FXML
     private Button HuyBtn = new Button();
 
+    private ObservableList<DSThuoc> existedThuoc_list = FXCollections.observableArrayList();
+
+
     // Luu du lieu cua dong duoc truyen vao tu EditPhieuKBController
     private ObjectProperty<Model.DSThuoc_PKB> rowDataProperties = new ObjectPropertyBase<DSThuoc_PKB>() {
         @Override
@@ -60,8 +63,9 @@ public class SuaThuocPKBController implements Initializable {
         return null;
     }
 
-    public SuaThuocPKBController(DSThuoc_PKB rowData){
+    public SuaThuocPKBController(DSThuoc_PKB rowData, ObservableList<DSThuoc> t){
         rowDataProperties.set(rowData);
+        existedThuoc_list = t;
     }
 
     @Override
@@ -115,7 +119,20 @@ public class SuaThuocPKBController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        thuoc_combobox.setItems(thuoc_list);
+
+        // Loại bỏ các thuốc đã tồn tại trong phiếu khám bệnh
+        ObservableList<DSThuoc> newthuoc_list = FXCollections.observableArrayList(thuoc_list);
+        for (DSThuoc existedThuoc : existedThuoc_list) {
+            newthuoc_list.removeIf(thuoc -> thuoc.getThuoc_ID().equals(existedThuoc.getThuoc_ID()));
+        }
+
+        if(newthuoc_list.isEmpty()){
+            System.out.println("Khong con thuoc nao de them");
+        }
+        else{
+            System.out.println("Con thuoc de them");
+            thuoc_combobox.setItems(newthuoc_list);
+        }
 
         try {
             Connection conn = DBConnection.getConnection();
