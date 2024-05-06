@@ -150,5 +150,28 @@ public class SuaThuocPKBController implements Initializable {
         soLuong_txtbox.setText(String.valueOf(rowData.getSoLuong()));
     }
 
+    public void thuoc_combobox_ChangedValue(){
+        thuoc_combobox.setOnAction((ActionEvent event) -> {
+            String selectedThuoc = thuoc_combobox.getSelectionModel().getSelectedItem().getTenThuoc();
+            try {
+                // Fetch ID corresponding to the selected name
+                String idThuoc = fetchId("Thuoc", "TenThuoc", "Thuoc_ID", selectedThuoc);
+
+                // Fetch corresponding DonVi from database
+                String sql = "SELECT DonViThuoc.TenDVThuoc, CachDung.TenCachDung FROM Thuoc JOIN DonViThuoc ON Thuoc.DonViThuoc_ID = DonViThuoc.DVThuoc_ID JOIN CachDung ON Thuoc.CachDung_ID = CachDung.CachDung_ID WHERE Thuoc.Thuoc_ID = ?";
+                PreparedStatement pst = con.prepareStatement(sql);
+                pst.setString(1, idThuoc);
+                ResultSet rs = pst.executeQuery();
+                if (rs.next()) {
+                    String donVi = rs.getString("TenDVThuoc");
+                    String cachDung = rs.getString("TenCachDung");
+                    DonViCBB.setValue(donVi);
+                    CachDungCBB.setValue(cachDung);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
 
 }
