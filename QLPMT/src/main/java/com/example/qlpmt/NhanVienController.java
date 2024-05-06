@@ -149,7 +149,7 @@ public class NhanVienController implements Initializable {
     public void setData () {
         pkb_list = FXCollections.observableArrayList();
         try {
-            Connection connection = DBConnectionQuyen.getConnection();
+            Connection connection = DBConnection.getConnection();
             String sql = "SELECT * FROM TaiKhoan";
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(sql);

@@ -140,7 +140,7 @@ public class loginController  implements Initializable {
 
     private boolean checkLogin (String username, String password) {
         // Tạo kết nối với cơ sở dữ liệu
-        Connection connection = DBConnectionQuyen.getConnection();
+        Connection connection = DBConnection.getConnection();
         if (connection == null) {
             return false;
         }

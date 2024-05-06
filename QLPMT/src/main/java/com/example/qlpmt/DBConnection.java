@@ -13,11 +13,11 @@ public class DBConnection {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             // ten database
+            String url = "jdbc:sqlserver://DESKTOP-MR3E6H4\\SQLEXPRESS:1433;databaseName=QLPK";
+            String user = "sa"; // replace with your username
+            String password = "hhhhhhhh444"; // replace with your password
 
-            String url = "jdbc:sqlserver://REDRUM\\REDRUM:1433;databaseName=QLPK;integratedSecurity=true;";
-
-            connection = (Connection) DriverManager.getConnection(url);
-            System.out.println("Connected to the database");
+            connection = (Connection) DriverManager.getConnection(url, user, password);
 
 
         } catch (ClassNotFoundException | java.sql.SQLException e) {
