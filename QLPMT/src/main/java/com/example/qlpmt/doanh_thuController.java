@@ -303,7 +303,7 @@ public class doanh_thuController implements Initializable {
             while (rs.next()){
                 float tiLe = 0;
                 for(TongDoanhThu tongDoanhThu : tongDoanhThuList){
-                    if(tongDoanhThu.getThang() == Integer.parseInt(month_combobox.getText()) && tongDoanhThu.getNam() == Integer.parseInt(year_combobox.getText())){
+                    if(tongDoanhThu.getThang() == month && tongDoanhThu.getNam() == year){
                         tiLe = Math.round((float) (rs.getDouble("DoanhThu") / Double.parseDouble(tongDoanhThu.getTongDoanhThu())  * 100) * 100.0f) / 100.0f ;}
                 }
                 doanhThuList.add(new DoanhThu(id, rs.getDate(1).toLocalDate(), rs.getInt(2), rs.getString(3), tiLe));
