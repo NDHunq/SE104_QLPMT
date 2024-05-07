@@ -243,6 +243,10 @@ public class doanh_thuController implements Initializable {
         xAxis.setLabel("Thời gian (Ngày)");
         yAxis.setLabel("Doanh thu (VND)");
 
+        if(chart_doanhThuList.isEmpty()){
+            xAxis.setCategories(FXCollections.observableArrayList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"));
+        }
+
         doanhThu_line_chart = new LineChart<String, Number>(xAxis, yAxis);
         line_chart_pane.getChildren().add(doanhThu_line_chart);
         doanhThu_line_chart.setPrefSize(883.0, 419.0);
@@ -250,9 +254,7 @@ public class doanh_thuController implements Initializable {
 
         doanhThu_line_chart.setTitle("Biểu đồ doanh thu Tháng " + month + "/" + year);
 
-        XYChart.Series<String, Number> series= new XYChart.Series<String, Number>();
-        series.setName("Doanh thu");
-
+        //Lay du lieu doanh thu theo thang va nam
         try{
             String query = "SELECT * FROM DoanhThu WHERE MONTH(NgayDT) = ? AND YEAR(NgayDT) = ?";
             Connection conn = DBConnection.getConnection();
@@ -267,25 +269,29 @@ public class doanh_thuController implements Initializable {
             e.printStackTrace();
         }
 
-        try{
-            int count = 0;
-            for (int i = 1; i <= 31; i++){
-                if(count < chart_doanhThuList.size()){
-                    if(chart_doanhThuList.get(count).getNgayKham().getDayOfMonth() == i){
-                        series.getData().add(new XYChart.Data<String, Number>(Integer.toString(i), Double.parseDouble(chart_doanhThuList.get(count).getDoanhThu())));
-                        count++;
+        if(!chart_doanhThuList.isEmpty()){
+            //Them du lieu vao bieu do
+            XYChart.Series<String, Number> series= new XYChart.Series<String, Number>();
+            series.setName("Doanh thu");
+            try{
+                int count = 0;
+                for (int i = 1; i <= 31; i++){
+                    if(count < chart_doanhThuList.size()){
+                        if(chart_doanhThuList.get(count).getNgayKham().getDayOfMonth() == i){
+                            series.getData().add(new XYChart.Data<String, Number>(Integer.toString(i), Double.parseDouble(chart_doanhThuList.get(count).getDoanhThu())));
+                            count++;
+                        }
+                        else
+                            series.getData().add(new XYChart.Data<String, Number>(Integer.toString(i), 0));
                     }
                     else
                         series.getData().add(new XYChart.Data<String, Number>(Integer.toString(i), 0));
                 }
-                else
-                    series.getData().add(new XYChart.Data<String, Number>(Integer.toString(i), 0));
+            }catch (Exception e){
+                e.printStackTrace();
             }
-        }catch (Exception e){
-            e.printStackTrace();
+            doanhThu_line_chart.getData().add(series);
         }
-
-        doanhThu_line_chart.getData().add(series);
     }
 
     public void setComboBox(){
