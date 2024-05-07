@@ -193,3 +193,9 @@
     -fx-font-size: 16;
     -fx-padding: 15, 5, 15, 0;
 }
+
+.chart-series-line {
+    -fx-stroke: #2264D1;
+}
+
+.default-color0.chart-line-symbol { -fx-background-color: #2264D1, white; }
