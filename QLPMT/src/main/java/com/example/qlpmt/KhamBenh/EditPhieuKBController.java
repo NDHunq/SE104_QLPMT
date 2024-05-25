@@ -13,6 +13,9 @@ import io.github.palexdev.materialfx.enums.ScrimPriority;
 import io.github.palexdev.materialfx.filter.IntegerFilter;
 import io.github.palexdev.materialfx.filter.LongFilter;
 import io.github.palexdev.materialfx.filter.StringFilter;
+import io.github.palexdev.materialfx.validation.Constraint;
+import io.github.palexdev.materialfx.validation.MFXValidator;
+import io.github.palexdev.materialfx.validation.Severity;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ObjectPropertyBase;
@@ -44,6 +47,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.function.Predicate;
 
 public class EditPhieuKBController implements Initializable {
     private MFXGenericDialog dialogContent = null;
@@ -120,6 +124,16 @@ public class EditPhieuKBController implements Initializable {
         return null;
     }
 
+    public String findUsername(String string) {
+        // Tìm kiếm đối tượng TaiKhoanNP dựa trên tên người khám
+        for (TaiKhoanNP tk : nguoiKham_combobox.getItems()) {
+            if (tk.getHoTen().equals(string)) {
+                return tk.getUsername();
+            }
+        }
+        return null;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Tạo một Pane tạm thời
@@ -142,7 +156,7 @@ public class EditPhieuKBController implements Initializable {
             stage.close();
         });
         XongBtn.setOnAction((ActionEvent event) -> {
-            String query = "UPDATE PKB SET TrieuChung = ?, LoaiBenh_ID = ? WHERE PKB_ID = ?";
+            String query = "UPDATE PKB SET TrieuChung = ?, LoaiBenh_ID = ?, NguoiKham = ? WHERE PKB_ID = ?";
             String query2 = "UPDATE DSKB SET CCCD = ?, HoTen = ?, NgayKham = ? WHERE DSKB_ID = ?";
             try {
                 Connection conn = DBConnection.getConnection();
@@ -150,7 +164,8 @@ public class EditPhieuKBController implements Initializable {
                 PreparedStatement ps1 = conn.prepareStatement(query);
                 ps1.setString(1, trieuChung_txtbox.getText());
                 ps1.setString(2, findLoaiBenh_ID(loaiBenh_combobox.getText()));
-                ps1.setString(3, rowDataProperties.get().getIdPKB());
+                ps1.setString(4, rowDataProperties.get().getIdPKB());
+                ps1.setString(3, findUsername(nguoiKham_combobox.getText()));
 
                 //ps1.setString(4, nguoiKham_combobox.getSelectedItem().getUsername());
                 ps1.executeUpdate();
@@ -342,6 +357,7 @@ public class EditPhieuKBController implements Initializable {
         else{
             System.out.println("Nguoi kham is empty");
         }
+        nguoiKham_combobox.setText(data.getNguoiKham().getHoTen());
     }
 
     public void LoadTableView(){
