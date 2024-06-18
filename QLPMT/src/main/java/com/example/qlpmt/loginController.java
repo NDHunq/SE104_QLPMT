@@ -66,9 +66,12 @@ public class loginController  implements Initializable {
         });
         quen.setOnMouseClicked(event -> {
             try {
-                Stage stage = (Stage) login.getScene().getWindow();
+                Stage stage = new Stage();
+                stage.initStyle(StageStyle.UNDECORATED);
+
 
                 Parent root = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/quyenmk.fxml"));
+
                 root.setOnMousePressed(event1 -> {
                     double x = event1.getSceneX();
                     double y = event1.getSceneY();
@@ -83,6 +86,7 @@ public class loginController  implements Initializable {
                 Scene scene = new Scene(root);
                 scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
                 stage.setScene(scene);
+                stage.show();
             } catch (IOException e) {
                 e.printStackTrace();
             }

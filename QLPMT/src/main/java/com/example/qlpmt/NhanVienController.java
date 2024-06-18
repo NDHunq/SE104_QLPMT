@@ -115,6 +115,22 @@ public class NhanVienController implements Initializable {
                 e.printStackTrace();
             }
         });
+        // su kien search
+        search_txtbox.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == null || newValue.isEmpty()) {
+                // If the search box is empty, show all items
+                pkb.setItems(pkb_list);
+            } else {
+                // If the search box is not empty, filter the items
+                ObservableList<NhanVien> filteredList = FXCollections.observableArrayList();
+                for (NhanVien nhanVien : pkb_list) {
+                    if (nhanVien.getHoten().toLowerCase().contains(newValue.toLowerCase())) {
+                        filteredList.add(nhanVien);
+                    }
+                }
+                pkb.setItems(filteredList);
+            }
+        });
     }
 
     private void setupPaginated () {
