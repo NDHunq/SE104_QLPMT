@@ -1,4 +1,5 @@
 package com.example.qlpmt;
+import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import io.github.palexdev.materialfx.controls.MFXPasswordField;
@@ -18,8 +19,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -51,6 +52,8 @@ public class loginController  implements Initializable {
     private MFXTextField usernameField;
     @FXML
     private MFXPasswordField passwordField;
+    @FXML
+    private Text quen;
 
 
 
@@ -61,7 +64,33 @@ public class loginController  implements Initializable {
         exit.setOnMouseClicked(event -> {
             System.exit(0);
         });
+        quen.setOnMouseClicked(event -> {
+            try {
+                Stage stage = new Stage();
+                stage.initStyle(StageStyle.UNDECORATED);
 
+
+                Parent root = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/quyenmk.fxml"));
+
+                root.setOnMousePressed(event1 -> {
+                    double x = event1.getSceneX();
+                    double y = event1.getSceneY();
+                    root.setOnMouseDragged(event2 -> {
+                        stage.setX(event2.getScreenX() - x);
+                        stage.setY(event2.getScreenY() - y);
+                    });
+                });
+
+
+                // Create a new scene and set it on the stage
+                Scene scene = new Scene(root);
+                scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
         login.setOnAction(event -> {
             String username = usernameField.getText();
@@ -69,9 +98,9 @@ public class loginController  implements Initializable {
 
             if (checkLogin(username, password)) {
                 try {
-                    login.setBackground(new javafx.scene.layout.Background(new javafx.scene.layout.BackgroundFill(javafx.scene.paint.Color.valueOf("#134494"), new javafx.scene.layout.CornerRadii(5), new javafx.geometry.Insets(0))));
+                    login.setBackground(new Background(new BackgroundFill(Color.valueOf("#134494"), new CornerRadii(5), new Insets(0))));
                     // Load the new FXML file
-                   String link = "/com/example/qlpmt/hello-view2.fxml";
+                   String link = "/com/example/qlpmt/mainview2.fxml";
                    if (quanly == 1) {
                             link = "/com/example/qlpmt/hello-view.fxml";
                         }
@@ -138,7 +167,7 @@ public class loginController  implements Initializable {
             // Nếu có kết quả trả về, kiểm tra cột ChucVu
             if (resultSet.next()) {
                 String chucVu = resultSet.getString("ChucVu");
-                if ("Quản lý".equals(chucVu)) {
+                if (chucVu.equals("Quản lý")) {
                     quanly = 1;
                 } else {
                     quanly = 0;
