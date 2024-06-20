@@ -33,8 +33,24 @@
             </VBox.margin>
          </BorderPane>
          <BorderPane prefHeight="38.0" prefWidth="828.0">
+            <VBox.margin>
+               <Insets />
+            </VBox.margin>
             <left>
-               <MFXTextField id="search_txtbox" fx:id="search_txtbox" floatMode="DISABLED" layoutX="567.0" layoutY="58.0" prefHeight="39.0" prefWidth="391.0">
+               <MFXDatePicker fx:id="NgayKhamPicker" prefHeight="17.0" prefWidth="150.0" styleClass="mfx-date-picker" stylesheets="@../../../style.css" BorderPane.alignment="CENTER">
+                  <opaqueInsets>
+                     <Insets />
+                  </opaqueInsets>
+                  <BorderPane.margin>
+                     <Insets left="20.0" right="23.0" />
+                  </BorderPane.margin>
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor>
+               </MFXDatePicker>
+            </left>
+            <right>
+               <MFXTextField id="search_txtbox" fx:id="search_txtbox" floatMode="DISABLED" prefHeight="30.0" prefWidth="338.0" BorderPane.alignment="CENTER">
                   <leadingIcon>
                      <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                         <image>
@@ -43,30 +59,14 @@
                      </ImageView>
                   </leadingIcon>
                   <BorderPane.margin>
-                     <Insets left="20.0" />
+                     <Insets left="20.0" right="20.0" />
                   </BorderPane.margin>
                </MFXTextField>
-            </left>
-            <VBox.margin>
-               <Insets />
-            </VBox.margin>
-            <right>
-               <MFXDatePicker fx:id="NgayKhamPicker" prefHeight="17.0" prefWidth="150.0" styleClass="mfx-date-picker" stylesheets="@../../../style.css" BorderPane.alignment="CENTER">
-                  <opaqueInsets>
-                     <Insets />
-                  </opaqueInsets>
-                  <BorderPane.margin>
-                     <Insets right="20.0" />
-                  </BorderPane.margin>
-                  <cursor>
-                     <Cursor fx:constant="HAND" />
-                  </cursor>
-               </MFXDatePicker>
             </right>
          </BorderPane>
          <BorderPane prefHeight="446.0" prefWidth="926.0">
             <center>
-               <MFXPaginatedTableView fx:id="table_bn" prefHeight="443.0" prefWidth="888.0" rowsPerPage="10" styleClass="font15" stylesheets="@../../../style.css" BorderPane.alignment="CENTER">
+               <MFXPaginatedTableView fx:id="table_bn" prefHeight="443.0" prefWidth="883.0" rowsPerPage="10" styleClass="font15" stylesheets="@../../../style.css" BorderPane.alignment="CENTER">
                   <padding>
                      <Insets bottom="7.0" top="7.0" />
                   </padding>
@@ -76,9 +76,9 @@
                <Insets top="10.0" />
             </VBox.margin>
          </BorderPane>
-         <BorderPane prefHeight="51.0" prefWidth="886.0">
+         <BorderPane prefHeight="52.0" prefWidth="869.0">
             <right>
-               <Button fx:id="add_butt" mnemonicParsing="false" onAction="#add" prefHeight="40.0" prefWidth="40.0" styleClass="buttonPlus" stylesheets="@../../../style.css" text="+" textFill="WHITE" BorderPane.alignment="CENTER">
+               <Button fx:id="add_butt" mnemonicParsing="false" onAction="#add" prefHeight="44.0" prefWidth="32.0" styleClass="buttonPlus" stylesheets="@../../../style.css" text="+" textFill="WHITE" BorderPane.alignment="CENTER">
                   <font>
                      <Font name="Times New Roman Bold" size="24.0" />
                   </font>
@@ -90,7 +90,7 @@
                   </cursor></Button>
             </right>
             <VBox.margin>
-               <Insets left="20.0" right="20.0" />
+               <Insets left="20.0" right="23.0" />
             </VBox.margin>
          </BorderPane>
       </children></VBox>

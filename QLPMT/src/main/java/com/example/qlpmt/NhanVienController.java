@@ -17,6 +17,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -115,6 +117,22 @@ public class NhanVienController implements Initializable {
                 e.printStackTrace();
             }
         });
+        // su kien search
+        search_txtbox.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == null || newValue.isEmpty()) {
+                // If the search box is empty, show all items
+                pkb.setItems(pkb_list);
+            } else {
+                // If the search box is not empty, filter the items
+                ObservableList<NhanVien> filteredList = FXCollections.observableArrayList();
+                for (NhanVien nhanVien : pkb_list) {
+                    if (nhanVien.getHoten().toLowerCase().contains(newValue.toLowerCase())) {
+                        filteredList.add(nhanVien);
+                    }
+                }
+                pkb.setItems(filteredList);
+            }
+        });
     }
 
     private void setupPaginated () {
@@ -184,13 +202,17 @@ public class NhanVienController implements Initializable {
                 NhanVien selectedNhanVien =row.getData();
 
                 if (selectedNhanVien != null) {
+
                     deleteNhanVienFromDatabase(selectedNhanVien);
                     pkb_list.remove(selectedNhanVien);
+
                     Alert deleteAlert = new Alert(Alert.AlertType.INFORMATION);
                     deleteAlert.setTitle("Delete Confirmation");
+
                     deleteAlert.setHeaderText(null);
                     deleteAlert.setContentText("Deleted: " + selectedNhanVien.getHoten());
                     deleteAlert.showAndWait();
+
                 }
             }
         });

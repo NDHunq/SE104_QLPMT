@@ -19,6 +19,7 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 public class HelloController implements Initializable {
+    private int quanly = 0;
 
     @FXML
     private AnchorPane Pane1;
@@ -68,8 +69,9 @@ public class HelloController implements Initializable {
     private BorderPane lotxt;
 
 
-
-
+    public int getQuanly() {
+        return quanly;
+    }
 
     // Add a boolean variable to track the state of the drawerPane
     private boolean isDrawerOpen = false;
@@ -103,6 +105,7 @@ public class HelloController implements Initializable {
         logout.setCursor(javafx.scene.Cursor.HAND);
     lotxt.setCursor(javafx.scene.Cursor.HAND);
         menu.setCursor(javafx.scene.Cursor.HAND);
+
 
         logout.setOnMouseClicked(event -> {
             try {
@@ -417,7 +420,13 @@ public class HelloController implements Initializable {
             isDrawerOpen = false;
         });
     }
-
+    //chi quan ly moi xem duoc nhan vien
+private void xoaNhanvien() {
+    bd7.setVisible(false);
+    bd7.setManaged(false);
+    txt7.setVisible(false);
+    txt7.setManaged(false);
+}
     private void handleBorderPaneClick(BorderPane clickedBorderPane) {
         // Remove the style from all BorderPanes
         bd1.getStyleClass().remove("square-border-pane");
@@ -595,6 +604,12 @@ public class HelloController implements Initializable {
 
             // Add the style to the clicked BorderPane
             bd7.getStyleClass().add("square-border-pane");
+        }
+    }
+    void setQuanly(int quanly) {
+        if(quanly!=1)
+        {
+            xoaNhanvien();
         }
     }
 

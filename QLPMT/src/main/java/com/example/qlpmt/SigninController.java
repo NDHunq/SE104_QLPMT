@@ -1,4 +1,7 @@
 package com.example.qlpmt;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import io.github.palexdev.materialfx.controls.MFXButton;
@@ -15,12 +18,15 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class SigninController   implements Initializable {
@@ -60,9 +66,11 @@ public class SigninController   implements Initializable {
     public void initialize (URL url, ResourceBundle resourceBundle) {
         exit.setOnMouseClicked(event -> {
             // Get the current stage
-            Stage stage = (Stage) ((ImageView) event.getSource()).getScene().getWindow();
-            // Close the stage
-            stage.close();
+            Stage stage1 = (Stage) ((ImageView) event.getSource()).getScene().getWindow();
+            // Close the current stage
+            stage1.close();
+
+
         });
         nv.setCursor(javafx.scene.Cursor.HAND);
         bs.setCursor(javafx.scene.Cursor.HAND);

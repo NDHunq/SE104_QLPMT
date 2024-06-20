@@ -30,7 +30,7 @@
             </font>
          </Text>
          <BorderPane layoutX="27.0" layoutY="166.0" maxWidth="416.0" minWidth="313.0" prefHeight="57.0" prefWidth="313.0" />
-         <MFXTextField fx:id="usernameField" layoutX="28.0" layoutY="126.0" maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="300.0" prefHeight="40.0" prefWidth="314.0" style="-fx-background-color: #E1F8F6;">
+         <MFXTextField fx:id="username" layoutX="28.0" layoutY="126.0" maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="300.0" prefHeight="40.0" prefWidth="314.0" style="-fx-background-color: #E1F8F6;">
             <font>
                <Font name="Times New Roman" size="20.0" />
             </font>
