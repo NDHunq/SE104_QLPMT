@@ -35,7 +35,7 @@
          </BorderPane>
          <BorderPane prefHeight="38.0" prefWidth="828.0">
             <left>
-               <MFXTextField id="search_txtbox" fx:id="search_txtbox" floatMode="DISABLED" prefHeight="41.0" prefWidth="379.0" BorderPane.alignment="CENTER">
+               <MFXTextField  fx:id="search_txtbox1" floatMode="DISABLED" prefHeight="41.0" prefWidth="379.0" BorderPane.alignment="CENTER">
                   <trailingIcon>
                      <ImageView fitHeight="25.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
                         <image>

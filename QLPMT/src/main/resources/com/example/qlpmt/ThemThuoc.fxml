@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXComboBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
@@ -40,7 +41,7 @@
                         <Font name="Times New Roman Bold" size="18.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="text_donvi">
+                  <TextField fx:id="text_soluong">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>
@@ -60,17 +61,44 @@
                         <Insets left="20.0" />
                      </HBox.margin>
                   </Text>
-                  <TextField fx:id="text_dongia">
+                  <MFXComboBox fx:id="text_donvi" prefHeight="27.0" prefWidth="90.0">
                      <HBox.margin>
                         <Insets left="20.0" right="20.0" />
                      </HBox.margin>
-                  </TextField>
+                  </MFXComboBox>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Đơn giá nhập">
                      <font>
                         <Font name="Times New Roman Bold" size="18.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="text_soluong">
+                  <TextField fx:id="text_dongia">
+                     <HBox.margin>
+                        <Insets left="25.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox prefHeight="45.0" prefWidth="600.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Cách dùng">
+                     <font>
+                        <Font name="Times New Roman Bold" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </Text>
+                  <MFXComboBox fx:id="text_cachdung" prefHeight="27.0" prefWidth="90.0">
+                     <HBox.margin>
+                        <Insets left="20.0" right="20.0" />
+                     </HBox.margin>
+                  </MFXComboBox>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Đơn giá bán">
+                     <font>
+                        <Font name="Times New Roman Bold" size="18.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="text_dongiaban">
                      <HBox.margin>
                         <Insets left="25.0" />
                      </HBox.margin>

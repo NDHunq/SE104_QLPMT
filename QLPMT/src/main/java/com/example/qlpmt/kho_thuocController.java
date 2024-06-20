@@ -1,7 +1,9 @@
 package com.example.qlpmt;
 import Model.Thuoc;
+import com.example.qlpmt.KhamBenh.KhamBenh;
 import io.github.palexdev.materialfx.controls.MFXPaginatedTableView;
 import io.github.palexdev.materialfx.controls.MFXTableColumn;
+import io.github.palexdev.materialfx.controls.MFXTableRow;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import io.github.palexdev.materialfx.filter.DoubleFilter;
@@ -53,30 +55,10 @@ public class kho_thuocController implements Initializable {
     private ObservableList<KhoThuoc> KhoThuoc_list;
     public void initialize(URL location, ResourceBundle resources){
         search_txtbox.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
-            String searchText = search_txtbox.getText();
-            if(!searchText.isEmpty()){
+          setData();
+            khothuoc.setItems(KhoThuoc_list);
+//            khothuoc.setCurrentPage(0);
 
-               try
-               {
-                   int STT=0;
-                   System.out.println(searchText);
-                   KhoThuoc_list=FXCollections.observableArrayList();
-                   String sql="Select*from Thuoc inner join DonViThuoc on Thuoc.DonViThuoc_ID=DonViThuoc.DVTHuoc_ID Where TenThuoc like '%"+searchText+"%'";
-                   pst=dbConnection.prepareStatement(sql);
-                   rs=pst.executeQuery();
-                   while (rs.next())
-                   {
-                       STT++;
-                       String img="Sửa";
-                       KhoThuoc_list.add(new KhoThuoc(STT,rs.getString("TenThuoc"),rs.getString("TenDVTHuoc"),rs.getInt("TonKho"),rs.getString("GiaMua"),img));
-                   }
-                     khothuoc.setItems(KhoThuoc_list);
-               }
-               catch (Exception e)
-               {
-                   e.printStackTrace();
-               }
-            }
             // Your code here
         });
         dbConnection = DBConnection.getConnection();
@@ -110,18 +92,31 @@ public class kho_thuocController implements Initializable {
     public void setData()
     {
 int STT=0;
+String sql="";
+        String search = search_txtbox.getText();
         try {
             KhoThuoc_list = FXCollections.observableArrayList();
-            String sql="Select*from Thuoc inner join DonViThuoc on Thuoc.DonViThuoc_ID=DonViThuoc.DVTHuoc_ID";
+            if(search=="")
+            {
+                sql="Select*from Thuoc inner join DonViThuoc on Thuoc.DonViThuoc_ID=DonViThuoc.DVTHuoc_ID";
+            }
+            else
+            {
+                 sql="Select*from Thuoc inner join DonViThuoc on Thuoc.DonViThuoc_ID=DonViThuoc.DVTHuoc_ID Where TenThuoc like '%"+search+"%'";
+            }
+
             pst=dbConnection.prepareStatement(sql);
 
             rs=pst.executeQuery();
             System.out.println("execute query");
             while (rs.next())
             {
-                String img="Sửa";
                 STT++;
-                KhoThuoc_list.add(new KhoThuoc(STT,rs.getString("TenThuoc"),rs.getString("TenDVTHuoc"),rs.getInt("TonKho"),rs.getString("GiaMua"),img));
+                String img="Sửa";
+                KhoThuoc thuoc=new KhoThuoc(STT,rs.getString("TenThuoc"),rs.getString("TenDVTHuoc"),rs.getInt("TonKho"),rs.getString("GiaBan"),img);
+                thuoc.setId(rs.getString("Thuoc_ID"));
+                thuoc.setDonViThuoc_ID(rs.getString("DonViTHuoc_ID"));
+                KhoThuoc_list.add(thuoc);
             }
         }
         catch (Exception e) {
@@ -131,31 +126,33 @@ int STT=0;
 
 
     }
-    public void setupPaginated()
-    {
-        MFXTableColumn<KhoThuoc> stt = new MFXTableColumn<>("STT",false, Comparator.comparing(KhoThuoc::getStt));
-        MFXTableColumn<KhoThuoc> tenthuoc = new MFXTableColumn<>("Tên Thuốc",false, Comparator.comparing(KhoThuoc::getTenthuoc));
-        MFXTableColumn<KhoThuoc> don_vi = new MFXTableColumn<>("Đơn Vị",false, Comparator.comparing(KhoThuoc::getDonvi));
-        MFXTableColumn<KhoThuoc> so_luong = new MFXTableColumn<>("Số Lượng",false, Comparator.comparing(KhoThuoc::getSoluong));
-        MFXTableColumn<KhoThuoc> dongia = new MFXTableColumn<>("Đơn giá nhập",false, Comparator.comparing(KhoThuoc::getDongia));
-        MFXTableColumn<KhoThuoc> img = new MFXTableColumn<>("Chỉnh sửa",false, Comparator.comparing(KhoThuoc::getImgThuoc));
+    public void setupPaginated() {
+        MFXTableColumn<KhoThuoc> stt = new MFXTableColumn<>("STT", false, Comparator.comparing(KhoThuoc::getStt));
+        MFXTableColumn<KhoThuoc> tenthuoc = new MFXTableColumn<>("Tên Thuốc", false, Comparator.comparing(KhoThuoc::getTenthuoc));
+        MFXTableColumn<KhoThuoc> don_vi = new MFXTableColumn<>("Đơn Vị", false, Comparator.comparing(KhoThuoc::getDonvi));
+        MFXTableColumn<KhoThuoc> so_luong = new MFXTableColumn<>("Số Lượng", false, Comparator.comparing(KhoThuoc::getSoluong));
+        MFXTableColumn<KhoThuoc> dongia = new MFXTableColumn<>("Đơn giá bán", false, Comparator.comparing(KhoThuoc::getDongia));
+        MFXTableColumn<KhoThuoc> img = new MFXTableColumn<>("Chỉnh sửa", false, Comparator.comparing(KhoThuoc::getImgThuoc));
 
 
-        stt.setRowCellFactory(khoThuoc ->  new MFXTableRowCell<>(KhoThuoc::getStt));
-        tenthuoc.setRowCellFactory(khoThuoc ->  new MFXTableRowCell<>(KhoThuoc::getTenthuoc));
+        stt.setRowCellFactory(khoThuoc -> new MFXTableRowCell<>(KhoThuoc::getStt));
+        tenthuoc.setRowCellFactory(khoThuoc -> new MFXTableRowCell<>(KhoThuoc::getTenthuoc));
         don_vi.setRowCellFactory(khoThuoc -> new MFXTableRowCell<>(KhoThuoc::getDonvi));
-        so_luong.setRowCellFactory(khoThuoc ->  new MFXTableRowCell<>(KhoThuoc::getSoluong));
-        dongia.setRowCellFactory(khoThuoc ->  new MFXTableRowCell<>(KhoThuoc::getDongia));
+        so_luong.setRowCellFactory(khoThuoc -> new MFXTableRowCell<>(KhoThuoc::getSoluong));
+        dongia.setRowCellFactory(khoThuoc -> new MFXTableRowCell<>(KhoThuoc::getDongia));
         img.setRowCellFactory(khoThuoc -> {
-            MFXTableRowCell<KhoThuoc, String> cell = new MFXTableRowCell<>(KhoThuoc::getImgThuoc); cell.setTextFill(Color.BLUE);
+            MFXTableRowCell<KhoThuoc, String> cell = new MFXTableRowCell<>(KhoThuoc::getImgThuoc);
+            cell.setTextFill(Color.BLUE);
             cell.setCursor(Cursor.HAND);
             cell.setUnderline(true);
 
             cell.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 1) {
-                    KhoThuoc rowData = khoThuoc;
+                    KhoThuoc rowData=khothuoc.getSelectionModel().getSelectedValues().get(0);
+                    System.out.println("Row data: "+rowData.getTenthuoc());
                     // rowData is the KhoThuoc object of the clicked row
                     try {
+
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/Sua_Thuoc.fxml"));
                         Sua_ThuocController controller = new Sua_ThuocController();
                         loader.setController(controller);
@@ -164,27 +161,96 @@ int STT=0;
                         stage.setScene(scene);
                         stage.show();
                         controller.text_tenthuoc.setText(rowData.getTenthuoc());
+                        System.out.println("Ten:"+rowData.getTenthuoc());
                         controller.text_donvi.setText(rowData.getDonvi());
                         controller.text_soluong.setText(rowData.getSoluong().toString());
                         controller.text_dongia.setText(rowData.getDongia());
+                        controller.Thuoc_ID = rowData.getId();
+                        controller.DonViThuoc_ID = rowData.getDonViThuoc_ID();
+                        controller.suathuoc.setOnMouseClicked(event1 -> {
+                                String dvthuocid = "";
+                            try {
+//
+                                String sql = "update Thuoc set TenThuoc=?,TonKho=?,GiaBan=? where Thuoc_ID=?";
+                                pst = dbConnection.prepareStatement(sql);
+                                pst.setString(1, controller.text_tenthuoc.getText());
+                                pst.setString(2, controller.text_soluong.getText());
+                                pst.setString(3, controller.text_dongia.getText());
+                                pst.setString(4, rowData.getId());
+                                int rowsAffected = pst.executeUpdate();
+                                if (rowsAffected > 0) {
+                                    System.out.println("The SQL statement was executed successfully.");
+                                } else {
+                                    System.out.println("The SQL statement did not affect any rows.");
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            try {
+//
+                                String sql = "select DVTHuoc_ID from DonViThuoc where TenDVTHuoc=?";
+                                pst = dbConnection.prepareStatement(sql);
+                                pst.setString(1, controller.text_donvi.getText());
+                                rs = pst.executeQuery();
+                                while (rs.next()) {
+                                    dvthuocid = rs.getString("DVTHuoc_ID");
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            try {
+                                String sql = "update Thuoc set DonViThuoc_ID=? where Thuoc_ID=?";
+                                pst = dbConnection.prepareStatement(sql);
+                                pst.setString(1, dvthuocid);
+                                pst.setString(2, rowData.getId());
+                                int rowsAffected = pst.executeUpdate();
+                                if (rowsAffected > 0) {
+                                    System.out.println("The SQL statement was executed successfully.");
+                                } else {
+                                    System.out.println("The SQL statement did not affect any rows.");
+                                }
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                            setData();
+                            khothuoc.setItems(KhoThuoc_list);
+                            controller.suathuoc.getScene().getWindow().hide();
+                            System.out.println("so luong:" + rowData.getSoluong());
+
+
+                        });
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
                 }
             });
             return cell;
         });
-        khothuoc.getTableColumns().addAll(stt,tenthuoc,don_vi,so_luong,dongia,img);
+        khothuoc.getTableColumns().addAll(stt, tenthuoc, don_vi, so_luong, dongia, img);
         khothuoc.getFilters().addAll(
-                new StringFilter<>("Tên Thuốc",KhoThuoc::getTenthuoc),
-                new StringFilter<>("Đơn vị",KhoThuoc::getDonvi),
-                new IntegerFilter<>("Số lượng",KhoThuoc::getSoluong),
-                new StringFilter<>("Đơn giá",KhoThuoc::getDongia)
+                new StringFilter<>("Tên Thuốc", KhoThuoc::getTenthuoc),
+                new StringFilter<>("Đơn vị", KhoThuoc::getDonvi),
+                new IntegerFilter<>("Số lượng", KhoThuoc::getSoluong),
+                new StringFilter<>("Đơn giá", KhoThuoc::getDongia)
 
         );
         setData();
         khothuoc.setItems(KhoThuoc_list);
+//        khothuoc.setCurrentPage(0);
+        Add.setOnMouseClicked(event -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/ThemThuoc.fxml"));
+                Scene scene = new Scene(loader.load());
+                Stage stage = new Stage();
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
 }

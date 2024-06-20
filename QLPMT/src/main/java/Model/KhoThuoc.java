@@ -9,7 +9,17 @@ public class KhoThuoc {
     private Integer soluong;
     private  String dongia;
     private  String imgThuoc;
+    private  String id;
 
+    public String getDonViThuoc_ID() {
+        return DonViThuoc_ID;
+    }
+
+    public void setDonViThuoc_ID(String donViThuoc_ID) {
+        DonViThuoc_ID = donViThuoc_ID;
+    }
+
+    private  String DonViThuoc_ID;
 
     public String getImgThuoc() {
         return imgThuoc;
@@ -27,8 +37,15 @@ public class KhoThuoc {
         this.stt=stt;
         this.imgThuoc=imgThuoc;
 
+
+    }
+    public String getId() {
+        return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
     public Integer getStt() {
         return stt;
     }
