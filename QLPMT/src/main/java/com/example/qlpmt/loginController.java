@@ -167,7 +167,7 @@ public class loginController  implements Initializable {
             // Nếu có kết quả trả về, kiểm tra cột ChucVu
             if (resultSet.next()) {
                 String chucVu = resultSet.getString("ChucVu");
-                if ("Quản lý".equals(chucVu)) {
+                if (chucVu.equals("Quản lý")) {
                     quanly = 1;
                 } else {
                     quanly = 0;
