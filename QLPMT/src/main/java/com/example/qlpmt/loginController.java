@@ -100,10 +100,10 @@ public class loginController  implements Initializable {
                 try {
                     login.setBackground(new Background(new BackgroundFill(Color.valueOf("#134494"), new CornerRadii(5), new Insets(0))));
                     // Load the new FXML file
-                   String link = "/com/example/qlpmt/mainview2.fxml";
-                   if (quanly == 1) {
-                            link = "/com/example/qlpmt/hello-view.fxml";
-                        }
+                    String link = "/com/example/qlpmt/mainview2.fxml";
+                    if (quanly == 1) {
+                        link = "/com/example/qlpmt/hello-view.fxml";
+                    }
                     Parent root = FXMLLoader.load(getClass().getResource(link));
 
 

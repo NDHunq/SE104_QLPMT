@@ -100,7 +100,7 @@ public class HelloController2 implements Initializable {
         txt6.setCursor(javafx.scene.Cursor.HAND);
 
         logout.setCursor(javafx.scene.Cursor.HAND);
-    lotxt.setCursor(javafx.scene.Cursor.HAND);
+        lotxt.setCursor(javafx.scene.Cursor.HAND);
         menu.setCursor(javafx.scene.Cursor.HAND);
 
         logout.setOnMouseClicked(event -> {
@@ -545,7 +545,5 @@ public class HelloController2 implements Initializable {
             bd6.getStyleClass().add("square-border-pane");
         }
 
-        }
     }
-
-
+}
