@@ -544,8 +544,5 @@ public class HelloController2 implements Initializable {
             // Add the style to the clicked BorderPane
             bd6.getStyleClass().add("square-border-pane");
         }
-
     }
 }
-
-

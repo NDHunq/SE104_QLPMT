@@ -16,6 +16,7 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("login.fxml"));
         Parent root = loader.load();
+
         stage.initStyle(StageStyle.UNDECORATED);
         root.setOnMousePressed(event -> {
             x = event.getSceneX();
@@ -24,7 +25,7 @@ public class HelloApplication extends Application {
         root.setOnMouseDragged(event -> {
             stage.setX(event.getScreenX() - x);
             stage.setY(event.getScreenY() - y);
-        });Scene scene = new Scene(root, 370, 500
+        });Scene scene = new Scene(root, 370, 462
         );
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.setScene(scene);

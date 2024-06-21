@@ -51,10 +51,11 @@ public class loginController  implements Initializable {
     private MFXTextField usernameField;
     @FXML
     private MFXPasswordField passwordField;
-
-
     @FXML
-    private Text signin;
+    private Text quen;
+
+
+
     int quanly = 0;
 
     @Override
@@ -62,6 +63,7 @@ public class loginController  implements Initializable {
         exit.setOnMouseClicked(event -> {
             System.exit(0);
         });
+
 
 
         login.setOnAction(event -> {
@@ -77,8 +79,15 @@ public class loginController  implements Initializable {
                         link = "/com/example/qlpmt/hello-view.fxml";
                     }
                     Parent root = FXMLLoader.load(getClass().getResource(link));
+                    //String link = "/com/example/qlpmt/hello-view.fxml";
 
 
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(link));
+                    Parent root = fxmlLoader.load();
+
+// Get the controller of the root
+                    HelloController helloController = fxmlLoader.getController();
+                    helloController.setQuanly(quanly);
                     // Get the current stage
                     Stage stage = (Stage) login.getScene().getWindow();
 
@@ -110,17 +119,15 @@ public class loginController  implements Initializable {
                 alert.showAndWait();
             }
         });
-        login.setCursor(Cursor.HAND);
 
-        minimize.setOnMouseClicked(event -> {
-            Stage stage = (Stage) ((ImageView) event.getSource()).getScene().getWindow();
-            stage.setIconified(true);
-        });
-        signin.setOnMouseClicked(event -> {
+        quen.setOnMouseClicked(event -> {
             try {
-                signin.setCursor(Cursor.HAND);
-                Parent root = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/signin.fxml"));
-                Stage stage = (Stage) signin.getScene().getWindow();
+                Stage stage = new Stage();
+                stage.initStyle(StageStyle.UNDECORATED);
+
+
+                Parent root = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/quyenmk.fxml"));
+
                 root.setOnMousePressed(event1 -> {
                     double x = event1.getSceneX();
                     double y = event1.getSceneY();
@@ -129,26 +136,39 @@ public class loginController  implements Initializable {
                         stage.setY(event2.getScreenY() - y);
                     });
                 });
+
+
+                // Create a new scene and set it on the stage
                 Scene scene = new Scene(root);
                 scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
                 stage.setScene(scene);
                 stage.centerOnScreen();
+                //stage.show();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
 
+        login.setCursor(Cursor.HAND);
+
+        minimize.setOnMouseClicked(event -> {
+            Stage stage = (Stage) ((ImageView) event.getSource()).getScene().getWindow();
+            stage.setIconified(true);
+        });
+
+
     }
 
     private boolean checkLogin (String username, String password) {
         // Tạo kết nối với cơ sở dữ liệu
-        Connection connection = DBConnectionQuyen.getConnection();
+        Connection connection = DBConnection.getConnection();
         if (connection == null) {
             return false;
         }
 
         // Tạo câu truy vấn SQL
-        String sql = "SELECT * FROM TaiKhoan WHERE username = ? AND mk = ?";
+        String sql = "SELECT * FROM TaiKhoan WHERE username = ? AND mk = ? AND ChucVu !='NGHI'";
 
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
