@@ -42,7 +42,7 @@
          </Text>
          <BorderPane layoutX="27.0" layoutY="166.0" maxWidth="416.0" minWidth="313.0" prefHeight="57.0" prefWidth="313.0">
             <top>
-               <MFXTextField fx:id="usernameField" maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="300.0" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: #E1F8F6;" BorderPane.alignment="CENTER">
+               <MFXTextField  fx:id="usernameField" maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="303.0" prefHeight="40.0" prefWidth="303.0" style="-fx-background-color: #E1F8F6; -fx-font-family: 'Times New Roman'; -fx-font-size: 20px" BorderPane.alignment="CENTER">
                   <BorderPane.margin>
                      <Insets bottom="2.0" left="5.0" right="5.0" top="2.0" />
                   </BorderPane.margin>
@@ -68,7 +68,13 @@
                <Font name="Times New Roman Bold" size="28.0" />
             </font>
          </Button>
-         <MFXPasswordField fx:id="passwordField" layoutX="33.0" layoutY="275.0" maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="303.0" prefHeight="40.0" prefWidth="303.0" style="-fx-background-color: #E1F8F6;" BorderPane.alignment="CENTER">
+         <Text fx:id="signin" fill="#2264d1" layoutX="148.0" layoutY="469.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Đăng ký" textAlignment="RIGHT" wrappingWidth="192.1367473602295">
+            <font>
+               <Font name="Times New Roman Bold" size="25.0" />
+            </font>
+         </Text>
+         <MFXPasswordField fx:id="passwordField" layoutX="33.0" layoutY="275.0" maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="303.0" prefHeight="40.0" prefWidth="313.0" style="-fx-background-color: #E1F8F6; -fx-font-family: 'Times New Roman'; -fx-font-size: 20px" BorderPane.alignment="CENTER">
+
               <font>
                    <Font name="Times New Roman" size="20.0" />
               </font>

@@ -5,6 +5,8 @@ import Model.PhieuKhamBenh;
 import com.example.qlpmt.DBConnection;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import io.github.palexdev.materialfx.controls.MFXTextField;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.StringBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ObjectPropertyBase;
 import javafx.collections.FXCollections;
@@ -14,15 +16,23 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.Background;
 import javafx.stage.Stage;
+import net.synedra.validatorfx.Validator;
+
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class SuaThuocPKBController implements Initializable {
+    private Validator validator = new Validator();
+    private StringBinding problemsText;
+
     @FXML
     private MFXComboBox<DSThuoc> thuoc_combobox = new MFXComboBox<>();
     @FXML
@@ -35,6 +45,9 @@ public class SuaThuocPKBController implements Initializable {
     private Button XongBtn = new Button();
     @FXML
     private Button HuyBtn = new Button();
+
+    private ObservableList<DSThuoc> existedThuoc_list = FXCollections.observableArrayList();
+
 
     // Luu du lieu cua dong duoc truyen vao tu EditPhieuKBController
     private ObjectProperty<Model.DSThuoc_PKB> rowDataProperties = new ObjectPropertyBase<DSThuoc_PKB>() {
@@ -60,39 +73,49 @@ public class SuaThuocPKBController implements Initializable {
         return null;
     }
 
-    public SuaThuocPKBController(DSThuoc_PKB rowData){
+    public SuaThuocPKBController(DSThuoc_PKB rowData, ObservableList<DSThuoc> t){
         rowDataProperties.set(rowData);
+        existedThuoc_list = t;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        updateData();
+        setupValidator();
+
+        //Goi ham khi thay doi gia tri cua thuoc_combobox
+        thuoc_combobox_ChangedValue();
+
+
         HuyBtn.setOnAction((ActionEvent event) -> {
             Node source = (Node) event.getSource();
             Stage stage = (Stage) source.getScene().getWindow();
             stage.close();
         });
         XongBtn.setOnAction((ActionEvent event) -> {
-            String query = "UPDATE DSTHuoc_PKB SET Thuoc_ID = ?, SoLuong = ? WHERE PKB_ID = '"+rowDataProperties.get().getPhieuKhamBenh().getIdPKB()+"' AND Thuoc_ID = '"+rowDataProperties.get().getThuoc().getThuoc_ID()+"'";
+            if(validator.validate()){
+                String query = "UPDATE DSTHuoc_PKB SET Thuoc_ID = ?, SoLuong = ? WHERE PKB_ID = '"+rowDataProperties.get().getPhieuKhamBenh().getIdPKB()+"' AND Thuoc_ID = '"+rowDataProperties.get().getThuoc().getThuoc_ID()+"'";
 
-            try{
-                Connection conn = DBConnection.getConnection();
-                PreparedStatement ps = conn.prepareStatement(query);
-                ps.setString(1, findThuoc_ID(thuoc_combobox.getText()));
-                ps.setInt(2, Integer.parseInt(soLuong_txtbox.getText()));
-                ps.executeUpdate();
+                try{
+                    Connection conn = DBConnection.getConnection();
+                    PreparedStatement ps = conn.prepareStatement(query);
+                    ps.setString(1, findThuoc_ID(thuoc_combobox.getText()));
+                    ps.setInt(2, Integer.parseInt(soLuong_txtbox.getText()));
+                    ps.executeUpdate();
 
-            } catch (Exception e) {
-                e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Node source = (Node) event.getSource();
+                Stage stage = (Stage) source.getScene().getWindow();
+                stage.close();
             }
-            Node source = (Node) event.getSource();
-            Stage stage = (Stage) source.getScene().getWindow();
-            stage.close();
+            else{
+                System.out.println("Đã có lỗi xảy ra!");
+            }
         });
 
-        updateData();
 
-        //Goi ham khi thay doi gia tri cua thuoc_combobox
-        thuoc_combobox_ChangedValue();
     }
 
     public void updateData(){
@@ -115,7 +138,20 @@ public class SuaThuocPKBController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        thuoc_combobox.setItems(thuoc_list);
+
+        // Loại bỏ các thuốc đã tồn tại trong phiếu khám bệnh
+        ObservableList<DSThuoc> newthuoc_list = FXCollections.observableArrayList(thuoc_list);
+        for (DSThuoc existedThuoc : existedThuoc_list) {
+            newthuoc_list.removeIf(thuoc -> thuoc.getThuoc_ID().equals(existedThuoc.getThuoc_ID()));
+        }
+
+        if(newthuoc_list.isEmpty()){
+            System.out.println("Khong con thuoc nao de them");
+        }
+        else{
+            System.out.println("Con thuoc de them");
+            thuoc_combobox.setItems(newthuoc_list);
+        }
 
         try {
             Connection conn = DBConnection.getConnection();
@@ -221,5 +257,59 @@ public class SuaThuocPKBController implements Initializable {
             e.printStackTrace();
         }
         return id;
+    }
+
+    private void setupValidator(){
+        validator.createCheck()
+                .withMethod(c -> {
+                    if (!(soLuong_txtbox.getText().isEmpty() || soLuong_txtbox.getText() == null)) {
+                        if(isInteger(soLuong_txtbox.getText())){
+                            if(Integer.parseInt(soLuong_txtbox.getText()) <= 0){
+                                soLuong_txtbox.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                                c.error("Số lượng không hợp lệ!");
+                            }
+                            else{
+                                soLuong_txtbox.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+                            }
+                        }
+                        else{
+                            soLuong_txtbox.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                            c.error("Số lượng không hợp lệ!");
+                        }
+                    }
+                    else{
+                        soLuong_txtbox.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                        c.error("Số lượng không được để trống!");
+                    }
+                })
+                .dependsOn("soLuong", soLuong_txtbox.textProperty())
+                .decorates(soLuong_txtbox)
+                .immediate();
+    }
+
+    private TextArea createProblemOutput() {
+        TextArea problems = new TextArea();
+        problems.setEditable(false);
+        problems.setPrefHeight(80);
+        problems.setBackground(Background.EMPTY);
+        problems.setFocusTraversable(false);
+        problemsText = Bindings.createStringBinding(this::getProblemText, validator.validationResultProperty());
+        problems.textProperty().bind(problemsText);
+        return problems;
+    }
+
+    private String getProblemText() {
+        return validator.validationResultProperty().get().getMessages().stream()
+                .map(msg -> msg.getSeverity().toString() + ": " + msg.getText())
+                .collect(Collectors.joining("\n"));
+    }
+
+    public boolean isInteger(String str) {
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 }
