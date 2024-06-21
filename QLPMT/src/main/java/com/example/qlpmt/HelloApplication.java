@@ -25,7 +25,7 @@ public class HelloApplication extends Application {
         root.setOnMouseDragged(event -> {
             stage.setX(event.getScreenX() - x);
             stage.setY(event.getScreenY() - y);
-        });Scene scene = new Scene(root, 370, 462
+        });Scene scene = new Scene(root, 370, 488
         );
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.setScene(scene);

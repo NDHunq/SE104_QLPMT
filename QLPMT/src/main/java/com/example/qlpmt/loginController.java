@@ -74,14 +74,12 @@ public class loginController  implements Initializable {
                 try {
                     login.setBackground(new javafx.scene.layout.Background(new javafx.scene.layout.BackgroundFill(javafx.scene.paint.Color.valueOf("#134494"), new javafx.scene.layout.CornerRadii(5), new javafx.geometry.Insets(0))));
                     // Load the new FXML file
-                    String link = "/com/example/qlpmt/hello-view2.fxml";
-                    if (quanly == 1) {
-                        link = "/com/example/qlpmt/hello-view.fxml";
-                    }
-                    Parent root = FXMLLoader.load(getClass().getResource(link));
-                    //String link = "/com/example/qlpmt/hello-view.fxml";
-
-
+//                    String link = "/com/example/qlpmt/hello-view2.fxml";
+//                    if (quanly == 1) {
+//                        link = "/com/example/qlpmt/hello-view.fxml";
+//                    }
+//                    Parent root = FXMLLoader.load(getClass().getResource(link));
+                    String link = "/com/example/qlpmt/hello-view.fxml";
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(link));
                     Parent root = fxmlLoader.load();
 
