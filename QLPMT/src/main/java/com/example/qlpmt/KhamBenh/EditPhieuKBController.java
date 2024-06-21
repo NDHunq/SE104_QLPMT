@@ -205,6 +205,8 @@ public class EditPhieuKBController implements Initializable {
         setupContextMenu();
         setupValidator();
 
+
+
         table_thuoc.autosizeColumnsOnInitialization();
         table_thuoc.getTableColumns().get(3).setPrefWidth(200);
     }
@@ -450,7 +452,9 @@ public class EditPhieuKBController implements Initializable {
         });
     }
 
+    //Ham dung de setup validator cho cac node
     private void setupValidator(){
+        //Validator cho căn cước công dân
         validator.createCheck()
                 .withMethod(c -> {
                     if (cccd_txtbox.getText().isEmpty() || cccd_txtbox.getText() == null) {
@@ -458,12 +462,19 @@ public class EditPhieuKBController implements Initializable {
                         c.error("Căn cước công dân không được để trống!");
                     }
                     else{
-                        if(cccd_txtbox.getText().length() != 12){
+                        if(!cccd_txtbox.getText().matches("[0-9]+")){
                             cccd_txtbox.setStyle("-fx-border-color: red; -fx-text-fill: red");
                             c.error("Căn cước công dân không hợp lệ!");
                         }
-                        else{
-                            cccd_txtbox.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+                        else {
+                            if(cccd_txtbox.getText().length() != 12){
+                                cccd_txtbox.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                                c.error("Căn cước công dân không hợp lệ!");
+                            }
+                            else{
+                                cccd_txtbox.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+                            }
+
                         }
                     }
                 })
@@ -471,6 +482,7 @@ public class EditPhieuKBController implements Initializable {
                 .decorates(cccd_txtbox)
                 .immediate();
 
+        //Validator cho họ tên
         validator.createCheck()
                 .withMethod(c -> {
                     if (hoTen_txtbox.getText().isEmpty() || hoTen_txtbox.getText() == null) {
@@ -485,6 +497,7 @@ public class EditPhieuKBController implements Initializable {
                 .decorates(hoTen_txtbox)
                 .immediate();
 
+        //Validator cho triệu chứng
         validator.createCheck()
                 .withMethod(c -> {
                     if (trieuChung_txtbox.getText().isEmpty() || trieuChung_txtbox.getText() == null) {
@@ -498,8 +511,28 @@ public class EditPhieuKBController implements Initializable {
                 .dependsOn("trieuChung", trieuChung_txtbox.textProperty())
                 .decorates(trieuChung_txtbox)
                 .immediate();
+
+        //Validator cho ngày khám
+        validator.createCheck()
+                .withMethod(c -> {
+                    if (ngayKham_datepicker.getValue().isAfter(LocalDate.now())) {
+                        ngayKham_datepicker.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                        ngayKham_datepicker.lookup(".mfx-icon-wrapper .mfx-font-icon").setStyle("-mfx-color: red;");
+                        ngayKham_datepicker.lookup(".mfx-icon-wrapper .mfx-ripple-generator").setStyle("-mfx-ripple-color: #FF6961;");
+                        c.error("Ngày khám không được lớn hơn ngày hiện tại!");
+                    }
+                    else{
+                        ngayKham_datepicker.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+                        ngayKham_datepicker.lookup(".mfx-icon-wrapper .mfx-font-icon").setStyle("-mfx-color: #2264D1;");
+                        ngayKham_datepicker.lookup(".mfx-icon-wrapper .mfx-ripple-generator").setStyle("-mfx-ripple-color: #D4F2FF;");
+                    }
+                })
+                .dependsOn("ngayKham", ngayKham_datepicker.valueProperty())
+                .decorates(ngayKham_datepicker)
+                .immediate();
     }
 
+    //Ham dung de tao ra mot TextArea de hien thi loi khi validate
     private TextArea createProblemOutput() {
         TextArea problems = new TextArea();
         problems.setEditable(false);
@@ -511,6 +544,7 @@ public class EditPhieuKBController implements Initializable {
         return problems;
     }
 
+    //Ham dung de lay ra loi khi validate
     private String getProblemText() {
         return validator.validationResultProperty().get().getMessages().stream()
                 .map(msg -> msg.getSeverity().toString() + ": " + msg.getText())
