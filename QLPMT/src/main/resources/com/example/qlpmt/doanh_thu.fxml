@@ -1,20 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import io.github.palexdev.materialfx.controls.MFXButton?>
-<?import io.github.palexdev.materialfx.controls.MFXComboBox?>
-<?import io.github.palexdev.materialfx.controls.MFXPaginatedTableView?>
-<?import io.github.palexdev.materialfx.controls.MFXTextField?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
-<?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import io.github.palexdev.materialfx.controls.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="doanh_thu_root_node" prefHeight="600.0" prefWidth="930.0" style="-fx-background-color: #D4F2FF" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.doanh_thuController">
+<AnchorPane fx:id="doanh_thu_root_node" prefHeight="600.0" prefWidth="930.0" style="-fx-background-color: #D4F2FF" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.doanh_thuController">
 
 
    <Pane fx:id="line_chart_pane" layoutX="23.0" layoutY="123.0" prefHeight="458.0" prefWidth="883.0" style="-fx-background-color: #FFFFFF; -fx-border-radius: 10px; -fx-background-radius: 10px">
@@ -48,19 +39,6 @@
          <Font name="Times New Roman Bold" size="14.0" />
       </font>
    </MFXButton>
-
-    <MFXTextField id="search_txtbox" fx:id="search_txtbox" floatMode="DISABLED" layoutX="567.0" layoutY="15.0" prefHeight="30.0" prefWidth="338.0">
-        <leadingIcon>
-            <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                <image>
-                    <Image url="@images/search.png" />
-                </image>
-            </ImageView>
-        </leadingIcon>
-      <font>
-         <Font name="Times New Roman" size="12.0" />
-      </font>
-    </MFXTextField>
 
    <MFXComboBox fx:id="month_combobox" floatingText="Tháng" layoutX="567.0" layoutY="69.0" prefHeight="32.0" prefWidth="130.0" />
 

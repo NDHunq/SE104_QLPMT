@@ -74,9 +74,6 @@ public class doanh_thuController implements Initializable {
     private MFXPaginatedTableView<DoanhThu> doanhThu;
 
     @FXML
-    private MFXTextField search_txtbox;
-
-    @FXML
     private LineChart<String, Number> doanhThu_line_chart;
 
     private ObservableList<DoanhThu> doanhThuList = FXCollections.observableArrayList();
@@ -110,17 +107,6 @@ public class doanh_thuController implements Initializable {
                 .then((oldValue, newValue) -> doanhThu.autosizeColumns())
                 .listen();
 
-        // Them su kien unfocus cho search_txtbox khi click ra ngoai bang cach requestFocus den node khac
-        doanh_thu_root_node.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                // Kiem tra xem search_txtbox co dang duoc focus hay khong
-                if (mouseEvent.getTarget() != search_txtbox) {
-                    // Neu khong thi unfocus search_txtbox
-                    doanh_thu_root_node.requestFocus();
-                }
-            }
-        });
 
         month_combobox.setOnAction(event -> {
             int month = Integer.parseInt(month_combobox.getSelectionModel().getSelectedItem());
@@ -183,7 +169,6 @@ public class doanh_thuController implements Initializable {
     public void setVisible(){
         if(isBangSoLieu){
             doanhThu.setVisible(true);
-            search_txtbox.setVisible(true);
             doanhThu_line_chart.setVisible(false);
             line_chart_pane.setVisible(false);
             month_combobox.setVisible(true);
@@ -192,7 +177,6 @@ public class doanh_thuController implements Initializable {
             chart_year_combobox.setVisible(false);
         } else {
             doanhThu.setVisible(false);
-            search_txtbox.setVisible(false);
             doanhThu_line_chart.setVisible(true);
             line_chart_pane.setVisible(true);
             month_combobox.setVisible(false);
