@@ -78,7 +78,7 @@ public class HelloController2 implements Initializable {
 //load khambenh.fxml
         Parent content = null;
         try {
-            content = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/KhamBenh/kham_benh.fxml"));
+            content = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/kham_benh.fxml"));
         } catch (IOException e) {
             System.exit(0);
         }
@@ -167,7 +167,7 @@ public class HelloController2 implements Initializable {
             // Load the content from kham_benh.fxml
             Parent khamBenhContent = null;
             try {
-                khamBenhContent = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/KhamBenh/kham_benh.fxml"));
+                khamBenhContent = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/kham_benh.fxml"));
             } catch (IOException e) {
                 System.exit(0);
             }
@@ -198,7 +198,7 @@ public class HelloController2 implements Initializable {
             // Load the content from kham_benh.fxml
             Parent khamBenhContent = null;
             try {
-                khamBenhContent = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/KhamBenh/kham_benh.fxml"));
+                khamBenhContent = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/kham_benh.fxml"));
             } catch (IOException e) {
                 System.exit(0);
             }
@@ -544,6 +544,5 @@ public class HelloController2 implements Initializable {
             // Add the style to the clicked BorderPane
             bd6.getStyleClass().add("square-border-pane");
         }
-
     }
 }

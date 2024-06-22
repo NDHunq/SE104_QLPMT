@@ -93,7 +93,7 @@ public class benh_nhanController implements Initializable{
                 .then((oldValue, newValue) -> pkb.autosizeColumns())
                 .listen();
 
-        // Them su kien unfocus cho search_txtbox khi click ra ngoai bang cach requestFocus den node khac
+        // Ham tim kiem khi go vao search_txtbox
         search_txtbox.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
             String searchText = search_txtbox.getText();
             if (!searchText.isEmpty()) {
@@ -119,7 +119,7 @@ public class benh_nhanController implements Initializable{
                     System.out.println(e);
                 }
             } else {
-                LoadTableView();
+                reloadTableView();
                 pkb.setItems(pkb_list);
             }
         });
@@ -271,7 +271,7 @@ public class benh_nhanController implements Initializable{
                 pkb_list.add(new PhieuKhamBenh(rs.getString("PKB_ID"),rs.getString("LoaiBenh_ID"),rs.getString("DSKB_ID"),rs.getString("NguoiKham"), rs.getInt("STT"), rs.getString("CCCD"), rs.getNString("HoTen"), rs.getNString("TenBenh"), rs.getNString("TrieuChung"),rs.getNString("NGUOIKHAM") ,rs.getDate("NgayKham").toLocalDate()));
             }
         }catch (Exception e){
-                e.printStackTrace();
+            e.printStackTrace();
         }
 
         if(pkb_list != null){
