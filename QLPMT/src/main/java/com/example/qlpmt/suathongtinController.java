@@ -31,6 +31,18 @@ public class suathongtinController implements Initializable {
         dbConnection = DBConnection.getConnection();
         xong.setOnMouseClicked(event -> {
             switch (Share.getInstance().getSharedVariable()) {
+                case "2":
+                    this.controller.hoten.setText(suathongtin.getText());
+                    String hoten = suathongtin.getText();
+                    String sql2 = "UPDATE TaiKhoan SET Hoten=? WHERE IdTT='TT01'";
+                    try {
+                        PreparedStatement pstmt = dbConnection.prepareStatement(sql2);
+//                        pstmt.setString(1, tienkham);
+                        pstmt.executeUpdate();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    break;
                 case "3":
                     this.controller.tienkham.setText(suathongtin.getText());
                     String tienkham = suathongtin.getText();

@@ -21,7 +21,9 @@ import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.ResourceBundle;
 import Model.KhoThuoc;
 import javafx.fxml.FXMLLoader;
@@ -75,13 +77,94 @@ public class kho_thuocController implements Initializable {
                 .listen();
         Add.setOnMouseClicked(event -> {
             try {
+                System.out.println("-3");
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/ThemThuoc.fxml"));
                 ThemThuocController controller = new ThemThuocController();
                 loader.setController(controller);
+                System.out.println("-2");
                 Scene scene = new Scene(loader.load());
                 Stage stage = new Stage();
                 stage.setScene(scene);
                 stage.show();
+                System.out.println("-1");
+
+                try {
+
+                    controller.themthuoc.setOnMouseClicked(event2 -> {
+                        System.out.println("0");
+                        String donvi =  controller.text_donvi.getValue();
+                        String cachdung =  controller.text_cachdung.getValue();
+                        int soluong = 0;
+                        String soluongAsString = "";
+                        try{
+                            String sql = "select CachDung_ID from CachDung where TenCachDung=?";
+                            pst = dbConnection.prepareStatement(sql);
+                            pst.setString(1,cachdung);
+                            rs = pst.executeQuery();
+                            while (rs.next()){
+                                cachdung = rs.getString("CachDung_ID");
+                            }
+                        }
+                        catch (Exception e){
+                            e.printStackTrace();
+                        }
+                        System.out.println("1");
+                        try{
+                            String sql = "select DVThuoc_ID from DonViThuoc where TenDVTHuoc=?";
+                            pst = dbConnection.prepareStatement(sql);
+                            pst.setString(1,donvi);
+                            rs = pst.executeQuery();
+                            while (rs.next()){
+                                donvi = rs.getString("DVThuoc_ID");
+                            }
+                        }
+                        catch (Exception e){
+                            e.printStackTrace();
+                        }
+                        System.out.println("2");
+                        try {
+                            String sql="Select count(*) as total from Thuoc";
+                            pst = dbConnection.prepareStatement(sql);
+                            rs = pst.executeQuery();
+                            while (rs.next()){
+                                soluong = rs.getInt("total");
+
+                            }
+                            soluongAsString = Integer.toString(soluong+1);
+                        }
+                        catch (Exception e){
+                            e.printStackTrace();
+                        }
+                        System.out.println("3");
+                        try {
+                            String sql = "insert into Thuoc(Thuoc_ID,TenThuoc,GiaMua,GiaBan,TonKho,CachDung_ID,DonViThuoc_ID) values(?,?,?,?,?,?,?)";
+                            pst = dbConnection.prepareStatement(sql);
+                            pst.setString(1,"T0"+soluongAsString);
+                            pst.setString(2, controller.text_tenthuoc.getText());
+                            pst.setString(3, controller.text_dongia.getText());
+                            pst.setString(4, controller.text_dongiaban.getText());
+                            pst.setString(5, controller.text_soluong.getText());
+                            pst.setString(6,cachdung);
+                            pst.setString(7,donvi);
+                            int rowsAffected = pst.executeUpdate();
+                            rowsAffected = pst.executeUpdate();
+
+                        }
+                        catch (Exception e){
+                            e.printStackTrace();
+                        }
+                        setData();
+                        khothuoc.setItems(KhoThuoc_list);
+                        System.out.println("4");
+                        controller.themthuoc.getScene().getWindow().hide();
+
+                    });
+
+                    // Đóng kết nối
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -240,17 +323,12 @@ String sql="";
         setData();
         khothuoc.setItems(KhoThuoc_list);
 //        khothuoc.setCurrentPage(0);
-        Add.setOnMouseClicked(event -> {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/ThemThuoc.fxml"));
-                Scene scene = new Scene(loader.load());
-                Stage stage = new Stage();
-                stage.setScene(scene);
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+
+    }
+    public void LoadData()
+    {
+        setData();
+        khothuoc.setItems(KhoThuoc_list);
     }
 
 }
