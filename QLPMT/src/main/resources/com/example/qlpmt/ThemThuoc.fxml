@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="266.0" prefWidth="600.0" style="-fx-border-radius: 5px" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="600.0" style="-fx-border-radius: 5px" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Text fill="#2264d1" strokeType="OUTSIDE" strokeWidth="0.0" text="Thêm Thuốc">
          <font>
@@ -19,19 +19,19 @@
             <Insets bottom="20.0" left="20.0" top="10.0" />
          </VBox.margin>
       </Text>
-      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="126.0" prefWidth="550.0" style="-fx-border-radius: 5px;-fx-background-color: #D4F2FF">
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="550.0" style="-fx-border-radius: 5px;-fx-background-color: #D4F2FF">
          <children>
-            <HBox prefHeight="45.0" prefWidth="600.0">
+            <HBox prefHeight="42.0" prefWidth="550.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Thuốc">
                      <font>
                         <Font name="Times New Roman Bold" size="18.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="20.0" />
+                        <Insets left="20.0" right="30.0" />
                      </HBox.margin>
                   </Text>
-                  <TextField fx:id="text_tenthuoc">
+                  <TextField fx:id="text_tenthuoc" prefHeight="26.0" prefWidth="118.0">
                      <HBox.margin>
                         <Insets left="20.0" right="20.0" />
                      </HBox.margin>
@@ -48,32 +48,35 @@
                   </TextField>
                </children>
                <VBox.margin>
-                  <Insets top="10.0" />
+                  <Insets bottom="20.0" top="10.0" />
                </VBox.margin>
             </HBox>
-            <HBox prefHeight="45.0" prefWidth="600.0">
+            <HBox prefHeight="45.0" prefWidth="550.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Đơn vị">
                      <font>
                         <Font name="Times New Roman Bold" size="18.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="20.0" />
+                        <Insets left="20.0" right="30.0" top="10.0" />
                      </HBox.margin>
                   </Text>
-                  <MFXComboBox fx:id="text_donvi" prefHeight="27.0" prefWidth="90.0">
+                  <MFXComboBox fx:id="text_donvi" prefHeight="28.0" prefWidth="119.0">
                      <HBox.margin>
-                        <Insets left="20.0" right="20.0" />
+                        <Insets bottom="20.0" left="20.0" right="20.0" />
                      </HBox.margin>
                   </MFXComboBox>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Đơn giá nhập">
                      <font>
                         <Font name="Times New Roman Bold" size="18.0" />
                      </font>
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
                   </Text>
                   <TextField fx:id="text_dongia">
                      <HBox.margin>
-                        <Insets left="25.0" />
+                        <Insets left="25.0" top="10.0" />
                      </HBox.margin>
                   </TextField>
                </children>
@@ -85,7 +88,7 @@
                         <Font name="Times New Roman Bold" size="18.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="20.0" />
+                        <Insets left="20.0" top="10.0" />
                      </HBox.margin>
                   </Text>
                   <MFXComboBox fx:id="text_cachdung" prefHeight="27.0" prefWidth="90.0">
@@ -97,10 +100,13 @@
                      <font>
                         <Font name="Times New Roman Bold" size="18.0" />
                      </font>
+                     <HBox.margin>
+                        <Insets right="9.0" top="10.0" />
+                     </HBox.margin>
                   </Text>
                   <TextField fx:id="text_dongiaban">
                      <HBox.margin>
-                        <Insets left="25.0" />
+                        <Insets left="25.0" top="10.0" />
                      </HBox.margin>
                   </TextField>
                </children>
