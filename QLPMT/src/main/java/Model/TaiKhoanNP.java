@@ -6,7 +6,7 @@ public class TaiKhoanNP {
 
     @Override
     public String toString() {
-        return hoTen;
+        return userName;
     }
 
     public TaiKhoanNP() {

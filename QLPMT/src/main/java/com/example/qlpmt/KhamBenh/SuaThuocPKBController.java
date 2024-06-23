@@ -15,10 +15,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Background;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import net.synedra.validatorfx.Validator;
 
 import java.net.URL;
@@ -94,24 +97,40 @@ public class SuaThuocPKBController implements Initializable {
         });
         XongBtn.setOnAction((ActionEvent event) -> {
             if(validator.validate()){
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                ButtonType buttonTypeYes = new ButtonType("Có");
+                ButtonType buttonTypeNo = new ButtonType("Không");
+                alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+                alert.setTitle("Xác nhận");
+                alert.setHeaderText(null);
+                alert.setContentText("Bạn có chắc chắn muốn cập nhật thông tin thuốc này không?");
+                Window window = alert.getDialogPane().getScene().getWindow();
+                window.setOnCloseRequest(e -> alert.close());
+                ButtonType result = alert.showAndWait().orElse(buttonTypeNo);
                 String query = "UPDATE DSTHuoc_PKB SET Thuoc_ID = ?, SoLuong = ? WHERE PKB_ID = '"+rowDataProperties.get().getPhieuKhamBenh().getIdPKB()+"' AND Thuoc_ID = '"+rowDataProperties.get().getThuoc().getThuoc_ID()+"'";
 
-                try{
-                    Connection conn = DBConnection.getConnection();
-                    PreparedStatement ps = conn.prepareStatement(query);
-                    ps.setString(1, findThuoc_ID(thuoc_combobox.getText()));
-                    ps.setInt(2, Integer.parseInt(soLuong_txtbox.getText()));
-                    ps.executeUpdate();
+                if(result == buttonTypeYes){
+                    try{
+                        Connection conn = DBConnection.getConnection();
+                        PreparedStatement ps = conn.prepareStatement(query);
+                        ps.setString(1, findThuoc_ID(thuoc_combobox.getText()));
+                        ps.setInt(2, Integer.parseInt(soLuong_txtbox.getText()));
+                        ps.executeUpdate();
 
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    Node source = (Node) event.getSource();
+                    Stage stage = (Stage) source.getScene().getWindow();
+                    stage.close();
                 }
-                Node source = (Node) event.getSource();
-                Stage stage = (Stage) source.getScene().getWindow();
-                stage.close();
             }
             else{
-                System.out.println("Đã có lỗi xảy ra!");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Lỗi");
+                alert.setHeaderText(null);
+                alert.setContentText("Đã có lỗi xảy ra, vui lòng kiểm tra lại thông tin!");
+                ButtonType result = alert.showAndWait().orElse(ButtonType.CLOSE);
             }
         });
 
@@ -269,7 +288,7 @@ public class SuaThuocPKBController implements Initializable {
                                 c.error("Số lượng không hợp lệ!");
                             }
                             else{
-                                soLuong_txtbox.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+                                soLuong_txtbox.setStyle("");
                             }
                         }
                         else{

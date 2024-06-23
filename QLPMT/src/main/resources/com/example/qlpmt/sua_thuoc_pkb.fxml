@@ -64,13 +64,9 @@
                     </font></Label>
                 <BorderPane prefHeight="51.0" prefWidth="315.0">
                     <right>
-                        <HBox prefHeight="33.0" prefWidth="134.0" styleClass="square-border-pane" BorderPane.alignment="CENTER">
+                        <HBox prefHeight="14.0" prefWidth="134.0" styleClass="square-border-pane" BorderPane.alignment="CENTER">
                             <children>
-                                <MFXButton fx:id="XongBtn" mnemonicParsing="false" prefHeight="33.0" prefWidth="65.0" style="-fx-background-color: BCE29E; -fx-text-fill: white;" stylesheets="@../../../style.css" text="Xong">
-                                    <styleClass>
-                                        <String fx:value="header" />
-                                        <String fx:value="TextBorder" />
-                                    </styleClass>
+                                <MFXButton fx:id="XongBtn" mnemonicParsing="false" prefHeight="33.0" prefWidth="65.0" style="-fx-background-color: #459244; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-family: 'Times New Roman';" stylesheets="@../../../style.css" text="Xong">
                                     <HBox.margin>
                                         <Insets right="15.0" />
                                     </HBox.margin>
@@ -80,11 +76,7 @@
                                     <cursor>
                                         <Cursor fx:constant="HAND" />
                                     </cursor></MFXButton>
-                                <Button fx:id="HuyBtn" mnemonicParsing="false" prefHeight="32.0" prefWidth="53.0" style="-fx-background-color: FF8787; -fx-text-fill: white;" stylesheets="@../../../style.css" text="Hủy">
-                                    <styleClass>
-                                        <String fx:value="header" />
-                                        <String fx:value="TextBorder" />
-                                    </styleClass>
+                                <Button fx:id="HuyBtn" mnemonicParsing="false" prefHeight="40.0" prefWidth="65.0" style="-fx-background-color: #EE0E36; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-family: 'Times New Roman';" stylesheets="@../../../style.css" text="Hủy">
                                     <font>
                                         <Font size="16.0" />
                                     </font>
