@@ -15,8 +15,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -25,9 +23,10 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Comparator;
+import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class ViewPhieuKBController implements Initializable {
 
@@ -164,6 +163,7 @@ public class ViewPhieuKBController implements Initializable {
         HoTenTxt.setText(kb.getHoTen());
         CCCDTxt.setText(kb.getCCCD());
         NgayKhamPicker.setValue(ngayKham);
+        NgayKhamPicker.setDisable(true);
 
         try {
             // Get DSKB_ID
