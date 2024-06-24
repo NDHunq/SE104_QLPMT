@@ -1,5 +1,6 @@
 package com.example.qlpmt.KhamBenh;
 
+import com.example.qlpmt.AppUtils;
 import com.example.qlpmt.HelloApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -100,6 +101,7 @@ public class KhamBenhItemController implements Initializable {
         Scene scene = new Scene(root, 684, 499);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.setScene(scene);
+        AppUtils.setIcon(stage);
         stage.show();
     }
 }

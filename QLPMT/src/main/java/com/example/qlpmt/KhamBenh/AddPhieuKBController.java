@@ -1,6 +1,7 @@
 package com.example.qlpmt.KhamBenh;
 
 import Model.TaiKhoanNP;
+import com.example.qlpmt.AppUtils;
 import com.example.qlpmt.DBConnection;
 import com.example.qlpmt.HelloApplication;
 import io.github.palexdev.materialfx.controls.*;
@@ -315,6 +316,7 @@ public class AddPhieuKBController implements Initializable {
         Scene scene = new Scene(root, 320, 340);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.setScene(scene);
+        AppUtils.setIcon(stage);
         stage.show();
 
     }
@@ -337,6 +339,7 @@ public class AddPhieuKBController implements Initializable {
         Scene scene = new Scene(root, 320, 340);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.setScene(scene);
+        AppUtils.setIcon(stage);
         stage.show();
     }
     public void setupContextMenu(){
@@ -363,10 +366,10 @@ public class AddPhieuKBController implements Initializable {
         delete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+
                 MFXTableRow<ThuocPKB> row = (MFXTableRow<ThuocPKB>) contextMenu.getOwnerNode();
                 ThuocPKB rowData = row.getData();
                 String Thuoc_ID=fetchId("Thuoc","TenThuoc","Thuoc_ID",rowData.getTenThuoc());
-
                 // Delete the record from the DSTHuoc_PKB table
                 String sql = "DELETE FROM DSTHuoc_PKB WHERE PKB_ID = ? AND Thuoc_ID = ?";
                 try {

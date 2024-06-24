@@ -97,6 +97,7 @@ public class kho_thuocController implements Initializable {
                 Scene scene = new Scene(loader.load());
                 Stage stage = new Stage();
                 stage.setScene(scene);
+                AppUtils.setIcon(stage);
                 stage.show();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -160,6 +161,7 @@ int STT=0;
                         Scene scene = new Scene(loader.load());
                         Stage stage = new Stage();
                         stage.setScene(scene);
+                        AppUtils.setIcon(stage);
                         stage.show();
                         controller.text_tenthuoc.setText(rowData.getTenthuoc());
                         controller.text_donvi.setText(rowData.getDonvi());

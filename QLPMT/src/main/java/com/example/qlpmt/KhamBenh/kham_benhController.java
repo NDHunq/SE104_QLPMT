@@ -1,6 +1,7 @@
 package com.example.qlpmt.KhamBenh;
 
 import Model.PhieuKhamBenh;
+import com.example.qlpmt.AppUtils;
 import com.example.qlpmt.DBConnection;
 import com.example.qlpmt.HelloApplication;
 import io.github.palexdev.materialfx.controls.*;
@@ -17,9 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
@@ -28,6 +27,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.Window;
 
 import java.io.IOException;
 import java.net.URL;
@@ -122,6 +122,7 @@ public class kham_benhController implements Initializable {
         Scene scene = new Scene(root, 330, 380);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.setScene(scene);
+        AppUtils.setIcon(stage);
         stage.show();
     }
     public void Sua(ActionEvent events, String DSKB_id,KhamBenh kb) throws IOException {
@@ -142,6 +143,7 @@ public class kham_benhController implements Initializable {
         Scene scene = new Scene(root, 330, 380);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.setScene(scene);
+        AppUtils.setIcon(stage);
         stage.show();
     }
     public void XemPKB(KhamBenh kb, LocalDate ngaykham){
@@ -167,6 +169,7 @@ public class kham_benhController implements Initializable {
         Scene scene = new Scene(root, 680, 500);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.setScene(scene);
+        AppUtils.setIcon(stage);
         stage.show();
     }
     public void AddPKB(KhamBenh kb, LocalDate ngaykham){
@@ -193,6 +196,7 @@ public class kham_benhController implements Initializable {
         Scene scene = new Scene(root, 684, 539);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.setScene(scene);
+        AppUtils.setIcon(stage);
         stage.show();
     }
     public void refreshPage() {
@@ -299,47 +303,66 @@ public class kham_benhController implements Initializable {
         delete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                MFXTableRow<KhamBenh> row = (MFXTableRow<KhamBenh>) contextMenu.getOwnerNode();
-                KhamBenh kb = row.getData();
-                String DSKB_id = getDSKB_id(kb);
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                ButtonType buttonTypeYes = new ButtonType("Có");
+                ButtonType buttonTypeNo = new ButtonType("Không");
+                alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+                alert.setTitle("Xác nhận");
+                alert.setHeaderText(null);
+                alert.setContentText("Bạn có chắc muốn xóa thông tin khách hàng này không?");
+                Window window = alert.getDialogPane().getScene().getWindow();
+                window.setOnCloseRequest(e -> alert.close());
+                ButtonType result = alert.showAndWait().orElse(buttonTypeNo);
 
-                try {
-                    con.setAutoCommit(false); // Start transaction
+                if(result == buttonTypeYes){
+                    MFXTableRow<KhamBenh> row = (MFXTableRow<KhamBenh>) contextMenu.getOwnerNode();
+                    KhamBenh kb = row.getData();
+                    String DSKB_id = getDSKB_id(kb);
 
-                    // Delete from DSTHuoc_PKB
-                    String sql = "DELETE FROM DSTHuoc_PKB WHERE PKB_id IN (SELECT PKB_id FROM PKB WHERE DSKB_id = ?)";
-                    PreparedStatement pst = con.prepareStatement(sql);
-                    pst.setString(1, DSKB_id);
-                    pst.executeUpdate();
-
-                    // Delete from PKB
-                    sql = "DELETE FROM PKB WHERE DSKB_id = ?";
-                    pst = con.prepareStatement(sql);
-                    pst.setString(1, DSKB_id);
-                    pst.executeUpdate();
-
-                    // Delete from DSKB
-                    sql = "DELETE FROM DSKB WHERE DSKB_id = ?";
-                    pst = con.prepareStatement(sql);
-                    pst.setString(1, DSKB_id);
-                    pst.executeUpdate();
-
-                    con.commit(); // Commit transaction
-                } catch (Exception e) {
                     try {
-                        con.rollback(); // Rollback transaction on error
-                    } catch (SQLException e1) {
-                        e1.printStackTrace();
-                    }
-                    e.printStackTrace();
-                } finally {
-                    try {
-                        con.setAutoCommit(true); // End transaction
-                    } catch (SQLException e) {
+                        con.setAutoCommit(false); // Start transaction
+
+                        // Delete from DSTHuoc_PKB
+                        String sql = "DELETE FROM DSTHuoc_PKB WHERE PKB_id IN (SELECT PKB_id FROM PKB WHERE DSKB_id = ?)";
+                        PreparedStatement pst = con.prepareStatement(sql);
+                        pst.setString(1, DSKB_id);
+                        pst.executeUpdate();
+
+                        // Delete from PKB
+                        sql = "DELETE FROM PKB WHERE DSKB_id = ?";
+                        pst = con.prepareStatement(sql);
+                        pst.setString(1, DSKB_id);
+                        pst.executeUpdate();
+
+                        // Delete from DSKB
+                        sql = "DELETE FROM DSKB WHERE DSKB_id = ?";
+                        pst = con.prepareStatement(sql);
+                        pst.setString(1, DSKB_id);
+                        pst.executeUpdate();
+
+                        con.commit(); // Commit transaction
+                    } catch (Exception e) {
+                        try {
+                            con.rollback(); // Rollback transaction on error
+                        } catch (SQLException e1) {
+                            e1.printStackTrace();
+                        }
                         e.printStackTrace();
+                    } finally {
+                        try {
+                            con.setAutoCommit(true); // End transaction
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
                     }
+                    refreshPage();
+
                 }
-                refreshPage();
+                else{
+                    alert.close();
+                }
+
+
             }
         });
         table_bn.setTableRowFactory(phieukhambenh -> {

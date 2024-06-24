@@ -110,7 +110,7 @@ public class NhanVienController implements Initializable {
                 // Set the title of the window
                 scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
                 stage.setTitle("Sign In");
-
+                AppUtils.setIcon(stage);
                 // Show the stage
                 stage.show();
             } catch (IOException e) {

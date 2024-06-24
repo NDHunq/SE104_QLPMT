@@ -8,9 +8,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -56,39 +59,57 @@ public class SuaKhamBenhController implements Initializable {
             stage.close();
         });
         XongBtn.setOnAction((ActionEvent event) -> {
-            // Get the values from the text fields and radio buttons
-            String hoTen = HoTenTxt.getText();
-            String cccd = CCCDTxt.getText();
-            String diaChi = DiaChiTxt.getText();
-            int namSinh = Integer.parseInt(NamSinhTxt.getText());
-            int gioiTinh = NamChBx.isSelected() ? 1 : 0;
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            ButtonType buttonTypeYes = new ButtonType("Có");
+            ButtonType buttonTypeNo = new ButtonType("Không");
+            alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+            alert.setTitle("Xác nhận");
+            alert.setHeaderText(null);
+            alert.setContentText("Bạn có chắc chắn muốn cập nhật thông tin phiếu khám bệnh này không?");
+            Window window = alert.getDialogPane().getScene().getWindow();
+            window.setOnCloseRequest(e -> alert.close());
+            ButtonType result = alert.showAndWait().orElse(buttonTypeNo);
 
-            // Create an SQL update statement
-            String sql = "UPDATE DSKB SET HoTen = ?, CCCD = ?, DiaChi = ?, NamSinh = ?, GioiTinh = ? WHERE DSKB_id = ?";
+            if(result == buttonTypeYes){
+                // Get the values from the text fields and radio buttons
+                String hoTen = HoTenTxt.getText();
+                String cccd = CCCDTxt.getText();
+                String diaChi = DiaChiTxt.getText();
+                int namSinh = Integer.parseInt(NamSinhTxt.getText());
+                int gioiTinh = NamChBx.isSelected() ? 1 : 0;
 
-            try {
-                // Prepare the statement with the connection object
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                // Create an SQL update statement
+                String sql = "UPDATE DSKB SET HoTen = ?, CCCD = ?, DiaChi = ?, NamSinh = ?, GioiTinh = ? WHERE DSKB_id = ?";
 
-                // Set the parameters in the prepared statement
-                preparedStatement.setString(1, hoTen);
-                preparedStatement.setString(2, cccd);
-                preparedStatement.setString(3, diaChi);
-                preparedStatement.setInt(4, namSinh);
-                preparedStatement.setInt(5, gioiTinh);
-                preparedStatement.setString(6, DSKB_id);
+                try {
+                    // Prepare the statement with the connection object
+                    PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
-                // Execute the update operation
-                preparedStatement.executeUpdate();
+                    // Set the parameters in the prepared statement
+                    preparedStatement.setString(1, hoTen);
+                    preparedStatement.setString(2, cccd);
+                    preparedStatement.setString(3, diaChi);
+                    preparedStatement.setInt(4, namSinh);
+                    preparedStatement.setInt(5, gioiTinh);
+                    preparedStatement.setString(6, DSKB_id);
 
-            } catch (SQLException e) {
-                System.out.println("Error: " + e);
+                    // Execute the update operation
+                    preparedStatement.executeUpdate();
+
+                } catch (SQLException e) {
+                    System.out.println("Error: " + e);
+                }
+                // Close the stage
+                Node source = (Node) event.getSource();
+                Stage stage = (Stage) source.getScene().getWindow();
+                khamBenhController.refreshPage();
+                stage.close();
             }
-            // Close the stage
-            Node source = (Node) event.getSource();
-            Stage stage = (Stage) source.getScene().getWindow();
-            khamBenhController.refreshPage();
-            stage.close();
+            else
+            {
+                alert.close();
+            }
+
         });
 
         ToggleGroup group = new ToggleGroup();
