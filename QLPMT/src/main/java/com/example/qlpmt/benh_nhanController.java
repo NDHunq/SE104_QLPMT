@@ -27,6 +27,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
@@ -39,6 +41,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.Window;
+
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
@@ -50,8 +54,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class benh_nhanController implements Initializable{
-    private MFXGenericDialog dialogContent = null;
-    private MFXStageDialog dialog = null;
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
     @FXML
@@ -203,8 +205,54 @@ public class benh_nhanController implements Initializable{
         delete.setOnAction(event -> {
             MFXTableRow<PhieuKhamBenh> row = (MFXTableRow<PhieuKhamBenh>) contextMenu.getOwnerNode();
             PhieuKhamBenh rowData = row.getData();
-            createInfoDialog((Stage) benh_nhan_root_node.getScene().getWindow(), "Bạn có chắc chắn muốn xóa phiếu khám bệnh này không?", "Xóa phiếu khám bệnh", rowData);
-            reloadTableView();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            ButtonType buttonTypeYes = new ButtonType("Có");
+            ButtonType buttonTypeNo = new ButtonType("Không");
+            alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+            alert.setTitle("Xác nhận");
+            alert.setHeaderText(null);
+            alert.setContentText("Bạn có chắc chắn muốn xóa thuốc này không?");
+            Window window = alert.getDialogPane().getScene().getWindow();
+            window.setOnCloseRequest(e -> alert.close());
+            ButtonType result = alert.showAndWait().orElse(buttonTypeNo);
+
+            if (result == buttonTypeYes) {
+                String query = "DELETE FROM PKB WHERE PKB_ID = ?";
+                String query2 = "DELETE FROM DSThuoc_PKB WHERE PKB_ID = ?";
+                String query3 = "DELETE FROM HD WHERE PKB_ID = ?";
+
+                if(checkPKBIDExists(rowData.getIdPKB(), "DSThuoc_PKB")){
+                    try(Connection conn = DBConnection.getConnection();
+                        PreparedStatement pst = conn.prepareStatement(query2)) {
+                        pst.setString(1, rowData.getIdPKB());
+                        pst.executeUpdate();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+
+                if(checkPKBIDExists(rowData.getIdPKB(), "HD")){
+                    try(Connection conn = DBConnection.getConnection();
+                        PreparedStatement pst = conn.prepareStatement(query3)) {
+                        pst.setString(1, rowData.getIdPKB());
+                        pst.executeUpdate();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+
+                try(Connection conn = DBConnection.getConnection();
+                    PreparedStatement pst = conn.prepareStatement(query)) {
+                    pst.setString(1, rowData.getIdPKB());
+                    pst.executeUpdate();
+
+                    reloadTableView();
+                    System.out.println("Xoa thanh cong");
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                reloadTableView();
+            }
         });
 
         // Them menu context o moi dong cho paginated tableview
@@ -258,6 +306,7 @@ public class benh_nhanController implements Initializable{
         //reload lai table view sau khi update
         stage.setOnHidden(e -> reloadTableView());
         stage.setScene(scene);
+        AppUtils.setIcon(stage);
         stage.show();
 
     }
@@ -285,73 +334,6 @@ public class benh_nhanController implements Initializable{
     public void reloadTableView() {
         pkb_list.clear(); // Xóa dữ liệu hiện tại
         LoadTableView(); // Load lại dữ liệu từ cơ sở dữ liệu
-    }
-
-    public void createInfoDialog(Stage stage, String contentText, String headerText, PhieuKhamBenh rowData){
-        Platform.runLater(() -> {
-            this.dialogContent = MFXGenericDialogBuilder.build()
-                    .setContentText(contentText)
-                    .addStyleClasses("mfx-info-dialog")
-                    .makeScrollable(true)
-                    .get();
-            this.dialog = MFXGenericDialogBuilder.build(dialogContent)
-                    .toStageDialogBuilder()
-                    .initOwner(stage)
-                    .initModality(Modality.APPLICATION_MODAL)
-                    .setDraggable(true)
-                    .setTitle("Info Dialog")
-                    .setOwnerNode(benh_nhan_root_node) // replace 'grid' with the parent node of your dialog
-                    .setScrimPriority(ScrimPriority.WINDOW)
-                    .setScrimOwner(true)
-                    .get();
-
-            dialogContent.addActions(
-                    Map.entry(new MFXButton("Xác nhận"), event -> {
-                        String query = "DELETE FROM PKB WHERE PKB_ID = ?";
-                        String query2 = "DELETE FROM DSThuoc_PKB WHERE PKB_ID = ?";
-                        String query3 = "DELETE FROM HD WHERE PKB_ID = ?";
-
-                        if(checkPKBIDExists(rowData.getIdPKB(), "DSThuoc_PKB")){
-                            try(Connection conn = DBConnection.getConnection();
-                                PreparedStatement pst = conn.prepareStatement(query2)) {
-                                pst.setString(1, rowData.getIdPKB());
-                                pst.executeUpdate();
-                            }catch (Exception e){
-                                e.printStackTrace();
-                            }
-                        }
-
-                        if(checkPKBIDExists(rowData.getIdPKB(), "HD")){
-                            try(Connection conn = DBConnection.getConnection();
-                                PreparedStatement pst = conn.prepareStatement(query3)) {
-                                pst.setString(1, rowData.getIdPKB());
-                                pst.executeUpdate();
-                            }catch (Exception e){
-                                e.printStackTrace();
-                            }
-                        }
-
-                        try(Connection conn = DBConnection.getConnection();
-                            PreparedStatement pst = conn.prepareStatement(query)) {
-                            pst.setString(1, rowData.getIdPKB());
-                            pst.executeUpdate();
-
-                            reloadTableView();
-                            System.out.println("Xoa thanh cong");
-                        }catch (Exception e){
-                            e.printStackTrace();
-                        }
-
-                        dialog.close();
-                    }),
-                    Map.entry(new MFXButton("Hủy"), event -> dialog.close())
-            );
-
-            dialogContent.setMaxSize(400, 200);
-            dialogContent.setHeaderIcon(info_icon);
-            dialogContent.setHeaderText(headerText);
-            dialog.showDialog();
-        });
     }
 
     public boolean checkPKBIDExists(String pkbID, String tableName) {
