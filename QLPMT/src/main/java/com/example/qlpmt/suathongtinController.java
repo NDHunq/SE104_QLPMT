@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import net.synedra.validatorfx.Validator;
 
 import java.awt.*;
 import java.net.URL;
@@ -24,19 +25,38 @@ public class suathongtinController implements Initializable {
     public Button huy;
     private java.sql.Connection dbConnection = null;
     private cai_datController controller;
+    private Validator validator = new Validator();
+    boolean validationResult ;
     public suathongtinController(cai_datController controller) {
         this.controller = controller;
     }
 
+public void Validator() {
+    validator.createCheck()
+            .withMethod(c -> {
+                if (suathongtin.getText().equals("")
+                ) {
+                    suathongtin.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                    c.error(" Không được để trống thông tin!");
+
+
+                }
+                else {
+                   suathongtin.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+
+                }
+            })
+            .dependsOn("thongtin", suathongtin.textProperty())
+            .decorates(suathongtin)
+            .immediate();
+    validationResult = validator.validate();
+}
 
     public void initialize(URL location, ResourceBundle resources) {
         dbConnection = DBConnection.getConnection();
         xong.setOnMouseClicked(event -> {
-            int check=1;
-            if(suathongtin.getText().equals("")){
-                check=0;
-            }
-            if(check==1) {
+           Validator();
+            if(validationResult) {
                 switch (Share.getInstance().getSharedVariable()) {
                     case "2":
 

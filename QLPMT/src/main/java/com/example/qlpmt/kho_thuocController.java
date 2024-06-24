@@ -57,17 +57,18 @@ public class kho_thuocController implements Initializable {
     @FXML
     public MFXTextField search_txtbox;
     private Validator validator = new Validator();
+    private Validator validatorSua = new Validator();
 
 
     private ObservableList<KhoThuoc> KhoThuoc_list;
     private List<String> tenthuoc = new ArrayList<>();
     ThemThuocController controller = new ThemThuocController();
+    Sua_ThuocController sua_controller = new Sua_ThuocController();
     boolean validationResult ;
+    boolean validationSua;
     public void setupValidator()
     {
         //Validate cho them thuoc
-
-
         validator.createCheck()
                 .withMethod(c -> {
                     if (controller.text_tenthuoc.getText().equals("")
@@ -180,9 +181,117 @@ public class kho_thuocController implements Initializable {
                 .dependsOn("soluong", controller.text_soluong.textProperty())
                 .decorates(controller.text_soluong)
                 .immediate();
+        validator.createCheck()
+                .withMethod(c -> {
+                    int check=1;
+                    for (int i = 0; i < tenthuoc.size(); i++) {
+                        if (controller.text_tenthuoc.getText().equals(tenthuoc.get(i))) {
+                            System.out.println("Thuoc da ton tai");
+                            check=0;
+//                            break;
+                        }
+                    }
+                    if (check==0) {
+                        controller.text_tenthuoc.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                        c.error("Thuốc đã tồn tại");
+                    }
+                    else {
+                        controller.text_tenthuoc.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+
+                    }
+                })
+                .dependsOn("soluong", controller.text_tenthuoc.textProperty())
+                .decorates(controller.text_tenthuoc)
+                .immediate();
         validationResult = validator.validate();
         System.out.println(validationResult);
 
+    }
+    public void setupValidatorSua() {
+        //Validate cho them thuoc
+        try {
+            validatorSua.createCheck()
+                    .withMethod(c -> {
+                        if (sua_controller.text_tenthuoc.getText().equals("")
+                        ) {
+                            sua_controller.text_tenthuoc.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                            c.error("Tên thuốc không được để trống!");
+                        } else {
+                            sua_controller.text_tenthuoc.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+                        }
+                    })
+                    .dependsOn("tenthuoc", sua_controller.text_tenthuoc.textProperty())
+                    .decorates(sua_controller.text_tenthuoc)
+                    .immediate();
+            validatorSua.createCheck()
+                    .withMethod(c -> {
+                        if (
+                                sua_controller.text_dongia.getText().equals("")) {
+                            sua_controller.text_dongia.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                            c.error("Đơn giá bán không được để trống!");
+                        } else {
+                            sua_controller.text_dongia.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+                        }
+                    })
+                    .dependsOn("dongia", sua_controller.text_dongia.textProperty())
+                    .decorates(sua_controller.text_dongia)
+                    .immediate();
+            validatorSua.createCheck()
+                    .withMethod(c -> {
+                        if (
+                                sua_controller.text_donvi.getText().equals("")) {
+                            sua_controller.text_donvi.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                            c.error("Đơn vị thuốc không được để trống!");
+                        } else {
+                            sua_controller.text_donvi.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+                        }
+                    })
+                    .dependsOn("donvi", sua_controller.text_donvi.textProperty())
+                    .decorates(sua_controller.text_donvi)
+                    .immediate();
+            validatorSua.createCheck()
+                    .withMethod(c -> {
+                        if (sua_controller.text_soluong.getText().equals("")) {
+                            sua_controller.text_soluong.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                            c.error("Số lượng thuốc không được để trống!");
+                        } else {
+                            sua_controller.text_soluong.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+                        }
+                    })
+                    .dependsOn("soluong", sua_controller.text_soluong.textProperty())
+                    .decorates(sua_controller.text_soluong)
+                    .immediate();
+            validatorSua.createCheck()
+                    .withMethod(c -> {
+                        if (sua_controller.text_dongianhap.getText().equals("")) {
+                            sua_controller.text_dongianhap.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                            c.error("Đơn giá nhập không được để trống!");
+                        } else {
+                            sua_controller.text_dongianhap.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+                        }
+                    })
+                    .dependsOn("dongianhap", sua_controller.text_dongianhap.textProperty())
+                    .decorates(sua_controller.text_dongianhap)
+                    .immediate();
+            validatorSua.createCheck()
+                    .withMethod(c -> {
+                        if (sua_controller.text_cachdung.getText().equals("")) {
+                            sua_controller.text_cachdung.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                            c.error("Cách dùng thuốc không được để trống!");
+                        } else {
+                            sua_controller.text_cachdung.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+                        }
+                    })
+                    .dependsOn("cachdung", sua_controller.text_cachdung.textProperty())
+                    .decorates(sua_controller.text_cachdung)
+                    .immediate();
+            validationSua = validatorSua.validate();
+            System.out.println(validationSua);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
 
@@ -233,12 +342,7 @@ public class kho_thuocController implements Initializable {
 
                 try {
                     controller.themthuoc.setOnMouseClicked(event2 -> {
-                        for (int i = 0; i < tenthuoc.size(); i++) {
-                            if (controller.text_tenthuoc.getText().equals(tenthuoc.get(i))) {
-                                System.out.println("Thuoc da ton tai");
-//                                break;
-                            }
-                        }
+
                         String donvi = controller.text_donvi.getValue();
                         String cachdung = controller.text_cachdung.getValue();
                         int soluong = 0;
@@ -280,7 +384,7 @@ public class kho_thuocController implements Initializable {
                             e.printStackTrace();
                         }
 
-
+                        setupValidator();
                         try {
                             System.out.println(validationResult);
                                 if (validationResult){
@@ -306,7 +410,7 @@ public class kho_thuocController implements Initializable {
 
                         setData();
                         khothuoc.setItems(KhoThuoc_list);
-                        setupValidator();
+
                         System.out.println("4");
 
                     });
@@ -383,76 +487,75 @@ public class kho_thuocController implements Initializable {
                     try {
 
                         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/Sua_Thuoc.fxml"));
-                        Sua_ThuocController controller = new Sua_ThuocController();
-                        loader.setController(controller);
+                        loader.setController(sua_controller);
                         Scene scene = new Scene(loader.load());
                         Stage stage = new Stage();
                         stage.setScene(scene);
                         stage.show();
-                        controller.text_tenthuoc.setText(rowData.getTenthuoc());
-                        System.out.println("Ten:" + rowData.getTenthuoc());
-                        System.out.println("Don Gia:" + rowData.getDongia());
-                        controller.text_donvi.setText(rowData.getDonvi());
-
-                        controller.text_soluong.setText(rowData.getSoluong().toString());
-                        controller.text_dongia.setText(rowData.getDongia());
-                        System.out.println("don gia ::" + controller.text_dongia.getText());
-                        controller.Thuoc_ID = rowData.getId();
-                        controller.DonViThuoc_ID = rowData.getDonViThuoc_ID();
-                        controller.suathuoc.setOnMouseClicked(event1 -> {
-                            int check = 1;
-                            if (controller.text_tenthuoc.getText().equals("")
-                                    || controller.text_dongia.getText().equals("")
-                                    || controller.text_soluong.getText().equals("")
-                                    || controller.text_donvi.getText().equals("")) {
-                                check = 0;
-                            }
+                        sua_controller.text_tenthuoc.setText(rowData.getTenthuoc());
+                        sua_controller.text_donvi.setText(rowData.getDonvi());
+                        sua_controller.text_soluong.setText(rowData.getSoluong().toString());
+                        sua_controller.text_dongia.setText(rowData.getDongia());
+                        sua_controller.Thuoc_ID = rowData.getId();
+                        System.out.println("Thuoc_ID:" + sua_controller.Thuoc_ID);
+//                      sua_controller.DonViThuoc_ID = rowData.getDonViThuoc_ID();
+                        sua_controller.suathuoc.setOnMouseClicked(event1 -> {
                             String dvthuocid = "";
+                            String cachdungid = "";
+                            setupValidatorSua();
                             try {
-                                if (check == 1) {
-                                    String sql = "update Thuoc set TenThuoc=?,TonKho=?,GiaBan=? where Thuoc_ID=?";
+                                System.out.println("validationSua:" + validationSua);
+                                if (validationSua) {
+                                    String sql = "update Thuoc set TenThuoc=?,TonKho=?,GiaBan=?,GiaMua=? where Thuoc_ID=?";
                                     pst = dbConnection.prepareStatement(sql);
-                                    pst.setString(1, controller.text_tenthuoc.getText());
-                                    pst.setString(2, controller.text_soluong.getText());
-                                    pst.setString(3, controller.text_dongia.getText());
-                                    pst.setString(4, rowData.getId());
-                                    int rowsAffected = pst.executeUpdate();
-                                    if (rowsAffected > 0) {
-                                        System.out.println("The SQL statement was executed successfully.");
-                                    } else {
-                                        System.out.println("The SQL statement did not affect any rows.");
-                                    }
+                                    pst.setString(1, sua_controller.text_tenthuoc.getText());
+                                    pst.setString(2, sua_controller.text_soluong.getText());
+                                    pst.setString(3, sua_controller.text_dongia.getText());
+                                    pst.setString(4, sua_controller.text_dongianhap.getText());
+                                    pst.setString(5, rowData.getId());
+                                     pst.executeUpdate();
+
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
                             try {
-                                if (check == 1) {
+                                if (validationSua) {
                                     // Thực hiện truy vấn để lấy ID của đơn vị thuốc (DonViThuoc_ID
                                     String sql = "select DVTHuoc_ID from DonViThuoc where TenDVTHuoc=?";
                                     pst = dbConnection.prepareStatement(sql);
-                                    pst.setString(1, controller.text_donvi.getText());
+                                    pst.setString(1, sua_controller.text_donvi.getText());
                                     rs = pst.executeQuery();
                                     while (rs.next()) {
                                         dvthuocid = rs.getString("DVTHuoc_ID");
                                     }
+                                    String str="Select CachDung_ID from CachDung where TenCachDung=?";
+                                    pst=dbConnection.prepareStatement(str);
+                                    pst.setString(1,sua_controller.text_cachdung.getText());
+                                    rs=pst.executeQuery();
+                                    while (rs.next()) {
+                                        cachdungid = rs.getString("CachDung_ID");
+                                    }
+                                    System.out.println("DonViThuoc_ID:" + dvthuocid);
+                                    System.out.println("CachDung_ID:" + cachdungid);
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
 
                             try {
-                                if (check == 1) {
+                                if (validationSua) {
                                     String sql = "update Thuoc set DonViThuoc_ID=? where Thuoc_ID=?";
                                     pst = dbConnection.prepareStatement(sql);
                                     pst.setString(1, dvthuocid);
                                     pst.setString(2, rowData.getId());
-                                    int rowsAffected = pst.executeUpdate();
-                                    if (rowsAffected > 0) {
-                                        System.out.println("The SQL statement was executed successfully.");
-                                    } else {
-                                        System.out.println("The SQL statement did not affect any rows.");
-                                    }
+                                     pst.executeUpdate();
+                                     String str="update Thuoc set CachDung_ID=? where Thuoc_ID=?";
+                                        pst=dbConnection.prepareStatement(str);
+                                        pst.setString(1,cachdungid);
+                                        pst.setString(2,rowData.getId());
+                                        pst.executeUpdate();
+
                                 }
 
                             } catch (Exception e) {
@@ -461,8 +564,8 @@ public class kho_thuocController implements Initializable {
 
                             setData();
                             khothuoc.setItems(KhoThuoc_list);
-                            if (check == 1) {
-                                controller.suathuoc.getScene().getWindow().hide();
+                            if (validationSua) {
+                                sua_controller.suathuoc.getScene().getWindow().hide();
                             }
 
                             System.out.println("so luong:" + rowData.getSoluong());
@@ -474,6 +577,7 @@ public class kho_thuocController implements Initializable {
                         e.printStackTrace();
                     }
                 }
+
             });
             return cell;
         });
@@ -487,7 +591,8 @@ public class kho_thuocController implements Initializable {
         );
         setData();
         khothuoc.setItems(KhoThuoc_list);
-//        khothuoc.setCurrentPage(0);
+
+        khothuoc.setCurrentPage(0);
 
     }
 

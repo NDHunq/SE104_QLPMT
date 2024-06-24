@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+import net.synedra.validatorfx.Validator;
 
 import java.net.URL;
 import java.sql.PreparedStatement;
@@ -34,16 +35,112 @@ public class doimatkhauController implements Initializable {
     String mkht;
     String mkmoi1;
     String mklai1;
+    boolean validationmk;
+    private Validator validatormk = new Validator();
+
+    public void Validator()
+    {
+        mkht=mkhientai.getText();
+        mkmoi1=mkmoi.getText();
+        mklai1=mklai.getText();
+        validatormk.createCheck()
+                .withMethod(c -> {
+                    if (mkhientai.getText().equals("")
+                    ) {
+                        mkhientai.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                        c.error(" Mật khẩu hiện tại không được để trống!");
+                    }
+                    else {
+                        mkhientai.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+                    }
+                })
+                .dependsOn("thongtin", mkhientai.textProperty())
+                .decorates(mkhientai)
+                .immediate();
+        validatormk.createCheck()
+                .withMethod(c -> {
+                    if (mkmoi.getText().equals("")
+                    ) {
+                        mkmoi.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                        c.error(" Mật khẩu mới không được để trống!");
+                    }
+                    else {
+                        mkmoi.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+                    }
+                })
+                .dependsOn("thongtin", mkmoi.textProperty())
+                .decorates(mkmoi)
+                .immediate();
+        validatormk.createCheck()
+                .withMethod(c -> {
+                    if (mklai.getText().equals("")
+                    ) {
+                        mklai.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                        c.error(" Mật khẩu nhập lại không được để trống!");
+                    }
+                    else {
+                        mklai.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+                    }
+                })
+                .dependsOn("thongtin", mklai.textProperty())
+                .decorates(mklai)
+                .immediate();
+        validatormk.createCheck()
+                .withMethod(c -> {
+                    if (!mkht.equals(mkcu)
+                    ) {
+                        mkhientai.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                        c.error(" Mật khẩu hiện tại không đúng!");
+                    }
+                    else {
+                        mkhientai.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+                    }
+                })
+                .dependsOn("thongtin", mkhientai.textProperty())
+                .decorates(mkhientai)
+                .immediate();
+        validatormk.createCheck()
+                .withMethod(c -> {
+                    if (mkht.equals(mkmoi1)
+                    ) {
+                        mkmoi.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                        c.error(" Mật khẩu mới phải khác mật khẩu hiện tại!");
+                    }
+                    else {
+                        mkmoi.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+                    }
+                })
+                .dependsOn("thongtin", mkmoi.textProperty())
+                .decorates(mkmoi)
+                .immediate();
+        validatormk.createCheck()
+                .withMethod(c -> {
+                    if (!mklai1.equals(mkmoi1)
+                    ) {
+                        mklai.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                        c.error(" Mật khẩu mới không khớp!");
+                    }
+                    else {
+                        mklai.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+                    }
+                })
+                .dependsOn("thongtin", mklai.textProperty())
+                .decorates(mklai)
+                .immediate();
+
+
+        validationmk = validatormk.validate();
+        System.out.println(validationmk);
+    }
     public void initialize(URL location, ResourceBundle resources) {
 
 
         dbConnection = DBConnection.getConnection();
         xong.setOnMouseClicked(event -> {
-            mkht=mkhientai.getText();
-            mkmoi1=mkmoi.getText();
-            mklai1=mklai.getText();
+            Validator();
 
-            if(check())
+
+            if(validationmk)
             {
                String sql="update TaiKhoan set mk=? where username=?";
                 try {
@@ -59,13 +156,7 @@ public class doimatkhauController implements Initializable {
                 Stage stage = (Stage) xong.getScene().getWindow();
                 stage.close();
             }
-            else
-            {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Thông báo");
-                alert.setHeaderText("Đổi mật khẩu thất bại");
-                alert.showAndWait();
-            }
+
 
         });
         huy.setOnMouseClicked(event -> {

@@ -29,6 +29,7 @@ import java.sql.*;
 import java.util.Comparator;
 import java.util.ResourceBundle;
 import Model.CachDungtable;
+import net.synedra.validatorfx.Validator;
 
 import static com.example.qlpmt.loginController.role;
 import static com.example.qlpmt.loginController.username;
@@ -78,7 +79,103 @@ private Text chucvu;
     private ObservableList<CachDungtable> cachdung_list;
     private ObservableList<DonViThuocTable> dvt_list;
     private ObservableList<LoaiBenhTable> loaibenh_list;
+    private Validator validator = new Validator();
 
+    private
+    ThemcachdungController controller = new ThemcachdungController(this);
+
+    boolean validation ;
+
+
+    public void Validation()
+    {
+        validator.createCheck()
+                .withMethod(c -> {
+                    if (controller.them.getText().equals("")
+                    ) {
+                       controller.them.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                        c.error(" Không được để trống thông tin!");
+                    }
+                    else {
+                        controller.them.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+                    }
+                })
+                .dependsOn("them", controller.them.textProperty())
+                .decorates(controller.them)
+                .immediate();
+        validator.createCheck()
+                .withMethod(c -> {
+                    int checkcd=1;
+                    for(int i=0;i<cachdung_list.size();i++)
+                    {
+                        if(controller.them.getText().equals(cachdung_list.get(i).getTenCachDung()))
+                        {
+                            checkcd=0;
+                            break;
+                        }
+                    }
+                    if(checkcd==0)
+                    {
+                        controller.them.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                        c.error("Tên cách dùng đã tồn tại!");
+                    }
+                    else {
+                        controller.them.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+                    }
+                })
+                .dependsOn("them", controller.them.textProperty())
+                .decorates(controller.them)
+                .immediate();
+        validator.createCheck()
+                .withMethod(c -> {
+                    int checkdvt=1;
+                    for(int i=0;i<dvt_list.size();i++)
+                    {
+                        if(controller.them.getText().equals(dvt_list.get(i).getTenDonVi()))
+                        {
+                            checkdvt=0;
+                            break;
+                        }
+                    }
+                    if(checkdvt==0)
+                    {
+                        controller.them.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                        c.error("Tên đơn vị thuốc đã tồn tại!");
+                    }
+                    else {
+                        controller.them.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+                    }
+                })
+                .dependsOn("them", controller.them.textProperty())
+                .decorates(controller.them)
+                .immediate();
+        validator.createCheck()
+                .withMethod(c -> {
+                    int checkbenh=1;
+                    for(int i=0;i<loaibenh_list.size();i++)
+                    {
+                        if(controller.them.getText().equals(loaibenh_list.get(i).getTenLoaiBenh()))
+                        {
+                            checkbenh=0;
+                            break;
+                        }
+                    }
+                    if(checkbenh==0)
+                    {
+                        controller.them.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                        c.error("Tên bệnh đã tồn tại!");
+                    }
+                    else {
+                        controller.them.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+                    }
+                })
+                .dependsOn("them", controller.them.textProperty())
+                .decorates(controller.them)
+                .immediate();
+        validation = validator.validate();
+        System.out.println(validation);
+
+    }
 
    public void initialize(URL location, ResourceBundle resources){
         System.out.println(username);
@@ -280,30 +377,26 @@ private Text chucvu;
                 {
               try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/themcachdung.fxml"));
-                ThemcachdungController controller = new ThemcachdungController(this);
                 loader.setController(controller);
                 Scene scene = new Scene(loader.load());
                 Stage stage = new Stage();
                 stage.setScene(scene);
                 stage.show();
                   controller.xong.setOnMouseClicked(event1 -> {
+                      Validation();
                       System.out.println("click vao button xong");
                       try {
-                          int check=1;
-                          if(controller.them.getText().equals(""))
-                          {
-                              check=0;
-                          }
+
                           for(int i=0;i<cachdung_list.size();i++)
                           {
                               if(controller.them.getText().equals(cachdung_list.get(i).getTenCachDung()))
                               {
-                                  check=0;
+//                                  check=0;
                                   break;
                               }
                           }
                           String soluongAsString = "CD";
-                          if(check==1) {
+                          if(validation) {
                               try {
                                   String str = "";
                                   int soluong = 0;
@@ -365,28 +458,24 @@ private Text chucvu;
            if(role.equals("Quản lý")) {
                try {
                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/themcachdung.fxml"));
-                   ThemcachdungController controller = new ThemcachdungController(this);
                    loader.setController(controller);
                    Scene scene = new Scene(loader.load());
                    Stage stage = new Stage();
                    stage.setScene(scene);
                    stage.show();
                    controller.xong.setOnMouseClicked(event1 -> {
+                          Validation();
                        System.out.println("click vao button xong");
                        try {
-                           int check=1;
-                           if(controller.them.getText().equals(""))
-                           {
-                               check=0;
-                           }
+
                            for (int i = 0; i < dvt_list.size(); i++) {
                                if (controller.them.getText().equals(dvt_list.get(i).getTenDonVi())) {
-                                   check = 0;
+//                                   check = 0;
                                    break;
                                }
                            }
                            String soluongAsString = "DV";
-                           if(check==1) {
+                           if(validation) {
                                try {
                                    int soluong = 0;
 
@@ -451,28 +540,24 @@ private Text chucvu;
 
            try {
                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/themcachdung.fxml"));
-               ThemcachdungController controller = new ThemcachdungController(this);
                loader.setController(controller);
                Scene scene = new Scene(loader.load());
                Stage stage = new Stage();
                stage.setScene(scene);
                stage.show();
                controller.xong.setOnMouseClicked(event1 -> {
+                     Validation();
                    System.out.println("click vao button xong");
                    try {
-                       int check=1;
-                       if(controller.them.getText().equals(""))
-                       {
-                           check=0;
-                       }
+
                        for (int i = 0; i < loaibenh_list.size(); i++) {
                            if (controller.them.getText().equals(loaibenh_list.get(i).getTenLoaiBenh())) {
-                               check = 0;
+//                               check = 0;
                                break;
                            }
                        }
                        String soluongAsString = "LB";
-                       if(check==1) {
+                       if(validation) {
                            try {
 
                                int soluong = 0;
