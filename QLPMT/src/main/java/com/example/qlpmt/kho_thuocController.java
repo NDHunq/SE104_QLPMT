@@ -10,6 +10,7 @@ import io.github.palexdev.materialfx.filter.DoubleFilter;
 import io.github.palexdev.materialfx.filter.IntegerFilter;
 import io.github.palexdev.materialfx.filter.StringFilter;
 import io.github.palexdev.materialfx.utils.others.observables.When;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -37,28 +38,158 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import net.synedra.validatorfx.Validator;
+
+import javax.swing.*;
 
 public class kho_thuocController implements Initializable {
-@FXML
+    @FXML
     public Button Add;
 
     DateTimeFormatter string_formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     @FXML
     private MFXPaginatedTableView<KhoThuoc> khothuoc = new MFXPaginatedTableView<>();
-    public PreparedStatement pst=null;
-    private ResultSet rs=null;
+    public PreparedStatement pst = null;
+    private ResultSet rs = null;
     private java.sql.Connection dbConnection = null;
 
     @FXML
-   public MFXTextField search_txtbox;
+    public MFXTextField search_txtbox;
+    private Validator validator = new Validator();
 
 
     private ObservableList<KhoThuoc> KhoThuoc_list;
     private List<String> tenthuoc = new ArrayList<>();
-    public void initialize(URL location, ResourceBundle resources){
+    ThemThuocController controller = new ThemThuocController();
+    boolean validationResult ;
+    public void setupValidator()
+    {
+        //Validate cho them thuoc
+
+
+        validator.createCheck()
+                .withMethod(c -> {
+                    if (controller.text_tenthuoc.getText().equals("")
+                    ) {
+                        controller.text_tenthuoc.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                        c.error("Tên thuốc không được để trống!");
+
+
+                    }
+                    else {
+                        controller.text_tenthuoc.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+
+                    }
+                })
+                .dependsOn("tenthuoc", controller.text_tenthuoc.textProperty())
+                .decorates(controller.text_tenthuoc)
+                .immediate();
+        validator.createCheck()
+                .withMethod(c -> {
+                    if (
+                            controller.text_dongia.getText().equals(""))
+                    {
+//
+                        controller.text_dongia.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                        c.error("Đơn giá nhập không được để trống!");
+
+
+                    }
+                    else {
+                        controller.text_dongia.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+
+                    }
+                })
+                .dependsOn("dongia", controller.text_dongia.textProperty())
+                .decorates(controller.text_dongia)
+                .immediate();
+        validator.createCheck()
+                .withMethod(c -> {
+                    if (
+                            controller.text_dongiaban.getText().equals(""))
+                    {
+//
+                        controller.text_dongiaban.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                        c.error("Đơn giá bán không được để trống!");
+
+
+                    }
+                    else {
+                        controller.text_dongiaban.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+
+                    }
+                })
+                .dependsOn("dongiaban", controller.text_dongiaban.textProperty())
+                .decorates(controller.text_dongiaban)
+                .immediate();
+        validator.createCheck()
+                .withMethod(c -> {
+                    if (
+                            controller.text_donvi.getText().equals(""))
+                    {
+//
+                        controller.text_donvi.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                        c.error("Đơn vị thuốc không được để trống!");
+
+
+                    }
+                    else {
+                        controller.text_donvi.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+
+                    }
+                })
+                .dependsOn("donvi", controller.text_donvi.textProperty())
+                .decorates(controller.text_donvi)
+                .immediate();
+        validator.createCheck()
+                .withMethod(c -> {
+                    if (
+                            controller.text_cachdung.getText().equals(""))
+                    {
+//
+                        controller.text_cachdung.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                        c.error("Cách dùng thuốc không được để trống!");
+
+
+                    }
+                    else {
+                        controller.text_cachdung.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+
+                    }
+                })
+                .dependsOn("cachdung", controller.text_cachdung.textProperty())
+                .decorates(controller.text_cachdung)
+                .immediate();
+        validator.createCheck()
+                .withMethod(c -> {
+                    if (
+                            controller.text_soluong.getText().equals(""))
+                    {
+//
+                        controller.text_soluong.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                        c.error("Số lượng thuốc không được để trống!");
+
+
+                    }
+                    else {
+                        controller.text_soluong.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+
+                    }
+                })
+                .dependsOn("soluong", controller.text_soluong.textProperty())
+                .decorates(controller.text_soluong)
+                .immediate();
+        validationResult = validator.validate();
+        System.out.println(validationResult);
+
+    }
+
+
+    public void initialize(URL location, ResourceBundle resources) {
+
         search_txtbox.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
-          setData();
+            setData();
             khothuoc.setItems(KhoThuoc_list);
 //            khothuoc.setCurrentPage(0);
 
@@ -76,16 +207,14 @@ public class kho_thuocController implements Initializable {
         When.onChanged(khothuoc.currentPageProperty())
                 .then((oldValue, newValue) -> khothuoc.autosizeColumns())
                 .listen();
-        String str="Select TenThuoc from Thuoc";
+        String str = "Select TenThuoc from Thuoc";
         try {
-            pst=dbConnection.prepareStatement(str);
-            rs=pst.executeQuery();
-            while (rs.next())
-            {
+            pst = dbConnection.prepareStatement(str);
+            rs = pst.executeQuery();
+            while (rs.next()) {
                 tenthuoc.add(rs.getString("TenThuoc"));
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("An error occurred during data retrieval");
             e.printStackTrace();
         }
@@ -93,7 +222,7 @@ public class kho_thuocController implements Initializable {
             try {
                 System.out.println("-3");
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/ThemThuoc.fxml"));
-                ThemThuocController controller = new ThemThuocController();
+
                 loader.setController(controller);
                 System.out.println("-2");
                 Scene scene = new Scene(loader.load());
@@ -103,98 +232,81 @@ public class kho_thuocController implements Initializable {
                 System.out.println("-1");
 
                 try {
-
                     controller.themthuoc.setOnMouseClicked(event2 -> {
-                        int check=1;
-                        System.out.println("0");
-                        if(controller.text_tenthuoc.getText().equals("")
-                                ||controller.text_dongia.getText().equals("")
-                                ||controller.text_dongiaban.getText().equals("")
-                                ||controller.text_soluong.getText().equals("")
-                                ||controller.text_donvi.getText().equals("")
-                                ||controller.text_cachdung.getText().equals(""))
-                        {
-                            System.out.println("dien du thong tin");
-                            check=0;
-
-                        }
-                       for(int i=0;i<tenthuoc.size();i++)
-                       {
-                            if(controller.text_tenthuoc.getText().equals(tenthuoc.get(i)))
-                            {
-                                 System.out.println("Thuoc da ton tai");
-                                 check=0;
+                        for (int i = 0; i < tenthuoc.size(); i++) {
+                            if (controller.text_tenthuoc.getText().equals(tenthuoc.get(i))) {
+                                System.out.println("Thuoc da ton tai");
+//                                break;
                             }
-                       }
-                        String donvi =  controller.text_donvi.getValue();
-                        String cachdung =  controller.text_cachdung.getValue();
+                        }
+                        String donvi = controller.text_donvi.getValue();
+                        String cachdung = controller.text_cachdung.getValue();
                         int soluong = 0;
                         String soluongAsString = "";
-                        try{
+                        try {
                             String sql = "select CachDung_ID from CachDung where TenCachDung=?";
                             pst = dbConnection.prepareStatement(sql);
-                            pst.setString(1,cachdung);
+                            pst.setString(1, cachdung);
                             rs = pst.executeQuery();
-                            while (rs.next()){
+                            while (rs.next()) {
                                 cachdung = rs.getString("CachDung_ID");
                             }
-                        }
-                        catch (Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                         System.out.println("1");
-                        try{
+                        try {
                             String sql = "select DVThuoc_ID from DonViThuoc where TenDVTHuoc=?";
                             pst = dbConnection.prepareStatement(sql);
-                            pst.setString(1,donvi);
+                            pst.setString(1, donvi);
                             rs = pst.executeQuery();
-                            while (rs.next()){
+                            while (rs.next()) {
                                 donvi = rs.getString("DVThuoc_ID");
                             }
-                        }
-                        catch (Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                         System.out.println("2");
                         try {
-                            String sql="Select count(*) as total from Thuoc";
+                            String sql = "Select count(*) as total from Thuoc";
                             pst = dbConnection.prepareStatement(sql);
                             rs = pst.executeQuery();
-                            while (rs.next()){
+                            while (rs.next()) {
                                 soluong = rs.getInt("total");
 
                             }
-                            soluongAsString = Integer.toString(soluong+1);
-                        }
-                        catch (Exception e){
+                            soluongAsString = Integer.toString(soluong + 1);
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        System.out.println("3");
+
+
                         try {
-                            if(check==1) {
-                                String sql = "insert into Thuoc(Thuoc_ID,TenThuoc,GiaMua,GiaBan,TonKho,CachDung_ID,DonViThuoc_ID) values(?,?,?,?,?,?,?)";
-                                pst = dbConnection.prepareStatement(sql);
-                                pst.setString(1, "T0" + soluongAsString);
-                                pst.setString(2, controller.text_tenthuoc.getText());
-                                pst.setString(3, controller.text_dongia.getText());
-                                pst.setString(4, controller.text_dongiaban.getText());
-                                pst.setString(5, controller.text_soluong.getText());
-                                pst.setString(6, cachdung);
-                                pst.setString(7, donvi);
-                                pst.executeUpdate();
-                                System.out.println("dong cua so");
-                                controller.themthuoc.getScene().getWindow().hide();
+                            System.out.println(validationResult);
+                                if (validationResult){
+                                    System.out.println("Thuoc Hop Le");
+                                    String sql = "insert into Thuoc(Thuoc_ID,TenThuoc,GiaMua,GiaBan,TonKho,CachDung_ID,DonViThuoc_ID) values(?,?,?,?,?,?,?)";
+                                    pst = dbConnection.prepareStatement(sql);
+                                    pst.setString(1, "T0" + soluongAsString);
+                                    pst.setString(2, controller.text_tenthuoc.getText());
+                                    pst.setString(3, controller.text_dongia.getText());
+                                    pst.setString(4, controller.text_dongiaban.getText());
+                                    pst.setString(5, controller.text_soluong.getText());
+                                    pst.setString(6, cachdung);
+                                    pst.setString(7, donvi);
+                                    pst.executeUpdate();
+                                    System.out.println("dong cua so");
+                                    controller.themthuoc.getScene().getWindow().hide();
 
-                            }
+                                }
 
-
-
-                        }
-                        catch (Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
+
                         setData();
                         khothuoc.setItems(KhoThuoc_list);
+                        setupValidator();
                         System.out.println("4");
 
                     });
@@ -211,43 +323,38 @@ public class kho_thuocController implements Initializable {
 
     }
 
-    public void setData()
-    {
-int STT=0;
-String sql="";
+    public void setData() {
+        int STT = 0;
+        String sql = "";
         String search = search_txtbox.getText();
         try {
             KhoThuoc_list = FXCollections.observableArrayList();
-            if(search=="")
-            {
-                sql="Select*from Thuoc inner join DonViThuoc on Thuoc.DonViThuoc_ID=DonViThuoc.DVTHuoc_ID";
-            }
-            else
-            {
-                 sql="Select*from Thuoc inner join DonViThuoc on Thuoc.DonViThuoc_ID=DonViThuoc.DVTHuoc_ID Where TenThuoc like '%"+search+"%'";
+            if (search == "") {
+                sql = "Select*from Thuoc inner join DonViThuoc on Thuoc.DonViThuoc_ID=DonViThuoc.DVTHuoc_ID";
+            } else {
+                sql = "Select*from Thuoc inner join DonViThuoc on Thuoc.DonViThuoc_ID=DonViThuoc.DVTHuoc_ID Where TenThuoc like '%" + search + "%'";
             }
 
-            pst=dbConnection.prepareStatement(sql);
+            pst = dbConnection.prepareStatement(sql);
 
-            rs=pst.executeQuery();
+            rs = pst.executeQuery();
             System.out.println("execute query");
-            while (rs.next())
-            {
+            while (rs.next()) {
                 STT++;
-                String img="Sửa";
-                KhoThuoc thuoc=new KhoThuoc(STT,rs.getString("TenThuoc"),rs.getString("TenDVTHuoc"),rs.getInt("TonKho"),rs.getString("GiaBan"),img);
+                String img = "Sửa";
+                KhoThuoc thuoc = new KhoThuoc(STT, rs.getString("TenThuoc"), rs.getString("TenDVTHuoc"), rs.getInt("TonKho"), rs.getString("GiaBan"), img);
                 thuoc.setId(rs.getString("Thuoc_ID"));
                 thuoc.setDonViThuoc_ID(rs.getString("DonViTHuoc_ID"));
                 KhoThuoc_list.add(thuoc);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("An error occurred during data retrieval");
             e.printStackTrace();
         }
 
 
     }
+
     public void setupPaginated() {
         MFXTableColumn<KhoThuoc> stt = new MFXTableColumn<>("STT", false, Comparator.comparing(KhoThuoc::getStt));
         MFXTableColumn<KhoThuoc> tenthuoc = new MFXTableColumn<>("Tên Thuốc", false, Comparator.comparing(KhoThuoc::getTenthuoc));
@@ -270,8 +377,8 @@ String sql="";
 
             cell.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 1) {
-                    KhoThuoc rowData=khothuoc.getSelectionModel().getSelectedValues().get(0);
-                    System.out.println("Row data: "+rowData.getTenthuoc());
+                    KhoThuoc rowData = khothuoc.getSelectionModel().getSelectedValues().get(0);
+                    System.out.println("Row data: " + rowData.getTenthuoc());
                     // rowData is the KhoThuoc object of the clicked row
                     try {
 
@@ -283,46 +390,44 @@ String sql="";
                         stage.setScene(scene);
                         stage.show();
                         controller.text_tenthuoc.setText(rowData.getTenthuoc());
-                        System.out.println("Ten:"+rowData.getTenthuoc());
-                        System.out.println("Don Gia:"+rowData.getDongia());
+                        System.out.println("Ten:" + rowData.getTenthuoc());
+                        System.out.println("Don Gia:" + rowData.getDongia());
                         controller.text_donvi.setText(rowData.getDonvi());
 
                         controller.text_soluong.setText(rowData.getSoluong().toString());
                         controller.text_dongia.setText(rowData.getDongia());
-                        System.out.println("don gia ::"+controller.text_dongia.getText());
+                        System.out.println("don gia ::" + controller.text_dongia.getText());
                         controller.Thuoc_ID = rowData.getId();
                         controller.DonViThuoc_ID = rowData.getDonViThuoc_ID();
                         controller.suathuoc.setOnMouseClicked(event1 -> {
-                            int check=1;
-                            if(controller.text_tenthuoc.getText().equals("")
-                                    ||controller.text_dongia.getText().equals("")
-                                    ||controller.text_soluong.getText().equals("")
-                                    ||controller.text_donvi.getText().equals(""))
-
-                            {
-                                check=0;
+                            int check = 1;
+                            if (controller.text_tenthuoc.getText().equals("")
+                                    || controller.text_dongia.getText().equals("")
+                                    || controller.text_soluong.getText().equals("")
+                                    || controller.text_donvi.getText().equals("")) {
+                                check = 0;
                             }
-                                String dvthuocid = "";
+                            String dvthuocid = "";
                             try {
-                              if(check==1) {
-                                  String sql = "update Thuoc set TenThuoc=?,TonKho=?,GiaBan=? where Thuoc_ID=?";
-                                  pst = dbConnection.prepareStatement(sql);
-                                  pst.setString(1, controller.text_tenthuoc.getText());
-                                  pst.setString(2, controller.text_soluong.getText());
-                                  pst.setString(3, controller.text_dongia.getText());
-                                  pst.setString(4, rowData.getId());
-                                  int rowsAffected = pst.executeUpdate();
-                                  if (rowsAffected > 0) {
-                                      System.out.println("The SQL statement was executed successfully.");
-                                  } else {
-                                      System.out.println("The SQL statement did not affect any rows.");
-                                  }
-                              }
+                                if (check == 1) {
+                                    String sql = "update Thuoc set TenThuoc=?,TonKho=?,GiaBan=? where Thuoc_ID=?";
+                                    pst = dbConnection.prepareStatement(sql);
+                                    pst.setString(1, controller.text_tenthuoc.getText());
+                                    pst.setString(2, controller.text_soluong.getText());
+                                    pst.setString(3, controller.text_dongia.getText());
+                                    pst.setString(4, rowData.getId());
+                                    int rowsAffected = pst.executeUpdate();
+                                    if (rowsAffected > 0) {
+                                        System.out.println("The SQL statement was executed successfully.");
+                                    } else {
+                                        System.out.println("The SQL statement did not affect any rows.");
+                                    }
+                                }
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
                             try {
-                                if(check==1) {
+                                if (check == 1) {
                                     // Thực hiện truy vấn để lấy ID của đơn vị thuốc (DonViThuoc_ID
                                     String sql = "select DVTHuoc_ID from DonViThuoc where TenDVTHuoc=?";
                                     pst = dbConnection.prepareStatement(sql);
@@ -337,7 +442,7 @@ String sql="";
                             }
 
                             try {
-                                if(check==1) {
+                                if (check == 1) {
                                     String sql = "update Thuoc set DonViThuoc_ID=? where Thuoc_ID=?";
                                     pst = dbConnection.prepareStatement(sql);
                                     pst.setString(1, dvthuocid);
@@ -356,8 +461,7 @@ String sql="";
 
                             setData();
                             khothuoc.setItems(KhoThuoc_list);
-                            if(check==1)
-                            {
+                            if (check == 1) {
                                 controller.suathuoc.getScene().getWindow().hide();
                             }
 
@@ -386,10 +490,11 @@ String sql="";
 //        khothuoc.setCurrentPage(0);
 
     }
-    public void LoadData()
-    {
+
+    public void LoadData() {
         setData();
         khothuoc.setItems(KhoThuoc_list);
     }
+
 
 }

@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import net.synedra.validatorfx.Validator;
 
 import java.awt.*;
 import java.sql.*;
@@ -34,6 +35,8 @@ public class ThemThuocController {
     private ResultSet rs=null;
     private Connection dbConnection = null;
     private ObservableList<KhoThuoc> KhoThuoc_list;
+//    public  ThemThuocController(kho_thuocController kho_thuocController) {
+//    }
 
 
     public void initialize() {
