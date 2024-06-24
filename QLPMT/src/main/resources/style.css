@@ -78,10 +78,9 @@
 }
 
 /*Doi mau vien cho mfx textfield khi duoc focus (cái nó báo lỗi là bị lỏ á, đừng fix j hết nha :Đ)*/
-/*.mfx-text-field:focus-within {*/
-/*    -fx-border-color: #2264D1;*/
-/*}*/
-
+.mfx-text-field:focus-within {
+    -fx-border-color: #2264D1;
+}
 
 .mfx-filter-pane .header #filterIcon:hover {
     -fx-background-color: derive(#D4F2FF, 150%);
@@ -102,10 +101,9 @@
     -mfx-ripple-color: #D4F2FF;
 }
 
-/*.mfx-combo-box:focus-within .caret .mfx-font-icon {*/
-/*    -mfx-color: #2264D1;*/
-
-/*}*/
+.mfx-combo-box:focus-within .caret .mfx-font-icon {
+    -mfx-color: #2264D1;
+}
 
 .mfx-combo-box-cell:hover {
     -fx-background-color: #D4F2FF;
@@ -193,3 +191,8 @@
     -fx-font-size: 16;
     -fx-padding: 15, 5, 15, 0;
 }
+.chart-series-line {
+    -fx-stroke: #2264D1;
+}
+
+.default-color0.chart-line-symbol { -fx-background-color: #2264D1, white; }

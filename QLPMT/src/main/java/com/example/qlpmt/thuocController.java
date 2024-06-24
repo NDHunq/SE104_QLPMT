@@ -176,11 +176,11 @@ public class thuocController implements Initializable {
     public void setComboBox(){
         System.out.println(month_combobox.getValue());
         month_List = FXCollections.observableArrayList(
-                "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "Tất cả"
+                "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"
         );
 
         year_List = FXCollections.observableArrayList(
-                "2021", "2022", "2023", "2024", "2025"
+                "2021", "2022", "2023", "2024"
         );
 
         month_combobox.setItems(month_List);

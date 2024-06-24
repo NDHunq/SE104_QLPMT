@@ -37,6 +37,21 @@ public class ThemThuocController {
 
 
     public void initialize() {
+        text_soluong.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")|| newValue.equals("0")) {
+                text_soluong.setText(oldValue);
+            }
+        });
+        text_dongia.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")|| newValue.equals("0")) {
+                text_dongia.setText(oldValue);
+            }
+        });
+        text_dongiaban.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")|| newValue.equals("0")) {
+                text_dongiaban.setText(oldValue);
+            }
+        });
         huy.setOnMouseClicked(event -> {
             huy.getScene().getWindow().hide();
         });

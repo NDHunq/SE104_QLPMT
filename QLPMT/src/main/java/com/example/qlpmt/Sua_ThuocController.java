@@ -24,6 +24,16 @@ public class Sua_ThuocController {
     public String Thuoc_ID;
     public String DonViThuoc_ID;
     public void initialize() {
+        text_soluong.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")|| newValue.equals("0")) {
+                text_soluong.setText(oldValue);
+            }
+        });
+        text_dongia.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")|| newValue.equals("0")) {
+                text_dongia.setText(oldValue);
+            }
+        });
         dbConnection = DBConnection.getConnection();
         huy.setOnMouseClicked(event -> {
             huy.getScene().getWindow().hide();

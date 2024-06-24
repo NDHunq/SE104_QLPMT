@@ -13,6 +13,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import static com.example.qlpmt.loginController.username;
+
 public class suathongtinController implements Initializable {
     @FXML
     public TextField suathongtin;
@@ -30,47 +32,62 @@ public class suathongtinController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         dbConnection = DBConnection.getConnection();
         xong.setOnMouseClicked(event -> {
-            switch (Share.getInstance().getSharedVariable()) {
-                case "2":
-                    this.controller.hoten.setText(suathongtin.getText());
-                    String hoten = suathongtin.getText();
-                    String sql2 = "UPDATE TaiKhoan SET Hoten=? WHERE IdTT='TT01'";
-                    try {
-                        PreparedStatement pstmt = dbConnection.prepareStatement(sql2);
-//                        pstmt.setString(1, tienkham);
-                        pstmt.executeUpdate();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                case "3":
-                    this.controller.tienkham.setText(suathongtin.getText());
-                    String tienkham = suathongtin.getText();
-                    String sql = "UPDATE ThongTinPK SET Gtri=? WHERE IdTT='TT01'";
-                    try {
-                        PreparedStatement pstmt = dbConnection.prepareStatement(sql);
-                        pstmt.setString(1, tienkham);
-                        pstmt.executeUpdate();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                case "4":
-                    this.controller.bntoida.setText(suathongtin.getText());
-                    String bntoida = suathongtin.getText();
-                    String sql1 = "UPDATE ThongTinPK SET Gtri=? WHERE IdTT='TT02'";
-                    try {
-                        PreparedStatement pstmt = dbConnection.prepareStatement(sql1);
-                        pstmt.setString(1, bntoida);
-                        pstmt.executeUpdate();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                    break;
-
+            int check=1;
+            if(suathongtin.getText().equals("")){
+                check=0;
             }
-            Stage stage = (Stage) xong.getScene().getWindow();
-            stage.close();
+            if(check==1) {
+                switch (Share.getInstance().getSharedVariable()) {
+                    case "2":
+
+                        this.controller.hoten.setText(suathongtin.getText());
+                        String hoten = suathongtin.getText();
+                        String sql2 = "UPDATE TaiKhoan SET Hoten=? WHERE username=?";
+                        try {
+                            PreparedStatement pstmt = dbConnection.prepareStatement(sql2);
+//
+                            pstmt.setString(1, hoten);
+                            pstmt.setString(2, username);
+                            pstmt.executeUpdate();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        Stage stage = (Stage) xong.getScene().getWindow();
+                        stage.close();
+
+                        break;
+                    case "3":
+
+                        this.controller.tienkham.setText(suathongtin.getText());
+                        String tienkham = suathongtin.getText();
+                        String sql = "UPDATE ThongTinPK SET Gtri=? WHERE IdTT='TT01'";
+                        try {
+                            PreparedStatement pstmt = dbConnection.prepareStatement(sql);
+                            pstmt.setString(1, tienkham);
+                            pstmt.executeUpdate();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case "4":
+                        this.controller.bntoida.setText(suathongtin.getText());
+                        String bntoida = suathongtin.getText();
+                        String sql1 = "UPDATE ThongTinPK SET Gtri=? WHERE IdTT='TT02'";
+                        try {
+                            PreparedStatement pstmt = dbConnection.prepareStatement(sql1);
+                            pstmt.setString(1, bntoida);
+                            pstmt.executeUpdate();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+
+                }
+                Stage stage = (Stage) xong.getScene().getWindow();
+                stage.close();
+            }
+
+
 
         });
         huy.setOnMouseClicked(event -> {

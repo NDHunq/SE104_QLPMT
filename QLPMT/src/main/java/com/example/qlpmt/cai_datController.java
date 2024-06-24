@@ -16,7 +16,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -28,6 +30,9 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 import Model.CachDungtable;
 
+import static com.example.qlpmt.loginController.role;
+import static com.example.qlpmt.loginController.username;
+
 public class cai_datController implements Initializable {
     @FXML
 private Text chucvu;
@@ -37,6 +42,10 @@ private Text chucvu;
     public Text tienkham;
     @FXML
     public Text bntoida;
+    @FXML
+    public Text tentaikhoan;
+    @FXML
+    public Text email;
 //    @FXML
 //    public ImageView suachucvu;
     @FXML
@@ -57,31 +66,51 @@ private Text chucvu;
     private ImageView themdvt;
     @FXML
     private ImageView thembenh;
+    @FXML
+    private MFXButton doimk;
+    @FXML
+    private HBox tg_benh;
+    @FXML
+    private HBox tg_cd;
+    @FXML
+    private HBox tg_dvt;
     private java.sql.Connection dbConnection = null;
     private ObservableList<CachDungtable> cachdung_list;
     private ObservableList<DonViThuocTable> dvt_list;
     private ObservableList<LoaiBenhTable> loaibenh_list;
-    public cai_datController() {
-        dbConnection = DBConnection.getConnection();
-        tb_cd = new MFXPaginatedTableView<CachDungtable>();
-        tb_dvt = new MFXPaginatedTableView<>();
-        tb_benh = new MFXPaginatedTableView<>();
-    }
+
 
    public void initialize(URL location, ResourceBundle resources){
-
-
+        System.out.println(username);
+        System.out.println(role);
        dbConnection = DBConnection.getConnection();
-         String sql0 = "SELECT * FROM TaiKhoan WHERE IdTT='TT01'";
+       String sql0 = "Select * from taikhoan where username = '"+username+"'";
        String sql = "SELECT * FROM ThongTinPK WHERE IdTT='TT01'";
        String sql1 = "SELECT * FROM ThongTinPK WHERE IdTT='TT02'";
        Statement statement = null;
+       try {
+           statement = dbConnection.createStatement();
+           ResultSet resultSet0 = statement.executeQuery(sql0);
+           if (resultSet0.next()) {
+               hoten.setText(resultSet0.getString("HoTen"));
+               chucvu.setText(resultSet0.getString("ChucVu"));
+                tentaikhoan.setText(resultSet0.getString("username"));
+                email.setText(resultSet0.getString("Email"));
+
+           } else {
+               System.out.println("Không tìm thấy hàng nào với IdTT='TT01'");
+           }
+       } catch (SQLException throwables) {
+           throwables.printStackTrace();
+       }
        try {
            Statement statement1 = dbConnection.createStatement();
            ResultSet resultSet = statement1.executeQuery(sql);
 
            Statement statement2 = dbConnection.createStatement();
            ResultSet resultSet1 = statement2.executeQuery(sql1);
+
+
 
            if (resultSet.next() && resultSet1.next()) {
                tienkham.setText(resultSet.getString("Gtri"));
@@ -157,23 +186,41 @@ private Text chucvu;
            }
        });
        suatienkham.setOnMouseClicked(event -> {
-           try {
+           if(role.equals("Quản lý"))
+           {
+               try {
 
-               FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/suathongtin.fxml"));
-               suathongtinController controller = new suathongtinController(this);
-               loader.setController(controller);
-               Scene scene = new Scene(loader.load());
-               Stage stage = new Stage();
-               stage.setScene(scene);
-               stage.show();
-                controller.suathongtin.setText(tienkham.getText());
-               Share.getInstance().setSharedVariable("3");
-               System.out.println(Share.getInstance().getSharedVariable());
-           } catch (IOException e) {
-               e.printStackTrace();
+                   FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/suathongtin.fxml"));
+                   suathongtinController controller = new suathongtinController(this);
+                   loader.setController(controller);
+                   Scene scene = new Scene(loader.load());
+                   Stage stage = new Stage();
+                   stage.setScene(scene);
+                   stage.show();
+                   controller.suathongtin.setText(tienkham.getText());
+                   controller.suathongtin.textProperty().addListener((observable, oldValue, newValue) -> {
+                       if (!newValue.matches("\\d*")|| newValue.equals("0")) {
+                          controller.suathongtin.setText(oldValue);
+                       }
+                   });
+                   Share.getInstance().setSharedVariable("3");
+                   System.out.println(Share.getInstance().getSharedVariable());
+               } catch (IOException e) {
+                   e.printStackTrace();
+               }
+           }
+           else
+           {
+               Alert alert = new Alert(Alert.AlertType.WARNING);
+               alert.setTitle("Cảnh báo");
+               alert.setHeaderText(null);
+               alert.setContentText("Ban không có quyền chỉnh sửa thông tin này");
+               alert.showAndWait();
            }
        });
        suabntoida.setOnMouseClicked(event -> {
+           if(role.equals("Quản lý"))
+           {
            try {
                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/suathongtin.fxml"));
                suathongtinController controller = new suathongtinController(this);
@@ -182,24 +229,120 @@ private Text chucvu;
                Stage stage = new Stage();
                stage.setScene(scene);
                stage.show();
+               controller.suathongtin.textProperty().addListener((observable, oldValue, newValue) -> {
+                   if (!newValue.matches("\\d*")|| newValue.equals("0")) {
+                       controller.suathongtin.setText(oldValue);
+                   }
+               });
                controller.suathongtin.setText(bntoida.getText());
                Share.getInstance().setSharedVariable("4");
                System.out.println(Share.getInstance().getSharedVariable());
            } catch (IOException e) {
                e.printStackTrace();
            }
+           }
+           else
+           {
+               Alert alert = new Alert(Alert.AlertType.WARNING);
+               alert.setTitle("Cảnh báo");
+               alert.setHeaderText(null);
+               alert.setContentText("Ban không có quyền chỉnh sửa thông tin này");
+               alert.showAndWait();
+           }
        });
+       doimk.setOnMouseClicked(event -> {
+           try {
+               FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/doimatkhau.fxml"));
+                doimatkhauController controller = new doimatkhauController();
+                loader.setController(controller);
+               Scene scene = new Scene(loader.load());
+               Stage stage = new Stage();
+               stage.setScene(scene);
+               stage.show();
+           } catch (IOException e) {
+               e.printStackTrace();
+           }
+         });
+       tg_cd.setOnMouseClicked(event4 -> {
+           tb_cd.setVisible(!tb_cd.isVisible());
+           tb_cd.setManaged(tb_cd.isVisible());
+               });
+         tg_dvt.setOnMouseClicked(event4 -> {
+             tb_dvt.setVisible(!tb_dvt.isVisible());
+             tb_dvt.setManaged(tb_dvt.isVisible());
+         });
+            tg_benh.setOnMouseClicked(event4 -> {
+                tb_benh.setVisible(!tb_benh.isVisible());
+                tb_benh.setManaged(tb_benh.isVisible());
+            });
          themcd.setOnMouseClicked(event -> {
+                if(role.equals("Quản lý"))
+                {
               try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/themcachdung.fxml"));
-                ThemcachdungController controller = new ThemcachdungController();
+                ThemcachdungController controller = new ThemcachdungController(this);
                 loader.setController(controller);
                 Scene scene = new Scene(loader.load());
                 Stage stage = new Stage();
                 stage.setScene(scene);
                 stage.show();
-                  Share.getInstance().setSharedVariable("5");
-                  System.out.println(Share.getInstance().getSharedVariable());
+                  controller.xong.setOnMouseClicked(event1 -> {
+                      System.out.println("click vao button xong");
+                      try {
+                          int check=1;
+                          if(controller.them.getText().equals(""))
+                          {
+                              check=0;
+                          }
+                          for(int i=0;i<cachdung_list.size();i++)
+                          {
+                              if(controller.them.getText().equals(cachdung_list.get(i).getTenCachDung()))
+                              {
+                                  check=0;
+                                  break;
+                              }
+                          }
+                          String soluongAsString = "CD";
+                          if(check==1) {
+                              try {
+                                  String str = "";
+                                  int soluong = 0;
+                                  str = "Select count(*) as total from CachDung";
+                                  PreparedStatement pst = dbConnection.prepareStatement(str);
+                                  ResultSet rs = pst.executeQuery();
+                                  while (rs.next()) {
+                                      soluong = rs.getInt("total");
+
+                                  }
+                                  System.out.println(soluong);
+                                  if (soluong < 9) {
+                                      soluongAsString += "0";
+                                      soluongAsString += Integer.toString(soluong + 1);
+                                  } else
+                                      soluongAsString += Integer.toString(soluong + 1);
+
+
+                              } catch (SQLException e) {
+                                  e.printStackTrace();
+                              }
+                              try {
+                                  PreparedStatement pstmt = dbConnection.prepareStatement("INSERT INTO CachDung VALUES (?,?)");
+                                  pstmt.setString(1, soluongAsString);
+                                  pstmt.setString(2, controller.them.getText());
+                                  pstmt.executeUpdate();
+                              } catch (SQLException e) {
+                                  e.printStackTrace();
+                              }
+                              setData();
+                              tb_cd.setItems(cachdung_list);
+                                stage.close();
+                          }
+
+                      } catch (Exception e) {
+                          e.printStackTrace();
+                      }
+                  });
+
 
                   controller.huy.setOnMouseClicked(event1 -> {
 
@@ -208,39 +351,166 @@ private Text chucvu;
               } catch (IOException e) {
                 e.printStackTrace();
               }
+         }
+           else
+       {
+           Alert alert = new Alert(Alert.AlertType.WARNING);
+           alert.setTitle("Cảnh báo");
+           alert.setHeaderText(null);
+           alert.setContentText("Ban không có quyền chỉnh sửa thông tin này");
+           alert.showAndWait();
+       }
          });
        themdvt.setOnMouseClicked(event -> {
-           try {
-               FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/themcachdung.fxml"));
-               ThemcachdungController controller = new ThemcachdungController();
-               loader.setController(controller);
-               Scene scene = new Scene(loader.load());
-               Stage stage = new Stage();
-               stage.setScene(scene);
-               stage.show();
-               Share.getInstance().setSharedVariable("6");
-               System.out.println(Share.getInstance().getSharedVariable());
+           if(role.equals("Quản lý")) {
+               try {
+                   FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/themcachdung.fxml"));
+                   ThemcachdungController controller = new ThemcachdungController(this);
+                   loader.setController(controller);
+                   Scene scene = new Scene(loader.load());
+                   Stage stage = new Stage();
+                   stage.setScene(scene);
+                   stage.show();
+                   controller.xong.setOnMouseClicked(event1 -> {
+                       System.out.println("click vao button xong");
+                       try {
+                           int check=1;
+                           if(controller.them.getText().equals(""))
+                           {
+                               check=0;
+                           }
+                           for (int i = 0; i < dvt_list.size(); i++) {
+                               if (controller.them.getText().equals(dvt_list.get(i).getTenDonVi())) {
+                                   check = 0;
+                                   break;
+                               }
+                           }
+                           String soluongAsString = "DV";
+                           if(check==1) {
+                               try {
+                                   int soluong = 0;
 
-               controller.huy.setOnMouseClicked(event1 -> {
+                                   String str="Select count(*) as total from DonViThuoc";
+                                   PreparedStatement pst = dbConnection.prepareStatement(str);
+                                   ResultSet rs = pst.executeQuery();
+                                   while (rs.next()){
+                                       soluong = rs.getInt("total");
 
-                   stage.close();
-               });
-           } catch (IOException e) {
-               e.printStackTrace();
+                                   }
+                                      System.out.println("so luong don vi la:"+soluong);
+                                   if (soluong < 9) {
+                                       soluongAsString += "0";
+                                       soluongAsString += Integer.toString(soluong + 1);
+                                   } else
+                                       soluongAsString += Integer.toString(soluong + 1);
+
+
+
+                               }
+                               catch (SQLException e)
+                               {
+                                   e.printStackTrace();
+                               }
+                               try {
+                                   PreparedStatement pstmt = dbConnection.prepareStatement("INSERT INTO DonViThuoc VALUES (?,?)");
+                                   pstmt.setString(1, soluongAsString);
+                                   pstmt.setString(2, controller.them.getText());
+                                   pstmt.executeUpdate();
+                               } catch (SQLException e) {
+                                   e.printStackTrace();
+                               }
+                               setData();
+                               tb_dvt.setItems(dvt_list);
+                               stage.close();
+                           }
+
+                       } catch (Exception e) {
+                           e.printStackTrace();
+                       }
+                   });
+
+                   controller.huy.setOnMouseClicked(event1 -> {
+
+                       stage.close();
+                   });
+               } catch (IOException e) {
+                   e.printStackTrace();
+               }
            }
+            else
+               {
+                   Alert alert = new Alert(Alert.AlertType.WARNING);
+                   alert.setTitle("Cảnh báo");
+                   alert.setHeaderText(null);
+                   alert.setContentText("Ban không có quyền chỉnh sửa thông tin này");
+                   alert.showAndWait();
+               }
        });
        thembenh.setOnMouseClicked(event -> {
+           if(role.equals("Quản lý")) {
+
            try {
                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/themcachdung.fxml"));
-               ThemcachdungController controller = new ThemcachdungController();
+               ThemcachdungController controller = new ThemcachdungController(this);
                loader.setController(controller);
                Scene scene = new Scene(loader.load());
                Stage stage = new Stage();
                stage.setScene(scene);
                stage.show();
-               Share.getInstance().setSharedVariable("7");
-               System.out.println(Share.getInstance().getSharedVariable());
+               controller.xong.setOnMouseClicked(event1 -> {
+                   System.out.println("click vao button xong");
+                   try {
+                       int check=1;
+                       if(controller.them.getText().equals(""))
+                       {
+                           check=0;
+                       }
+                       for (int i = 0; i < loaibenh_list.size(); i++) {
+                           if (controller.them.getText().equals(loaibenh_list.get(i).getTenLoaiBenh())) {
+                               check = 0;
+                               break;
+                           }
+                       }
+                       String soluongAsString = "LB";
+                       if(check==1) {
+                           try {
 
+                               int soluong = 0;
+                               String str="Select count(*) as total from LoaiBenh";
+                               PreparedStatement pst = dbConnection.prepareStatement(str);
+                               ResultSet rs = pst.executeQuery();
+                               while (rs.next()){
+                                   soluong = rs.getInt("total");
+
+                               }
+                               System.out.println("so luong benh la:"+soluong);
+                               if (soluong < 9) {
+                                   soluongAsString += "0";
+                                   soluongAsString += Integer.toString(soluong + 1);
+                               } else
+                                   soluongAsString += Integer.toString(soluong + 1);
+
+
+                           } catch (SQLException e) {
+                               e.printStackTrace();
+                           }
+                           try {
+                               PreparedStatement pstmt = dbConnection.prepareStatement("INSERT INTO LoaiBenh VALUES (?,?)");
+                               pstmt.setString(1, soluongAsString);
+                               pstmt.setString(2, controller.them.getText());
+                                 pstmt.executeUpdate();
+                           } catch (SQLException e) {
+                               e.printStackTrace();
+                           }
+                           setData();
+                          tb_benh.setItems(loaibenh_list);
+                           stage.close();
+                       }
+
+                   } catch (Exception e) {
+                       e.printStackTrace();
+                   }
+               });
                controller.huy.setOnMouseClicked(event1 -> {
 
                    stage.close();
@@ -248,6 +518,15 @@ private Text chucvu;
            } catch (IOException e) {
                e.printStackTrace();
            }
+               }
+            else
+               {
+                   Alert alert = new Alert(Alert.AlertType.WARNING);
+                   alert.setTitle("Cảnh báo");
+                   alert.setHeaderText(null);
+                   alert.setContentText("Ban không có quyền chỉnh sửa thông tin này");
+                   alert.showAndWait();
+               }
        });
    }
 
@@ -287,20 +566,20 @@ private Text chucvu;
             while (rs.next())
             {
                 STT1++;
-                System.out.println("Adding data to the list...");
+
                 cachdung_list.add(new CachDungtable(STT1,rs.getString("TenCachDung")));
 
             }
             while (rs1.next())
             {
                 STT2++;
-                System.out.println("Adding data to the list...");
+
                 dvt_list.add(new DonViThuocTable(STT2,rs1.getString("TenDVTHuoc")));
             }
             while (rs2.next())
             {
                 STT3++;
-                System.out.println("Adding data to the list...");
+
                 loaibenh_list.add(new LoaiBenhTable(STT3,rs2.getString("TenBenh")));
             }
 
@@ -309,10 +588,9 @@ private Text chucvu;
             e.printStackTrace();
         }
     }
-    public void LoadData()
-    {
-            setData();
-            setupPaginated();
+    public void refreshPage() {
+        initialize(null, null);
+        setupPaginated();
     }
     public void setupPaginated()
     {

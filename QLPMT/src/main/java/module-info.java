@@ -13,6 +13,7 @@ module com.example.qlpmt {
     requires MaterialFX;
     requires java.sql;
     requires itextpdf;
+    requires mail;
 
     opens com.example.qlpmt to javafx.fxml;
     exports com.example.qlpmt;

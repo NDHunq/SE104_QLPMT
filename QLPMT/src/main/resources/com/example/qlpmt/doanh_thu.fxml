@@ -2,18 +2,29 @@
 
 <?import io.github.palexdev.materialfx.controls.*?>
 <?import javafx.scene.chart.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
 <AnchorPane fx:id="doanh_thu_root_node" prefHeight="600.0" prefWidth="930.0" style="-fx-background-color: #D4F2FF" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.doanh_thuController">
+
+
+   <Pane fx:id="line_chart_pane" layoutX="23.0" layoutY="123.0" prefHeight="458.0" prefWidth="883.0" style="-fx-background-color: #FFFFFF; -fx-border-radius: 10px; -fx-background-radius: 10px">
+       <LineChart fx:id="doanhThu_line_chart" layoutY="15.0" prefHeight="419.0" prefWidth="883.0">
+           <xAxis>
+               <CategoryAxis side="BOTTOM" />
+           </xAxis>
+           <yAxis>
+               <NumberAxis side="LEFT" />
+           </yAxis>
+       </LineChart>
+   </Pane>
     <Text fill="#2264D1" layoutX="23.0" layoutY="41.0" text="Doanh thu theo tháng" wrappingWidth="282.10545349121094">
         <font>
             <Font name="Times New Roman Bold" size="30.0" />
         </font>
     </Text>
 
-    <MFXPaginatedTableView id="doanhThu_table" fx:id="doanhThu" layoutX="23.0" layoutY="161.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="411.0" prefWidth="883.0" rowsPerPage="10">
+    <MFXPaginatedTableView id="doanhThu_table" fx:id="doanhThu" layoutX="23.0" layoutY="123.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="458.0" prefWidth="883.0" rowsPerPage="11">
 
     </MFXPaginatedTableView>
 
@@ -29,33 +40,10 @@
       </font>
    </MFXButton>
 
-    <MFXTextField id="search_txtbox" fx:id="search_txtbox" floatMode="DISABLED" layoutX="567.0" layoutY="120.0" prefHeight="30.0" prefWidth="338.0">
-        <leadingIcon>
-            <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                <image>
-                    <Image url="@images/search.png" />
-                </image>
-            </ImageView>
-        </leadingIcon>
-      <font>
-         <Font name="Times New Roman" size="12.0" />
-      </font>
-    </MFXTextField>
-
    <MFXComboBox fx:id="month_combobox" floatingText="Tháng" layoutX="567.0" layoutY="69.0" prefHeight="32.0" prefWidth="130.0" />
 
    <MFXComboBox fx:id="year_combobox" floatingText="Năm" layoutX="756.0" layoutY="69.0" prefHeight="32.0" prefWidth="130.0" />
-
-
-   <Pane fx:id="line_chart_pane" layoutX="23.0" layoutY="119.0" prefHeight="475.0" prefWidth="883.0" style="-fx-background-color: #FFFFFF; -fx-border-radius: 10px; -fx-background-radius: 10px">
-       <LineChart fx:id="doanhThu_line_chart" layoutY="15.0" prefHeight="419.0" prefWidth="883.0">
-           <xAxis>
-               <CategoryAxis side="BOTTOM" />
-           </xAxis>
-           <yAxis>
-               <NumberAxis side="LEFT" />
-           </yAxis>
-       </LineChart>
-   </Pane>
+   <MFXComboBox fx:id="chart_month_combobox" floatingText="Tháng" layoutX="567.0" layoutY="69.0" prefHeight="32.0" prefWidth="130.0" />
+   <MFXComboBox fx:id="chart_year_combobox" floatingText="Năm" layoutX="756.0" layoutY="69.0" prefHeight="32.0" prefWidth="130.0" />
 
 </AnchorPane>
