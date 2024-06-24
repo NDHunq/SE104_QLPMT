@@ -352,7 +352,7 @@
                               </Text>
                            </children>
                         </HBox>
-                        <AnchorPane prefHeight="34.0" prefWidth="385.0" />
+                        <AnchorPane prefHeight="34.0" prefWidth="386.0" />
                         <ImageView fx:id="themdvt" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@images/add.png" />
@@ -398,9 +398,9 @@
                               </Text>
                            </children>
                         </HBox>
-                        <AnchorPane prefHeight="20.0" prefWidth="362.0">
+                        <AnchorPane prefHeight="20.0" prefWidth="386.0">
                            <HBox.margin>
-                              <Insets left="20.0" top="10.0" />
+                              <Insets top="10.0" />
                            </HBox.margin>
                         </AnchorPane>
                         <ImageView fx:id="themcd" fitHeight="25.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
