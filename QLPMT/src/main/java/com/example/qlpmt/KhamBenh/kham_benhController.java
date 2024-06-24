@@ -190,7 +190,7 @@ public class kham_benhController implements Initializable {
             stage.setX(event.getScreenX() - x);
             stage.setY(event.getScreenY() - y);
         });
-        Scene scene = new Scene(root, 680, 500);
+        Scene scene = new Scene(root, 684, 539);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.setScene(scene);
         stage.show();

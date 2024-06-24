@@ -81,18 +81,12 @@ public class AddPhieuKBController implements Initializable {
     String PKB_id;
     String loaiBenhID;
     kham_benhController controller=new kham_benhController();
-    public String findUsername(String string) {
-        // Tìm kiếm đối tượng TaiKhoanNP dựa trên tên người khám
-        for (TaiKhoanNP tk : NguoiKhamCBB.getItems()) {
-            if (tk.getHoTen().equals(string)) {
-                return tk.getUsername();
-            }
-        }
-        return null;
-    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         con= DBConnection.getConnection();
+        setupContextMenu();
+
         close.setOnMouseClicked(event -> {
             Node source = (Node) event.getSource();
             Stage stage = (Stage) source.getScene().getWindow();
@@ -120,8 +114,7 @@ public class AddPhieuKBController implements Initializable {
             }
         });
         XongBtn.setOnAction((ActionEvent event) -> {
-            Node source = (Node) event.getSource();
-            Stage stage = (Stage) source.getScene().getWindow();
+            setupValidator();
             if(validator.validate()){
                 String sql = "INSERT INTO PKB(PKB_ID, DSKB_ID, TrieuChung, LoaiBenh_ID, NguoiKham,STT) VALUES(?, ?, ?, ?, ?, ?)";
                 try {
@@ -130,11 +123,11 @@ public class AddPhieuKBController implements Initializable {
                     pst.setString(2, DSKB_id);
                     pst.setString(3, TrieuChungTxt.getText());
                     pst.setString(4, loaiBenhID);
-                    pst.setString(3, findUsername(NguoiKhamCBB.getText()));
+                    pst.setString(5, NguoiKhamCBB.getText());
                     int stt = Integer.parseInt(PKB_id.substring(3)); // Extract the number part from PKB_id
                     pst.setInt(6, stt);
                     pst.executeUpdate();
-                    stage.close();
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -172,13 +165,14 @@ public class AddPhieuKBController implements Initializable {
                         e.printStackTrace();
                     }
                 }
+                Node source = (Node) event.getSource();
+                Stage stage = (Stage) source.getScene().getWindow();
                 stage.close();
             }
             else{
                 System.out.println("Validation failed");
             }
             controller.refreshPage();
-
         });
         add_butt.setOnAction((ActionEvent event) -> {
             try {
@@ -201,8 +195,7 @@ public class AddPhieuKBController implements Initializable {
                 e.printStackTrace();
             }
         });
-        setupContextMenu();
-       setupValidator();
+
 
     }
     private double calculateTotalCost() {
@@ -436,6 +429,7 @@ public class AddPhieuKBController implements Initializable {
         }
     }
     private void setupValidator(){
+        validator = new Validator();
         //Validator cho căn cước công dân
         validator.createCheck()
                 .withMethod(c -> {
@@ -454,9 +448,8 @@ public class AddPhieuKBController implements Initializable {
                                 c.error("Căn cước công dân không hợp lệ!");
                             }
                             else{
-                                CCCDTxt.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+                                CCCDTxt.setStyle("");
                             }
-
                         }
                     }
                 })
@@ -472,7 +465,7 @@ public class AddPhieuKBController implements Initializable {
                         c.error("Họ tên không được để trống!");
                     }
                     else{
-                        HoTenTxt.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+                        HoTenTxt.setStyle("");
                     }
                 })
                 .dependsOn("hoTen", HoTenTxt.textProperty())
@@ -487,7 +480,7 @@ public class AddPhieuKBController implements Initializable {
                         c.error("Triệu chứng không được để trống!");
                     }
                     else{
-                        TrieuChungTxt.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+                        TrieuChungTxt.setStyle("");
                     }
                 })
                 .dependsOn("trieuChung", TrieuChungTxt.textProperty())
@@ -504,13 +497,49 @@ public class AddPhieuKBController implements Initializable {
                         c.error("Ngày khám không được lớn hơn ngày hiện tại!");
                     }
                     else{
-                        NgayKhamPicker.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+                        NgayKhamPicker.setStyle("");
                         NgayKhamPicker.lookup(".mfx-icon-wrapper .mfx-font-icon").setStyle("-mfx-color: #2264D1;");
                         NgayKhamPicker.lookup(".mfx-icon-wrapper .mfx-ripple-generator").setStyle("-mfx-ripple-color: #D4F2FF;");
                     }
                 })
                 .dependsOn("ngayKham", NgayKhamPicker.valueProperty())
                 .decorates(NgayKhamPicker)
+                .immediate();
+
+        validator.createCheck()
+                .withMethod(c -> {
+                    if (LoaiBenhCBB.getValue() == null) {
+                        LoaiBenhCBB.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                        LoaiBenhCBB.lookup(".mfx-combo-box .caret .mfx-ripple-generator").setStyle("-mfx-ripple-color: #FF6961;");
+                        LoaiBenhCBB.lookup(".mfx-combo-box .caret .mfx-font-icon").setStyle("-mfx-color: red;");
+                        c.error("Loại bệnh không được để trống!");
+                    }
+                    else{
+                        LoaiBenhCBB.setStyle("");
+                        LoaiBenhCBB.lookup(".mfx-combo-box .caret .mfx-ripple-generator").setStyle("-mfx-ripple-color: #D4F2FF;");
+                        LoaiBenhCBB.lookup(".mfx-combo-box .caret .mfx-font-icon").setStyle("-mfx-color: #2264D1;");
+                    }
+                })
+                .dependsOn("loaiBenh", LoaiBenhCBB.valueProperty())
+                .decorates(LoaiBenhCBB)
+                .immediate();
+
+        validator.createCheck()
+                .withMethod(c -> {
+                    if (NguoiKhamCBB.getValue() == null) {
+                        NguoiKhamCBB.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                        NguoiKhamCBB.lookup(".mfx-combo-box .caret .mfx-ripple-generator").setStyle("-mfx-ripple-color: #FF6961;");
+                        NguoiKhamCBB.lookup(".mfx-combo-box .caret .mfx-font-icon").setStyle("-mfx-color: red;");
+                        c.error("Người khám không được để trống!");
+                    }
+                    else{
+                        NguoiKhamCBB.setStyle("");
+                        NguoiKhamCBB.lookup(".mfx-combo-box .caret .mfx-ripple-generator").setStyle("-mfx-ripple-color: #D4F2FF;");
+                        NguoiKhamCBB.lookup(".mfx-combo-box .caret .mfx-font-icon").setStyle("-mfx-color: #2264D1;");
+                    }
+                })
+                .dependsOn("nguoiKham", NguoiKhamCBB.valueProperty())
+                .decorates(NguoiKhamCBB)
                 .immediate();
     }
     private TextArea createProblemOutput() {
@@ -564,7 +593,5 @@ public class AddPhieuKBController implements Initializable {
             e.printStackTrace();
         }
         setupPaginated();
-
     }
-
 }
