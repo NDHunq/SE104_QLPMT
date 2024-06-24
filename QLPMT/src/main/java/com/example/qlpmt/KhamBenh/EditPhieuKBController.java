@@ -345,7 +345,7 @@ public class EditPhieuKBController implements Initializable {
             stage.setX(event.getScreenX() - x);
             stage.setY(event.getScreenY() - y);
         });
-        Scene scene = new Scene(root, 320, 340);
+        Scene scene = new Scene(root, 332.0, 362.0);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.initModality(Modality.APPLICATION_MODAL);
 
@@ -512,6 +512,8 @@ public class EditPhieuKBController implements Initializable {
                     }
                     else{
                         ngayKham_datepicker.setStyle("");
+                        ngayKham_datepicker.lookup(".mfx-icon-wrapper .mfx-font-icon").setStyle("-mfx-color: #2264D1;");
+                        ngayKham_datepicker.lookup(".mfx-icon-wrapper .mfx-ripple-generator").setStyle("-mfx-ripple-color: #D4F2FF;");
                     }
                 })
                 .dependsOn("ngayKham", ngayKham_datepicker.valueProperty())

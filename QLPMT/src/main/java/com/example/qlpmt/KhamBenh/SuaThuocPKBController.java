@@ -3,6 +3,7 @@ package com.example.qlpmt.KhamBenh;
 import Model.*;
 import Model.PhieuKhamBenh;
 import com.example.qlpmt.DBConnection;
+import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.beans.binding.Bindings;
@@ -45,9 +46,9 @@ public class SuaThuocPKBController implements Initializable {
     @FXML
     private MFXComboBox<DonViThuoc> donVi_combobox = new MFXComboBox<>();
     @FXML
-    private Button XongBtn = new Button();
+    private MFXButton XongBtn = new MFXButton();
     @FXML
-    private Button HuyBtn = new Button();
+    private MFXButton HuyBtn = new MFXButton();
 
     private ObservableList<DSThuoc> existedThuoc_list = FXCollections.observableArrayList();
 
