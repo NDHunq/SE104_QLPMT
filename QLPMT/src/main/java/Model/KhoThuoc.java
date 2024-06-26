@@ -7,7 +7,7 @@ public class KhoThuoc {
     private String tenthuoc;
     private String donvi;
     private Integer soluong;
-    private  String dongia;
+    private  Integer dongia;
     private  String imgThuoc;
     private  String id;
 
@@ -29,7 +29,7 @@ public class KhoThuoc {
         this.imgThuoc = imgThuoc;
     }
 
-    public KhoThuoc(Integer stt, String tenthuoc, String donvi, Integer soluong, String dongia , String imgThuoc) {
+    public KhoThuoc(Integer stt, String tenthuoc, String donvi, Integer soluong, Integer dongia , String imgThuoc) {
         this.tenthuoc = tenthuoc;
         this.donvi = donvi;
         this.soluong = soluong;
@@ -54,7 +54,7 @@ public class KhoThuoc {
         this.stt = stt;
     }
 
-    public String getDongia() {
+    public Integer getDongia() {
         return dongia;
     }
 

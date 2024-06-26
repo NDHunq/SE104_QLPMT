@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -285,6 +286,28 @@ public class kho_thuocController implements Initializable {
                     .dependsOn("cachdung", sua_controller.text_cachdung.textProperty())
                     .decorates(sua_controller.text_cachdung)
                     .immediate();
+            validatorSua.createCheck()
+                    .withMethod(c -> {
+                        int check=1;
+                        for (int i = 0; i < tenthuoc.size(); i++) {
+                            if (sua_controller.text_tenthuoc.getText().equals(tenthuoc.get(i))) {
+                                System.out.println("Thuoc da ton tai");
+                                check=0;
+//                            break;
+                            }
+                        }
+                        if (check==0) {
+                            sua_controller.text_tenthuoc.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                            c.error("Thuốc đã tồn tại");
+                        }
+                        else {
+                            sua_controller.text_tenthuoc.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+
+                        }
+                    })
+                    .dependsOn("soluong", sua_controller.text_tenthuoc.textProperty())
+                    .decorates(sua_controller.text_tenthuoc)
+                    .immediate();
             validationSua = validatorSua.validate();
             System.out.println(validationSua);
         }
@@ -446,7 +469,7 @@ public class kho_thuocController implements Initializable {
             while (rs.next()) {
                 STT++;
                 String img = "Sửa";
-                KhoThuoc thuoc = new KhoThuoc(STT, rs.getString("TenThuoc"), rs.getString("TenDVTHuoc"), rs.getInt("TonKho"), rs.getString("GiaBan"), img);
+                KhoThuoc thuoc = new KhoThuoc(STT, rs.getString("TenThuoc"), rs.getString("TenDVTHuoc"), rs.getInt("TonKho"), rs.getInt("GiaBan"), img);
                 thuoc.setId(rs.getString("Thuoc_ID"));
                 thuoc.setDonViThuoc_ID(rs.getString("DonViTHuoc_ID"));
                 KhoThuoc_list.add(thuoc);
@@ -492,10 +515,27 @@ public class kho_thuocController implements Initializable {
                         Stage stage = new Stage();
                         stage.setScene(scene);
                         stage.show();
+                       try
+                       {
+                           String sql = "Select * from Thuoc inner join CachDung on Thuoc.CachDung_ID=CachDung.CachDung_ID where Thuoc_ID=?";
+                           PreparedStatement pst = dbConnection.prepareStatement(sql);
+                            pst.setString(1, rowData.getId());
+                            ResultSet rs = pst.executeQuery();
+                            while (rs.next()) {
+                               sua_controller.text_cachdung.setText(rs.getString("TenCachDung"));
+                               Integer giaMua=rs.getInt("GiaMua");
+                                 sua_controller.text_dongianhap.setText(giaMua.toString());
+                            }
+                       }
+                       catch (Exception e) {
+                           e.printStackTrace();
+                       }
                         sua_controller.text_tenthuoc.setText(rowData.getTenthuoc());
                         sua_controller.text_donvi.setText(rowData.getDonvi());
                         sua_controller.text_soluong.setText(rowData.getSoluong().toString());
-                        sua_controller.text_dongia.setText(rowData.getDongia());
+                        sua_controller.text_dongia.setText(rowData.getDongia().toString());
+
+
                         sua_controller.Thuoc_ID = rowData.getId();
                         System.out.println("Thuoc_ID:" + sua_controller.Thuoc_ID);
 //                      sua_controller.DonViThuoc_ID = rowData.getDonViThuoc_ID();
@@ -586,7 +626,7 @@ public class kho_thuocController implements Initializable {
                 new StringFilter<>("Tên Thuốc", KhoThuoc::getTenthuoc),
                 new StringFilter<>("Đơn vị", KhoThuoc::getDonvi),
                 new IntegerFilter<>("Số lượng", KhoThuoc::getSoluong),
-                new StringFilter<>("Đơn giá", KhoThuoc::getDongia)
+                new IntegerFilter<>("Đơn giá bán", KhoThuoc::getDongia)
 
         );
         setData();
