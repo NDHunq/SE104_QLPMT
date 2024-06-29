@@ -19,7 +19,7 @@
    <children>
       <BorderPane prefHeight="58.0" prefWidth="662.0">
          <left>
-            <Label styleClass="header" stylesheets="@../../../style.css" text="Phiếu khám bệnh" BorderPane.alignment="CENTER">
+            <Label styleClass="header" stylesheets="@../../../style.css" text="PHIẾU KHÁM BỆNH" BorderPane.alignment="CENTER">
                <font>
                   <Font name="System Bold" size="25.0" />
                </font>

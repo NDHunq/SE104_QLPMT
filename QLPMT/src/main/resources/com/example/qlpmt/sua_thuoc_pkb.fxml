@@ -22,7 +22,7 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="362.0" prefWidth="332.0" styleClass="TextBorder" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Label styleClass="header" stylesheets="@../../../style.css" text="Sửa thông tin thuốc">
+        <Label styleClass="header" stylesheets="@../../../style.css" text="SỬA THUỐC">
             <font>
                 <Font name="System Bold" size="25.0" />
             </font>
