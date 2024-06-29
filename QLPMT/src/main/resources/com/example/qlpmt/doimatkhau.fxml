@@ -20,7 +20,7 @@
                         <Font name="Times New Roman Bold" size="24.0" />
                     </font>
                <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </VBox.margin>
                 </Text>
                 <VBox prefHeight="285.0" prefWidth="350.0" style="-fx-background-color: #D4F2FF">
@@ -30,12 +30,12 @@
                                 <Font name="Times New Roman Bold" size="20.0" />
                             </font>
                      <VBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
+                        <Insets bottom="5.0" left="10.0" right="5.0" top="10.0" />
                      </VBox.margin>
                         </Text>
                   <MFXPasswordField fx:id="mkhientai" maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="303.0" prefHeight="40.0" prefWidth="303.0">
                      <VBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -49,12 +49,12 @@
                                 <Font name="Times New Roman Bold" size="20.0" />
                             </font>
                      <VBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                         </Text>
                   <MFXPasswordField fx:id="mkmoi" maxHeight="40.0" minHeight="40.0" prefHeight="24.0" prefWidth="307.0">
                      <VBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -68,12 +68,12 @@
                                 <Font name="Times New Roman Bold" size="20.0" />
                             </font>
                      <VBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                         </Text>
                   <MFXPasswordField fx:id="mklai" maxHeight="40.0" minHeight="40.0" prefHeight="50.0" prefWidth="326.0">
                      <VBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -110,12 +110,12 @@
                                 </MFXButton>
                             </children>
                             <VBox.margin>
-                                <Insets bottom="10.0" right="5.0" top="10.0" />
+                                <Insets bottom="10.0" right="10.0" top="10.0" />
                             </VBox.margin>
                         </HBox>
                     </children>
                <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                  <Insets bottom="10.0" left="10.0" right="10.0" />
                </VBox.margin>
                 </VBox>
             </children>

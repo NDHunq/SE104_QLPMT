@@ -282,6 +282,7 @@ public class cai_datController implements Initializable {
                 Scene scene = new Scene(loader.load());
                 Stage stage = new Stage();
                 stage.setScene(scene);
+                AppUtils.setIcon(stage);
                 stage.show();
                 controller.suathongtin.setText(hoten.getText());
                 Share.getInstance().setSharedVariable("2");
@@ -301,6 +302,7 @@ public class cai_datController implements Initializable {
                     Scene scene = new Scene(loader.load());
                     Stage stage = new Stage();
                     stage.setScene(scene);
+                    AppUtils.setIcon(stage);
                     stage.show();
                     controller.suathongtin.setText(tienkham.getText());
                     controller.suathongtin.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -333,6 +335,7 @@ public class cai_datController implements Initializable {
                     Scene scene = new Scene(loader.load());
                     Stage stage = new Stage();
                     stage.setScene(scene);
+                    AppUtils.setIcon(stage);
                     stage.show();
                     controller.suathongtin.textProperty().addListener((observable, oldValue, newValue) -> {
                         if (!newValue.matches("\\d*")|| newValue.equals("0")) {
@@ -363,6 +366,7 @@ public class cai_datController implements Initializable {
                 Scene scene = new Scene(loader.load());
                 Stage stage = new Stage();
                 stage.setScene(scene);
+                AppUtils.setIcon(stage);
                 stage.show();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -414,7 +418,8 @@ public class cai_datController implements Initializable {
                     loader.setController(controller);
                     Scene scene = new Scene(loader.load());
                     Stage stage = new Stage();
-                    stage.setScene(scene);
+                    stage.setScene(scene); AppUtils.setIcon(stage);
+
                     stage.show();
                     controller.xong.setOnMouseClicked(event1 -> {
                         Validation();
@@ -496,6 +501,7 @@ public class cai_datController implements Initializable {
                     Scene scene = new Scene(loader.load());
                     Stage stage = new Stage();
                     stage.setScene(scene);
+                    AppUtils.setIcon(stage);
                     stage.show();
                     controller.xong.setOnMouseClicked(event1 -> {
                         Validation();
@@ -578,6 +584,7 @@ public class cai_datController implements Initializable {
                     Scene scene = new Scene(loader.load());
                     Stage stage = new Stage();
                     stage.setScene(scene);
+                    AppUtils.setIcon(stage);
                     stage.show();
                     controller.xong.setOnMouseClicked(event1 -> {
                         Validation();

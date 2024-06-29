@@ -10,14 +10,14 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="444.0" style="-fx-border-radius: 5px" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="157.0" prefWidth="444.0" style="-fx-border-radius: 5px" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Text fill="#0040aa" strokeType="OUTSIDE" strokeWidth="0.0" text="SỬA THÔNG TIN">
          <font>
             <Font name="Times New Roman Bold" size="24.0" />
          </font>
          <VBox.margin>
-            <Insets left="5.0" top="5.0" />
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </VBox.margin>
       </Text>
       <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #D4F2FF">
@@ -30,14 +30,17 @@
                         <Font name="Times New Roman Bold" size="18.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="5.0" right="5.0" top="15.0" />
+                        <Insets left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
                   </Text>
                   <TextField fx:id="suathongtin" prefHeight="26.0" prefWidth="301.0">
                      <HBox.margin>
-                        <Insets top="10.0" />
+                        <Insets top="5.0" />
                      </HBox.margin></TextField>
                </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
             </HBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="575.0">
                <children>
@@ -67,12 +70,12 @@
                   </MFXButton>
                </children>
                <VBox.margin>
-                  <Insets bottom="10.0" right="5.0" />
+                  <Insets bottom="10.0" right="10.0" />
                </VBox.margin>
             </HBox>
          </children>
          <VBox.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            <Insets bottom="10.0" left="10.0" right="10.0" />
          </VBox.margin>
       </VBox>
    </children>
