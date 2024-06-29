@@ -2,6 +2,7 @@ package com.example.qlpmt.KhamBenh;
 
 import Model.*;
 import Model.PhieuKhamBenh;
+import com.example.qlpmt.AppUtils;
 import com.example.qlpmt.DBConnection;
 import com.example.qlpmt.HelloApplication;
 import io.github.palexdev.materialfx.controls.*;
@@ -31,6 +32,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
@@ -43,6 +46,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.Window;
 import net.synedra.validatorfx.Check;
 import net.synedra.validatorfx.Validator;
 
@@ -57,8 +61,6 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class EditPhieuKBController implements Initializable {
-    private MFXGenericDialog dialogContent = null;
-    private MFXStageDialog dialog = null;
 
     private Validator validator = new Validator();
     private StringBinding problemsText;
@@ -134,16 +136,6 @@ public class EditPhieuKBController implements Initializable {
         return null;
     }
 
-    public String findUsername(String string) {
-        // Tìm kiếm đối tượng TaiKhoanNP dựa trên tên người khám
-        for (TaiKhoanNP tk : nguoiKham_combobox.getItems()) {
-            if (tk.getHoTen().equals(string)) {
-                return tk.getUsername();
-            }
-        }
-        return null;
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Tạo một Pane tạm thời
@@ -167,45 +159,63 @@ public class EditPhieuKBController implements Initializable {
         });
         XongBtn.setOnAction((ActionEvent event) -> {
             if(validator.validate()){
-// Câu lệnh update dữ liệu vào bảng PKB (PhieuKhamBenh) và DSKB (DanhSachKhamBenh
-                String query = "UPDATE PKB SET TrieuChung = ?, LoaiBenh_ID = ?, NguoiKham = ? WHERE PKB_ID = ?";
-                String query2 = "UPDATE DSKB SET CCCD = ?, HoTen = ?, NgayKham = ? WHERE DSKB_ID = ?";
-                try {
-                    Connection conn = DBConnection.getConnection();
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                ButtonType buttonTypeYes = new ButtonType("Có");
+                ButtonType buttonTypeNo = new ButtonType("Không");
+                alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+                alert.setTitle("Xác nhận");
+                alert.setHeaderText(null);
+                alert.setContentText("Bạn có chắc chắn muốn cập nhật thông tin phiếu khám bệnh này không?");
+                Window window = alert.getDialogPane().getScene().getWindow();
+                window.setOnCloseRequest(e -> alert.close());
+                ButtonType result = alert.showAndWait().orElse(buttonTypeNo);
 
-                    PreparedStatement ps1 = conn.prepareStatement(query);
-                    ps1.setString(1, trieuChung_txtbox.getText());
-                    ps1.setString(2, findLoaiBenh_ID(loaiBenh_combobox.getText()));
-                    ps1.setString(4, rowDataProperties.get().getIdPKB());
-                    ps1.setString(3, findUsername(nguoiKham_combobox.getText()));
+                if(result == buttonTypeYes){
+                    // Câu lệnh update dữ liệu vào bảng PKB (PhieuKhamBenh) và DSKB (DanhSachKhamBenh
+                    String query = "UPDATE PKB SET TrieuChung = ?, LoaiBenh_ID = ?, NguoiKham = ? WHERE PKB_ID = ?";
+                    String query2 = "UPDATE DSKB SET CCCD = ?, HoTen = ?, NgayKham = ? WHERE DSKB_ID = ?";
+                    try {
+                        Connection conn = DBConnection.getConnection();
 
-                    //ps1.setString(4, nguoiKham_combobox.getSelectedItem().getUsername());
-                    ps1.executeUpdate();
+                        PreparedStatement ps1 = conn.prepareStatement(query);
+                        ps1.setString(1, trieuChung_txtbox.getText());
+                        ps1.setString(2, findLoaiBenh_ID(loaiBenh_combobox.getText()));
+                        ps1.setString(4, rowDataProperties.get().getIdPKB());
+                        ps1.setString(3, nguoiKham_combobox.getText());
 
-                    PreparedStatement ps2 = conn.prepareStatement(query2);
-                    ps2.setString(1, cccd_txtbox.getText());
-                    ps2.setString(2, hoTen_txtbox.getText());
-                    ps2.setDate(3, java.sql.Date.valueOf(ngayKham_datepicker.getValue()));
-                    ps2.setString(4, rowDataProperties.get().getIdDSKB());
-                    ps2.executeUpdate();
+                        //ps1.setString(4, nguoiKham_combobox.getSelectedItem().getUsername());
+                        ps1.executeUpdate();
 
-                } catch (Exception e) {
-                    e.printStackTrace();
+                        PreparedStatement ps2 = conn.prepareStatement(query2);
+                        ps2.setString(1, cccd_txtbox.getText());
+                        ps2.setString(2, hoTen_txtbox.getText());
+                        ps2.setDate(3, java.sql.Date.valueOf(ngayKham_datepicker.getValue()));
+                        ps2.setString(4, rowDataProperties.get().getIdDSKB());
+                        ps2.executeUpdate();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    Node source = (Node) event.getSource();
+                    Stage stage = (Stage) source.getScene().getWindow();
+                    stage.close();
                 }
-                Node source = (Node) event.getSource();
-                Stage stage = (Stage) source.getScene().getWindow();
-                stage.close();
+                else{
+                    alert.close();
+                }
             }
             else{
-                System.out.println("Validation failed");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Lỗi");
+                alert.setHeaderText(null);
+                alert.setContentText("Đã có lỗi xảy ra, vui lòng kiểm tra lại thông tin!");
+                ButtonType result = alert.showAndWait().orElse(ButtonType.CLOSE);
             }
         });
         updateData();
         setupPaginated();
         setupContextMenu();
         setupValidator();
-
-
 
         table_thuoc.autosizeColumnsOnInitialization();
         table_thuoc.getTableColumns().get(3).setPrefWidth(200);
@@ -274,7 +284,32 @@ public class EditPhieuKBController implements Initializable {
         delete.setOnAction(event -> {
             MFXTableRow<DSThuoc_PKB> row = (MFXTableRow<DSThuoc_PKB>) contextMenu.getOwnerNode();
             DSThuoc_PKB rowData = row.getData();
-            createInfoDialog((Stage) edit_pkb_root_node.getScene().getWindow(), "Bạn có chắc chắn muốn xóa thuốc này không?", "Xác nhận xóa", rowData);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            ButtonType buttonTypeYes = new ButtonType("Có");
+            ButtonType buttonTypeNo = new ButtonType("Không");
+            alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+            alert.setTitle("Xác nhận");
+            alert.setHeaderText(null);
+            alert.setContentText("Bạn có chắc chắn muốn xóa thuốc này không?");
+            Window window = alert.getDialogPane().getScene().getWindow();
+            window.setOnCloseRequest(e -> alert.close());
+            ButtonType result = alert.showAndWait().orElse(buttonTypeNo);
+
+            if(result == buttonTypeYes){
+                // Xoa du lieu trong bang DSThuoc_PKB
+                String query = "DELETE FROM DSTHuoc_PKB WHERE PKB_ID = ? AND Thuoc_ID = ?";
+                try{
+                    Connection conn = DBConnection.getConnection();
+                    PreparedStatement ps = conn.prepareStatement(query);
+                    ps.setString(1, rowData.getPhieuKhamBenh().getIdPKB());
+                    ps.setString(2, rowData.getThuoc().getThuoc_ID());
+                    ps.executeUpdate();
+
+                    reloadTableView();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         });
 
         // Them menu context o moi dong cho paginated tableview
@@ -311,13 +346,14 @@ public class EditPhieuKBController implements Initializable {
             stage.setX(event.getScreenX() - x);
             stage.setY(event.getScreenY() - y);
         });
-        Scene scene = new Scene(root, 320, 340);
+        Scene scene = new Scene(root, 332.0, 362.0);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.initModality(Modality.APPLICATION_MODAL);
 
         //reload lai table view sau khi update table
         stage.setOnHidden(e -> reloadTableView());
         stage.setScene(scene);
+        AppUtils.setIcon(stage);
         stage.show();
     }
 
@@ -374,7 +410,7 @@ public class EditPhieuKBController implements Initializable {
         else{
             System.out.println("Nguoi kham is empty");
         }
-        nguoiKham_combobox.setText(data.getNguoiKham().getHoTen());
+        nguoiKham_combobox.setText(data.getNguoiKham().getUsername());
     }
 
     public void LoadTableView(){
@@ -407,51 +443,6 @@ public class EditPhieuKBController implements Initializable {
         table_thuoc.setItems(list);
     }
 
-    public void createInfoDialog(Stage stage, String contentText, String headerText, DSThuoc_PKB rowData){
-        Platform.runLater(() -> {
-            this.dialogContent = MFXGenericDialogBuilder.build()
-                    .setContentText(contentText)
-                    .addStyleClasses("mfx-info-dialog")
-                    .makeScrollable(true)
-                    .get();
-            this.dialog = MFXGenericDialogBuilder.build(dialogContent)
-                    .toStageDialogBuilder()
-                    .initOwner(stage)
-                    .initModality(Modality.APPLICATION_MODAL)
-                    .setDraggable(true)
-                    .setTitle("Info Dialog")
-                    .setOwnerNode(edit_pkb_root_node) // replace 'grid' with the parent node of your dialog
-                    .setScrimPriority(ScrimPriority.WINDOW)
-                    .setScrimOwner(true)
-                    .get();
-
-            dialogContent.addActions(
-                    Map.entry(new MFXButton("Xác nhận"), event -> {
-                        String query = "DELETE FROM DSTHuoc_PKB WHERE PKB_ID = ? AND Thuoc_ID = ?";
-                        try{
-                            Connection conn = DBConnection.getConnection();
-                            PreparedStatement ps = conn.prepareStatement(query);
-                            ps.setString(1, rowData.getPhieuKhamBenh().getIdPKB());
-                            ps.setString(2, rowData.getThuoc().getThuoc_ID());
-                            ps.executeUpdate();
-
-                            reloadTableView();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-                        dialog.close();
-                    }),
-                    Map.entry(new MFXButton("Hủy"), event -> dialog.close())
-            );
-
-            dialogContent.setMaxSize(400, 200);
-            dialogContent.setHeaderIcon(info_icon);
-            dialogContent.setHeaderText(headerText);
-            dialog.showDialog();
-        });
-    }
-
     //Ham dung de setup validator cho cac node
     private void setupValidator(){
         //Validator cho căn cước công dân
@@ -472,7 +463,7 @@ public class EditPhieuKBController implements Initializable {
                                 c.error("Căn cước công dân không hợp lệ!");
                             }
                             else{
-                                cccd_txtbox.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+                                cccd_txtbox.setStyle("");
                             }
 
                         }
@@ -490,7 +481,7 @@ public class EditPhieuKBController implements Initializable {
                         c.error("Họ tên không được để trống!");
                     }
                     else{
-                        hoTen_txtbox.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+                        hoTen_txtbox.setStyle("");
                     }
                 })
                 .dependsOn("hoTen", hoTen_txtbox.textProperty())
@@ -505,7 +496,7 @@ public class EditPhieuKBController implements Initializable {
                         c.error("Triệu chứng không được để trống!");
                     }
                     else{
-                        trieuChung_txtbox.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+                        trieuChung_txtbox.setStyle("");
                     }
                 })
                 .dependsOn("trieuChung", trieuChung_txtbox.textProperty())
@@ -522,7 +513,7 @@ public class EditPhieuKBController implements Initializable {
                         c.error("Ngày khám không được lớn hơn ngày hiện tại!");
                     }
                     else{
-                        ngayKham_datepicker.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+                        ngayKham_datepicker.setStyle("");
                         ngayKham_datepicker.lookup(".mfx-icon-wrapper .mfx-font-icon").setStyle("-mfx-color: #2264D1;");
                         ngayKham_datepicker.lookup(".mfx-icon-wrapper .mfx-ripple-generator").setStyle("-mfx-ripple-color: #D4F2FF;");
                     }

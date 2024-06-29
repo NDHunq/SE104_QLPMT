@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<?import net.synedra.validatorfx.TooltipWrapper?>
 <AnchorPane prefHeight="645.0" prefWidth="975.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.HelloController">
    <children>
       <AnchorPane prefHeight="40.0" prefWidth="975.0" style="-fx-background-color: #D4F2FF;">
@@ -48,6 +50,8 @@
                            </BorderPane.margin>
                         </Text>
                      </left>
+
+
                   </BorderPane>
                   <BorderPane fx:id="txt2" maxHeight="50.0" minHeight="50.0" prefHeight="50.0" prefWidth="194.0">
                      <opaqueInsets>
@@ -181,10 +185,12 @@
             <VBox maxHeight="40.0" maxWidth="40.0" prefHeight="200.0" prefWidth="45.0" AnchorPane.topAnchor="5.0">
                <children>
                   <BorderPane fx:id="bd1" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" prefHeight="50.0" prefWidth="61.0" styleClass="square-border-pane">
+
                      <VBox.margin>
                         <Insets bottom="5.0" left="5.0" />
                      </VBox.margin>
                      <center>
+                        <?import javafx.scene.control.Tooltip?>
                         <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                            <BorderPane.margin>
                               <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
@@ -192,6 +198,7 @@
                            <image>
                               <Image url="@images/kham_benh.png" />
                            </image>
+
                         </ImageView>
                      </center>
                   </BorderPane>

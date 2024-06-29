@@ -7,10 +7,10 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="745.0" maxWidth="400.0" minHeight="670.0" minWidth="400.0" prefHeight="745.0" prefWidth="400.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.SigninController">
-    <AnchorPane maxHeight="745.0" maxWidth="400.0" minHeight="670.0" minWidth="400.0" prefHeight="745.0" prefWidth="400.0" styleClass="rounded-anchor-pane">
+<VBox maxHeight="745.0" maxWidth="400.0" minHeight="670.0" minWidth="400.0" prefHeight="745.0" prefWidth="400.0" styleClass="vien" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.SigninController">
+    <AnchorPane maxHeight="745.0" maxWidth="400.0" minHeight="670.0" minWidth="400.0" prefHeight="745.0" prefWidth="400.0" style="-fx-background-color: transperant;">
         <children>
-            <Text fill="#2264d1" layoutX="27.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Đăng ký" wrappingWidth="192.1367473602295">
+            <Text fill="#2264d1" layoutX="27.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ĐĂNG KÝ" wrappingWidth="192.1367473602295">
                 <font>
                     <Font name="Times New Roman Bold" size="30.0" />
                 </font>
@@ -118,4 +118,4 @@
         </children>
     </AnchorPane>
 
-</AnchorPane>
+</VBox>

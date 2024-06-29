@@ -7,7 +7,7 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane fx:id="nhanvien_root" prefHeight="600.0" prefWidth="930.0" style="-fx-background-color: #E6F8FF" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.NhanVienController">
-    <Text fill="#2264D1" layoutX="23.0" layoutY="41.0" text="Danh sách nhân viên" wrappingWidth="278.9054412841797">
+    <Text fill="#2264D1" layoutX="23.0" layoutY="41.0" text="NHÂN VIÊN" wrappingWidth="278.9054412841797">
         <font>
             <Font name="Times New Roman Bold" size="30.0" />
         </font>

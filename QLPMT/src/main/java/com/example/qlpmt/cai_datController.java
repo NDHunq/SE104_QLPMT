@@ -37,7 +37,7 @@ import static com.example.qlpmt.loginController.username;
 
 public class cai_datController implements Initializable {
     @FXML
-private Text chucvu;
+    private Text chucvu;
     @FXML
     public Text hoten;
     @FXML
@@ -48,7 +48,7 @@ private Text chucvu;
     public Text tentaikhoan;
     @FXML
     public Text email;
-//    @FXML
+    //    @FXML
 //    public ImageView suachucvu;
     @FXML
     private ImageView suahoten;
@@ -101,7 +101,7 @@ private Text chucvu;
                 .withMethod(c -> {
                     if (controller.them.getText().equals("")
                     ) {
-                       controller.them.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                        controller.them.setStyle("-fx-border-color: red; -fx-text-fill: red");
                         c.error(" Không được để trống thông tin!");
                     }
                     else {
@@ -185,469 +185,469 @@ private Text chucvu;
 
     }
 
-   public void initialize(URL location, ResourceBundle resources){
+    public void initialize(URL location, ResourceBundle resources){
         System.out.println(username);
         System.out.println(role);
-       dbConnection = DBConnection.getConnection();
-       String sql0 = "Select * from taikhoan where username = '"+username+"'";
-       String sql = "SELECT * FROM ThongTinPK WHERE IdTT='TT01'";
-       String sql1 = "SELECT * FROM ThongTinPK WHERE IdTT='TT02'";
-       Statement statement = null;
-       try {
-           statement = dbConnection.createStatement();
-           ResultSet resultSet0 = statement.executeQuery(sql0);
-           if (resultSet0.next()) {
-               hoten.setText(resultSet0.getString("HoTen"));
-               chucvu.setText(resultSet0.getString("ChucVu"));
+        dbConnection = DBConnection.getConnection();
+        String sql0 = "Select * from taikhoan where username = '"+username+"'";
+        String sql = "SELECT * FROM ThongTinPK WHERE IdTT='TT01'";
+        String sql1 = "SELECT * FROM ThongTinPK WHERE IdTT='TT02'";
+        Statement statement = null;
+        try {
+            statement = dbConnection.createStatement();
+            ResultSet resultSet0 = statement.executeQuery(sql0);
+            if (resultSet0.next()) {
+                hoten.setText(resultSet0.getString("HoTen"));
+                chucvu.setText(resultSet0.getString("ChucVu"));
                 tentaikhoan.setText(resultSet0.getString("username"));
                 email.setText(resultSet0.getString("Email"));
 
-           } else {
-               System.out.println("Không tìm thấy hàng nào với IdTT='TT01'");
-           }
-       } catch (SQLException throwables) {
-           throwables.printStackTrace();
-       }
-       try {
-           Statement statement1 = dbConnection.createStatement();
-           ResultSet resultSet = statement1.executeQuery(sql);
+            } else {
+                System.out.println("Không tìm thấy hàng nào với IdTT='TT01'");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        try {
+            Statement statement1 = dbConnection.createStatement();
+            ResultSet resultSet = statement1.executeQuery(sql);
 
-           Statement statement2 = dbConnection.createStatement();
-           ResultSet resultSet1 = statement2.executeQuery(sql1);
+            Statement statement2 = dbConnection.createStatement();
+            ResultSet resultSet1 = statement2.executeQuery(sql1);
 
 
 
-           if (resultSet.next() && resultSet1.next()) {
-               tienkham.setText(resultSet.getString("Gtri"));
-               bntoida.setText(resultSet1.getString("Gtri"));
-           } else {
-               System.out.println("Không tìm thấy hàng nào với IdTT='TT01'");
-           }
-       } catch (java.sql.SQLException e) {
-           e.printStackTrace();
-       }
+            if (resultSet.next() && resultSet1.next()) {
+                tienkham.setText(resultSet.getString("Gtri"));
+                bntoida.setText(resultSet1.getString("Gtri"));
+            } else {
+                System.out.println("Không tìm thấy hàng nào với IdTT='TT01'");
+            }
+        } catch (java.sql.SQLException e) {
+            e.printStackTrace();
+        }
 
-       try {
-           setData();
-           setupPaginated();
-           //Cach dung
-           double tableViewWidth = tb_cd.getPrefWidth();
-           int numberOfColumns = tb_cd.getTableColumns().size();
-           for (MFXTableColumn column : tb_cd.getTableColumns()) {
-               column.setPrefWidth(tableViewWidth / numberOfColumns);
-           }
-           tb_cd.autosizeColumnsOnInitialization();
-           When.onChanged(tb_cd.currentPageProperty())
-                   .then((oldValue, newValue) -> {
+        try {
+            setData();
+            setupPaginated();
+            //Cach dung
+            double tableViewWidth = tb_cd.getPrefWidth();
+            int numberOfColumns = tb_cd.getTableColumns().size();
+            for (MFXTableColumn column : tb_cd.getTableColumns()) {
+                column.setPrefWidth(tableViewWidth / numberOfColumns);
+            }
+            tb_cd.autosizeColumnsOnInitialization();
+            When.onChanged(tb_cd.currentPageProperty())
+                    .then((oldValue, newValue) -> {
 
-                       tb_cd.autosizeColumns();
-                   })
-                   .listen();
-           //Don vi thuoc
-           double tableViewWidth1 = tb_dvt.getPrefWidth();
-           int numberOfColumns1 = tb_dvt.getTableColumns().size();
-           for (MFXTableColumn column : tb_dvt.getTableColumns()) {
-               column.setPrefWidth(tableViewWidth1 / numberOfColumns1);
-           }
-           tb_dvt.autosizeColumnsOnInitialization();
-           When.onChanged(tb_dvt.currentPageProperty())
-                   .then((oldValue, newValue) -> {
+                        tb_cd.autosizeColumns();
+                    })
+                    .listen();
+            //Don vi thuoc
+            double tableViewWidth1 = tb_dvt.getPrefWidth();
+            int numberOfColumns1 = tb_dvt.getTableColumns().size();
+            for (MFXTableColumn column : tb_dvt.getTableColumns()) {
+                column.setPrefWidth(tableViewWidth1 / numberOfColumns1);
+            }
+            tb_dvt.autosizeColumnsOnInitialization();
+            When.onChanged(tb_dvt.currentPageProperty())
+                    .then((oldValue, newValue) -> {
 
-                       tb_dvt.autosizeColumns();
-                   })
-                   .listen();
-           //Loai benh
-           double tableViewWidth2 = tb_benh.getPrefWidth();
-           int numberOfColumns2 = tb_benh.getTableColumns().size();
-           for (MFXTableColumn column : tb_benh.getTableColumns()) {
-               column.setPrefWidth(tableViewWidth2 / numberOfColumns2);
-           }
-           tb_benh.autosizeColumnsOnInitialization();
-           When.onChanged(tb_benh.currentPageProperty())
-                   .then((oldValue, newValue) -> {
+                        tb_dvt.autosizeColumns();
+                    })
+                    .listen();
+            //Loai benh
+            double tableViewWidth2 = tb_benh.getPrefWidth();
+            int numberOfColumns2 = tb_benh.getTableColumns().size();
+            for (MFXTableColumn column : tb_benh.getTableColumns()) {
+                column.setPrefWidth(tableViewWidth2 / numberOfColumns2);
+            }
+            tb_benh.autosizeColumnsOnInitialization();
+            When.onChanged(tb_benh.currentPageProperty())
+                    .then((oldValue, newValue) -> {
 
-                       tb_benh.autosizeColumns();
-                   })
-                   .listen();
-       } catch (Exception e) {
-           System.out.println("An error occurred during initialization");
-           e.printStackTrace();
-       }
+                        tb_benh.autosizeColumns();
+                    })
+                    .listen();
+        } catch (Exception e) {
+            System.out.println("An error occurred during initialization");
+            e.printStackTrace();
+        }
 
-       suahoten.setOnMouseClicked(event -> {
-           try {
-               FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/suathongtin.fxml"));
-               suathongtinController controller = new suathongtinController(this);
-               loader.setController(controller);
-               Scene scene = new Scene(loader.load());
-               Stage stage = new Stage();
-               stage.setScene(scene);
-               stage.show();
-                controller.suathongtin.setText(hoten.getText());
-               Share.getInstance().setSharedVariable("2");
-               System.out.println(Share.getInstance().getSharedVariable());
-           } catch (IOException e) {
-               e.printStackTrace();
-           }
-       });
-       suatienkham.setOnMouseClicked(event -> {
-           if(role.equals("Quản lý"))
-           {
-               try {
-
-                   FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/suathongtin.fxml"));
-                   suathongtinController controller = new suathongtinController(this);
-                   loader.setController(controller);
-                   Scene scene = new Scene(loader.load());
-                   Stage stage = new Stage();
-                   stage.setScene(scene);
-                   stage.show();
-                   controller.suathongtin.setText(tienkham.getText());
-                   controller.suathongtin.textProperty().addListener((observable, oldValue, newValue) -> {
-                       if (!newValue.matches("\\d*")|| newValue.equals("0")) {
-                          controller.suathongtin.setText(oldValue);
-                       }
-                   });
-                   Share.getInstance().setSharedVariable("3");
-                   System.out.println(Share.getInstance().getSharedVariable());
-               } catch (IOException e) {
-                   e.printStackTrace();
-               }
-           }
-           else
-           {
-               Alert alert = new Alert(Alert.AlertType.WARNING);
-               alert.setTitle("Cảnh báo");
-               alert.setHeaderText(null);
-               alert.setContentText("Ban không có quyền chỉnh sửa thông tin này");
-               alert.showAndWait();
-           }
-       });
-       suabntoida.setOnMouseClicked(event -> {
-           if(role.equals("Quản lý"))
-           {
-           try {
-               FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/suathongtin.fxml"));
-               suathongtinController controller = new suathongtinController(this);
-               loader.setController(controller);
-               Scene scene = new Scene(loader.load());
-               Stage stage = new Stage();
-               stage.setScene(scene);
-               stage.show();
-               controller.suathongtin.textProperty().addListener((observable, oldValue, newValue) -> {
-                   if (!newValue.matches("\\d*")|| newValue.equals("0")) {
-                       controller.suathongtin.setText(oldValue);
-                   }
-               });
-               controller.suathongtin.setText(bntoida.getText());
-               Share.getInstance().setSharedVariable("4");
-               System.out.println(Share.getInstance().getSharedVariable());
-           } catch (IOException e) {
-               e.printStackTrace();
-           }
-           }
-           else
-           {
-               Alert alert = new Alert(Alert.AlertType.WARNING);
-               alert.setTitle("Cảnh báo");
-               alert.setHeaderText(null);
-               alert.setContentText("Ban không có quyền chỉnh sửa thông tin này");
-               alert.showAndWait();
-           }
-       });
-       doimk.setOnMouseClicked(event -> {
-           try {
-               FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/doimatkhau.fxml"));
-                doimatkhauController controller = new doimatkhauController();
-                loader.setController(controller);
-               Scene scene = new Scene(loader.load());
-               Stage stage = new Stage();
-               stage.setScene(scene);
-               stage.show();
-           } catch (IOException e) {
-               e.printStackTrace();
-           }
-         });
-       tg_cd.setOnMouseClicked(event4 -> {
-              if(tb_cd.isVisible())
-              {
-                show3.setText("Hiện");
-              }
-              else
-              {
-                show3.setText("Thu gọn");
-              }
-           tb_cd.setVisible(!tb_cd.isVisible());
-           tb_cd.setManaged(tb_cd.isVisible());
-
-               });
-         tg_dvt.setOnMouseClicked(event4 -> {
-                if(tb_dvt.isVisible())
-                {
-                    show2.setText("Hiện");
-                }
-                else
-                {
-                    show2.setText("Thu gọn");
-                }
-             tb_dvt.setVisible(!tb_dvt.isVisible());
-             tb_dvt.setManaged(tb_dvt.isVisible());
-         });
-            tg_benh.setOnMouseClicked(event4 -> {
-                if(tb_benh.isVisible())
-                {
-                    show1.setText("Hiện");
-                }
-                else
-                {
-                    show1.setText("Thu gọn");
-                }
-                tb_benh.setVisible(!tb_benh.isVisible());
-                tb_benh.setManaged(tb_benh.isVisible());
-
-            });
-         themcd.setOnMouseClicked(event -> {
-                if(role.equals("Quản lý"))
-                {
-              try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/themcachdung.fxml"));
+        suahoten.setOnMouseClicked(event -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/suathongtin.fxml"));
+                suathongtinController controller = new suathongtinController(this);
                 loader.setController(controller);
                 Scene scene = new Scene(loader.load());
                 Stage stage = new Stage();
                 stage.setScene(scene);
                 stage.show();
-                  controller.xong.setOnMouseClicked(event1 -> {
-                      Validation();
-                      System.out.println("click vao button xong");
-                      try {
-
-                          for(int i=0;i<cachdung_list.size();i++)
-                          {
-                              if(controller.them.getText().equals(cachdung_list.get(i).getTenCachDung()))
-                              {
-//                                  check=0;
-                                  break;
-                              }
-                          }
-                          String soluongAsString = "CD";
-                          if(validation) {
-                              try {
-                                  String str = "";
-                                  int soluong = 0;
-                                  str = "Select count(*) as total from CachDung";
-                                  PreparedStatement pst = dbConnection.prepareStatement(str);
-                                  ResultSet rs = pst.executeQuery();
-                                  while (rs.next()) {
-                                      soluong = rs.getInt("total");
-
-                                  }
-                                  System.out.println(soluong);
-                                  if (soluong < 9) {
-                                      soluongAsString += "0";
-                                      soluongAsString += Integer.toString(soluong + 1);
-                                  } else
-                                      soluongAsString += Integer.toString(soluong + 1);
-
-
-                              } catch (SQLException e) {
-                                  e.printStackTrace();
-                              }
-                              try {
-                                  PreparedStatement pstmt = dbConnection.prepareStatement("INSERT INTO CachDung VALUES (?,?)");
-                                  pstmt.setString(1, soluongAsString);
-                                  pstmt.setString(2, controller.them.getText());
-                                  pstmt.executeUpdate();
-                              } catch (SQLException e) {
-                                  e.printStackTrace();
-                              }
-                              setData();
-                              tb_cd.setItems(cachdung_list);
-                                stage.close();
-                          }
-
-                      } catch (Exception e) {
-                          e.printStackTrace();
-                      }
-                  });
-
-
-                  controller.huy.setOnMouseClicked(event1 -> {
-
-                      stage.close();
-                  });
-              } catch (IOException e) {
+                controller.suathongtin.setText(hoten.getText());
+                Share.getInstance().setSharedVariable("2");
+                System.out.println(Share.getInstance().getSharedVariable());
+            } catch (IOException e) {
                 e.printStackTrace();
-              }
-         }
-           else
-       {
-           Alert alert = new Alert(Alert.AlertType.WARNING);
-           alert.setTitle("Cảnh báo");
-           alert.setHeaderText(null);
-           alert.setContentText("Ban không có quyền chỉnh sửa thông tin này");
-           alert.showAndWait();
-       }
-         });
-       themdvt.setOnMouseClicked(event -> {
-           if(role.equals("Quản lý")) {
-               try {
-                   FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/themcachdung.fxml"));
-                   loader.setController(controller);
-                   Scene scene = new Scene(loader.load());
-                   Stage stage = new Stage();
-                   stage.setScene(scene);
-                   stage.show();
-                   controller.xong.setOnMouseClicked(event1 -> {
-                          Validation();
-                       System.out.println("click vao button xong");
-                       try {
+            }
+        });
+        suatienkham.setOnMouseClicked(event -> {
+            if(role.equals("Quản lý"))
+            {
+                try {
 
-                           for (int i = 0; i < dvt_list.size(); i++) {
-                               if (controller.them.getText().equals(dvt_list.get(i).getTenDonVi())) {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/suathongtin.fxml"));
+                    suathongtinController controller = new suathongtinController(this);
+                    loader.setController(controller);
+                    Scene scene = new Scene(loader.load());
+                    Stage stage = new Stage();
+                    stage.setScene(scene);
+                    stage.show();
+                    controller.suathongtin.setText(tienkham.getText());
+                    controller.suathongtin.textProperty().addListener((observable, oldValue, newValue) -> {
+                        if (!newValue.matches("\\d*")|| newValue.equals("0")) {
+                            controller.suathongtin.setText(oldValue);
+                        }
+                    });
+                    Share.getInstance().setSharedVariable("3");
+                    System.out.println(Share.getInstance().getSharedVariable());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            else
+            {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Cảnh báo");
+                alert.setHeaderText(null);
+                alert.setContentText("Ban không có quyền chỉnh sửa thông tin này");
+                alert.showAndWait();
+            }
+        });
+        suabntoida.setOnMouseClicked(event -> {
+            if(role.equals("Quản lý"))
+            {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/suathongtin.fxml"));
+                    suathongtinController controller = new suathongtinController(this);
+                    loader.setController(controller);
+                    Scene scene = new Scene(loader.load());
+                    Stage stage = new Stage();
+                    stage.setScene(scene);
+                    stage.show();
+                    controller.suathongtin.textProperty().addListener((observable, oldValue, newValue) -> {
+                        if (!newValue.matches("\\d*")|| newValue.equals("0")) {
+                            controller.suathongtin.setText(oldValue);
+                        }
+                    });
+                    controller.suathongtin.setText(bntoida.getText());
+                    Share.getInstance().setSharedVariable("4");
+                    System.out.println(Share.getInstance().getSharedVariable());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            else
+            {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Cảnh báo");
+                alert.setHeaderText(null);
+                alert.setContentText("Ban không có quyền chỉnh sửa thông tin này");
+                alert.showAndWait();
+            }
+        });
+        doimk.setOnMouseClicked(event -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/doimatkhau.fxml"));
+                doimatkhauController controller = new doimatkhauController();
+                loader.setController(controller);
+                Scene scene = new Scene(loader.load());
+                Stage stage = new Stage();
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        tg_cd.setOnMouseClicked(event4 -> {
+            if(tb_cd.isVisible())
+            {
+                show3.setText("Hiện");
+            }
+            else
+            {
+                show3.setText("Thu gọn");
+            }
+            tb_cd.setVisible(!tb_cd.isVisible());
+            tb_cd.setManaged(tb_cd.isVisible());
+
+        });
+        tg_dvt.setOnMouseClicked(event4 -> {
+            if(tb_dvt.isVisible())
+            {
+                show2.setText("Hiện");
+            }
+            else
+            {
+                show2.setText("Thu gọn");
+            }
+            tb_dvt.setVisible(!tb_dvt.isVisible());
+            tb_dvt.setManaged(tb_dvt.isVisible());
+        });
+        tg_benh.setOnMouseClicked(event4 -> {
+            if(tb_benh.isVisible())
+            {
+                show1.setText("Hiện");
+            }
+            else
+            {
+                show1.setText("Thu gọn");
+            }
+            tb_benh.setVisible(!tb_benh.isVisible());
+            tb_benh.setManaged(tb_benh.isVisible());
+
+        });
+        themcd.setOnMouseClicked(event -> {
+            if(role.equals("Quản lý"))
+            {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/themcachdung.fxml"));
+                    loader.setController(controller);
+                    Scene scene = new Scene(loader.load());
+                    Stage stage = new Stage();
+                    stage.setScene(scene);
+                    stage.show();
+                    controller.xong.setOnMouseClicked(event1 -> {
+                        Validation();
+                        System.out.println("click vao button xong");
+                        try {
+
+                            for(int i=0;i<cachdung_list.size();i++)
+                            {
+                                if(controller.them.getText().equals(cachdung_list.get(i).getTenCachDung()))
+                                {
+//                                  check=0;
+                                    break;
+                                }
+                            }
+                            String soluongAsString = "CD";
+                            if(validation) {
+                                try {
+                                    String str = "";
+                                    int soluong = 0;
+                                    str = "Select count(*) as total from CachDung";
+                                    PreparedStatement pst = dbConnection.prepareStatement(str);
+                                    ResultSet rs = pst.executeQuery();
+                                    while (rs.next()) {
+                                        soluong = rs.getInt("total");
+
+                                    }
+                                    System.out.println(soluong);
+                                    if (soluong < 9) {
+                                        soluongAsString += "0";
+                                        soluongAsString += Integer.toString(soluong + 1);
+                                    } else
+                                        soluongAsString += Integer.toString(soluong + 1);
+
+
+                                } catch (SQLException e) {
+                                    e.printStackTrace();
+                                }
+                                try {
+                                    PreparedStatement pstmt = dbConnection.prepareStatement("INSERT INTO CachDung VALUES (?,?)");
+                                    pstmt.setString(1, soluongAsString);
+                                    pstmt.setString(2, controller.them.getText());
+                                    pstmt.executeUpdate();
+                                } catch (SQLException e) {
+                                    e.printStackTrace();
+                                }
+                                setData();
+                                tb_cd.setItems(cachdung_list);
+                                stage.close();
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    });
+
+
+                    controller.huy.setOnMouseClicked(event1 -> {
+
+                        stage.close();
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            else
+            {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Cảnh báo");
+                alert.setHeaderText(null);
+                alert.setContentText("Ban không có quyền chỉnh sửa thông tin này");
+                alert.showAndWait();
+            }
+        });
+        themdvt.setOnMouseClicked(event -> {
+            if(role.equals("Quản lý")) {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/themcachdung.fxml"));
+                    loader.setController(controller);
+                    Scene scene = new Scene(loader.load());
+                    Stage stage = new Stage();
+                    stage.setScene(scene);
+                    stage.show();
+                    controller.xong.setOnMouseClicked(event1 -> {
+                        Validation();
+                        System.out.println("click vao button xong");
+                        try {
+
+                            for (int i = 0; i < dvt_list.size(); i++) {
+                                if (controller.them.getText().equals(dvt_list.get(i).getTenDonVi())) {
 //                                   check = 0;
-                                   break;
-                               }
-                           }
-                           String soluongAsString = "DV";
-                           if(validation) {
-                               try {
-                                   int soluong = 0;
+                                    break;
+                                }
+                            }
+                            String soluongAsString = "DV";
+                            if(validation) {
+                                try {
+                                    int soluong = 0;
 
-                                   String str="Select count(*) as total from DonViThuoc";
-                                   PreparedStatement pst = dbConnection.prepareStatement(str);
-                                   ResultSet rs = pst.executeQuery();
-                                   while (rs.next()){
-                                       soluong = rs.getInt("total");
+                                    String str="Select count(*) as total from DonViThuoc";
+                                    PreparedStatement pst = dbConnection.prepareStatement(str);
+                                    ResultSet rs = pst.executeQuery();
+                                    while (rs.next()){
+                                        soluong = rs.getInt("total");
 
-                                   }
-                                      System.out.println("so luong don vi la:"+soluong);
-                                   if (soluong < 9) {
-                                       soluongAsString += "0";
-                                       soluongAsString += Integer.toString(soluong + 1);
-                                   } else
-                                       soluongAsString += Integer.toString(soluong + 1);
+                                    }
+                                    System.out.println("so luong don vi la:"+soluong);
+                                    if (soluong < 9) {
+                                        soluongAsString += "0";
+                                        soluongAsString += Integer.toString(soluong + 1);
+                                    } else
+                                        soluongAsString += Integer.toString(soluong + 1);
 
 
 
-                               }
-                               catch (SQLException e)
-                               {
-                                   e.printStackTrace();
-                               }
-                               try {
-                                   PreparedStatement pstmt = dbConnection.prepareStatement("INSERT INTO DonViThuoc VALUES (?,?)");
-                                   pstmt.setString(1, soluongAsString);
-                                   pstmt.setString(2, controller.them.getText());
-                                   pstmt.executeUpdate();
-                               } catch (SQLException e) {
-                                   e.printStackTrace();
-                               }
-                               setData();
-                               tb_dvt.setItems(dvt_list);
-                               stage.close();
-                           }
+                                }
+                                catch (SQLException e)
+                                {
+                                    e.printStackTrace();
+                                }
+                                try {
+                                    PreparedStatement pstmt = dbConnection.prepareStatement("INSERT INTO DonViThuoc VALUES (?,?)");
+                                    pstmt.setString(1, soluongAsString);
+                                    pstmt.setString(2, controller.them.getText());
+                                    pstmt.executeUpdate();
+                                } catch (SQLException e) {
+                                    e.printStackTrace();
+                                }
+                                setData();
+                                tb_dvt.setItems(dvt_list);
+                                stage.close();
+                            }
 
-                       } catch (Exception e) {
-                           e.printStackTrace();
-                       }
-                   });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    });
 
-                   controller.huy.setOnMouseClicked(event1 -> {
+                    controller.huy.setOnMouseClicked(event1 -> {
 
-                       stage.close();
-                   });
-               } catch (IOException e) {
-                   e.printStackTrace();
-               }
-           }
+                        stage.close();
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
             else
-               {
-                   Alert alert = new Alert(Alert.AlertType.WARNING);
-                   alert.setTitle("Cảnh báo");
-                   alert.setHeaderText(null);
-                   alert.setContentText("Ban không có quyền chỉnh sửa thông tin này");
-                   alert.showAndWait();
-               }
-       });
-       thembenh.setOnMouseClicked(event -> {
-           if(role.equals("Quản lý")) {
+            {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Cảnh báo");
+                alert.setHeaderText(null);
+                alert.setContentText("Ban không có quyền chỉnh sửa thông tin này");
+                alert.showAndWait();
+            }
+        });
+        thembenh.setOnMouseClicked(event -> {
+            if(role.equals("Quản lý")) {
 
-           try {
-               FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/themcachdung.fxml"));
-               loader.setController(controller);
-               Scene scene = new Scene(loader.load());
-               Stage stage = new Stage();
-               stage.setScene(scene);
-               stage.show();
-               controller.xong.setOnMouseClicked(event1 -> {
-                     Validation();
-                   System.out.println("click vao button xong");
-                   try {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/themcachdung.fxml"));
+                    loader.setController(controller);
+                    Scene scene = new Scene(loader.load());
+                    Stage stage = new Stage();
+                    stage.setScene(scene);
+                    stage.show();
+                    controller.xong.setOnMouseClicked(event1 -> {
+                        Validation();
+                        System.out.println("click vao button xong");
+                        try {
 
-                       for (int i = 0; i < loaibenh_list.size(); i++) {
-                           if (controller.them.getText().equals(loaibenh_list.get(i).getTenLoaiBenh())) {
+                            for (int i = 0; i < loaibenh_list.size(); i++) {
+                                if (controller.them.getText().equals(loaibenh_list.get(i).getTenLoaiBenh())) {
 //                               check = 0;
-                               break;
-                           }
-                       }
-                       String soluongAsString = "LB";
-                       if(validation) {
-                           try {
+                                    break;
+                                }
+                            }
+                            String soluongAsString = "LB";
+                            if(validation) {
+                                try {
 
-                               int soluong = 0;
-                               String str="Select count(*) as total from LoaiBenh";
-                               PreparedStatement pst = dbConnection.prepareStatement(str);
-                               ResultSet rs = pst.executeQuery();
-                               while (rs.next()){
-                                   soluong = rs.getInt("total");
+                                    int soluong = 0;
+                                    String str="Select count(*) as total from LoaiBenh";
+                                    PreparedStatement pst = dbConnection.prepareStatement(str);
+                                    ResultSet rs = pst.executeQuery();
+                                    while (rs.next()){
+                                        soluong = rs.getInt("total");
 
-                               }
-                               System.out.println("so luong benh la:"+soluong);
-                               if (soluong < 9) {
-                                   soluongAsString += "0";
-                                   soluongAsString += Integer.toString(soluong + 1);
-                               } else
-                                   soluongAsString += Integer.toString(soluong + 1);
+                                    }
+                                    System.out.println("so luong benh la:"+soluong);
+                                    if (soluong < 9) {
+                                        soluongAsString += "0";
+                                        soluongAsString += Integer.toString(soluong + 1);
+                                    } else
+                                        soluongAsString += Integer.toString(soluong + 1);
 
 
-                           } catch (SQLException e) {
-                               e.printStackTrace();
-                           }
-                           try {
-                               PreparedStatement pstmt = dbConnection.prepareStatement("INSERT INTO LoaiBenh VALUES (?,?)");
-                               pstmt.setString(1, soluongAsString);
-                               pstmt.setString(2, controller.them.getText());
-                                 pstmt.executeUpdate();
-                           } catch (SQLException e) {
-                               e.printStackTrace();
-                           }
-                           setData();
-                          tb_benh.setItems(loaibenh_list);
-                           stage.close();
-                       }
+                                } catch (SQLException e) {
+                                    e.printStackTrace();
+                                }
+                                try {
+                                    PreparedStatement pstmt = dbConnection.prepareStatement("INSERT INTO LoaiBenh VALUES (?,?)");
+                                    pstmt.setString(1, soluongAsString);
+                                    pstmt.setString(2, controller.them.getText());
+                                    pstmt.executeUpdate();
+                                } catch (SQLException e) {
+                                    e.printStackTrace();
+                                }
+                                setData();
+                                tb_benh.setItems(loaibenh_list);
+                                stage.close();
+                            }
 
-                   } catch (Exception e) {
-                       e.printStackTrace();
-                   }
-               });
-               controller.huy.setOnMouseClicked(event1 -> {
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    });
+                    controller.huy.setOnMouseClicked(event1 -> {
 
-                   stage.close();
-               });
-           } catch (IOException e) {
-               e.printStackTrace();
-           }
-               }
+                        stage.close();
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
             else
-               {
-                   Alert alert = new Alert(Alert.AlertType.WARNING);
-                   alert.setTitle("Cảnh báo");
-                   alert.setHeaderText(null);
-                   alert.setContentText("Ban không có quyền chỉnh sửa thông tin này");
-                   alert.showAndWait();
-               }
-       });
-   }
+            {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Cảnh báo");
+                alert.setHeaderText(null);
+                alert.setContentText("Ban không có quyền chỉnh sửa thông tin này");
+                alert.showAndWait();
+            }
+        });
+    }
 
     public void setData()
     {

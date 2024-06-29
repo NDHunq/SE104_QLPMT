@@ -1,5 +1,6 @@
 package com.example.qlpmt.KhamBenh;
 
+import com.example.qlpmt.AppUtils;
 import com.example.qlpmt.DBConnection;
 import com.example.qlpmt.HelloApplication;
 import io.github.palexdev.materialfx.controls.*;
@@ -99,6 +100,7 @@ public class ViewPhieuKBController implements Initializable {
         Scene scene = new Scene(root, 680, 500);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.setScene(scene);
+        AppUtils.setIcon(stage);
         stage.show();
     }
     private void setupPaginated() {

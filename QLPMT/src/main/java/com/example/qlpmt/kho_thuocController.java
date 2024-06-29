@@ -360,6 +360,7 @@ public class kho_thuocController implements Initializable {
                 Scene scene = new Scene(loader.load());
                 Stage stage = new Stage();
                 stage.setScene(scene);
+                AppUtils.setIcon(stage);
                 stage.show();
                 System.out.println("-1");
 
@@ -514,6 +515,7 @@ public class kho_thuocController implements Initializable {
                         Scene scene = new Scene(loader.load());
                         Stage stage = new Stage();
                         stage.setScene(scene);
+                        AppUtils.setIcon(stage);
                         stage.show();
                        try
                        {
