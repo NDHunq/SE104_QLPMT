@@ -2,10 +2,9 @@
 
 <?import io.github.palexdev.materialfx.controls.MFXComboBox?>
 <?import io.github.palexdev.materialfx.controls.MFXPaginatedTableView?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -14,12 +13,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="607.0" prefWidth="920.0" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.thuocController">
+<AnchorPane prefHeight="607.0" prefWidth="920.0" style="-fx-background-color: #E6F8FF" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.thuocController">
    <VBox layoutX="13.0" layoutY="20.0" prefHeight="400.0" prefWidth="600.0" styleClass="mainBackground" stylesheets="@../../../style.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="12.600000000000023" AnchorPane.topAnchor="10.0">
       <children>
          <BorderPane prefHeight="46.0" prefWidth="828.0">
             <left>
-               <Label prefHeight="34.0" prefWidth="300.0" styleClass="header" stylesheets="@../../../style.css" text="Báo cáo sử dụng thuốc" BorderPane.alignment="CENTER">
+               <Label prefHeight="34.0" prefWidth="422.0" styleClass="header" stylesheets="@../../../style.css" text="BÁO CÁO SỬ DỤNG THUỐC" BorderPane.alignment="CENTER">
                   <font>
                      <Font name="System Bold" size="30.0" />
                   </font>
@@ -34,48 +33,43 @@
          </BorderPane>
          <BorderPane prefHeight="38.0" prefWidth="828.0">
             <left>
-               <HBox prefHeight="38.0" prefWidth="482.0" styleClass="TextBorder" stylesheets="@../../../style.css" BorderPane.alignment="CENTER">
-                  <children>
-                     <TextField prefHeight="38.0" prefWidth="448.0" styleClass="square-border-pane-none" stylesheets="@../../../style.css">
-                        <font>
-                           <Font name=".VnTimeH" size="17.0" />
-                        </font>
-                     </TextField>
-                     <ImageView fitHeight="31.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                           <Image url="@images/finding.png" />
-                        </image>
-                        <HBox.margin>
-                           <Insets top="3.0" />
-                        </HBox.margin>
-                        <cursor>
-                           <Cursor fx:constant="HAND" />
-                        </cursor>
-                     </ImageView>
-                  </children>
-                  <BorderPane.margin>
-                     <Insets left="20.0" />
-                  </BorderPane.margin>
-               </HBox>
-            </left>
-            <VBox.margin>
-               <Insets />
-            </VBox.margin>
-            <right>
-              <HBox>
-                 <MFXComboBox fx:id="month_combobox" floatingText="Tháng" layoutX="23.0" layoutY="119.0" prefHeight="32.0" prefWidth="130.0" />
+               <HBox>
+                  <MFXComboBox fx:id="month_combobox" floatingText="Tháng" layoutX="23.0" layoutY="119.0" prefHeight="32.0" prefWidth="130.0" />
 
-                 <MFXComboBox fx:id="year_combobox" floatingText="Năm" layoutX="180.0" layoutY="119.0" prefHeight="32.0" prefWidth="130.0" />
+                  <MFXComboBox fx:id="year_combobox" floatingText="Năm" layoutX="180.0" layoutY="119.0" prefHeight="32.0" prefWidth="130.0">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin></MFXComboBox>
                   <padding>
                      <Insets right="20.0" />
                   </padding>
 
-              </HBox>
+               </HBox>
+            </left>
+            <VBox.margin>
+               <Insets left="20.0" right="20.0" />
+            </VBox.margin>
+            <right>
+               <MFXTextField fx:id="search_txtbox1" floatMode="DISABLED" prefHeight="30.0" prefWidth="379.0" BorderPane.alignment="CENTER">
+                  <trailingIcon>
+                     <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@images/finding.png" />
+                        </image>
+                     </ImageView>
+                  </trailingIcon>
+                  <font>
+                     <Font name="Times New Roman" size="12.0" />
+                  </font>
+                  <BorderPane.margin>
+                     <Insets left="20.0" />
+                  </BorderPane.margin>
+               </MFXTextField>
             </right>
          </BorderPane>
-         <BorderPane prefHeight="414.0" prefWidth="894.0">
+         <BorderPane prefHeight="468.0" prefWidth="894.0">
             <center>
-               <MFXPaginatedTableView fx:id="thuoc" prefHeight="395.0" prefWidth="850.0" rowsPerPage="10" styleClass="font15" stylesheets="@../../../style.css" BorderPane.alignment="CENTER">
+               <MFXPaginatedTableView fx:id="thuoc" prefHeight="442.0" prefWidth="850.0" rowsPerPage="10" styleClass="font15" stylesheets="@../../../style.css" BorderPane.alignment="CENTER">
                   <padding>
                      <Insets bottom="7.0" top="7.0" />
                   </padding>
