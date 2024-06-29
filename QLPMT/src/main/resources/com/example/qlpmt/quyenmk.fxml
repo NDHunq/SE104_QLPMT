@@ -35,7 +35,7 @@
                <Font name="Times New Roman" size="20.0" />
             </font>
          </MFXTextField>
-         <Button fx:id="login" layoutX="26.0" layoutY="213.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="314.0" styleClass="button" text="Lấy lại mật khẩu" textFill="WHITE">
+         <Button fx:id="quenmk" layoutX="26.0" layoutY="213.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="314.0" styleClass="button" text="Lấy lại mật khẩu" textFill="WHITE">
             <font>
                <Font name="Times New Roman Bold" size="28.0" />
             </font>

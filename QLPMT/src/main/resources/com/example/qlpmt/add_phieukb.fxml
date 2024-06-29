@@ -1,24 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import io.github.palexdev.materialfx.controls.MFXButton?>
-<?import io.github.palexdev.materialfx.controls.MFXComboBox?>
-<?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
-<?import io.github.palexdev.materialfx.controls.MFXTableView?>
-<?import io.github.palexdev.materialfx.controls.MFXTextField?>
-<?import java.lang.String?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import io.github.palexdev.materialfx.controls.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="684.0" styleClass="TextBorder" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.KhamBenh.AddPhieuKBController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="539.0" prefWidth="684.0" styleClass="TextBorder" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.KhamBenh.AddPhieuKBController">
    <children>
-      <BorderPane prefHeight="46.0" prefWidth="662.0">
+      <BorderPane layoutX="15.0" prefHeight="46.0" prefWidth="663.0">
          <left>
             <Label styleClass="header" stylesheets="@../../../style.css" text="Phiếu khám bệnh" BorderPane.alignment="CENTER">
                <font>
@@ -43,7 +36,8 @@
             </ImageView>
          </right>
       </BorderPane>
-      <VBox prefHeight="542.0" prefWidth="315.0" style="-fx-background-radius: 10;" styleClass="mainBackground" stylesheets="@../../../style.css">
+
+      <VBox layoutX="15.0" layoutY="46.0" prefHeight="438.0" prefWidth="654.0" style="-fx-background-radius: 10;" styleClass="mainBackground" stylesheets="@../../../style.css">
          <children>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
@@ -68,20 +62,30 @@
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <MFXTextField fx:id="TrieuChungTxt" maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" styleClass="fontStd" stylesheets="@../../../style.css">
+                        <MFXTextField fx:id="TrieuChungTxt" maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" stylesheets="@../../../style.css">
                            <VBox.margin>
                               <Insets bottom="5.0" right="20.0" />
                            </VBox.margin>
+
+                           <styleClass>
+                              <String fx:value="TextBorder" />
+                              <String fx:value="fontStd" />
+                           </styleClass>
                         </MFXTextField>
                         <Label styleClass="header" stylesheets="@../../../style.css" text="Dự đoán loại bệnh">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <MFXComboBox fx:id="LoaiBenhCBB" maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" prefHeight="26.0" prefWidth="348.0" styleClass="fontStd" stylesheets="@../../../style.css">
+                        <MFXComboBox fx:id="LoaiBenhCBB" maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" prefHeight="26.0" prefWidth="348.0" styleClass="TextBorder" stylesheets="@../../../style.css">
                            <VBox.margin>
                               <Insets right="20.0" />
-                           </VBox.margin></MFXComboBox>
+                           </VBox.margin>
+
+                           <font>
+                              <Font name="Times New Roman" size="17.0" />
+                           </font>
+                        </MFXComboBox>
                      </children>
                   </VBox>
                   <VBox prefHeight="162.0" prefWidth="301.0">
@@ -116,13 +120,20 @@
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
+                           <font>
+                              <Font name="Times New Roman" size="17.0" />
+                           </font>
                         </MFXDatePicker>
                         <Label styleClass="header" stylesheets="@../../../style.css" text="Người khám">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <MFXComboBox fx:id="NguoiKhamCBB" maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" prefHeight="26.0" prefWidth="348.0" styleClass="TextBorder" stylesheets="@../../../style.css" />
+                        <MFXComboBox fx:id="NguoiKhamCBB" maxHeight="32.0" maxWidth="1.7976931348623157E308" minHeight="32.0" prefHeight="26.0" prefWidth="348.0" styleClass="TextBorder" stylesheets="@../../../style.css">
+                           <font>
+                              <Font name="Times New Roman" size="17.0" />
+                           </font>
+                        </MFXComboBox>
                      </children>
                   </VBox>
                </children>
@@ -137,55 +148,52 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
       </VBox>
-      <BorderPane prefHeight="51.0" prefWidth="315.0">
-         <right>
-            <HBox prefHeight="26.0" prefWidth="218.0" BorderPane.alignment="CENTER">
-               <children>
-                  <MFXButton fx:id="add_butt" maxHeight="36.0" minHeight="36.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="33.0" style="-fx-font-weight: bold;" stylesheets="@../../../style.css" text="+" textFill="WHITE" BorderPane.alignment="CENTER">
-                     <font>
-                        <Font name="Times New Roman Bold" size="23.0" />
-                     </font>
-                     <BorderPane.margin>
-                        <Insets top="8.0" />
-                     </BorderPane.margin>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                     <HBox.margin>
-                        <Insets right="15.0" />
-                     </HBox.margin>
-                     <styleClass>
-                        <String fx:value="buttonPlus" />
-                        <String fx:value="fontButton" />
-                     </styleClass></MFXButton>
-                  <MFXButton fx:id="XongBtn" mnemonicParsing="false" prefHeight="39.0" prefWidth="75.0" style="-fx-font-weight: bold; -fx-font-size: 17; -fx-background-color: #459244; -fx-text-fill: white; -fx-font-family: 'Times New Roman';" stylesheets="@../../../style.css" text="Xong">
-                     <HBox.margin>
-                        <Insets right="15.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </MFXButton>
-                  <MFXButton fx:id="HuyBtn" mnemonicParsing="false" prefHeight="35.0" prefWidth="64.0" style="-fx-background-color: #EE0E36; -fx-font-family: 'Times New Roman'; -fx-font-weight: bold; -fx-font-size: 17; -fx-text-fill: white;" stylesheets="@../../../style.css" text="Hủy">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </MFXButton>
-               </children>
-               <BorderPane.margin>
-                  <Insets top="10.0" />
-               </BorderPane.margin>
-            </HBox>
-         </right>
-      </BorderPane>
+      <BorderPane prefHeight="51.0" prefWidth="315.0" />
+         <HBox layoutX="480.0" layoutY="491.0" prefHeight="37.0" prefWidth="188.0" BorderPane.alignment="CENTER">
+            <children>
+               <MFXButton fx:id="add_butt" maxHeight="36.0" minHeight="36.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="33.0" style="-fx-font-weight: bold;" stylesheets="@../../../style.css" text="+" textFill="WHITE" BorderPane.alignment="CENTER">
+                  <font>
+                     <Font name="Times New Roman Bold" size="23.0" />
+                  </font>
+                  <BorderPane.margin>
+                     <Insets top="8.0" />
+                  </BorderPane.margin>
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor>
+                  <HBox.margin>
+                     <Insets right="15.0" />
+                  </HBox.margin>
+                  <styleClass>
+                     <String fx:value="buttonPlus" />
+                     <String fx:value="fontButton" />
+                  </styleClass></MFXButton>
+               <MFXButton fx:id="XongBtn" buttonType="RAISED" mnemonicParsing="false" prefHeight="37.0" prefWidth="81.0" style="-fx-font-weight: bold; -fx-font-size: 17; -fx-background-color: #459244; -fx-text-fill: white; -fx-font-family: 'Times New Roman';" stylesheets="@../../../style.css" text="Xong">
+                  <HBox.margin>
+                     <Insets right="15.0" />
+                  </HBox.margin>
+                  <font>
+                     <Font size="16.0" />
+                  </font>
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor>
+               </MFXButton>
+               <MFXButton fx:id="HuyBtn" buttonType="RAISED" mnemonicParsing="false" prefHeight="37.0" prefWidth="81.0" style="-fx-background-color: #EE0E36; -fx-font-family: 'Times New Roman'; -fx-font-weight: bold; -fx-font-size: 17; -fx-text-fill: white;" stylesheets="@../../../style.css" text="Hủy">
+                  <font>
+                     <Font size="16.0" />
+                  </font>
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor>
+               </MFXButton>
+            </children>
+            <BorderPane.margin>
+               <Insets top="10.0" />
+            </BorderPane.margin>
+         </HBox>
    </children>
    <padding>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
    </padding>
-</VBox>
+</AnchorPane>

@@ -13,6 +13,7 @@ public class DBConnection {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             // ten database
+
             String url = "jdbc:sqlserver://DESKTOP-MR3E6H4\\SQLEXPRESS:1433;databaseName=QLPK";
             String user = "sa"; // replace with your username
             String password = "hhhhhhhh444"; // replace with your password

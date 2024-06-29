@@ -2,6 +2,7 @@ package com.example.qlpmt;
 
 import Model.DoanhThu;
 import Model.PhieuKhamBenh;
+import Model.TongDoanhThu;
 import io.github.palexdev.materialfx.controls.*;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import io.github.palexdev.materialfx.filter.DoubleFilter;
@@ -24,6 +25,9 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.layout.Pane;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
@@ -36,17 +40,23 @@ public class doanh_thuController implements Initializable {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
 
     //Tao cac truc toa do cho bieu do
-    final CategoryAxis xAxis = new CategoryAxis();
-    final NumberAxis yAxis = new NumberAxis();
+    private CategoryAxis xAxis = new CategoryAxis();
+    private NumberAxis yAxis = new NumberAxis();
 
-    private ObservableList<String> month_List;
-    private ObservableList<String> year_List;
+    private ObservableList<String> month_List = FXCollections.observableArrayList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12");
+    private ObservableList<String> year_List = FXCollections.observableArrayList();
 
     @FXML
     private MFXComboBox<String> month_combobox;
 
     @FXML
     private MFXComboBox<String> year_combobox;
+
+    @FXML
+    private MFXComboBox<String> chart_month_combobox;
+
+    @FXML
+    private MFXComboBox<String> chart_year_combobox;
 
     @FXML
     private AnchorPane doanh_thu_root_node;
@@ -64,12 +74,11 @@ public class doanh_thuController implements Initializable {
     private MFXPaginatedTableView<DoanhThu> doanhThu;
 
     @FXML
-    private MFXTextField search_txtbox;
+    private LineChart<String, Number> doanhThu_line_chart;
 
-    @FXML
-    private LineChart<String, Number> doanhThu_line_chart = new LineChart<String, Number>(xAxis, yAxis);
-
-    private ObservableList<DoanhThu> doanhThuList;
+    private ObservableList<DoanhThu> doanhThuList = FXCollections.observableArrayList();
+    private ObservableList<DoanhThu> chart_doanhThuList = FXCollections.observableArrayList();
+    private ObservableList<TongDoanhThu> tongDoanhThuList = FXCollections.observableArrayList();
 
     //Ham khoi tao
     @Override
@@ -77,8 +86,8 @@ public class doanh_thuController implements Initializable {
         setButton();
         setVisible();
         buttonClickEvent();
-        setupChart();
         setComboBox();
+        setupChart(Integer.parseInt(month_combobox.getText()), Integer.parseInt(year_combobox.getText()));
 
         //Khoi tao paginated tableview
         setupPaginated();
@@ -98,18 +107,26 @@ public class doanh_thuController implements Initializable {
                 .then((oldValue, newValue) -> doanhThu.autosizeColumns())
                 .listen();
 
-        // Them su kien unfocus cho search_txtbox khi click ra ngoai bang cach requestFocus den node khac
-        doanh_thu_root_node.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                // Kiem tra xem search_txtbox co dang duoc focus hay khong
-                if (mouseEvent.getTarget() != search_txtbox) {
-                    // Neu khong thi unfocus search_txtbox
-                    doanh_thu_root_node.requestFocus();
-                }
-            }
+
+        month_combobox.setOnAction(event -> {
+            int month = Integer.parseInt(month_combobox.getSelectionModel().getSelectedItem());
+            reloadTableView(month, Integer.parseInt(year_combobox.getText()));
         });
 
+        year_combobox.setOnAction(event -> {
+            int year = Integer.parseInt(year_combobox.getSelectionModel().getSelectedItem());
+            reloadTableView(Integer.parseInt(month_combobox.getText()), year);
+        });
+
+        chart_month_combobox.setOnAction(event -> {
+            int month = Integer.parseInt(chart_month_combobox.getSelectionModel().getSelectedItem());
+            reloadChart(month, Integer.parseInt(chart_year_combobox.getText()));
+        });
+
+        chart_year_combobox.setOnAction(event -> {
+            int year = Integer.parseInt(chart_year_combobox.getSelectionModel().getSelectedItem());
+            reloadChart(Integer.parseInt(chart_month_combobox.getText()), year);
+        });
     }
 
     //Doi mau button khi chon giua cac tab
@@ -152,73 +169,21 @@ public class doanh_thuController implements Initializable {
     public void setVisible(){
         if(isBangSoLieu){
             doanhThu.setVisible(true);
-            search_txtbox.setVisible(true);
             doanhThu_line_chart.setVisible(false);
             line_chart_pane.setVisible(false);
-
+            month_combobox.setVisible(true);
+            year_combobox.setVisible(true);
+            chart_month_combobox.setVisible(false);
+            chart_year_combobox.setVisible(false);
         } else {
             doanhThu.setVisible(false);
-            search_txtbox.setVisible(false);
             doanhThu_line_chart.setVisible(true);
             line_chart_pane.setVisible(true);
+            month_combobox.setVisible(false);
+            year_combobox.setVisible(false);
+            chart_month_combobox.setVisible(true);
+            chart_year_combobox.setVisible(true);
         }
-    }
-
-    public void setData(){
-        doanhThuList = FXCollections.observableArrayList(
-                new DoanhThu(1, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(2, LocalDate.parse("11/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(3, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(4, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(5, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(6, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(7, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(8, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(9, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(10, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(11, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(12, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(13, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(14, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(15, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(16, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(17, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(18, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(19, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(20, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(21, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(22, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(23, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(24, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(25, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(26, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(27, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(28, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(29, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(30, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(31, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(32, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(33, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(34, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(35, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(36, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(37, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(38, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(39, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(40, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(41, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(42, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(43, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(44, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(45, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(46, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(47, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(48, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(49, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(50, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f),
-                new DoanhThu(51, LocalDate.parse("12/07/2023", formatter), 1000000, 10, 0.1f)
-        );
-
     }
 
     public void setupPaginated(){
@@ -243,70 +208,156 @@ public class doanh_thuController implements Initializable {
         doanhThu.getFilters().addAll(
                 new IntegerFilter<>("STT", DoanhThu::getId),
                 new StringFilter<>("Ngày khám", DoanhThu::getNgayKham_string),
-                new DoubleFilter<>("Doanh thu", DoanhThu::getDoanhThu),
+                new StringFilter<>("Doanh thu", DoanhThu::getDoanhThu),
                 new IntegerFilter<>("Số lượng bệnh nhân", DoanhThu::getSoLuongBenhNhan),
                 new FloatFilter<>("Tỉ lệ", DoanhThu::getTiLe)
         );
 
         //Them du lieu vao tableview
-        setData();
+        LoadTableView(Integer.parseInt(month_combobox.getText()), Integer.parseInt(year_combobox.getText()));
         doanhThu.setItems(doanhThuList);
     }
 
-    public void setupChart(){
-        int month = 7;
-        doanhThu_line_chart.setTitle("Biểu đồ doanh thu tháng " + month);
-
-        XYChart.Series<String, Number> series= new XYChart.Series<String, Number>();
-        series.setName("Doanh thu");
-
+    public void setupChart(int month, int year){
+//        try{
+//
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
         xAxis.setLabel("Thời gian (Ngày)");
+        yAxis.setLabel("Doanh thu (VND)");
 
-        series.getData().add(new XYChart.Data<String, Number>("1", 2508060));
-        series.getData().add(new XYChart.Data<String, Number>("2", 6820043));
-        series.getData().add(new XYChart.Data<String, Number>("3", 1174516));
-        series.getData().add(new XYChart.Data<String, Number>("4", 2513369));
-        series.getData().add(new XYChart.Data<String, Number>("5", 9626838));
-        series.getData().add(new XYChart.Data<String, Number>("6", 3487137));
-        series.getData().add(new XYChart.Data<String, Number>("7", 2366582));
-        series.getData().add(new XYChart.Data<String, Number>("8", 517915));
-        series.getData().add(new XYChart.Data<String, Number>("9", 2665481));
-        series.getData().add(new XYChart.Data<String, Number>("10", 0));
-        series.getData().add(new XYChart.Data<String, Number>("11", 8151507));
-        series.getData().add(new XYChart.Data<String, Number>("12", 8976275));
-        series.getData().add(new XYChart.Data<String, Number>("13", 5311370));
-        series.getData().add(new XYChart.Data<String, Number>("14", 4333728));
-        series.getData().add(new XYChart.Data<String, Number>("15", 7398367));
-        series.getData().add(new XYChart.Data<String, Number>("16", 2572029));
-        series.getData().add(new XYChart.Data<String, Number>("17", 0));
-        series.getData().add(new XYChart.Data<String, Number>("18", 3607426));
-        series.getData().add(new XYChart.Data<String, Number>("19", 5863342));
-        series.getData().add(new XYChart.Data<String, Number>("20", 4830826));
-        series.getData().add(new XYChart.Data<String, Number>("21", 4011452));
-        series.getData().add(new XYChart.Data<String, Number>("22", 819606));
-        series.getData().add(new XYChart.Data<String, Number>("23", 6062521));
-        series.getData().add(new XYChart.Data<String, Number>("24", 3389291));
-        series.getData().add(new XYChart.Data<String, Number>("25", 534570));
-        series.getData().add(new XYChart.Data<String, Number>("26", 7456915));
-        series.getData().add(new XYChart.Data<String, Number>("27", 9385957));
-        series.getData().add(new XYChart.Data<String, Number>("28", 3464504));
-        series.getData().add(new XYChart.Data<String, Number>("29", 596957));
-        series.getData().add(new XYChart.Data<String, Number>("30", 3797033));
-        series.getData().add(new XYChart.Data<String, Number>("31", 5284519));
+        if(chart_doanhThuList.isEmpty()){
+            xAxis.setCategories(FXCollections.observableArrayList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"));
+        }
 
-        doanhThu_line_chart.getData().add(series);
+        doanhThu_line_chart = new LineChart<String, Number>(xAxis, yAxis);
+        line_chart_pane.getChildren().add(doanhThu_line_chart);
+        doanhThu_line_chart.setPrefSize(883.0, 419.0);
+        doanhThu_line_chart.setLayoutY(15.0);
+
+        doanhThu_line_chart.setTitle("Biểu đồ doanh thu Tháng " + month + "/" + year);
+
+        //Lay du lieu doanh thu theo thang va nam
+        try{
+            String query = "SELECT * FROM DoanhThu WHERE MONTH(NgayDT) = ? AND YEAR(NgayDT) = ?";
+            Connection conn = DBConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, month);
+            ps.setInt(2, year);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                chart_doanhThuList.add(new DoanhThu(1, rs.getDate(1).toLocalDate(), rs.getInt(2), rs.getString(3), 1));
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        if(!chart_doanhThuList.isEmpty()){
+            //Them du lieu vao bieu do
+            XYChart.Series<String, Number> series= new XYChart.Series<String, Number>();
+            series.setName("Doanh thu");
+            try{
+                int count = 0;
+                for (int i = 1; i <= 31; i++){
+                    if(count < chart_doanhThuList.size()){
+                        if(chart_doanhThuList.get(count).getNgayKham().getDayOfMonth() == i){
+                            series.getData().add(new XYChart.Data<String, Number>(Integer.toString(i), Double.parseDouble(chart_doanhThuList.get(count).getDoanhThu())));
+                            count++;
+                        }
+                        else
+                            series.getData().add(new XYChart.Data<String, Number>(Integer.toString(i), 0));
+                    }
+                    else
+                        series.getData().add(new XYChart.Data<String, Number>(Integer.toString(i), 0));
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            doanhThu_line_chart.getData().add(series);
+        }
     }
 
     public void setComboBox(){
-        month_List = FXCollections.observableArrayList(
-                "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "Tất cả"
-        );
-
-        year_List = FXCollections.observableArrayList(
-                "2021", "2022", "2023", "2024", "2025"
-        );
+        try{
+            String query = "SELECT DISTINCT YEAR(NgayDT) AS Nam FROM DoanhThu";
+            Connection conn = DBConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                year_List.add(rs.getString(1));
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        int currentYear = LocalDate.now().getYear();
+        int currentMonth = LocalDate.now().getMonthValue();
 
         month_combobox.setItems(month_List);
+        month_combobox.setText("3");
+
+        year_combobox.setText(Integer.toString(currentYear));
         year_combobox.setItems(year_List);
+
+        chart_month_combobox.setItems(month_List);
+        chart_month_combobox.setText("3");
+
+        chart_year_combobox.setText(Integer.toString(currentYear));
+        chart_year_combobox.setItems(year_List);
+    }
+
+    public void LoadTableView(int month, int year){
+        //Tinh tong doanh thu theo thang va nam
+        try{
+            String query = " SELECT MONTH(NgayDT) AS Thang, YEAR(NgayDT) AS Nam, SUM(DoanhThu) AS TongDT  \n" +
+                    " FROM DoanhThu\n" +
+                    " GROUP BY MONTH(NgayDT), YEAR(NgayDT)";
+            Connection conn = DBConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()){
+                tongDoanhThuList.add(new TongDoanhThu(rs.getInt("Thang"), rs.getInt("Nam"), rs.getString("TongDT")));
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            String query = "SELECT * FROM DoanhThu WHERE MONTH(NgayDT) = ? AND YEAR(NgayDT) = ?";
+            Connection conn = DBConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, month);
+            ps.setInt(2, year);
+            ResultSet rs = ps.executeQuery();
+            int id = 1;
+            while (rs.next()){
+                float tiLe = 0;
+
+                //Tinh ti le doanh thu cua tung ngay do so voi tong doanh thu cua thang do
+                for(TongDoanhThu tongDoanhThu : tongDoanhThuList){
+                    if(tongDoanhThu.getThang() == month && tongDoanhThu.getNam() == year){
+                        tiLe = Math.round((float) (rs.getDouble("DoanhThu") / Double.parseDouble(tongDoanhThu.getTongDoanhThu())  * 100) * 100.0f) / 100.0f ;}
+                }
+                doanhThuList.add(new DoanhThu(id, rs.getDate(1).toLocalDate(), rs.getInt(2), rs.getString(3), tiLe));
+                id++;
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void reloadTableView(int month, int year){
+        doanhThuList.clear();
+        tongDoanhThuList.clear();
+        LoadTableView(month, year);
+        doanhThu.setItems(doanhThuList);
+        doanhThu.setCurrentPage(0);
+    }
+
+    public void reloadChart(int month, int year){
+        chart_doanhThuList.clear();
+        line_chart_pane.getChildren().clear();
+        setupChart(month, year);
     }
 }

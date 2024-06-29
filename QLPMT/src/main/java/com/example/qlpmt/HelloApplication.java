@@ -9,7 +9,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.io.IOException;
 import java.util.Objects;
 
 public class HelloApplication extends Application {
@@ -32,13 +31,17 @@ public class HelloApplication extends Application {
         root.setOnMouseDragged(event -> {
             stage.setX(event.getScreenX() - x);
             stage.setY(event.getScreenY() - y);
-        });Scene scene = new Scene(root, 370, 462
+        });Scene scene = new Scene(root, 370, 488
         );
 
 
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.setScene(scene);
+
         scene.setFill(Color.TRANSPARENT);
+
+        AppUtils.setIcon(stage);
+
         stage.show();
     }
 

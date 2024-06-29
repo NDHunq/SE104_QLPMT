@@ -64,6 +64,61 @@ public class loginController  implements Initializable {
         exit.setOnMouseClicked(event -> {
             System.exit(0);
         });
+
+
+
+        login.setOnAction(event -> {
+            String username = usernameField.getText();
+            String password = passwordField.getText();
+
+            if (checkLogin(username, password)) {
+                try {
+                    login.setBackground(new javafx.scene.layout.Background(new javafx.scene.layout.BackgroundFill(javafx.scene.paint.Color.valueOf("#134494"), new javafx.scene.layout.CornerRadii(5), new javafx.geometry.Insets(0))));
+                    // Load the new FXML file
+//                    String link = "/com/example/qlpmt/hello-view2.fxml";
+//                    if (quanly == 1) {
+//                        link = "/com/example/qlpmt/hello-view.fxml";
+//                    }
+//                    Parent root = FXMLLoader.load(getClass().getResource(link));
+                    String link = "/com/example/qlpmt/hello-view.fxml";
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(link));
+                    Parent root = fxmlLoader.load();
+
+// Get the controller of the root
+                    HelloController helloController = fxmlLoader.getController();
+                    helloController.setQuanly(quanly);
+                    // Get the current stage
+                    Stage stage = (Stage) login.getScene().getWindow();
+
+                    root.setOnMousePressed(event1 -> {
+                        double x = event1.getSceneX();
+                        double y = event1.getSceneY();
+                        root.setOnMouseDragged(event2 -> {
+                            stage.setX(event2.getScreenX() - x);
+                            stage.setY(event2.getScreenY() - y);
+                        });
+                    });
+
+
+                    // Create a new scene and set it on the stage
+                    Scene scene = new Scene(root);
+                    scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
+                    stage.setScene(scene);
+                    stage.centerOnScreen();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                // Đăng nhập thất bại, hiển thị thông báo
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Lỗi đăng nhập");
+                alert.setHeaderText(null);
+                alert.setContentText("Đăng nhập thất bại");
+                alert.showAndWait();
+            }
+        });
+
         quen.setOnMouseClicked(event -> {
             try {
 
@@ -91,11 +146,16 @@ public class loginController  implements Initializable {
                 scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
                 stage.setScene(scene);
 
+
                 stage.show();
+       stage.centerOnScreen();
+                //stage.show();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
+
 
         login.setOnAction(event -> {
             String username = usernameField.getText();
@@ -146,6 +206,7 @@ public class loginController  implements Initializable {
                 alert.showAndWait();
             }
         });
+
         login.setCursor(Cursor.HAND);
 
         minimize.setOnMouseClicked(event -> {

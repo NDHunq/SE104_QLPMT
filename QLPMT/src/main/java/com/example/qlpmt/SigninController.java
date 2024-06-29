@@ -69,31 +69,8 @@ public class SigninController   implements Initializable {
             Stage stage1 = (Stage) ((ImageView) event.getSource()).getScene().getWindow();
             // Close the current stage
             stage1.close();
-            try {
-                Stage stage = new Stage();
-                stage.initStyle(StageStyle.UNDECORATED);
 
 
-                Parent root = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/login.fxml"));
-
-                root.setOnMousePressed(event1 -> {
-                    double x = event1.getSceneX();
-                    double y = event1.getSceneY();
-                    root.setOnMouseDragged(event2 -> {
-                        stage.setX(event2.getScreenX() - x);
-                        stage.setY(event2.getScreenY() - y);
-                    });
-                });
-
-
-                // Create a new scene and set it on the stage
-                Scene scene = new Scene(root);
-                scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
-                stage.setScene(scene);
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         });
         nv.setCursor(javafx.scene.Cursor.HAND);
         bs.setCursor(javafx.scene.Cursor.HAND);

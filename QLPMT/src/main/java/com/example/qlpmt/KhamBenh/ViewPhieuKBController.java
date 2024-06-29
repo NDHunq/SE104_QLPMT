@@ -1,5 +1,6 @@
 package com.example.qlpmt.KhamBenh;
 
+import com.example.qlpmt.AppUtils;
 import com.example.qlpmt.DBConnection;
 import com.example.qlpmt.HelloApplication;
 import io.github.palexdev.materialfx.controls.*;
@@ -15,8 +16,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -25,9 +24,10 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Comparator;
+import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class ViewPhieuKBController implements Initializable {
 
@@ -100,6 +100,7 @@ public class ViewPhieuKBController implements Initializable {
         Scene scene = new Scene(root, 680, 500);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.setScene(scene);
+        AppUtils.setIcon(stage);
         stage.show();
     }
     private void setupPaginated() {
@@ -164,6 +165,7 @@ public class ViewPhieuKBController implements Initializable {
         HoTenTxt.setText(kb.getHoTen());
         CCCDTxt.setText(kb.getCCCD());
         NgayKhamPicker.setValue(ngayKham);
+        NgayKhamPicker.setDisable(true);
 
         try {
             // Get DSKB_ID

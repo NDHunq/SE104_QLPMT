@@ -1,13 +1,14 @@
 package com.example.qlpmt.KhamBenh;
 
-import Model.DSThuoc_PKB;
-import Model.PhieuKhamBenh;
+import Model.TaiKhoanNP;
+import com.example.qlpmt.AppUtils;
 import com.example.qlpmt.DBConnection;
 import com.example.qlpmt.HelloApplication;
 import io.github.palexdev.materialfx.controls.*;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import io.github.palexdev.materialfx.filter.StringFilter;
-import io.github.palexdev.materialfx.utils.others.observables.When;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.StringBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,27 +19,33 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import net.synedra.validatorfx.Validator;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Comparator;
+import java.util.Objects;
+import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class AddPhieuKBController implements Initializable {
     @FXML
     private VBox pkb_layout;
-
+    private Validator validator = new Validator();
     @FXML
     private MFXButton HuyBtn;
+    private StringBinding problemsText;
 
     @FXML
     private MFXButton XongBtn;
@@ -59,7 +66,7 @@ public class AddPhieuKBController implements Initializable {
     private MFXDatePicker NgayKhamPicker;
 
     @FXML
-    private MFXComboBox<String> NguoiKhamCBB;
+    private MFXComboBox<TaiKhoanNP> NguoiKhamCBB;
 
     @FXML
     private MFXTextField TrieuChungTxt;
@@ -75,9 +82,11 @@ public class AddPhieuKBController implements Initializable {
     String PKB_id;
     String loaiBenhID;
     kham_benhController controller=new kham_benhController();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         con= DBConnection.getConnection();
+        setupContextMenu();
 
         close.setOnMouseClicked(event -> {
             Node source = (Node) event.getSource();
@@ -106,59 +115,65 @@ public class AddPhieuKBController implements Initializable {
             }
         });
         XongBtn.setOnAction((ActionEvent event) -> {
-            Node source = (Node) event.getSource();
-            Stage stage = (Stage) source.getScene().getWindow();
-            String sql = "INSERT INTO PKB(PKB_ID, DSKB_ID, TrieuChung, LoaiBenh_ID, NguoiKham,STT) VALUES(?, ?, ?, ?, ?, ?)";
-            try {
-                pst = con.prepareStatement(sql);
-                pst.setString(1, PKB_id);
-                pst.setString(2, DSKB_id);
-                pst.setString(3, TrieuChungTxt.getText());
-                pst.setString(4, loaiBenhID);
-                pst.setString(5, "hung123");
-                int stt = Integer.parseInt(PKB_id.substring(3)); // Extract the number part from PKB_id
-                pst.setInt(6, stt);
-                pst.executeUpdate();
-                stage.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            String sql2 = "UPDATE DSKB SET CoPKB = 1 WHERE DSKB_ID = ?";
-            try {
-                pst = con.prepareStatement(sql2);
-                pst.setString(1, DSKB_id);
-                pst.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            controller.refreshPage();
-            LocalDate selectedDate = NgayKhamPicker.getValue();
-            if (selectedDate != null) {
+            setupValidator();
+            if(validator.validate()){
+                String sql = "INSERT INTO PKB(PKB_ID, DSKB_ID, TrieuChung, LoaiBenh_ID, NguoiKham,STT) VALUES(?, ?, ?, ?, ?, ?)";
                 try {
-                    String checkSql = "SELECT * FROM DoanhThu WHERE NgayDT = ?";
-                    PreparedStatement pst = con.prepareStatement(checkSql);
-                    pst.setDate(1, java.sql.Date.valueOf(selectedDate));
-                    rs = pst.executeQuery();
-                    if (rs.next()) {
-                        // Ngày đã tồn tại trong bảng DoanhThu
-                        String updateSql = "UPDATE DoanhThu SET DoanhThu = DoanhThu + ?, SoBenhNhan = SoBenhNhan + 1 WHERE NgayDT = ?";
-                        pst = con.prepareStatement(updateSql);
-                        pst.setDouble(1, calculateTotalCost());
-                        pst.setDate(2, java.sql.Date.valueOf(selectedDate));
-                        pst.executeUpdate();
-                    } else {
-                        // Ngày chưa tồn tại trong bảng DoanhThu
-                        String insertSql = "INSERT INTO DoanhThu(NgayDT, DoanhThu, SoBenhNhan) VALUES(?, ?, 1)";
-                        pst = con.prepareStatement(insertSql);
-                        pst.setDate(1, java.sql.Date.valueOf(selectedDate));
-                        pst.setDouble(2, calculateTotalCost());
-                        pst.executeUpdate();
-                    }
+                    pst = con.prepareStatement(sql);
+                    pst.setString(1, PKB_id);
+                    pst.setString(2, DSKB_id);
+                    pst.setString(3, TrieuChungTxt.getText());
+                    pst.setString(4, loaiBenhID);
+                    pst.setString(5, NguoiKhamCBB.getText());
+                    int stt = Integer.parseInt(PKB_id.substring(3)); // Extract the number part from PKB_id
+                    pst.setInt(6, stt);
+                    pst.executeUpdate();
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                String sql2 = "UPDATE DSKB SET CoPKB = 1 WHERE DSKB_ID = ?";
+                try {
+                    pst = con.prepareStatement(sql2);
+                    pst.setString(1, DSKB_id);
+                    pst.executeUpdate();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                LocalDate selectedDate = NgayKhamPicker.getValue();
+                if (selectedDate != null) {
+                    try {
+                        String checkSql = "SELECT * FROM DoanhThu WHERE NgayDT = ?";
+                        PreparedStatement pst = con.prepareStatement(checkSql);
+                        pst.setDate(1, java.sql.Date.valueOf(selectedDate));
+                        rs = pst.executeQuery();
+                        if (rs.next()) {
+                            // Ngày đã tồn tại trong bảng DoanhThu
+                            String updateSql = "UPDATE DoanhThu SET DoanhThu = DoanhThu + ?, SoBenhNhan = SoBenhNhan + 1 WHERE NgayDT = ?";
+                            pst = con.prepareStatement(updateSql);
+                            pst.setDouble(1, calculateTotalCost());
+                            pst.setDate(2, java.sql.Date.valueOf(selectedDate));
+                            pst.executeUpdate();
+                        } else {
+                            // Ngày chưa tồn tại trong bảng DoanhThu
+                            String insertSql = "INSERT INTO DoanhThu(NgayDT, DoanhThu, SoBenhNhan) VALUES(?, ?, 1)";
+                            pst = con.prepareStatement(insertSql);
+                            pst.setDate(1, java.sql.Date.valueOf(selectedDate));
+                            pst.setDouble(2, calculateTotalCost());
+                            pst.executeUpdate();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                Node source = (Node) event.getSource();
+                Stage stage = (Stage) source.getScene().getWindow();
+                stage.close();
             }
-            stage.close();
+            else{
+                System.out.println("Validation failed");
+            }
+            controller.refreshPage();
         });
         add_butt.setOnAction((ActionEvent event) -> {
             try {
@@ -181,7 +196,8 @@ public class AddPhieuKBController implements Initializable {
                 e.printStackTrace();
             }
         });
-        setupContextMenu();
+
+
     }
     private double calculateTotalCost() {
         double totalCost = 0;
@@ -220,6 +236,25 @@ public class AddPhieuKBController implements Initializable {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        ObservableList<TaiKhoanNP> nguoiKham_list = FXCollections.observableArrayList();
+        String query2 = "SELECT * FROM TaiKhoan";
+        try {
+            Connection conn = DBConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(query2);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                TaiKhoanNP temp = new TaiKhoanNP(rs.getString("username"),rs.getString("HoTen"));
+                nguoiKham_list.add(temp);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if(!nguoiKham_list.isEmpty()){
+            NguoiKhamCBB.setItems(nguoiKham_list);
+        }
+        else{
+            System.out.println("Nguoi kham is empty");
         }
     }
     public void setupPaginated() {
@@ -281,6 +316,7 @@ public class AddPhieuKBController implements Initializable {
         Scene scene = new Scene(root, 320, 340);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.setScene(scene);
+        AppUtils.setIcon(stage);
         stage.show();
 
     }
@@ -303,6 +339,7 @@ public class AddPhieuKBController implements Initializable {
         Scene scene = new Scene(root, 320, 340);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.setScene(scene);
+        AppUtils.setIcon(stage);
         stage.show();
     }
     public void setupContextMenu(){
@@ -329,10 +366,10 @@ public class AddPhieuKBController implements Initializable {
         delete.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+
                 MFXTableRow<ThuocPKB> row = (MFXTableRow<ThuocPKB>) contextMenu.getOwnerNode();
                 ThuocPKB rowData = row.getData();
                 String Thuoc_ID=fetchId("Thuoc","TenThuoc","Thuoc_ID",rowData.getTenThuoc());
-
                 // Delete the record from the DSTHuoc_PKB table
                 String sql = "DELETE FROM DSTHuoc_PKB WHERE PKB_ID = ? AND Thuoc_ID = ?";
                 try {
@@ -394,6 +431,137 @@ public class AddPhieuKBController implements Initializable {
             System.out.println(e);
         }
     }
+    private void setupValidator(){
+        validator = new Validator();
+        //Validator cho căn cước công dân
+        validator.createCheck()
+                .withMethod(c -> {
+                    if (CCCDTxt.getText().isEmpty() || CCCDTxt.getText() == null) {
+                        CCCDTxt.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                        c.error("Căn cước công dân không được để trống!");
+                    }
+                    else{
+                        if(!CCCDTxt.getText().matches("[0-9]+")){
+                            CCCDTxt.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                            c.error("Căn cước công dân không hợp lệ!");
+                        }
+                        else {
+                            if(CCCDTxt.getText().length() != 12){
+                                CCCDTxt.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                                c.error("Căn cước công dân không hợp lệ!");
+                            }
+                            else{
+                                CCCDTxt.setStyle("");
+                            }
+                        }
+                    }
+                })
+                .dependsOn("cccd", CCCDTxt.textProperty())
+                .decorates(CCCDTxt)
+                .immediate();
+
+        //Validator cho họ tên
+        validator.createCheck()
+                .withMethod(c -> {
+                    if (HoTenTxt.getText().isEmpty() || HoTenTxt.getText() == null) {
+                        HoTenTxt.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                        c.error("Họ tên không được để trống!");
+                    }
+                    else{
+                        HoTenTxt.setStyle("");
+                    }
+                })
+                .dependsOn("hoTen", HoTenTxt.textProperty())
+                .decorates(HoTenTxt)
+                .immediate();
+
+        //Validator cho triệu chứng
+        validator.createCheck()
+                .withMethod(c -> {
+                    if (TrieuChungTxt.getText().isEmpty() || TrieuChungTxt.getText() == null) {
+                        TrieuChungTxt.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                        c.error("Triệu chứng không được để trống!");
+                    }
+                    else{
+                        TrieuChungTxt.setStyle("");
+                    }
+                })
+                .dependsOn("trieuChung", TrieuChungTxt.textProperty())
+                .decorates(TrieuChungTxt)
+                .immediate();
+
+        //Validator cho ngày khám
+        validator.createCheck()
+                .withMethod(c -> {
+                    if (NgayKhamPicker.getValue().isAfter(LocalDate.now())) {
+                        NgayKhamPicker.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                        NgayKhamPicker.lookup(".mfx-icon-wrapper .mfx-font-icon").setStyle("-mfx-color: red;");
+                        NgayKhamPicker.lookup(".mfx-icon-wrapper .mfx-ripple-generator").setStyle("-mfx-ripple-color: #FF6961;");
+                        c.error("Ngày khám không được lớn hơn ngày hiện tại!");
+                    }
+                    else{
+                        NgayKhamPicker.setStyle("");
+                        NgayKhamPicker.lookup(".mfx-icon-wrapper .mfx-font-icon").setStyle("-mfx-color: #2264D1;");
+                        NgayKhamPicker.lookup(".mfx-icon-wrapper .mfx-ripple-generator").setStyle("-mfx-ripple-color: #D4F2FF;");
+                    }
+                })
+                .dependsOn("ngayKham", NgayKhamPicker.valueProperty())
+                .decorates(NgayKhamPicker)
+                .immediate();
+
+        validator.createCheck()
+                .withMethod(c -> {
+                    if (LoaiBenhCBB.getValue() == null) {
+                        LoaiBenhCBB.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                        LoaiBenhCBB.lookup(".mfx-combo-box .caret .mfx-ripple-generator").setStyle("-mfx-ripple-color: #FF6961;");
+                        LoaiBenhCBB.lookup(".mfx-combo-box .caret .mfx-font-icon").setStyle("-mfx-color: red;");
+                        c.error("Loại bệnh không được để trống!");
+                    }
+                    else{
+                        LoaiBenhCBB.setStyle("");
+                        LoaiBenhCBB.lookup(".mfx-combo-box .caret .mfx-ripple-generator").setStyle("-mfx-ripple-color: #D4F2FF;");
+                        LoaiBenhCBB.lookup(".mfx-combo-box .caret .mfx-font-icon").setStyle("-mfx-color: #2264D1;");
+                    }
+                })
+                .dependsOn("loaiBenh", LoaiBenhCBB.valueProperty())
+                .decorates(LoaiBenhCBB)
+                .immediate();
+
+        validator.createCheck()
+                .withMethod(c -> {
+                    if (NguoiKhamCBB.getValue() == null) {
+                        NguoiKhamCBB.setStyle("-fx-border-color: red; -fx-text-fill: red");
+                        NguoiKhamCBB.lookup(".mfx-combo-box .caret .mfx-ripple-generator").setStyle("-mfx-ripple-color: #FF6961;");
+                        NguoiKhamCBB.lookup(".mfx-combo-box .caret .mfx-font-icon").setStyle("-mfx-color: red;");
+                        c.error("Người khám không được để trống!");
+                    }
+                    else{
+                        NguoiKhamCBB.setStyle("");
+                        NguoiKhamCBB.lookup(".mfx-combo-box .caret .mfx-ripple-generator").setStyle("-mfx-ripple-color: #D4F2FF;");
+                        NguoiKhamCBB.lookup(".mfx-combo-box .caret .mfx-font-icon").setStyle("-mfx-color: #2264D1;");
+                    }
+                })
+                .dependsOn("nguoiKham", NguoiKhamCBB.valueProperty())
+                .decorates(NguoiKhamCBB)
+                .immediate();
+    }
+    private TextArea createProblemOutput() {
+        TextArea problems = new TextArea();
+        problems.setEditable(false);
+        problems.setPrefHeight(80);
+        problems.setBackground(Background.EMPTY);
+        problems.setFocusTraversable(false);
+        problemsText = Bindings.createStringBinding(this::getProblemText, validator.validationResultProperty());
+        problems.textProperty().bind(problemsText);
+        return problems;
+    }
+
+    //Ham dung de lay ra loi khi validate
+    private String getProblemText() {
+        return validator.validationResultProperty().get().getMessages().stream()
+                .map(msg -> msg.getSeverity().toString() + ": " + msg.getText())
+                .collect(Collectors.joining("\n"));
+    }
     public void InitData(KhamBenh kb, LocalDate ngayKham) {
         HoTenTxt.setText(kb.getHoTen());
         CCCDTxt.setText(kb.getCCCD());
@@ -428,7 +596,5 @@ public class AddPhieuKBController implements Initializable {
             e.printStackTrace();
         }
         setupPaginated();
-
     }
-
 }

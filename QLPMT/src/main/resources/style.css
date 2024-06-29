@@ -34,7 +34,7 @@
 }
 
 .mainBackground {
-    -fx-background-color: #D4F2FF;
+    -fx-background-color: #E6F8FF;
     -fx-background-radius: 20;
 }
 .header {
@@ -84,10 +84,9 @@
 }
 
 /*Doi mau vien cho mfx textfield khi duoc focus (cái nó báo lỗi là bị lỏ á, đừng fix j hết nha :Đ)*/
-/*.mfx-text-field:focus-within {*/
-/*    -fx-border-color: #2264D1;*/
-/*}*/
-
+.mfx-text-field:focus-within {
+    -fx-border-color: #2264D1;
+}
 
 .mfx-filter-pane .header #filterIcon:hover {
     -fx-background-color: derive(#D4F2FF, 150%);
@@ -108,10 +107,9 @@
     -mfx-ripple-color: #D4F2FF;
 }
 
-/*.mfx-combo-box:focus-within .caret .mfx-font-icon {*/
-/*    -mfx-color: #2264D1;*/
-
-/*}*/
+.mfx-combo-box:focus-within .caret .mfx-font-icon {
+    -mfx-color: #2264D1;
+}
 
 .mfx-combo-box-cell:hover {
     -fx-background-color: #D4F2FF;
@@ -199,9 +197,17 @@
     -fx-font-size: 16;
     -fx-padding: 15, 5, 15, 0;
 }
+<<<<<<< HEAD
 .rounded-anchor-panee {
     -fx-border-color: black;
     -fx-border-width: 2;
     -fx-background-radius: 15;
     -fx-border-radius: 15;
 }
+=======
+.chart-series-line {
+    -fx-stroke: #2264D1;
+}
+
+.default-color0.chart-line-symbol { -fx-background-color: #2264D1, white; }
+>>>>>>> da38a82780e5eec1f0937e313ad19819bb5e3772
