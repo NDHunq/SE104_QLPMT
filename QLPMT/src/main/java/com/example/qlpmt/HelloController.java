@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -121,6 +122,7 @@ public class HelloController implements Initializable {
                 });
 
                 // Create a new scene and set it on the stage
+                // Create a new scene and set it on the stage
                 Scene scene = new Scene(root);
                 scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
                 stage.setScene(scene);
@@ -137,8 +139,10 @@ public class HelloController implements Initializable {
                 // Get the current stage
                 Stage stage = (Stage) logout.getScene().getWindow();
 
+
                 // Create a new scene and set it on the stage
                 Scene scene = new Scene(root);
+                stage.initStyle(StageStyle.UNDECORATED);
                 scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
                 stage.setScene(scene);
 

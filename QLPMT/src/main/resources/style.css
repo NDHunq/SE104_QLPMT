@@ -60,6 +60,12 @@
     -fx-border-color: #000000;
     -fx-border-radius: 5;
 }
+.vien{
+    -fx-background-color: white;
+    -fx-border-color: #000000;
+    -fx-border-radius: 5;
+
+}
 .buttonPlus {
     -fx-background-color: #2264D1;
     -fx-border-radius: 5;
@@ -192,4 +198,10 @@
     -fx-font-family: "Times New Roman";
     -fx-font-size: 16;
     -fx-padding: 15, 5, 15, 0;
+}
+.rounded-anchor-panee {
+    -fx-border-color: black;
+    -fx-border-width: 2;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
 }

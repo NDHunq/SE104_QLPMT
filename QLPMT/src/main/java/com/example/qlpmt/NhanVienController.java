@@ -21,6 +21,7 @@ import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -223,7 +224,7 @@ public class NhanVienController implements Initializable {
                 controller.setUsr(selectedNhanVien.getUsername());
 
                 // Create a new stage and set the scene
-                Stage stage = new Stage(StageStyle.UNDECORATED);
+                Stage stage = new Stage(StageStyle.TRANSPARENT);
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
 
@@ -242,7 +243,10 @@ public class NhanVienController implements Initializable {
 
 
                 // Show the stage
+
+
                 scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
+                scene.setFill(Color.TRANSPARENT);
                 stage.show();
 
             } catch (IOException e) {
