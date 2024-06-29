@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
-<?import io.github.palexdev.materialfx.controls.MFXListView?>
+<?import io.github.palexdev.materialfx.controls.MFXPaginatedTableView?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -13,21 +16,21 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="931.0" style="-fx-background-color: #D4F2FF" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.cai_datController">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" style="-fx-background-color: #E6F8FF" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.cai_datController">
    <content>
-      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="931.0" style="-fx-background-color: #D4F2FF">
+      <VBox maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefWidth="970.0" style="-fx-background-color: #E6F8FF">
          <children>
-            <Text fill="#2264d1" strokeType="OUTSIDE" strokeWidth="0.0" text="Cài đặt">
+            <Text fill="#2264d1" strokeType="OUTSIDE" strokeWidth="0.0" text="CÀI ĐẶT">
                <font>
                   <Font name="Times New Roman Bold" size="24.0" />
                </font>
             </Text>
-            <Line endX="600" startX="-100.0">
+            <Line endX="720.0" startX="-100.0">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
             </Line>
-            <Text fill="#2264d1" strokeType="OUTSIDE" strokeWidth="0.0" text="Tài khoản">
+            <Text fill="#2264d1" strokeType="OUTSIDE" strokeWidth="0.0" text="TÀI KHOẢN">
                <font>
                   <Font name="Times New Roman Bold" size="20.0" />
                </font>
@@ -35,38 +38,30 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Text>
-            <HBox maxWidth="-Infinity" prefHeight="158.0" prefWidth="674.0" style="-fx-border-width: 2px;       -fx-border-color: #2264D1 ;-fx-border-radius: 5px">
+            <HBox maxWidth="-Infinity" prefHeight="250.0" prefWidth="820.0" style="-fx-border-width: 2px;       -fx-border-color: #2264D1 ;-fx-border-radius: 5px">
                <children>
-                  <VBox prefHeight="133.0" prefWidth="298.0">
+                  <VBox prefHeight="200.0" prefWidth="298.0">
                      <children>
-                        <HBox prefHeight="37.0" prefWidth="298.0">
+                        <HBox prefHeight="40.0" prefWidth="298.0">
                            <children>
                               <Text fill="#2264d1" strokeType="OUTSIDE" strokeWidth="0.0" text="Chức vụ">
                                  <font>
                                     <Font name="Times New Roman Bold" size="20.0" />
                                  </font>
                                  <HBox.margin>
-                                    <Insets right="50.0" />
+                                    <Insets right="50.0" top="10.0" />
                                  </HBox.margin>
                               </Text>
-                              <HBox prefHeight="31.0" prefWidth="119.0" style="-fx-border-width2px: 5px;-fx-border-color: Black                         ;-fx-border-radius: 5px">
+                              <HBox prefHeight="40.0" prefWidth="119.0" style="-fx-border-width2px: 5px;-fx-border-color: Black                         ;-fx-border-radius: 5px">
                                  <children>
-                                    <Text fx:id="chucvu" fill="#2264d1" strokeType="OUTSIDE" strokeWidth="0.0" text="Bác sĩ" wrappingWidth="45.789676666259766">
+                                    <Text fx:id="chucvu" fill="#2264d1" strokeType="OUTSIDE" strokeWidth="0.0" text="Bác sĩ" wrappingWidth="76.18969727754592">
                                        <font>
                                           <Font name="Times New Roman Bold" size="18.0" />
                                        </font>
                                        <HBox.margin>
-                                          <Insets left="20.0" right="20.0" />
+                                          <Insets left="10.0" right="10.0" top="10.0" />
                                        </HBox.margin>
                                     </Text>
-                                    <ImageView fx:id="suachucvu" fitHeight="15.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@images/pen.png" />
-                                       </image>
-                                       <HBox.margin>
-                                          <Insets left="5.0" top="2.0" />
-                                       </HBox.margin>
-                                    </ImageView>
                                  </children>
                               </HBox>
                            </children>
@@ -82,17 +77,23 @@
                               <Insets top="10.0" />
                            </VBox.margin>
                         </Text>
-                        <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="248.0" style="-fx-border-width: 1px;-fx-border-color: Black                         ;-fx-border-radius: 5px">
+                        <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="248.0" style="-fx-border-width: 1px;-fx-border-color: Black                         ;-fx-border-radius: 5px">
                            <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tên tài khoản" AnchorPane.topAnchor="0.0">
+                              <Text fx:id="tentaikhoan" strokeType="OUTSIDE" strokeWidth="0.0" text="Tên tài khoản" wrappingWidth="233.36488342285156" AnchorPane.topAnchor="0.0">
                                  <font>
-                                    <Font size="16.0" />
+                                    <Font name="Times New Roman" size="18.0" />
                                  </font>
+                                 <HBox.margin>
+                                    <Insets top="10.0" />
+                                 </HBox.margin>
                               </Text>
                            </children>
                            <VBox.margin>
                               <Insets top="10.0" />
                            </VBox.margin>
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding>
                         </HBox>
                         <HBox prefHeight="55.0" prefWidth="296.0">
                            <children>
@@ -104,7 +105,7 @@
                                     <Insets right="20.0" top="5.0" />
                                  </HBox.margin>
                               </Text>
-                              <MFXButton style="-fx-background-color: #2264D1;-fx-border-radius: 5px" text="Đổi mật khẩu" textFill="#FFFFFF">
+                              <MFXButton fx:id="doimk" style="-fx-background-color: #2264D1;-fx-border-radius: 5px" text="Đổi mật khẩu" textFill="#ffffff">
                                  <font>
                                     <Font name="Times New Roman Bold" size="16.0" />
                                  </font>
@@ -116,10 +117,13 @@
                            <VBox.margin>
                               <Insets bottom="10.0" top="10.0" />
                            </VBox.margin>
+                           <padding>
+                              <Insets top="20.0" />
+                           </padding>
                         </HBox>
                      </children>
                      <HBox.margin>
-                        <Insets bottom="20.0" left="20.0" />
+                        <Insets bottom="20.0" left="20.0" right="100.0" />
                      </HBox.margin>
                   </VBox>
                   <VBox prefHeight="122.0" prefWidth="278.0">
@@ -132,14 +136,14 @@
                               <Insets top="10.0" />
                            </VBox.margin>
                         </Text>
-                        <HBox maxWidth="-Infinity" prefHeight="38.0" prefWidth="280.0" style="-fx-border-width: 1px;-fx-border-color: Black                         ;-fx-border-radius: 5px">
+                        <HBox maxWidth="-Infinity" prefHeight="40.0" prefWidth="290.0" style="-fx-border-width: 1px;-fx-border-color: Black                         ;-fx-border-radius: 5px">
                            <children>
-                              <Text fx:id="hoten" strokeType="OUTSIDE" strokeWidth="0.0" text="Bác sĩ">
+                              <Text fx:id="hoten" strokeType="OUTSIDE" strokeWidth="0.0" text="Bác sĩ" wrappingWidth="246.09022903442383">
                                  <font>
-                                    <Font name="Times New Roman" size="16.0" />
+                                    <Font name="Times New Roman" size="18.0" />
                                  </font>
                                  <HBox.margin>
-                                    <Insets right="220.0" />
+                                    <Insets left="5.0" right="10.0" top="10.0" />
                                  </HBox.margin>
                               </Text>
                               <ImageView fx:id="suahoten" fitHeight="15.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
@@ -147,7 +151,7 @@
                                     <Image url="@images/pen.png" />
                                  </image>
                                  <HBox.margin>
-                                    <Insets top="5.0" />
+                                    <Insets right="10.0" top="10.0" />
                                  </HBox.margin>
                               </ImageView>
                            </children>
@@ -163,12 +167,15 @@
                               <Insets bottom="10.0" />
                            </VBox.margin>
                         </Text>
-                        <HBox maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="36.0" prefWidth="280.0" style="-fx-border-width: 1px;-fx-border-color: Black                         ;-fx-border-radius: 5px">
+                        <HBox maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="295.0" style="-fx-border-width: 1px;-fx-border-color: Black                         ;-fx-border-radius: 5px">
                            <children>
-                              <Text text="Bác sĩ" wrappingWidth="118.4000244140625">
+                              <Text fx:id="email" text="Bác sĩ" wrappingWidth="284.7999954223633">
                                  <font>
-                                    <Font name="Times New Roman" size="16.0" />
+                                    <Font name="Times New Roman" size="18.0" />
                                  </font>
+                                 <HBox.margin>
+                                    <Insets left="5.0" top="10.0" />
+                                 </HBox.margin>
                               </Text>
                            </children>
                         </HBox>
@@ -179,7 +186,7 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </HBox>
-            <Text fill="#2264d1" strokeType="OUTSIDE" strokeWidth="0.0" text="Phòng khám">
+            <Text fill="#2264d1" strokeType="OUTSIDE" strokeWidth="0.0" text="PHÒNG KHÁM">
                <font>
                   <Font name="Times New Roman Bold" size="20.0" />
                </font>
@@ -187,9 +194,9 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Text>
-            <VBox maxWidth="-Infinity" prefHeight="750.0" prefWidth="676.0" style="-fx-border-width: 2px;-fx-border-color: #2264D1;-fx-border-radius: 5px">
+            <VBox maxWidth="-Infinity" prefWidth="820.0" style="-fx-border-width: 2px;-fx-border-color: #2264D1;-fx-border-radius: 5px">
                <children>
-                  <HBox minHeight="-Infinity" prefHeight="86.0" prefWidth="651.0">
+                  <HBox minHeight="-Infinity" prefHeight="86.0" prefWidth="1000.0">
                      <children>
                         <VBox prefHeight="119.0" prefWidth="290.0">
                            <children>
@@ -208,7 +215,7 @@
                                           <Font name="Times New Roman Bold" size="16.0" />
                                        </font>
                                        <HBox.margin>
-                                          <Insets left="5.0" top="5.0" />
+                                          <Insets left="5.0" top="10.0" />
                                        </HBox.margin>
                                     </Text>
                                     <AnchorPane prefHeight="18.0" prefWidth="221.0" />
@@ -217,14 +224,17 @@
                                           <Image url="@images/pen.png" />
                                        </image>
                                        <HBox.margin>
-                                          <Insets right="5.0" top="5.0" />
+                                          <Insets right="10.0" top="10.0" />
                                        </HBox.margin>
                                     </ImageView>
                                  </children>
                               </HBox>
                            </children>
+                           <HBox.margin>
+                              <Insets right="100.0" />
+                           </HBox.margin>
                         </VBox>
-                        <VBox prefHeight="119.0" prefWidth="290.0">
+                        <VBox prefHeight="119.0" prefWidth="295.0">
                            <children>
                               <Text fill="#2264d1" strokeType="OUTSIDE" strokeWidth="0.0" text="Số bệnh nhân tối đa">
                                  <font>
@@ -234,23 +244,23 @@
                                     <Insets bottom="5.0" top="5.0" />
                                  </VBox.margin>
                               </Text>
-                              <HBox prefHeight="42.0" prefWidth="290.0" style="-fx-border-width: 1px;-fx-border-color: Black                         ;-fx-border-radius: 5px">
+                              <HBox prefHeight="42.0" prefWidth="295.0" style="-fx-border-width: 1px;-fx-border-color: Black                         ;-fx-border-radius: 5px">
                                  <children>
                                     <Text fx:id="bntoida" strokeType="OUTSIDE" strokeWidth="0.0" text="10">
                                        <font>
                                           <Font name="Times New Roman Bold" size="16.0" />
                                        </font>
                                        <HBox.margin>
-                                          <Insets left="5.0" top="5.0" />
+                                          <Insets left="5.0" top="10.0" />
                                        </HBox.margin>
                                     </Text>
-                                    <AnchorPane prefHeight="32.0" prefWidth="248.0" />
+                                    <AnchorPane prefHeight="32.0" prefWidth="280.0" />
                                     <ImageView fx:id="suabntoida" fitHeight="15.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@images/pen.png" />
                                        </image>
                                        <HBox.margin>
-                                          <Insets right="5.0" top="5.0" />
+                                          <Insets right="10.0" top="10.0" />
                                        </HBox.margin>
                                     </ImageView>
                                  </children>
@@ -265,148 +275,188 @@
                         <Insets left="20.0" top="10.0" />
                      </VBox.margin>
                   </HBox>
-                  <HBox prefHeight="27.0" prefWidth="600.0">
+                  <HBox prefHeight="35.0" prefWidth="600.0">
                      <children>
                         <Text fill="#2264d1" strokeType="OUTSIDE" strokeWidth="0.0" text="Loại bệnh">
                            <font>
                               <Font name="Times New Roman Bold" size="18.0" />
                            </font>
                            <HBox.margin>
-                              <Insets left="20.0" right="10.0" top="5.0" />
+                              <Insets left="20.0" right="100.0" top="5.0" />
                            </HBox.margin>
                         </Text>
-                        <HBox prefHeight="27.0" prefWidth="100.0" style="-fx-border-width: 1px;-fx-border-color: Black                         ;-fx-border-radius: 5px">
+                        <HBox fx:id="tg_benh" prefHeight="30.0" prefWidth="110.0" style="-fx-border-width: 1px;-fx-border-color: Black                         ;-fx-border-radius: 5px">
                            <children>
                               <ImageView fitHeight="15.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@images/show.png" />
                                  </image>
                                  <HBox.margin>
-                                    <Insets top="5.0" />
+                                    <Insets left="5.0" top="7.0" />
                                  </HBox.margin>
                               </ImageView>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Thu gọn">
+                              <Text fx:id="show1" strokeType="OUTSIDE" strokeWidth="0.0" text="Thu gọn">
                                  <font>
-                                    <Font name="Times New Roman Bold" size="14.0" />
+                                    <Font name="Times New Roman Bold" size="18.0" />
                                  </font>
                                  <HBox.margin>
-                                    <Insets left="10.0" top="5.0" />
+                                    <Insets bottom="4.0" left="10.0" top="4.0" />
                                  </HBox.margin>
                               </Text>
                            </children>
+                           <HBox.margin>
+                              <Insets bottom="10.0" />
+                           </HBox.margin>
                         </HBox>
-                        <AnchorPane prefHeight="26.0" prefWidth="386.0" />
-                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/add.png" />
-                           </image>
-                        </ImageView>
+                        <AnchorPane prefHeight="40.0" prefWidth="365.0">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </AnchorPane>
+                        <Button fx:id="thembenh" maxHeight="40.0" maxWidth="40.0" mnemonicParsing="false" styleClass="buttonPlus" stylesheets="@../../../style.css" text="+" textFill="WHITE">
+                           <font>
+                              <Font name="Times New Roman Bold" size="23.0" />
+                           </font>
+
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <tooltip>
+                              <Tooltip text="Thêm loại bệnh" />
+                           </tooltip>
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                        </Button>
                      </children>
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
                   </HBox>
-                  <MFXListView prefHeight="150.0" prefWidth="598.0">
+                  <MFXPaginatedTableView fx:id="tb_benh" prefHeight="150.0" prefWidth="698.0">
                      <VBox.margin>
                         <Insets bottom="5.0" left="20.0" top="10.0" />
                      </VBox.margin>
-                  </MFXListView>
-                  <HBox prefHeight="26.0" prefWidth="600.0">
+                  </MFXPaginatedTableView>
+                  <HBox prefHeight="35.0" prefWidth="600.0">
                      <children>
                         <Text fill="#2264d1" strokeType="OUTSIDE" strokeWidth="0.0" text="Đơn vị thuốc">
                            <font>
                               <Font name="Times New Roman Bold" size="18.0" />
                            </font>
                            <HBox.margin>
-                              <Insets right="10.0" />
+                              <Insets right="78.0" />
                            </HBox.margin>
                         </Text>
-                        <HBox prefHeight="27.0" prefWidth="100.0" style="-fx-border-width: 1px;-fx-border-color: Black                         ;-fx-border-radius: 5px">
+                        <HBox fx:id="tg_dvt" prefHeight="27.0" prefWidth="110.0" style="-fx-border-width: 1px;-fx-border-color: Black                         ;-fx-border-radius: 5px">
                            <children>
                               <ImageView fitHeight="15.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@images/show.png" />
                                  </image>
                                  <HBox.margin>
-                                    <Insets top="5.0" />
+                                    <Insets left="5.0" top="7.0" />
                                  </HBox.margin>
                               </ImageView>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Thu gọn">
+                              <Text fx:id="show2" strokeType="OUTSIDE" strokeWidth="0.0" text="Thu gọn">
                                  <font>
-                                    <Font name="Times New Roman Bold" size="14.0" />
+                                    <Font name="Times New Roman Bold" size="18.0" />
                                  </font>
                                  <HBox.margin>
-                                    <Insets left="10.0" top="5.0" />
+                                    <Insets bottom="4.0" left="10.0" top="4.0" />
                                  </HBox.margin>
                               </Text>
                            </children>
+                           <HBox.margin>
+                              <Insets bottom="10.0" />
+                           </HBox.margin>
                         </HBox>
-                        <AnchorPane prefHeight="26.0" prefWidth="365.0" />
-                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/add.png" />
-                           </image>
-                        </ImageView>
+                        <AnchorPane prefHeight="34.0" prefWidth="365.0" />
+                        <Button fx:id="themdvt" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" styleClass="buttonPlus" stylesheets="@../../../style.css" text="+" textFill="WHITE">
+                           <font>
+                              <Font name="Times New Roman Bold" size="23.0" />
+                           </font>
+
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <tooltip>
+                              <Tooltip text="Thêm đơn vị thuốc" />
+                           </tooltip>
+                        </Button>
                      </children>
                      <VBox.margin>
                         <Insets left="20.0" top="10.0" />
                      </VBox.margin>
                   </HBox>
-                  <MFXListView prefHeight="150.0" prefWidth="598.0">
+                  <MFXPaginatedTableView fx:id="tb_dvt" prefHeight="150.0" prefWidth="698.0">
                      <VBox.margin>
                         <Insets bottom="10.0" left="20.0" top="10.0" />
                      </VBox.margin>
-                  </MFXListView>
-                  <HBox prefHeight="27.0" prefWidth="600.0">
+                  </MFXPaginatedTableView>
+                  <HBox prefHeight="35.0" prefWidth="804.0">
                      <children>
                         <Text fill="#2264d1" strokeType="OUTSIDE" strokeWidth="0.0" text="Cách dùng">
                            <font>
                               <Font name="Times New Roman Bold" size="18.0" />
                            </font>
                            <HBox.margin>
-                              <Insets right="10.0" />
+                              <Insets right="95.0" />
                            </HBox.margin>
                         </Text>
-                        <HBox prefHeight="27.0" prefWidth="100.0" style="-fx-border-width: 1px;-fx-border-color: Black                         ;-fx-border-radius: 5px">
+                        <HBox fx:id="tg_cd" prefHeight="27.0" prefWidth="110.0" style="-fx-border-width: 1px;-fx-border-color: Black                         ;-fx-border-radius: 5px">
                            <children>
                               <ImageView fitHeight="15.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@images/show.png" />
                                  </image>
                                  <HBox.margin>
-                                    <Insets top="5.0" />
+                                    <Insets left="5.0" top="7.0" />
                                  </HBox.margin>
                               </ImageView>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Thu gọn">
+                              <Text fx:id="show3" strokeType="OUTSIDE" strokeWidth="0.0" text="Thu gọn">
                                  <font>
-                                    <Font name="Times New Roman Bold" size="14.0" />
+                                    <Font name="Times New Roman Bold" size="18.0" />
                                  </font>
                                  <HBox.margin>
-                                    <Insets left="10.0" top="5.0" />
+                                    <Insets bottom="4.0" left="10.0" top="4.0" />
                                  </HBox.margin>
                               </Text>
                            </children>
-                        </HBox>
-                        <AnchorPane prefHeight="15.0" prefWidth="363.0">
                            <HBox.margin>
-                              <Insets left="20.0" top="10.0" />
+                              <Insets bottom="10.0" />
+                           </HBox.margin>
+                        </HBox>
+                        <AnchorPane prefHeight="20.0" prefWidth="365.0">
+                           <HBox.margin>
+                              <Insets top="10.0" />
                            </HBox.margin>
                         </AnchorPane>
-                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/add.png" />
-                           </image>
-                        </ImageView>
+                        <Button fx:id="themcd" mnemonicParsing="false" prefHeight="40.0" prefWidth="40.0" styleClass="buttonPlus" stylesheets="@../../../style.css" text="+" textFill="WHITE">
+                           <font>
+                              <Font name="Times New Roman Bold" size="23.0" />
+                           </font>
+
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <tooltip>
+                              <Tooltip text="Thêm cách dùng" />
+                           </tooltip>
+                           <HBox.margin>
+                              <Insets bottom="5.0" />
+                           </HBox.margin>
+                        </Button>
                      </children>
                      <VBox.margin>
                         <Insets left="20.0" top="10.0" />
                      </VBox.margin>
                   </HBox>
-                  <MFXListView prefHeight="150.0" prefWidth="598.0">
+                  <MFXPaginatedTableView fx:id="tb_cd" prefHeight="150.0" prefWidth="698.0">
                      <VBox.margin>
                         <Insets bottom="20.0" left="20.0" top="10.0" />
                      </VBox.margin>
-                  </MFXListView>
+                  </MFXPaginatedTableView>
                </children>
                <VBox.margin>
                   <Insets top="10.0" />
@@ -414,7 +464,7 @@
             </VBox>
          </children>
          <padding>
-            <Insets left="120.0" />
+            <Insets left="50.0" right="30.0" />
          </padding>
       </VBox>
    </content>

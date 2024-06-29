@@ -53,8 +53,19 @@ public class loginController  implements Initializable {
     private MFXPasswordField passwordField;
     @FXML
     private Text quen;
+    public static String username="";
+    public static String role="";
+    public static String matkhau="";
 
-
+    public static void setUsername(String newUsername) {
+        username = newUsername;
+    }
+    public static void setRole(String newRole) {
+        role = newRole;
+    }
+    public static void setMatkhau(String newMatkhau) {
+        matkhau = newMatkhau;
+    }
 
     int quanly = 0;
 
@@ -183,7 +194,11 @@ public class loginController  implements Initializable {
                 } else {
                     quanly = 0;
                 }
+               setUsername(resultSet.getString("username"));
+                setRole(resultSet.getString("ChucVu"));
+                setMatkhau(resultSet.getString("mk"));
                 connection.close();
+
                 return true;
             }
 

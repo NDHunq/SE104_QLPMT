@@ -1,98 +1,153 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXComboBox?>
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="266.0" prefWidth="600.0" style="-fx-border-radius: 5px" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="265.0" prefWidth="562.0" style="-fx-border-radius: 5px" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Text fill="#2264d1" strokeType="OUTSIDE" strokeWidth="0.0" text="Thêm Thuốc">
+      <Text fill="#0040aa" strokeType="OUTSIDE" strokeWidth="0.0" text="THÊM THUỐC">
          <font>
             <Font name="Times New Roman Bold" size="24.0" />
          </font>
          <VBox.margin>
-            <Insets bottom="20.0" left="20.0" top="10.0" />
+            <Insets bottom="5.0" left="20.0" top="10.0" />
          </VBox.margin>
       </Text>
-      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="126.0" prefWidth="550.0" style="-fx-border-radius: 5px;-fx-background-color: #D4F2FF">
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="206.0" prefWidth="550.0" style="-fx-border-radius: 5px;-fx-background-color: #D4F2FF">
          <children>
-            <HBox prefHeight="45.0" prefWidth="600.0">
+            <HBox prefHeight="43.0" prefWidth="590.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Thuốc">
+                  <Text fill="#2264d1" strokeType="OUTSIDE" strokeWidth="0.0" text="Thuốc">
                      <font>
                         <Font name="Times New Roman Bold" size="18.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="20.0" />
+                        <Insets left="20.0" right="30.0" />
                      </HBox.margin>
                   </Text>
-                  <TextField fx:id="text_tenthuoc">
+                  <TextField fx:id="text_tenthuoc" prefHeight="26.0" prefWidth="118.0">
                      <HBox.margin>
                         <Insets left="20.0" right="20.0" />
                      </HBox.margin>
                   </TextField>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Số lượng nhập">
-                     <font>
-                        <Font name="Times New Roman Bold" size="18.0" />
-                     </font>
-                  </Text>
-                  <TextField fx:id="text_donvi">
-                     <HBox.margin>
-                        <Insets left="20.0" />
-                     </HBox.margin>
-                  </TextField>
-               </children>
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox prefHeight="45.0" prefWidth="600.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Đơn vị">
-                     <font>
-                        <Font name="Times New Roman Bold" size="18.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="20.0" />
-                     </HBox.margin>
-                  </Text>
-                  <TextField fx:id="text_dongia">
-                     <HBox.margin>
-                        <Insets left="20.0" right="20.0" />
-                     </HBox.margin>
-                  </TextField>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Đơn giá nhập">
+                  <Text fill="#2264d1" strokeType="OUTSIDE" strokeWidth="0.0" text="Số lượng nhập">
                      <font>
                         <Font name="Times New Roman Bold" size="18.0" />
                      </font>
                   </Text>
                   <TextField fx:id="text_soluong">
                      <HBox.margin>
-                        <Insets left="25.0" />
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" top="10.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox prefHeight="45.0" prefWidth="550.0">
+               <children>
+                  <Text fill="#2264d1" strokeType="OUTSIDE" strokeWidth="0.0" text="Đơn vị">
+                     <font>
+                        <Font name="Times New Roman Bold" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="20.0" right="30.0" top="10.0" />
+                     </HBox.margin>
+                  </Text>
+                  <MFXComboBox fx:id="text_donvi" maxHeight="30.0" minHeight="30.0" prefHeight="28.0" prefWidth="119.0">
+                     <HBox.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" />
+                     </HBox.margin>
+                  </MFXComboBox>
+                  <Text fill="#2264d1" strokeType="OUTSIDE" strokeWidth="0.0" text="Đơn giá nhập">
+                     <font>
+                        <Font name="Times New Roman Bold" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
+                  </Text>
+                  <TextField fx:id="text_dongia">
+                     <HBox.margin>
+                        <Insets left="25.0" top="5.0" />
                      </HBox.margin>
                   </TextField>
                </children>
             </HBox>
+            <HBox prefHeight="45.0" prefWidth="600.0">
+               <children>
+                  <Text fill="#2264d1" strokeType="OUTSIDE" strokeWidth="0.0" text="Cách dùng">
+                     <font>
+                        <Font name="Times New Roman Bold" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="20.0" top="10.0" />
+                     </HBox.margin>
+                  </Text>
+                  <MFXComboBox fx:id="text_cachdung" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="90.0">
+                     <HBox.margin>
+                        <Insets left="20.0" right="20.0" />
+                     </HBox.margin>
+                  </MFXComboBox>
+                  <Text fill="#2264d1" strokeType="OUTSIDE" strokeWidth="0.0" text="Đơn giá bán">
+                     <font>
+                        <Font name="Times New Roman Bold" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="9.0" top="10.0" />
+                     </HBox.margin>
+                  </Text>
+                  <TextField fx:id="text_dongiaban">
+                     <HBox.margin>
+                        <Insets left="25.0" top="5.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="43.0" prefWidth="536.0">
+               <children>
+                  <MFXButton fx:id="themthuoc" buttonType="RAISED" mnemonicParsing="false" prefHeight="37.0" prefWidth="81.0" style="-fx-background-color: #459244; -fx-text-fill: white; -fx-font-family: 'Times New Roman'; -fx-font-size: 17px; -fx-font-weight: bold; -fx-stroke-width: 2px" stylesheets="@../../../style.css" text="XONG">
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+      
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+      
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </MFXButton>
+                  <MFXButton fx:id="huy" buttonType="RAISED" mnemonicParsing="false" prefHeight="37.0" prefWidth="81.0" style="-fx-background-color: #EE0E36;-fx-text-fill: white; -fx-font-family: 'Times New Roman'; -fx-font-size: 17px; -fx-font-weight: bold; -fx-stroke-width: 2px" stylesheets="@../../../style.css" text="HỦY">
+                     <styleClass>
+                        <String fx:value="fontButton" />
+                     </styleClass>
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </MFXButton>
+               </children>
+               <VBox.margin>
+                  <Insets right="10.0" />
+               </VBox.margin>
+            </HBox>
          </children>
          <VBox.margin>
-            <Insets left="25.0" right="20.0" />
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </VBox.margin>
       </VBox>
-      <HBox alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="575.0">
-         <children>
-            <MFXButton fx:id="themthuoc" prefHeight="35.0" prefWidth="81.0" style="-fx-background-color: #BCE29E;-fx-border-radius: 2px" text="Xong">
-               <HBox.margin>
-                  <Insets right="10.0" />
-               </HBox.margin></MFXButton>
-            <MFXButton fx:id="huy" prefHeight="36.0" prefWidth="87.0" style="-fx-background-color: #FF8787;-fx-border-radius: 2px" text="Hủy" />
-         </children>
-         <VBox.margin>
-            <Insets right="25.0" top="20.0" />
-         </VBox.margin>
-      </HBox>
    </children>
 </VBox>

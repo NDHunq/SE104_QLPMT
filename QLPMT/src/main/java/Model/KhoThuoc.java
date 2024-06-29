@@ -7,9 +7,19 @@ public class KhoThuoc {
     private String tenthuoc;
     private String donvi;
     private Integer soluong;
-    private  String dongia;
+    private  Integer dongia;
     private  String imgThuoc;
+    private  String id;
 
+    public String getDonViThuoc_ID() {
+        return DonViThuoc_ID;
+    }
+
+    public void setDonViThuoc_ID(String donViThuoc_ID) {
+        DonViThuoc_ID = donViThuoc_ID;
+    }
+
+    private  String DonViThuoc_ID;
 
     public String getImgThuoc() {
         return imgThuoc;
@@ -19,7 +29,7 @@ public class KhoThuoc {
         this.imgThuoc = imgThuoc;
     }
 
-    public KhoThuoc(Integer stt, String tenthuoc, String donvi, Integer soluong, String dongia , String imgThuoc) {
+    public KhoThuoc(Integer stt, String tenthuoc, String donvi, Integer soluong, Integer dongia , String imgThuoc) {
         this.tenthuoc = tenthuoc;
         this.donvi = donvi;
         this.soluong = soluong;
@@ -27,8 +37,15 @@ public class KhoThuoc {
         this.stt=stt;
         this.imgThuoc=imgThuoc;
 
+
+    }
+    public String getId() {
+        return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
     public Integer getStt() {
         return stt;
     }
@@ -37,7 +54,7 @@ public class KhoThuoc {
         this.stt = stt;
     }
 
-    public String getDongia() {
+    public Integer getDongia() {
         return dongia;
     }
 
