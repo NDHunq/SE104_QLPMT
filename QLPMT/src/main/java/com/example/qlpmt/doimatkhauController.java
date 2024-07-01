@@ -51,7 +51,7 @@ public class doimatkhauController implements Initializable {
                         c.error(" Mật khẩu hiện tại không được để trống!");
                     }
                     else {
-                        mkhientai.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+                        mkhientai.setStyle("");
                     }
                 })
                 .dependsOn("thongtin", mkhientai.textProperty())
@@ -59,13 +59,12 @@ public class doimatkhauController implements Initializable {
                 .immediate();
         validatormk.createCheck()
                 .withMethod(c -> {
-                    if (mkmoi.getText().equals("")
-                    ) {
+                    if (mkmoi.getText().equals("")) {
                         mkmoi.setStyle("-fx-border-color: red; -fx-text-fill: red");
                         c.error(" Mật khẩu mới không được để trống!");
                     }
                     else {
-                        mkmoi.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+                        mkmoi.setStyle("");
                     }
                 })
                 .dependsOn("thongtin", mkmoi.textProperty())
@@ -73,13 +72,12 @@ public class doimatkhauController implements Initializable {
                 .immediate();
         validatormk.createCheck()
                 .withMethod(c -> {
-                    if (mklai.getText().equals("")
-                    ) {
+                    if (mklai.getText().equals("")) {
                         mklai.setStyle("-fx-border-color: red; -fx-text-fill: red");
                         c.error(" Mật khẩu nhập lại không được để trống!");
                     }
                     else {
-                        mklai.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+                        mklai.setStyle("");
                     }
                 })
                 .dependsOn("thongtin", mklai.textProperty())
@@ -87,13 +85,12 @@ public class doimatkhauController implements Initializable {
                 .immediate();
         validatormk.createCheck()
                 .withMethod(c -> {
-                    if (!mkht.equals(mkcu)
-                    ) {
+                    if (!mkht.equals(mkcu)) {
                         mkhientai.setStyle("-fx-border-color: red; -fx-text-fill: red");
                         c.error(" Mật khẩu hiện tại không đúng!");
                     }
                     else {
-                        mkhientai.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+                        mkhientai.setStyle("");
                     }
                 })
                 .dependsOn("thongtin", mkhientai.textProperty())
@@ -101,13 +98,12 @@ public class doimatkhauController implements Initializable {
                 .immediate();
         validatormk.createCheck()
                 .withMethod(c -> {
-                    if (mkht.equals(mkmoi1)
-                    ) {
+                    if (mkht.equals(mkmoi1)) {
                         mkmoi.setStyle("-fx-border-color: red; -fx-text-fill: red");
                         c.error(" Mật khẩu mới phải khác mật khẩu hiện tại!");
                     }
                     else {
-                        mkmoi.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+                        mkmoi.setStyle("");
                     }
                 })
                 .dependsOn("thongtin", mkmoi.textProperty())
@@ -121,7 +117,7 @@ public class doimatkhauController implements Initializable {
                         c.error(" Mật khẩu mới không khớp!");
                     }
                     else {
-                        mklai.setStyle("-fx-border-color: #2264D1; -fx-text-fill: black");
+                        mklai.setStyle("");
                     }
                 })
                 .dependsOn("thongtin", mklai.textProperty())
