@@ -8,7 +8,7 @@
 <?import javafx.scene.text.*?>
 
 <VBox maxHeight="745.0" maxWidth="400.0" minHeight="577.0" minWidth="400.0" prefHeight="577.0" prefWidth="400.0" styleClass="vien" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.Inf_TK_controller">
-    <AnchorPane maxHeight="745.0" maxWidth="400.0" minHeight="572.0" minWidth="400.0" prefHeight="572.0" prefWidth="400.0" style="-fx-background-color: trannsperant;">
+    <AnchorPane maxHeight="745.0" maxWidth="400.0" minHeight="572.0" minWidth="400.0" prefHeight="572.0" prefWidth="400.0" style="-fx-background-color: white;">
         <children>
             <Text fill="#2264d1" layoutX="27.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TÀI KHOẢN" wrappingWidth="282.13676261901855">
                 <font>

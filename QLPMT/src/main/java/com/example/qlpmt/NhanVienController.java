@@ -113,6 +113,7 @@ public class NhanVienController implements Initializable {
                 stage.setTitle("Sign In");
                 AppUtils.setIcon(stage);
                 // Show the stage
+                AppUtils.setIcon(stage);
                 stage.show();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -253,6 +254,8 @@ public class NhanVienController implements Initializable {
 
                 scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
                 scene.setFill(Color.TRANSPARENT);
+                AppUtils.setIcon(stage);
+
                 stage.show();
 
             } catch (IOException e) {
