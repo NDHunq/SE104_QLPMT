@@ -20,8 +20,6 @@ public class HelloApplication extends Application {
         StackPane stackPane = new StackPane();
 
 
-
-
         stage.initStyle(StageStyle.TRANSPARENT);
 
         root.setOnMousePressed(event -> {
@@ -31,7 +29,8 @@ public class HelloApplication extends Application {
         root.setOnMouseDragged(event -> {
             stage.setX(event.getScreenX() - x);
             stage.setY(event.getScreenY() - y);
-        });Scene scene = new Scene(root, 370, 488
+        });
+        Scene scene = new Scene(root, 370, 488
         );
 
 

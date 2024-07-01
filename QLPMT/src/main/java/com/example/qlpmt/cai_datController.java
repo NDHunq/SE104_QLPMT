@@ -20,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -27,6 +28,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.sql.*;
 import java.util.Comparator;
@@ -322,11 +324,7 @@ public class cai_datController implements Initializable {
             }
             else
             {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Cảnh báo");
-                alert.setHeaderText(null);
-                alert.setContentText("Ban không có quyền chỉnh sửa thông tin này");
-                alert.showAndWait();
+              showAlert();
             }
         });
         suabntoida.setOnMouseClicked(event -> {
@@ -355,11 +353,7 @@ public class cai_datController implements Initializable {
             }
             else
             {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Cảnh báo");
-                alert.setHeaderText(null);
-                alert.setContentText("Ban không có quyền chỉnh sửa thông tin này");
-                alert.showAndWait();
+                showAlert();
             }
         });
         doimk.setOnMouseClicked(event -> {
@@ -492,11 +486,7 @@ public class cai_datController implements Initializable {
             }
             else
             {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Cảnh báo");
-                alert.setHeaderText(null);
-                alert.setContentText("Ban không có quyền chỉnh sửa thông tin này");
-                alert.showAndWait();
+                showAlert();
             }
         });
         themdvt.setOnMouseClicked(event -> {
@@ -576,11 +566,7 @@ public class cai_datController implements Initializable {
             }
             else
             {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Cảnh báo");
-                alert.setHeaderText(null);
-                alert.setContentText("Ban không có quyền chỉnh sửa thông tin này");
-                alert.showAndWait();
+               showAlert();
             }
         });
         thembenh.setOnMouseClicked(event -> {
@@ -655,11 +641,7 @@ Share.getInstance().setSharedVariable("13");
             }
             else
             {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Cảnh báo");
-                alert.setHeaderText(null);
-                alert.setContentText("Ban không có quyền chỉnh sửa thông tin này");
-                alert.showAndWait();
+                showAlert();
             }
         });
     }
@@ -780,11 +762,7 @@ Share.getInstance().setSharedVariable("13");
 
 
                     } else {
-                        Alert alert = new Alert(Alert.AlertType.WARNING);
-                        alert.setTitle("Cảnh báo");
-                        alert.setHeaderText(null);
-                        alert.setContentText("Ban không có quyền chỉnh sửa thông tin này");
-                        alert.showAndWait();
+                      showAlert();
                     }
                 }
             });
@@ -842,11 +820,7 @@ Share.getInstance().setSharedVariable("13");
                     }
                     else
                     {
-                        Alert alert = new Alert(Alert.AlertType.WARNING);
-                        alert.setTitle("Cảnh báo");
-                        alert.setHeaderText(null);
-                        alert.setContentText("Ban không có quyền chỉnh sửa thông tin này");
-                        alert.showAndWait();
+                        showAlert();
                     }
 
                 }
@@ -907,11 +881,7 @@ Share.getInstance().setSharedVariable("13");
                     }
                     else
                     {
-                        Alert alert = new Alert(Alert.AlertType.WARNING);
-                        alert.setTitle("Cảnh báo");
-                        alert.setHeaderText(null);
-                        alert.setContentText("Ban không có quyền chỉnh sửa thông tin này");
-                        alert.showAndWait();
+                       showAlert();
                     }
 
                 }
@@ -919,5 +889,19 @@ Share.getInstance().setSharedVariable("13");
             return cell;
         });
     }
+    public void showAlert() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Thông báo");
+        alert.setHeaderText(null);
+        alert.setContentText("Bạn không có quyền chỉnh sửa thông tin này");
+
+        Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+        InputStream iconStream = AppUtils.class.getResourceAsStream("/com/example/qlpmt/images/cong.png");
+        Image image = new Image(iconStream);
+        alertStage.getIcons().add(image);
+
+        alert.showAndWait();
+    }
+
 
 }

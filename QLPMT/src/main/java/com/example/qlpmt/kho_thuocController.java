@@ -57,6 +57,8 @@ public class kho_thuocController implements Initializable {
 
     @FXML
     public MFXTextField search_txtbox;
+    @FXML
+    private Text sothuoc;
     private Validator validator = new Validator();
     private Validator validatorSua = new Validator();
 
@@ -348,6 +350,16 @@ public class kho_thuocController implements Initializable {
             }
         } catch (Exception e) {
             System.out.println("An error occurred during data retrieval");
+            e.printStackTrace();
+        }
+        try {
+            String sql = "Select count(*) as total from Thuoc";
+            pst = dbConnection.prepareStatement(sql);
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                sothuoc.setText(rs.getString("total"));
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
         Add.setOnMouseClicked(event -> {
