@@ -218,7 +218,9 @@ public class NhanVienController implements Initializable {
 
                     deleteAlert.setHeaderText(null);
                     deleteAlert.setContentText("Deleted: " + selectedNhanVien.getHoten());
+                    this.refreshpage();
                     deleteAlert.showAndWait();
+
 
                 }
             }
