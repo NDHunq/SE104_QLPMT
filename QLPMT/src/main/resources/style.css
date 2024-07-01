@@ -6,7 +6,12 @@
     -fx-shape: "M0,0h100a10,10 0 0 1 10,10v100a10,10 0 0 1 -10,10h-100a10,10 0 0 1 -10,-10v-100a10,10 0 0 1 10,-10z";
     -fx-background-color:  #FFFFFF;
 }
-
+.mfx-radio-button:selected {
+    -mfx-dot-color: #2264D1;
+}
+.radioGend .radio-button .dot {
+    -fx-fill: #2264D1;
+}
 .button {
     -fx-background-radius: 10px;
     -fx-background-color:  #2264D1;
@@ -44,6 +49,11 @@
 .fontStd {
     -fx-font-size: 17;
     -fx-font-family: "Times New Roman";
+}
+.fontStd2 {
+    -fx-font-size: 20;
+    -fx-font-family: "Times New Roman";
+    -fx-background-color: #E1F8F6;
 }
 .fontButton {
     -fx-font-size: 17;

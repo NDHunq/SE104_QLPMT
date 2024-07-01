@@ -1,4 +1,5 @@
 package com.example.qlpmt;
+import com.example.qlpmt.KhamBenh.kham_benhController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -21,6 +22,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -60,6 +62,7 @@ public class SigninController   implements Initializable {
     private MFXPasswordField matkhau2;
     @FXML
     private Button dangky;
+    private NhanVienController ccontroller=new NhanVienController();
 
 
     @Override
@@ -102,6 +105,9 @@ public class SigninController   implements Initializable {
 
 
     }
+    public void setController(NhanVienController controller) {
+        this.ccontroller = controller;
+    }
     private void insertData() {
         // Tạo kết nối với cơ sở dữ liệu
         Connection connection = DBConnectionQuyen.getConnection();
@@ -115,6 +121,11 @@ public class SigninController   implements Initializable {
             alert.setTitle("Lỗi");
             alert.setHeaderText(null);
             alert.setContentText("Vui lòng nhập đầy đủ thông tin");
+            Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+
+            InputStream iconStream = AppUtils.class.getResourceAsStream("/com/example/qlpmt/images/cong.png");
+            Image image = new Image(iconStream);
+            alertStage.getIcons().add(image);
             alert.showAndWait();
             return;
         }
@@ -125,6 +136,11 @@ public class SigninController   implements Initializable {
             alert.setTitle("Lỗi");
             alert.setHeaderText(null);
             alert.setContentText("Sai mật khẩu");
+            Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+
+            InputStream iconStream = AppUtils.class.getResourceAsStream("/com/example/qlpmt/images/cong.png");
+            Image image = new Image(iconStream);
+            alertStage.getIcons().add(image);
             alert.showAndWait();
             return;
         }
@@ -139,6 +155,13 @@ public class SigninController   implements Initializable {
                 alert.setTitle("Lỗi");
                 alert.setHeaderText(null);
                 alert.setContentText("Tên người dùng đã tồn tại");
+                Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+
+                InputStream iconStream = AppUtils.class.getResourceAsStream("/com/example/qlpmt/images/cong.png");
+                Image image = new Image(iconStream);
+                alertStage.getIcons().add(image);
+
+
                 alert.showAndWait();
                 return;
             }
@@ -170,6 +193,11 @@ public class SigninController   implements Initializable {
             alert.setTitle("Thành công");
             alert.setHeaderText(null);
             alert.setContentText("Thêm thành công");
+            Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+
+            InputStream iconStream = AppUtils.class.getResourceAsStream("/com/example/qlpmt/images/cong.png");
+            Image image = new Image(iconStream);
+            alertStage.getIcons().add(image);
             alert.showAndWait();
 
             // Clear all input fields
@@ -178,6 +206,7 @@ public class SigninController   implements Initializable {
             matkhau.clear();
             matkhau2.clear();
             hoten.clear();
+           ccontroller.refreshpage();
 
         } catch (SQLException e) {
             e.printStackTrace();
