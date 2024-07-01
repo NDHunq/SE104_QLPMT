@@ -215,3 +215,15 @@
     -fx-border-color: #2264D1;
 }
 
+.mfx-radio-button:selected .radio {
+    -fx-stroke: #2264D1;
+}
+
+.mfx-radio-button .dot {
+    -fx-fill: #2264D1;
+}
+
+.mfx-radio-button .mfx-ripple-generator {
+    -mfx-ripple-color: #D4F2FF;
+}
+
