@@ -7,8 +7,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="500.0" maxWidth="370.0" minHeight="450.0" minWidth="370.0" prefHeight="488.0" prefWidth="370.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.loginController">
-   <AnchorPane layoutY="-5.0" maxHeight="570.0" maxWidth="370.0" minHeight="450.0" minWidth="370.0" prefHeight="488.0" prefWidth="370.0" styleClass="rounded-anchor-pane">
+<VBox maxWidth="449.0" minHeight="23.0" minWidth="12.0" prefHeight="484.0" prefWidth="377.0" style="-fx-background-radius: 5;" styleClass="vien" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.loginController">
+   <AnchorPane layoutY="-5.0" maxHeight="570.0" maxWidth="415.0" minHeight="443.0" minWidth="303.0" prefHeight="475.0" prefWidth="362.0" style="-fx-background-color: transperant;">
+
       <children>
          <Text fill="#2264d1" layoutX="111.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quản lý phòng mạch tư" wrappingWidth="192.1367473602295">
             <font>
@@ -40,8 +41,8 @@
                <Font name="Times New Roman Bold" size="22.0" />
             </font>
          </Text>
-         <BorderPane layoutX="27.0" layoutY="166.0" maxWidth="416.0" minWidth="313.0" prefHeight="57.0" prefWidth="313.0">
-            <top>
+         <BorderPane layoutX="16.0" layoutY="157.0" maxWidth="416.0" minWidth="313.0" prefHeight="57.0" prefWidth="313.0">
+            <center>
                <MFXTextField fx:id="usernameField" maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="303.0" prefHeight="40.0" prefWidth="303.0" style="-fx-background-color: #E1F8F6; -fx-font-family: 'Times New Roman'; -fx-font-size: 20px" BorderPane.alignment="CENTER">
                   <BorderPane.margin>
                      <Insets bottom="2.0" left="5.0" right="5.0" top="2.0" />
@@ -49,7 +50,7 @@
                   <font>
                      <Font name="Times New Roman" size="20.0" />
                   </font></MFXTextField>
-            </top>
+            </center>
          </BorderPane>
          <AnchorPane layoutY="315.0" maxHeight="57.0" maxWidth="345.0" minHeight="0.0" minWidth="345.0" prefHeight="57.0" prefWidth="345.0">
             <opaqueInsets>
@@ -63,17 +64,17 @@
                </Text>
             </children>
          </AnchorPane>
-         <Button fx:id="login" layoutX="33.0" layoutY="380.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="303.0" styleClass="button" text="Đăng nhập" textFill="WHITE">
+
+         <Button fx:id="login" layoutX="21.0" layoutY="372.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="303.0" styleClass="button" text="Đăng nhập" textFill="WHITE">
+
             <font>
                <Font name="Times New Roman Bold" size="28.0" />
             </font>
          </Button>
-         <Text fx:id="signin" fill="#2264d1" layoutX="148.0" layoutY="469.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Đăng ký" textAlignment="RIGHT" wrappingWidth="192.1367473602295">
-            <font>
-               <Font name="Times New Roman Bold" size="25.0" />
-            </font>
-         </Text>
-         <MFXPasswordField fx:id="passwordField" layoutX="33.0" layoutY="275.0" maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="303.0" prefHeight="40.0" prefWidth="303.0" style="-fx-background-color: #E1F8F6; -fx-font-family: 'Times New Roman'; -fx-font-size: 20px" BorderPane.alignment="CENTER">
+
+
+         <MFXPasswordField fx:id="passwordField" layoutX="21.0" layoutY="275.0" maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="303.0" prefHeight="40.0" prefWidth="303.0" style="-fx-background-color: #E1F8F6; -fx-font-family: 'Times New Roman'; -fx-font-size: 20px" BorderPane.alignment="CENTER">
+
 
               <font>
                    <Font name="Times New Roman" size="20.0" />
@@ -81,7 +82,13 @@
          </MFXPasswordField>
         
       </children>
+      <opaqueInsets>
+         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+      </opaqueInsets>
+      <VBox.margin>
+         <Insets left="10.0" right="5.0" top="5.0" />
+      </VBox.margin>
 
    </AnchorPane>
 
-</AnchorPane>
+</VBox>

@@ -1,4 +1,5 @@
 package com.example.qlpmt;
+import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import io.github.palexdev.materialfx.controls.MFXPasswordField;
@@ -18,8 +19,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -53,8 +54,19 @@ public class loginController  implements Initializable {
     private MFXPasswordField passwordField;
     @FXML
     private Text quen;
+    public static String username="";
+    public static String role="";
+    public static String matkhau="";
 
-
+    public static void setUsername(String newUsername) {
+        username = newUsername;
+    }
+    public static void setRole(String newRole) {
+        role = newRole;
+    }
+    public static void setMatkhau(String newMatkhau) {
+        matkhau = newMatkhau;
+    }
 
     int quanly = 0;
 
@@ -120,8 +132,11 @@ public class loginController  implements Initializable {
 
         quen.setOnMouseClicked(event -> {
             try {
+
                 Stage stage = new Stage();
-                stage.initStyle(StageStyle.UNDECORATED);
+                StackPane stackPane = new StackPane();
+                stage.initStyle(StageStyle.TRANSPARENT);
+
 
 
                 Parent root = FXMLLoader.load(getClass().getResource("/com/example/qlpmt/quyenmk.fxml"));
@@ -138,13 +153,68 @@ public class loginController  implements Initializable {
 
                 // Create a new scene and set it on the stage
                 Scene scene = new Scene(root);
+
                 scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
                 stage.setScene(scene);
-                stage.centerOnScreen();
+
+
+                stage.show();
+       stage.centerOnScreen();
                 //stage.show();
 
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+        });
+
+
+        login.setOnAction(event -> {
+            String username = usernameField.getText();
+            String password = passwordField.getText();
+
+            if (checkLogin(username, password)) {
+                try {
+                    login.setBackground(new Background(new BackgroundFill(Color.valueOf("#134494"), new CornerRadii(5), new Insets(0))));
+                    // Load the new FXML file
+                   String link = "/com/example/qlpmt/hello-view2.fxml";
+                   if (quanly == 1) {
+                            link = "/com/example/qlpmt/hello-view.fxml";
+                        }
+                    Parent root = FXMLLoader.load(getClass().getResource(link));
+
+
+                    // Get the current stage
+                    Stage stage = (Stage) login.getScene().getWindow();
+
+                    root.setOnMousePressed(event1 -> {
+                        double x = event1.getSceneX();
+                        double y = event1.getSceneY();
+                        root.setOnMouseDragged(event2 -> {
+                            stage.setX(event2.getScreenX() - x);
+                            stage.setY(event2.getScreenY() - y);
+                        });
+                    });
+
+
+                    // Create a new scene and set it on the stage
+                    Scene scene = new Scene(root);
+                    scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
+
+                    stage.setScene(scene);
+                    scene.setFill(Color.TRANSPARENT);
+
+                    stage.show();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                // Đăng nhập thất bại, hiển thị thông báo
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Lỗi đăng nhập");
+                alert.setHeaderText(null);
+                alert.setContentText("Đăng nhập thất bại");
+                alert.showAndWait();
             }
         });
 
@@ -183,7 +253,11 @@ public class loginController  implements Initializable {
                 } else {
                     quanly = 0;
                 }
+               setUsername(resultSet.getString("username"));
+                setRole(resultSet.getString("ChucVu"));
+                setMatkhau(resultSet.getString("mk"));
                 connection.close();
+
                 return true;
             }
 

@@ -9,11 +9,11 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="607.0" prefWidth="920.0" stylesheets="@../../../style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.KhamBenh.kham_benhController">
-    <VBox layoutX="-0.8" layoutY="0.8" prefHeight="607.0" prefWidth="926.0" style="-fx-background-color: #D4F2FF;" stylesheets="@../../../style.css" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="-5.0" AnchorPane.topAnchor="1.0">
+    <VBox layoutX="-0.8" layoutY="0.8" prefHeight="607.0" prefWidth="926.0" style="-fx-background-color: #E6F8FF;" stylesheets="@../../../style.css" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="-5.0" AnchorPane.topAnchor="1.0">
       <children>
          <BorderPane prefHeight="46.0" prefWidth="894.0">
             <left>
-               <Label prefHeight="34.0" prefWidth="300.0" styleClass="header" stylesheets="@../../../style.css" text="Danh sách khám bệnh" BorderPane.alignment="CENTER">
+               <Label prefHeight="34.0" prefWidth="444.0" styleClass="header" stylesheets="@../../../style.css" text="DANH SÁCH KHÁM BỆNH" BorderPane.alignment="CENTER">
                   <font>
                      <Font name="System Bold" size="30.0" />
                   </font>
@@ -87,6 +87,9 @@
          <BorderPane prefHeight="52.0" prefWidth="869.0">
             <right>
                <Button fx:id="add_butt" mnemonicParsing="false" onAction="#add" prefHeight="44.0" prefWidth="32.0" styleClass="buttonPlus" stylesheets="@../../../style.css" text="+" textFill="WHITE" BorderPane.alignment="CENTER">
+                  <tooltip>
+                     <Tooltip text="Thêm khách hàng"/>
+                  </tooltip>
                   <font>
                      <Font name="Times New Roman Bold" size="24.0" />
                   </font>

@@ -2,6 +2,7 @@ package com.example.qlpmt.KhamBenh;
 
 import Model.*;
 import Model.PhieuKhamBenh;
+import com.example.qlpmt.AppUtils;
 import com.example.qlpmt.DBConnection;
 import com.example.qlpmt.HelloApplication;
 import io.github.palexdev.materialfx.controls.*;
@@ -352,6 +353,7 @@ public class EditPhieuKBController implements Initializable {
         //reload lai table view sau khi update table
         stage.setOnHidden(e -> reloadTableView());
         stage.setScene(scene);
+        AppUtils.setIcon(stage);
         stage.show();
     }
 

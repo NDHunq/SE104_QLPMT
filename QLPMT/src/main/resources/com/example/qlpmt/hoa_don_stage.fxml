@@ -19,7 +19,7 @@
    <children>
       <BorderPane prefHeight="50.0" prefWidth="662.0">
          <left>
-            <Label styleClass="header" stylesheets="@../../../style.css" text="Hóa đơn" BorderPane.alignment="CENTER">
+            <Label styleClass="header" stylesheets="@../../../style.css" text="HÓA ĐƠN" BorderPane.alignment="CENTER">
                <font>
                   <Font name="System Bold" size="25.0" />
                </font>

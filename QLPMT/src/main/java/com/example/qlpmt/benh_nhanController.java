@@ -306,6 +306,7 @@ public class benh_nhanController implements Initializable{
         //reload lai table view sau khi update
         stage.setOnHidden(e -> reloadTableView());
         stage.setScene(scene);
+        AppUtils.setIcon(stage);
         stage.show();
 
     }

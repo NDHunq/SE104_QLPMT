@@ -4,10 +4,11 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.io.IOException;
 import java.util.Objects;
 
 public class HelloApplication extends Application {
@@ -16,8 +17,13 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("login.fxml"));
         Parent root = loader.load();
+        StackPane stackPane = new StackPane();
 
-        stage.initStyle(StageStyle.UNDECORATED);
+
+
+
+        stage.initStyle(StageStyle.TRANSPARENT);
+
         root.setOnMousePressed(event -> {
             x = event.getSceneX();
             y = event.getSceneY();
@@ -27,8 +33,15 @@ public class HelloApplication extends Application {
             stage.setY(event.getScreenY() - y);
         });Scene scene = new Scene(root, 370, 488
         );
+
+
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.setScene(scene);
+
+        scene.setFill(Color.TRANSPARENT);
+
+        AppUtils.setIcon(stage);
+
         stage.show();
     }
 

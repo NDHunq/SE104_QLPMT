@@ -19,7 +19,7 @@
    <children>
       <BorderPane prefHeight="58.0" prefWidth="662.0">
          <left>
-            <Label styleClass="header" stylesheets="@../../../style.css" text="Phiếu khám bệnh" BorderPane.alignment="CENTER">
+            <Label styleClass="header" stylesheets="@../../../style.css" text="PHIẾU KHÁM BỆNH" BorderPane.alignment="CENTER">
                <font>
                   <Font name="System Bold" size="25.0" />
                </font>
@@ -141,9 +141,9 @@
       </VBox>
       <BorderPane prefHeight="51.0" prefWidth="315.0">
          <right>
-            <HBox prefHeight="35.0" prefWidth="116.0" BorderPane.alignment="CENTER">
+            <HBox prefHeight="39.0" prefWidth="127.0" BorderPane.alignment="CENTER">
                <children>
-                  <MFXButton fx:id="HoaDon" mnemonicParsing="false" prefHeight="35.0" prefWidth="107.0" style="-fx-background-color: #5CC2F2;" stylesheets="@../../../style.css" text="Hóa đơn">
+                  <MFXButton fx:id="HoaDon" mnemonicParsing="false" prefHeight="39.0" prefWidth="196.0" style="-fx-background-color: #5CC2F2;" stylesheets="@../../../style.css" text="HÓA ĐƠN">
                      <styleClass>
                         <String fx:value="fontButton" />
                         <String fx:value="TextBorder" />
