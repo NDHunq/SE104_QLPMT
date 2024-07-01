@@ -51,13 +51,13 @@
             </VBox.margin>
             <right>
                <MFXTextField fx:id="search_txtbox1" floatMode="DISABLED" prefHeight="30.0" prefWidth="379.0" BorderPane.alignment="CENTER">
-                  <trailingIcon>
+                  <leadingIcon>
                      <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                           <Image url="@images/finding.png" />
+                           <Image url="@images/search.png" />
                         </image>
                      </ImageView>
-                  </trailingIcon>
+                  </leadingIcon>
                   <font>
                      <Font name="Times New Roman" size="12.0" />
                   </font>
