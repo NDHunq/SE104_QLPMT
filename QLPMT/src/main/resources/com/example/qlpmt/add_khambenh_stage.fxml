@@ -4,6 +4,7 @@
 <?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
 <?import io.github.palexdev.materialfx.controls.MFXRadioButton?>
 <?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -45,12 +46,20 @@
                </font></Label>
             <HBox prefHeight="30.0" prefWidth="315.0">
                <children>
-                  <MFXRadioButton fx:id="NamChBx" style="-fx-font-size: 16;" styleClass="font15" stylesheets="@../../../style.css" text="Nam">
+                  <MFXRadioButton fx:id="NamChBx" style="-fx-font-size: 16;" stylesheets="@../../../style.css" text="Nam">
                      <HBox.margin>
                         <Insets right="5.0" />
                      </HBox.margin>
+                     <styleClass>
+                        <String fx:value="font15" />
+                        <String fx:value="radioGend" />
+                     </styleClass>
                   </MFXRadioButton>
-                  <MFXRadioButton fx:id="NuChBx" style="-fx-font-size: 16;" styleClass="font15" stylesheets="@../../../style.css" text="Nu" />
+                  <MFXRadioButton fx:id="NuChBx" style="-fx-font-size: 16;" stylesheets="@../../../style.css" text="Nu">
+                     <styleClass>
+                        <String fx:value="font15" />
+                        <String fx:value="mfx-radio-button" />
+                     </styleClass></MFXRadioButton>
                </children>
             </HBox>
             <Label styleClass="header" stylesheets="@../../../style.css" text="Ngày sinh">

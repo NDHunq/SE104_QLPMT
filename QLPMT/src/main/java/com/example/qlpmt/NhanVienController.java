@@ -1,6 +1,7 @@
 package com.example.qlpmt;
 
 import Model.NhanVien;
+import com.example.qlpmt.KhamBenh.SuaKhamBenhController;
 import io.github.palexdev.materialfx.controls.*;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import io.github.palexdev.materialfx.filter.StringFilter;
@@ -29,6 +30,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.nio.Buffer;
 import java.sql.*;
@@ -92,9 +94,13 @@ public class NhanVienController implements Initializable {
 
                 // Create a new stage and set the scene
                 Stage stage = new Stage(StageStyle.UNDECORATED);
+
                 Parent root = loader.load();
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
+
+                SigninController controllerchinh = loader.getController();
+                controllerchinh.setController(this);
 
                 // Make the window draggable
                 final double[] xOffset = new double[1];
@@ -196,7 +202,14 @@ public class NhanVienController implements Initializable {
         delete.setStyle("-fx-text-fill: red; -fx-font-size: 16px; -fx-font-family: 'Times New Roman'");
 
         delete.setOnAction(event -> {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this item?", ButtonType.YES, ButtonType.NO);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Bạn có chắc xóa nhân viên này không?", ButtonType.YES, ButtonType.NO);
+            alert.getDialogPane().getScene().getWindow();
+            Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+
+            InputStream iconStream = AppUtils.class.getResourceAsStream("/com/example/qlpmt/images/cong.png");
+            Image image = new Image(iconStream);
+            alertStage.getIcons().add(image);
+
             alert.showAndWait();
 
             if (alert.getResult() == ButtonType.YES) {
@@ -209,11 +222,13 @@ public class NhanVienController implements Initializable {
                     pkb_list.remove(selectedNhanVien);
 
                     Alert deleteAlert = new Alert(Alert.AlertType.INFORMATION);
-                    deleteAlert.setTitle("Delete Confirmation");
+                    deleteAlert.setTitle("Xác nhận xóa");
 
                     deleteAlert.setHeaderText(null);
-                    deleteAlert.setContentText("Deleted: " + selectedNhanVien.getHoten());
+                    deleteAlert.setContentText("Đã xóa: " + selectedNhanVien.getHoten());
+                    this.refreshpage();
                     deleteAlert.showAndWait();
+
 
                 }
             }
@@ -226,6 +241,7 @@ public class NhanVienController implements Initializable {
 
                 // Get the controller and set the usr attribute
                 Inf_TK_controller controller = loader.getController();
+                controller.setController(this);
                 MFXTableRow<NhanVien> row= (MFXTableRow<NhanVien>) contextMenu.getOwnerNode();
                 NhanVien selectedNhanVien =row.getData();
                 controller.setUsr(selectedNhanVien.getUsername());
@@ -234,6 +250,8 @@ public class NhanVienController implements Initializable {
                 Stage stage = new Stage(StageStyle.TRANSPARENT);
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
+
+
 
                 // Make the window draggable
                 final double[] xOffset = new double[1];
@@ -289,5 +307,9 @@ public class NhanVienController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    public void refreshpage(){
+        setData();
+        pkb.setItems(pkb_list);
     }
 }

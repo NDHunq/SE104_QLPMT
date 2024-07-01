@@ -1,5 +1,6 @@
 package com.example.qlpmt.KhamBenh;
 
+import com.example.qlpmt.AppUtils;
 import com.example.qlpmt.DBConnection;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
@@ -14,12 +15,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.Connection;
@@ -75,10 +79,23 @@ public class HoaDonController implements Initializable {
         });
         InBtn.setOnAction((ActionEvent event) -> {
             exportToPDF();
-            System.out.println("Da luu hoa don vao Downloads!");
+            showAlert();
         });
 
 
+    }
+    public void showAlert() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Thông báo");
+        alert.setHeaderText(null);
+        alert.setContentText("Hóa đơn đã được lưu vào thư mục Downloads");
+
+        Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+        InputStream iconStream = AppUtils.class.getResourceAsStream("/com/example/qlpmt/images/cong.png");
+        Image image = new Image(iconStream);
+        alertStage.getIcons().add(image);
+
+        alert.showAndWait();
     }
     public void InitData(String Pkb_id,String DSKB_id)
     {

@@ -38,6 +38,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import net.synedra.validatorfx.Validator;
 
@@ -57,6 +58,8 @@ public class kho_thuocController implements Initializable {
 
     @FXML
     public MFXTextField search_txtbox;
+    @FXML
+    private Text sothuoc;
     private Validator validator = new Validator();
     private Validator validatorSua = new Validator();
 
@@ -350,6 +353,16 @@ public class kho_thuocController implements Initializable {
             System.out.println("An error occurred during data retrieval");
             e.printStackTrace();
         }
+        try {
+            String sql = "Select count(*) as total from Thuoc";
+            pst = dbConnection.prepareStatement(sql);
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                sothuoc.setText(rs.getString("total"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Add.setOnMouseClicked(event -> {
             try {
                 System.out.println("-3");
@@ -361,6 +374,8 @@ public class kho_thuocController implements Initializable {
                 Stage stage = new Stage();
                 stage.setScene(scene);
                 AppUtils.setIcon(stage);
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.centerOnScreen();
                 stage.show();
                 System.out.println("-1");
 
@@ -516,6 +531,8 @@ public class kho_thuocController implements Initializable {
                         Stage stage = new Stage();
                         stage.setScene(scene);
                         AppUtils.setIcon(stage);
+                        stage.initModality(Modality.APPLICATION_MODAL);
+                        stage.centerOnScreen();
                         stage.show();
                        try
                        {

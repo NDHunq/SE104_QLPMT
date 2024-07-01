@@ -37,7 +37,7 @@
             </Text>
             <BorderPane layoutX="27.0" layoutY="289.0" maxWidth="416.0" minWidth="345.0" prefHeight="57.0" prefWidth="345.0">
             <top>
-                    <MFXTextField fx:id="Email" maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="312.0" prefHeight="40.0" prefWidth="312.0" style="-fx-background-color: #E1F8F6;" BorderPane.alignment="CENTER">
+                    <MFXTextField fx:id="Email" maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="312.0" prefHeight="40.0" prefWidth="312.0" styleClass="fontStd2" BorderPane.alignment="CENTER">
                         <BorderPane.margin>
                             <Insets bottom="2.0" left="5.0" right="5.0" top="2.0" />
                         </BorderPane.margin>
@@ -80,7 +80,7 @@
             </font>
          </Text>
 
-               <MFXTextField fx:id="username" layoutX="28.0" layoutY="187.0" maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="312.0" prefHeight="40.0" prefWidth="339.0" style="-fx-background-color: #E1F8F6;" BorderPane.alignment="CENTER">
+               <MFXTextField fx:id="username" layoutX="28.0" layoutY="187.0" maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="312.0" prefHeight="40.0" prefWidth="339.0" styleClass="fontStd2" BorderPane.alignment="CENTER">
                   <BorderPane.margin>
                      <Insets bottom="2.0" left="5.0" right="5.0" top="2.0" />
                   </BorderPane.margin>
@@ -98,17 +98,17 @@
                     <Font name="Times New Roman Bold" size="22.0" />
                 </font>
             </Text>
-            <MFXPasswordField fx:id="matkhau" layoutX="33.0" layoutY="593.0" maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="303.0" prefHeight="40.0" prefWidth="339.0" style="-fx-background-color: #E1F8F6;" BorderPane.alignment="CENTER">
+            <MFXPasswordField fx:id="matkhau" layoutX="33.0" layoutY="593.0" maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="303.0" prefHeight="40.0" prefWidth="339.0" styleClass="fontStd2" BorderPane.alignment="CENTER">
                 <font>
                     <Font name="Times New Roman" size="20.0" />
                 </font>
             </MFXPasswordField>
-            <MFXPasswordField fx:id="matkhau2" layoutX="33.0" layoutY="487.0" maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="303.0" prefHeight="40.0" prefWidth="339.0" style="-fx-background-color: #E1F8F6;" BorderPane.alignment="CENTER">
+            <MFXPasswordField fx:id="matkhau2" layoutX="33.0" layoutY="487.0" maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="303.0" prefHeight="40.0" prefWidth="339.0" styleClass="fontStd2" BorderPane.alignment="CENTER">
                 <font>
                     <Font name="Times New Roman" size="20.0" />
                 </font>
             </MFXPasswordField>
-              <MFXTextField fx:id="hoten" layoutX="30.0" layoutY="390.0" maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="312.0" prefHeight="40.0" prefWidth="339.0" style="-fx-background-color: #E1F8F6;">
+              <MFXTextField fx:id="hoten" layoutX="30.0" layoutY="390.0" maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="312.0" prefHeight="40.0" prefWidth="339.0" styleClass="fontStd2">
                   <font>
                       <Font name="Times New Roman" size="20.0" />
                   </font>

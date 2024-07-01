@@ -19,6 +19,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
@@ -31,6 +32,7 @@ import javafx.stage.StageStyle;
 import javafx.stage.Window;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -58,8 +60,7 @@ public class kham_benhController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         con= DBConnection.getConnection();
-        NgayKhamPicker.setValue(LocalDate.of(2024, 4, 20));
-        setupContextMenu();
+        NgayKhamPicker.setValue(LocalDate.now());        setupContextMenu();
         setupPaginated();
         //chia deu kich thuoc cac cot de vua voi chieu rong cua tableview
         double tableViewWidth = table_bn.getPrefWidth();
@@ -125,6 +126,7 @@ public class kham_benhController implements Initializable {
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
         AppUtils.setIcon(stage);
+        stage.centerOnScreen();
         stage.show();
     }
     public void Sua(ActionEvent events, String DSKB_id,KhamBenh kb) throws IOException {
@@ -147,6 +149,7 @@ public class kham_benhController implements Initializable {
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
         AppUtils.setIcon(stage);
+        stage.centerOnScreen();
         stage.show();
     }
     public void XemPKB(KhamBenh kb, LocalDate ngaykham){
@@ -174,6 +177,7 @@ public class kham_benhController implements Initializable {
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
         AppUtils.setIcon(stage);
+        stage.centerOnScreen();
         stage.show();
     }
     public void AddPKB(KhamBenh kb, LocalDate ngaykham){
@@ -202,6 +206,7 @@ public class kham_benhController implements Initializable {
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
         AppUtils.setIcon(stage);
+        stage.centerOnScreen();
         stage.show();
     }
     public void refreshPage() {
@@ -325,6 +330,10 @@ public class kham_benhController implements Initializable {
                 alert.setTitle("Xác nhận");
                 alert.setHeaderText(null);
                 alert.setContentText("Bạn có chắc muốn xóa thông tin khách hàng này không?");
+                Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+                InputStream iconStream = AppUtils.class.getResourceAsStream("/com/example/qlpmt/images/cong.png");
+                Image image = new Image(iconStream);
+                alertStage.getIcons().add(image);
                 Window window = alert.getDialogPane().getScene().getWindow();
                 window.setOnCloseRequest(e -> alert.close());
                 ButtonType result = alert.showAndWait().orElse(buttonTypeNo);
