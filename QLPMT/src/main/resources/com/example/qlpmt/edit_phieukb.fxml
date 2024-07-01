@@ -21,9 +21,9 @@
     <children>
         <BorderPane layoutX="15.0" prefHeight="46.0" prefWidth="663.0">
             <left>
-                <Label styleClass="header" stylesheets="@../../../style.css" text="Chỉnh sửa phiếu khám bệnh" BorderPane.alignment="CENTER">
+                <Label styleClass="header" stylesheets="@../../../style.css" text="CHỈNH SỬA PHIẾU KHÁM BỆNH" BorderPane.alignment="CENTER">
                     <font>
-                        <Font name="System Bold" size="25.0" />
+                        <Font name="System Bold" size="23.0" />
                     </font>
 
                     <BorderPane.margin>
@@ -209,9 +209,9 @@
         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
     </padding>
 
-    <ImageView fx:id="info_icon" fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" visible="false">
-        <image>
-            <Image url="@images/info.png" />
-        </image>
-    </ImageView>
+<!--    <ImageView fx:id="info_icon" fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" visible="false">-->
+<!--        <image>-->
+<!--            <Image url="@images/info.png" />-->
+<!--        </image>-->
+<!--    </ImageView>-->
 </AnchorPane>

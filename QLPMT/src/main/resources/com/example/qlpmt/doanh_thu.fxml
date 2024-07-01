@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import io.github.palexdev.materialfx.controls.*?>
-<?import javafx.scene.chart.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXComboBox?>
+<?import io.github.palexdev.materialfx.controls.MFXPaginatedTableView?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="doanh_thu_root_node" prefHeight="600.0" prefWidth="930.0" style="-fx-background-color: #D4F2FF" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.doanh_thuController">
+<AnchorPane fx:id="doanh_thu_root_node" prefHeight="600.0" prefWidth="930.0" style="-fx-background-color: #D4F2FF" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.qlpmt.doanh_thuController">
 
 
    <Pane fx:id="line_chart_pane" layoutX="23.0" layoutY="123.0" prefHeight="458.0" prefWidth="883.0" style="-fx-background-color: #FFFFFF; -fx-border-radius: 10px; -fx-background-radius: 10px">
@@ -18,7 +24,7 @@
            </yAxis>
        </LineChart>
    </Pane>
-    <Text fill="#2264D1" layoutX="23.0" layoutY="41.0" text="Doanh thu theo tháng" wrappingWidth="282.10545349121094">
+    <Text fill="#2264D1" layoutX="23.0" layoutY="41.0" text="DOANH THU THEO THÁNG" wrappingWidth="458.9054412841797">
         <font>
             <Font name="Times New Roman Bold" size="30.0" />
         </font>
