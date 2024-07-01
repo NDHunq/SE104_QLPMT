@@ -38,6 +38,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import net.synedra.validatorfx.Validator;
 
@@ -373,6 +374,8 @@ public class kho_thuocController implements Initializable {
                 Stage stage = new Stage();
                 stage.setScene(scene);
                 AppUtils.setIcon(stage);
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.centerOnScreen();
                 stage.show();
                 System.out.println("-1");
 
@@ -528,6 +531,8 @@ public class kho_thuocController implements Initializable {
                         Stage stage = new Stage();
                         stage.setScene(scene);
                         AppUtils.setIcon(stage);
+                        stage.initModality(Modality.APPLICATION_MODAL);
+                        stage.centerOnScreen();
                         stage.show();
                        try
                        {

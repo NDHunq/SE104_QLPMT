@@ -25,6 +25,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.image.ImageView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -289,6 +290,8 @@ public class cai_datController implements Initializable {
                 Stage stage = new Stage();
                 stage.setScene(scene);
                 AppUtils.setIcon(stage);
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.centerOnScreen();
                 stage.show();
                 controller.suathongtin.setText(hoten.getText());
                 Share.getInstance().setSharedVariable("2");
@@ -309,6 +312,8 @@ public class cai_datController implements Initializable {
                     Stage stage = new Stage();
                     stage.setScene(scene);
                     AppUtils.setIcon(stage);
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.centerOnScreen();
                     stage.show();
                     controller.suathongtin.setText(tienkham.getText());
                     controller.suathongtin.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -338,6 +343,8 @@ public class cai_datController implements Initializable {
                     Stage stage = new Stage();
                     stage.setScene(scene);
                     AppUtils.setIcon(stage);
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.centerOnScreen();
                     stage.show();
                     controller.suathongtin.textProperty().addListener((observable, oldValue, newValue) -> {
                         if (!newValue.matches("\\d*")|| newValue.equals("0")) {
@@ -364,7 +371,9 @@ public class cai_datController implements Initializable {
                 Scene scene = new Scene(loader.load());
                 Stage stage = new Stage();
                 stage.setScene(scene);
-                AppUtils.setIcon(stage);
+                AppUtils.setIcon(stage);stage.initModality(Modality.APPLICATION_MODAL);
+                stage.centerOnScreen();
+
                 stage.show();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -418,7 +427,8 @@ public class cai_datController implements Initializable {
                     Scene scene = new Scene(loader.load());
                     Stage stage = new Stage();
                     stage.setScene(scene); AppUtils.setIcon(stage);
-
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.centerOnScreen();
                     stage.show();
                     controller.xong.setOnMouseClicked(event1 -> {
 
@@ -500,6 +510,8 @@ public class cai_datController implements Initializable {
                     Stage stage = new Stage();
                     stage.setScene(scene);
                     AppUtils.setIcon(stage);
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.centerOnScreen();
                     stage.show();
                     controller.xong.setOnMouseClicked(event1 -> {
                         Validation();
@@ -579,6 +591,8 @@ Share.getInstance().setSharedVariable("13");
                     Stage stage = new Stage();
                     stage.setScene(scene);
                     AppUtils.setIcon(stage);
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.centerOnScreen();
                     stage.show();
                     controller.xong.setOnMouseClicked(event1 -> {
                         Validation();
@@ -736,6 +750,8 @@ Share.getInstance().setSharedVariable("13");
                             Stage stage = new Stage();
                             stage.setScene(scene);
                             AppUtils.setIcon(stage);
+                            stage.initModality(Modality.APPLICATION_MODAL);
+                            stage.centerOnScreen();
                             stage.show();
                             suacachdungController.xong.setOnMouseClicked(event1 -> {
                                 Share.getInstance().setSharedVariable("8");
@@ -796,6 +812,8 @@ Share.getInstance().setSharedVariable("13");
                             Stage stage = new Stage();
                             stage.setScene(scene);
                             AppUtils.setIcon(stage);
+                            stage.initModality(Modality.APPLICATION_MODAL);
+                            stage.centerOnScreen();
                             stage.show();
                             suacachdungController.xong.setOnMouseClicked(event1 -> {
                                 suacachdungController.Validator();
@@ -857,6 +875,8 @@ Share.getInstance().setSharedVariable("13");
                             Stage stage = new Stage();
                             stage.setScene(scene);
                             AppUtils.setIcon(stage);
+                            stage.initModality(Modality.APPLICATION_MODAL);
+                            stage.centerOnScreen();
                             stage.show();
                             suacachdungController.xong.setOnMouseClicked(event1 -> {
                                 suacachdungController.Validator();
