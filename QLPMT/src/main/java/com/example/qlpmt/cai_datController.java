@@ -744,42 +744,48 @@ Share.getInstance().setSharedVariable("13");
 
             cell.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 1) {
-                    CachDungtable rowData = tb_cd.getSelectionModel().getSelectedValues().get(0);
-                    String thongtin=rowData.getTenCachDung();
-                    try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/Suacachdung.fxml"));
-                        loader.setController(suacachdungController);
-                        Scene scene = new Scene(loader.load());
-                        Stage stage = new Stage();
-                        stage.setScene(scene);
-                        AppUtils.setIcon(stage);
-                        stage.show();
-                        suacachdungController.xong.setOnMouseClicked(event1 -> {
-                            Share.getInstance().setSharedVariable("8");
-                            System.out.println(Share.getInstance().getSharedVariable());
-                            suacachdungController.Validator();
-                            if(suacachdungController.validationResult) {
-                                try {
-                                    PreparedStatement pstmt = dbConnection.prepareStatement("UPDATE CachDung SET TenCachDung = ? WHERE TenCachDung = ?");
-                                    pstmt.setString(1, suacachdungController.suathongtin.getText());
-                                    pstmt.setString(2, thongtin);
-                                    pstmt.executeUpdate();
-                                    setData();
-                                    tb_cd.setItems(cachdung_list);
-                                    stage.close();
-                                } catch (SQLException e) {
-                                    e.printStackTrace();
+                    if (role.equals("Quản lý")) {
+                        CachDungtable rowData = tb_cd.getSelectionModel().getSelectedValues().get(0);
+                        String thongtin = rowData.getTenCachDung();
+                        try {
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/Suacachdung.fxml"));
+                            loader.setController(suacachdungController);
+                            Scene scene = new Scene(loader.load());
+                            Stage stage = new Stage();
+                            stage.setScene(scene);
+                            AppUtils.setIcon(stage);
+                            stage.show();
+                            suacachdungController.xong.setOnMouseClicked(event1 -> {
+                                Share.getInstance().setSharedVariable("8");
+                                System.out.println(Share.getInstance().getSharedVariable());
+                                suacachdungController.Validator();
+                                if (suacachdungController.validationResult) {
+                                    try {
+                                        PreparedStatement pstmt = dbConnection.prepareStatement("UPDATE CachDung SET TenCachDung = ? WHERE TenCachDung = ?");
+                                        pstmt.setString(1, suacachdungController.suathongtin.getText());
+                                        pstmt.setString(2, thongtin);
+                                        pstmt.executeUpdate();
+                                        setData();
+                                        tb_cd.setItems(cachdung_list);
+                                        stage.close();
+                                    } catch (SQLException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
-                            }
-                        });
+                            });
 
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle("Cảnh báo");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Ban không có quyền chỉnh sửa thông tin này");
+                        alert.showAndWait();
                     }
-
-
-
-
                 }
             });
             return cell;
@@ -800,41 +806,54 @@ Share.getInstance().setSharedVariable("13");
             cell.setUnderline(true);
             cell.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 1) {
-                    Share.getInstance().setSharedVariable("9");
-                    DonViThuocTable rowData = tb_dvt.getSelectionModel().getSelectedValues().get(0);
-                    String thongtin=rowData.getTenDonVi();
-                    try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/Suacachdung.fxml"));
-                        loader.setController(suacachdungController);
-                        Scene scene = new Scene(loader.load());
-                        Stage stage = new Stage();
-                        stage.setScene(scene);
-                        AppUtils.setIcon(stage);
-                        stage.show();
-                        suacachdungController.xong.setOnMouseClicked(event1 -> {
-                            suacachdungController.Validator();
-                            if(suacachdungController.validationResult) {
-                                try {
-                                    PreparedStatement pstmt = dbConnection.prepareStatement("UPDATE DonViThuoc SET TenDVTHuoc = ? WHERE TenDVTHuoc = ?");
-                                    pstmt.setString(1, suacachdungController.suathongtin.getText());
-                                    pstmt.setString(2, thongtin);
-                                    pstmt.executeUpdate();
-                                    setData();
-                                    tb_dvt.setItems(dvt_list);
-                                    stage.close();
-                                } catch (SQLException e) {
-                                    e.printStackTrace();
+                    if(role.equals("Quản lý"))
+                    {
+                        Share.getInstance().setSharedVariable("9");
+                        DonViThuocTable rowData = tb_dvt.getSelectionModel().getSelectedValues().get(0);
+                        String thongtin = rowData.getTenDonVi();
+                        try {
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/Suacachdung.fxml"));
+                            loader.setController(suacachdungController);
+                            Scene scene = new Scene(loader.load());
+                            Stage stage = new Stage();
+                            stage.setScene(scene);
+                            AppUtils.setIcon(stage);
+                            stage.show();
+                            suacachdungController.xong.setOnMouseClicked(event1 -> {
+                                suacachdungController.Validator();
+                                if (suacachdungController.validationResult) {
+                                    try {
+                                        PreparedStatement pstmt = dbConnection.prepareStatement("UPDATE DonViThuoc SET TenDVTHuoc = ? WHERE TenDVTHuoc = ?");
+                                        pstmt.setString(1, suacachdungController.suathongtin.getText());
+                                        pstmt.setString(2, thongtin);
+                                        pstmt.executeUpdate();
+                                        setData();
+                                        tb_dvt.setItems(dvt_list);
+                                        stage.close();
+                                    } catch (SQLException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
-                            }
-                        });
+                            });
 
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    else
+                    {
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle("Cảnh báo");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Ban không có quyền chỉnh sửa thông tin này");
+                        alert.showAndWait();
                     }
 
                 }
             });
+
             return cell;
+
         });
         tb_dvt.getTableColumns().addAll(stt1,ten_donvi,xoa2);
         tb_dvt.setItems(dvt_list);
@@ -853,36 +872,46 @@ Share.getInstance().setSharedVariable("13");
             cell.setUnderline(true);
             cell.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 1) {
-                    Share.getInstance().setSharedVariable("10");
-                    LoaiBenhTable rowData = tb_benh.getSelectionModel().getSelectedValues().get(0);
-                    String thongtin=rowData.getTenLoaiBenh();
-                    try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/Suacachdung.fxml"));
-                        loader.setController(suacachdungController);
-                        Scene scene = new Scene(loader.load());
-                        Stage stage = new Stage();
-                        stage.setScene(scene);
-                        AppUtils.setIcon(stage);
-                        stage.show();
-                        suacachdungController.xong.setOnMouseClicked(event1 -> {
-                            suacachdungController.Validator();
-                            if(suacachdungController.validationResult) {
-                                try {
-                                    PreparedStatement pstmt = dbConnection.prepareStatement("UPDATE LoaiBenh SET TenBenh = ? WHERE TenBenh = ?");
-                                    pstmt.setString(1, suacachdungController.suathongtin.getText());
-                                    pstmt.setString(2, thongtin);
-                                    pstmt.executeUpdate();
-                                    setData();
-                                    tb_benh.setItems(loaibenh_list);
-                                    stage.close();
-                                } catch (SQLException e) {
-                                    e.printStackTrace();
+                    if(role.equals("Quản lý")) {
+                        Share.getInstance().setSharedVariable("10");
+                        LoaiBenhTable rowData = tb_benh.getSelectionModel().getSelectedValues().get(0);
+                        String thongtin = rowData.getTenLoaiBenh();
+                        try {
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/Suacachdung.fxml"));
+                            loader.setController(suacachdungController);
+                            Scene scene = new Scene(loader.load());
+                            Stage stage = new Stage();
+                            stage.setScene(scene);
+                            AppUtils.setIcon(stage);
+                            stage.show();
+                            suacachdungController.xong.setOnMouseClicked(event1 -> {
+                                suacachdungController.Validator();
+                                if (suacachdungController.validationResult) {
+                                    try {
+                                        PreparedStatement pstmt = dbConnection.prepareStatement("UPDATE LoaiBenh SET TenBenh = ? WHERE TenBenh = ?");
+                                        pstmt.setString(1, suacachdungController.suathongtin.getText());
+                                        pstmt.setString(2, thongtin);
+                                        pstmt.executeUpdate();
+                                        setData();
+                                        tb_benh.setItems(loaibenh_list);
+                                        stage.close();
+                                    } catch (SQLException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
-                            }
-                        });
+                            });
 
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    else
+                    {
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle("Cảnh báo");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Ban không có quyền chỉnh sửa thông tin này");
+                        alert.showAndWait();
                     }
 
                 }
