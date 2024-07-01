@@ -202,7 +202,7 @@ public class loginController  implements Initializable {
 
                     stage.setScene(scene);
                     scene.setFill(Color.TRANSPARENT);
-
+                    stage.centerOnScreen();
                     stage.show();
 
                 } catch (IOException e) {

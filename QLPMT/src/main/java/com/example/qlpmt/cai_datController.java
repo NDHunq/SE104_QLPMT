@@ -20,16 +20,20 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.image.ImageView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.sql.*;
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import Model.CachDungtable;
 import net.synedra.validatorfx.Validator;
@@ -287,6 +291,8 @@ public class cai_datController implements Initializable {
                 Stage stage = new Stage();
                 stage.setScene(scene);
                 AppUtils.setIcon(stage);
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.centerOnScreen();
                 stage.show();
                 controller.suathongtin.setText(hoten.getText());
                 Share.getInstance().setSharedVariable("2");
@@ -307,6 +313,8 @@ public class cai_datController implements Initializable {
                     Stage stage = new Stage();
                     stage.setScene(scene);
                     AppUtils.setIcon(stage);
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.centerOnScreen();
                     stage.show();
                     controller.suathongtin.setText(tienkham.getText());
                     controller.suathongtin.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -322,11 +330,7 @@ public class cai_datController implements Initializable {
             }
             else
             {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Cảnh báo");
-                alert.setHeaderText(null);
-                alert.setContentText("Ban không có quyền chỉnh sửa thông tin này");
-                alert.showAndWait();
+              showAlert();
             }
         });
         suabntoida.setOnMouseClicked(event -> {
@@ -340,6 +344,8 @@ public class cai_datController implements Initializable {
                     Stage stage = new Stage();
                     stage.setScene(scene);
                     AppUtils.setIcon(stage);
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.centerOnScreen();
                     stage.show();
                     controller.suathongtin.textProperty().addListener((observable, oldValue, newValue) -> {
                         if (!newValue.matches("\\d*")|| newValue.equals("0")) {
@@ -355,11 +361,7 @@ public class cai_datController implements Initializable {
             }
             else
             {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Cảnh báo");
-                alert.setHeaderText(null);
-                alert.setContentText("Ban không có quyền chỉnh sửa thông tin này");
-                alert.showAndWait();
+                showAlert();
             }
         });
         doimk.setOnMouseClicked(event -> {
@@ -369,8 +371,11 @@ public class cai_datController implements Initializable {
                 loader.setController(controller);
                 Scene scene = new Scene(loader.load());
                 Stage stage = new Stage();
+                scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
                 stage.setScene(scene);
-                AppUtils.setIcon(stage);
+                AppUtils.setIcon(stage);stage.initModality(Modality.APPLICATION_MODAL);
+                stage.centerOnScreen();
+
                 stage.show();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -423,7 +428,13 @@ public class cai_datController implements Initializable {
                     loader.setController(controller);
                     Scene scene = new Scene(loader.load());
                     Stage stage = new Stage();
-                    stage.setScene(scene); AppUtils.setIcon(stage);
+
+                    scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
+              
+                    stage.setScene(scene); 
+                    AppUtils.setIcon(stage);
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.centerOnScreen();
 
                     stage.show();
                     controller.xong.setOnMouseClicked(event1 -> {
@@ -492,11 +503,7 @@ public class cai_datController implements Initializable {
             }
             else
             {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Cảnh báo");
-                alert.setHeaderText(null);
-                alert.setContentText("Ban không có quyền chỉnh sửa thông tin này");
-                alert.showAndWait();
+                showAlert();
             }
         });
         themdvt.setOnMouseClicked(event -> {
@@ -508,8 +515,11 @@ public class cai_datController implements Initializable {
                     loader.setController(controller);
                     Scene scene = new Scene(loader.load());
                     Stage stage = new Stage();
+                    scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
                     stage.setScene(scene);
                     AppUtils.setIcon(stage);
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.centerOnScreen();
                     stage.show();
                     controller.xong.setOnMouseClicked(event1 -> {
                         Validation();
@@ -576,11 +586,7 @@ public class cai_datController implements Initializable {
             }
             else
             {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Cảnh báo");
-                alert.setHeaderText(null);
-                alert.setContentText("Ban không có quyền chỉnh sửa thông tin này");
-                alert.showAndWait();
+               showAlert();
             }
         });
         thembenh.setOnMouseClicked(event -> {
@@ -591,8 +597,11 @@ Share.getInstance().setSharedVariable("13");
                     loader.setController(controller);
                     Scene scene = new Scene(loader.load());
                     Stage stage = new Stage();
+                    scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
                     stage.setScene(scene);
                     AppUtils.setIcon(stage);
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.centerOnScreen();
                     stage.show();
                     controller.xong.setOnMouseClicked(event1 -> {
                         Validation();
@@ -655,11 +664,7 @@ Share.getInstance().setSharedVariable("13");
             }
             else
             {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Cảnh báo");
-                alert.setHeaderText(null);
-                alert.setContentText("Ban không có quyền chỉnh sửa thông tin này");
-                alert.showAndWait();
+                showAlert();
             }
         });
     }
@@ -754,6 +759,8 @@ Share.getInstance().setSharedVariable("13");
                             Stage stage = new Stage();
                             stage.setScene(scene);
                             AppUtils.setIcon(stage);
+                            stage.initModality(Modality.APPLICATION_MODAL);
+                            stage.centerOnScreen();
                             stage.show();
                             suacachdungController.xong.setOnMouseClicked(event1 -> {
                                 Share.getInstance().setSharedVariable("8");
@@ -780,11 +787,7 @@ Share.getInstance().setSharedVariable("13");
 
 
                     } else {
-                        Alert alert = new Alert(Alert.AlertType.WARNING);
-                        alert.setTitle("Cảnh báo");
-                        alert.setHeaderText(null);
-                        alert.setContentText("Ban không có quyền chỉnh sửa thông tin này");
-                        alert.showAndWait();
+                      showAlert();
                     }
                 }
             });
@@ -818,6 +821,8 @@ Share.getInstance().setSharedVariable("13");
                             Stage stage = new Stage();
                             stage.setScene(scene);
                             AppUtils.setIcon(stage);
+                            stage.initModality(Modality.APPLICATION_MODAL);
+                            stage.centerOnScreen();
                             stage.show();
                             suacachdungController.xong.setOnMouseClicked(event1 -> {
                                 suacachdungController.Validator();
@@ -842,11 +847,7 @@ Share.getInstance().setSharedVariable("13");
                     }
                     else
                     {
-                        Alert alert = new Alert(Alert.AlertType.WARNING);
-                        alert.setTitle("Cảnh báo");
-                        alert.setHeaderText(null);
-                        alert.setContentText("Ban không có quyền chỉnh sửa thông tin này");
-                        alert.showAndWait();
+                        showAlert();
                     }
 
                 }
@@ -883,6 +884,8 @@ Share.getInstance().setSharedVariable("13");
                             Stage stage = new Stage();
                             stage.setScene(scene);
                             AppUtils.setIcon(stage);
+                            stage.initModality(Modality.APPLICATION_MODAL);
+                            stage.centerOnScreen();
                             stage.show();
                             suacachdungController.xong.setOnMouseClicked(event1 -> {
                                 suacachdungController.Validator();
@@ -907,11 +910,7 @@ Share.getInstance().setSharedVariable("13");
                     }
                     else
                     {
-                        Alert alert = new Alert(Alert.AlertType.WARNING);
-                        alert.setTitle("Cảnh báo");
-                        alert.setHeaderText(null);
-                        alert.setContentText("Ban không có quyền chỉnh sửa thông tin này");
-                        alert.showAndWait();
+                       showAlert();
                     }
 
                 }
@@ -919,5 +918,19 @@ Share.getInstance().setSharedVariable("13");
             return cell;
         });
     }
+    public void showAlert() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Thông báo");
+        alert.setHeaderText(null);
+        alert.setContentText("Bạn không có quyền chỉnh sửa thông tin này");
+
+        Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+        InputStream iconStream = AppUtils.class.getResourceAsStream("/com/example/qlpmt/images/cong.png");
+        Image image = new Image(iconStream);
+        alertStage.getIcons().add(image);
+
+        alert.showAndWait();
+    }
+
 
 }

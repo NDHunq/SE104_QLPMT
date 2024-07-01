@@ -26,6 +26,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
@@ -123,6 +124,7 @@ public class kham_benhController implements Initializable {
         Scene scene = new Scene(root, 330, 380);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
         AppUtils.setIcon(stage);
         stage.centerOnScreen();
         stage.show();
@@ -145,6 +147,7 @@ public class kham_benhController implements Initializable {
         Scene scene = new Scene(root, 330, 380);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
         AppUtils.setIcon(stage);
         stage.centerOnScreen();
         stage.show();
@@ -172,6 +175,7 @@ public class kham_benhController implements Initializable {
         Scene scene = new Scene(root, 680, 500);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
         AppUtils.setIcon(stage);
         stage.centerOnScreen();
         stage.show();
@@ -200,6 +204,7 @@ public class kham_benhController implements Initializable {
         Scene scene = new Scene(root, 684, 539);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
         AppUtils.setIcon(stage);
         stage.centerOnScreen();
         stage.show();

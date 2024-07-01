@@ -35,6 +35,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseButton;
@@ -51,6 +52,7 @@ import net.synedra.validatorfx.Check;
 import net.synedra.validatorfx.Validator;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -168,6 +170,10 @@ public class EditPhieuKBController implements Initializable {
                 alert.setContentText("Bạn có chắc chắn muốn cập nhật thông tin phiếu khám bệnh này không?");
                 Window window = alert.getDialogPane().getScene().getWindow();
                 window.setOnCloseRequest(e -> alert.close());
+                Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+                InputStream iconStream = AppUtils.class.getResourceAsStream("/com/example/qlpmt/images/cong.png");
+                Image image = new Image(iconStream);
+                alertStage.getIcons().add(image);
                 ButtonType result = alert.showAndWait().orElse(buttonTypeNo);
 
                 if(result == buttonTypeYes){
@@ -209,6 +215,10 @@ public class EditPhieuKBController implements Initializable {
                 alert.setTitle("Lỗi");
                 alert.setHeaderText(null);
                 alert.setContentText("Đã có lỗi xảy ra, vui lòng kiểm tra lại thông tin!");
+                Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+                InputStream iconStream = AppUtils.class.getResourceAsStream("/com/example/qlpmt/images/cong.png");
+                Image image = new Image(iconStream);
+                alertStage.getIcons().add(image);
                 ButtonType result = alert.showAndWait().orElse(ButtonType.CLOSE);
             }
         });
@@ -293,6 +303,10 @@ public class EditPhieuKBController implements Initializable {
             alert.setContentText("Bạn có chắc chắn muốn xóa thuốc này không?");
             Window window = alert.getDialogPane().getScene().getWindow();
             window.setOnCloseRequest(e -> alert.close());
+            Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+            InputStream iconStream = AppUtils.class.getResourceAsStream("/com/example/qlpmt/images/cong.png");
+            Image image = new Image(iconStream);
+            alertStage.getIcons().add(image);
             ButtonType result = alert.showAndWait().orElse(buttonTypeNo);
 
             if(result == buttonTypeYes){

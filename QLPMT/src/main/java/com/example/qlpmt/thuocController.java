@@ -164,10 +164,10 @@ public class thuocController implements Initializable {
 
         thuoc.getTableColumns().addAll(stt,ten_thuoc,don_vi,so_luong,solandung);
         thuoc.getFilters().addAll(
-                new StringFilter<>("tenthuoc",Thuoc::getTenthuoc),
-                new StringFilter<>("donvi",Thuoc::getDonvi),
-                new StringFilter<>("soluong",Thuoc::getSoluong),
-                new StringFilter<>("solandung",Thuoc::getSolandung)
+                new StringFilter<>("Tên thuốc",Thuoc::getTenthuoc),
+                new StringFilter<>("Đơn vị thuốc",Thuoc::getDonvi),
+                new StringFilter<>("Số lượng",Thuoc::getSoluong),
+                new StringFilter<>("Số lần dùng",Thuoc::getSolandung)
 
         );
 
