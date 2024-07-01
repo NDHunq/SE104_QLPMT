@@ -46,6 +46,7 @@ public class Inf_TK_controller implements Initializable {
     private Text bstxt;
     @FXML
     private Text nvtxt;
+    private NhanVienController ccontroller=new NhanVienController();
 
 
     private String usr ;
@@ -95,6 +96,9 @@ public class Inf_TK_controller implements Initializable {
             // Close the stage
             stage.close();
         });
+    }
+    public void setController(NhanVienController controller) {
+        this.ccontroller = controller;
     }
 
     private void displayUserInfo(String usr) {
@@ -162,6 +166,7 @@ public class Inf_TK_controller implements Initializable {
                 alert.showAndWait();
             }
             connection.close();
+            ccontroller.refreshpage();
         } catch (SQLException e) {
             e.printStackTrace();
         }

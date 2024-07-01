@@ -1,4 +1,5 @@
 package com.example.qlpmt;
+import com.example.qlpmt.KhamBenh.kham_benhController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -60,6 +61,7 @@ public class SigninController   implements Initializable {
     private MFXPasswordField matkhau2;
     @FXML
     private Button dangky;
+    private NhanVienController ccontroller=new NhanVienController();
 
 
     @Override
@@ -101,6 +103,9 @@ public class SigninController   implements Initializable {
         });
 
 
+    }
+    public void setController(NhanVienController controller) {
+        this.ccontroller = controller;
     }
     private void insertData() {
         // Tạo kết nối với cơ sở dữ liệu
@@ -178,6 +183,7 @@ public class SigninController   implements Initializable {
             matkhau.clear();
             matkhau2.clear();
             hoten.clear();
+           ccontroller.refreshpage();
 
         } catch (SQLException e) {
             e.printStackTrace();
