@@ -38,9 +38,9 @@ public class HelloApplication extends Application {
         stage.setScene(scene);
 
         scene.setFill(Color.TRANSPARENT);
+        stage.centerOnScreen();
 
         AppUtils.setIcon(stage);
-        stage.centerOnScreen();
         stage.show();
     }
 

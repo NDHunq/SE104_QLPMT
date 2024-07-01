@@ -12,6 +12,17 @@
 .radioGend .radio-button .dot {
     -fx-fill: #2264D1;
 }
+.mfx-radio-button:selected .radio {
+    -fx-stroke: #2264D1;
+}
+
+.mfx-radio-button .dot {
+    -fx-fill: #2264D1;
+}
+
+.mfx-radio-button .mfx-ripple-generator {
+    -mfx-ripple-color: #D4F2FF;
+}
 .button {
     -fx-background-radius: 10px;
     -fx-background-color:  #2264D1;
