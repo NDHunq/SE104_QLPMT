@@ -18,6 +18,9 @@
             <font>
                 <Font name="System Bold" size="25.0" />
             </font>
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
         </Label>
         <VBox prefHeight="353.0" prefWidth="310.0" style="-fx-background-radius: 10;" styleClass="mainBackground" stylesheets="@../../../style.css">
             <children>
