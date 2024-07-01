@@ -91,7 +91,14 @@ public class Inf_TK_controller implements Initializable {
             nvtxt.setFill(Color.web("#7b7b7b"));
             bstxt.setFill(Color.web("#2264d1"));
         });
-        luu.setOnAction(event -> saveUserInfo());
+        luu.setOnAction(event -> {
+            // Get the current stage
+            Stage stage = (Stage) luu.getScene().getWindow();
+            // Close the stage
+            stage.close();
+            saveUserInfo();
+
+        });
         huy.setOnAction(event -> {
             // Get the current stage
             Stage stage = (Stage) huy.getScene().getWindow();
