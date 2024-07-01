@@ -38,7 +38,7 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Text>
-            <HBox maxWidth="-Infinity" prefHeight="250.0" prefWidth="820.0" style="-fx-border-width: 2px;       -fx-border-color: #2264D1 ;-fx-border-radius: 5px">
+            <HBox  maxWidth="-Infinity" prefHeight="250.0" prefWidth="820.0" style="-fx-border-width: 2px;       ;-fx-border-color: #2264D1 ;-fx-border-radius: 5px">
                <children>
                   <VBox prefHeight="200.0" prefWidth="298.0">
                      <children>

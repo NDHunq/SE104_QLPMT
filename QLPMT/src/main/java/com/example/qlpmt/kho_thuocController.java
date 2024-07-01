@@ -23,10 +23,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
+
 import Model.KhoThuoc;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
@@ -45,6 +43,8 @@ import net.synedra.validatorfx.Validator;
 import javax.swing.*;
 
 public class kho_thuocController implements Initializable {
+    String cd= "";
+    String dongianhap="";
     @FXML
     public Button Add;
 
@@ -211,7 +211,7 @@ public class kho_thuocController implements Initializable {
         System.out.println(validationResult);
 
     }
-    public void setupValidatorSua() {
+    public void setupValidatorSua(KhoThuoc rowData) {
         //Validate cho them thuoc
         try {
             validatorSua.createCheck()
@@ -292,6 +292,7 @@ public class kho_thuocController implements Initializable {
             validatorSua.createCheck()
                     .withMethod(c -> {
                         int check=1;
+                        int check1=1;
                         for (int i = 0; i < tenthuoc.size(); i++) {
                             if (sua_controller.text_tenthuoc.getText().equals(tenthuoc.get(i))) {
                                 System.out.println("Thuoc da ton tai");
@@ -299,7 +300,17 @@ public class kho_thuocController implements Initializable {
 //                            break;
                             }
                         }
-                        if (check==0) {
+                        if(sua_controller.text_donvi.getText().equals(rowData.getDonvi())
+                                &&sua_controller.text_cachdung.getText().equals(cd)
+                                &&sua_controller.text_tenthuoc.getText().equals(rowData.getTenthuoc())
+                                &&sua_controller.text_soluong.getText().equals(rowData.getSoluong().toString())
+                                &&sua_controller.text_dongia.getText().equals(rowData.getDongia().toString())
+                                &&sua_controller.text_dongianhap.getText().equals(dongianhap))
+                        {
+                            check1=0;
+                        }
+
+                        if (check==0&&check1==0) {
                             sua_controller.text_tenthuoc.setStyle("-fx-border-color: red; -fx-text-fill: red");
                             c.error("Thuốc đã tồn tại");
                         }
@@ -372,6 +383,7 @@ public class kho_thuocController implements Initializable {
                 System.out.println("-2");
                 Scene scene = new Scene(loader.load());
                 Stage stage = new Stage();
+//                scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
                 stage.setScene(scene);
                 AppUtils.setIcon(stage);
                 stage.initModality(Modality.APPLICATION_MODAL);
@@ -529,6 +541,7 @@ public class kho_thuocController implements Initializable {
                         loader.setController(sua_controller);
                         Scene scene = new Scene(loader.load());
                         Stage stage = new Stage();
+//                       scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
                         stage.setScene(scene);
                         AppUtils.setIcon(stage);
                         stage.initModality(Modality.APPLICATION_MODAL);
@@ -542,8 +555,10 @@ public class kho_thuocController implements Initializable {
                             ResultSet rs = pst.executeQuery();
                             while (rs.next()) {
                                sua_controller.text_cachdung.setText(rs.getString("TenCachDung"));
+                               cd=rs.getString("TenCachDung");
                                Integer giaMua=rs.getInt("GiaMua");
                                  sua_controller.text_dongianhap.setText(giaMua.toString());
+                                 dongianhap=giaMua.toString();
                             }
                        }
                        catch (Exception e) {
@@ -561,7 +576,7 @@ public class kho_thuocController implements Initializable {
                         sua_controller.suathuoc.setOnMouseClicked(event1 -> {
                             String dvthuocid = "";
                             String cachdungid = "";
-                            setupValidatorSua();
+                            setupValidatorSua(rowData);
                             try {
                                 System.out.println("validationSua:" + validationSua);
                                 if (validationSua) {

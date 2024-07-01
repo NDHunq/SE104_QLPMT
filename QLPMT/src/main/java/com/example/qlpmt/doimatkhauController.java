@@ -5,9 +5,11 @@ import io.github.palexdev.materialfx.controls.MFXPasswordField;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import net.synedra.validatorfx.Validator;
 
+import java.io.InputStream;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -128,6 +130,19 @@ public class doimatkhauController implements Initializable {
         validationmk = validatormk.validate();
         System.out.println(validationmk);
     }
+    public void showAlert() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Thông báo");
+        alert.setHeaderText(null);
+        alert.setContentText("Đổi mật khẩu thành công");
+
+        Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+        InputStream iconStream = AppUtils.class.getResourceAsStream("/com/example/qlpmt/images/cong.png");
+        Image image = new Image(iconStream);
+        alertStage.getIcons().add(image);
+
+        alert.showAndWait();
+    }
     public void initialize(URL location, ResourceBundle resources) {
 
 
@@ -138,6 +153,7 @@ public class doimatkhauController implements Initializable {
 
             if(validationmk)
             {
+                matkhau=mkmoi1;
                String sql="update TaiKhoan set mk=? where username=?";
                 try {
                     System.out.println(mkmoi1);
@@ -146,11 +162,13 @@ public class doimatkhauController implements Initializable {
                     preparedStatement.setString(1,mkmoi1);
                     preparedStatement.setString(2,username);
                     preparedStatement.executeUpdate();
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
                 Stage stage = (Stage) xong.getScene().getWindow();
                 stage.close();
+                showAlert();
             }
 
 
