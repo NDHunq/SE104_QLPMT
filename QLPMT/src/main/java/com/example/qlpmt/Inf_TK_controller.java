@@ -6,12 +6,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.InputStream;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -163,6 +165,11 @@ public class Inf_TK_controller implements Initializable {
                 alert.setTitle("Success");
                 alert.setHeaderText(null);
                 alert.setContentText("Cập nhật thông tin thành công.");
+                Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+
+                InputStream iconStream = AppUtils.class.getResourceAsStream("/com/example/qlpmt/images/cong.png");
+                Image image = new Image(iconStream);
+                alertStage.getIcons().add(image);
                 alert.showAndWait();
             }
             connection.close();

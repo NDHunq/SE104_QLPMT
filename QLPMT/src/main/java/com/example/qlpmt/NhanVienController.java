@@ -30,6 +30,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.nio.Buffer;
 import java.sql.*;
@@ -202,6 +203,13 @@ public class NhanVienController implements Initializable {
 
         delete.setOnAction(event -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Bạn có chắc xóa nhân viên này không?", ButtonType.YES, ButtonType.NO);
+            alert.getDialogPane().getScene().getWindow();
+            Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+
+            InputStream iconStream = AppUtils.class.getResourceAsStream("/com/example/qlpmt/images/cong.png");
+            Image image = new Image(iconStream);
+            alertStage.getIcons().add(image);
+
             alert.showAndWait();
 
             if (alert.getResult() == ButtonType.YES) {

@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -120,6 +121,11 @@ public class SigninController   implements Initializable {
             alert.setTitle("Lỗi");
             alert.setHeaderText(null);
             alert.setContentText("Vui lòng nhập đầy đủ thông tin");
+            Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+
+            InputStream iconStream = AppUtils.class.getResourceAsStream("/com/example/qlpmt/images/cong.png");
+            Image image = new Image(iconStream);
+            alertStage.getIcons().add(image);
             alert.showAndWait();
             return;
         }
@@ -130,6 +136,11 @@ public class SigninController   implements Initializable {
             alert.setTitle("Lỗi");
             alert.setHeaderText(null);
             alert.setContentText("Sai mật khẩu");
+            Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+
+            InputStream iconStream = AppUtils.class.getResourceAsStream("/com/example/qlpmt/images/cong.png");
+            Image image = new Image(iconStream);
+            alertStage.getIcons().add(image);
             alert.showAndWait();
             return;
         }
@@ -144,6 +155,13 @@ public class SigninController   implements Initializable {
                 alert.setTitle("Lỗi");
                 alert.setHeaderText(null);
                 alert.setContentText("Tên người dùng đã tồn tại");
+                Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+
+                InputStream iconStream = AppUtils.class.getResourceAsStream("/com/example/qlpmt/images/cong.png");
+                Image image = new Image(iconStream);
+                alertStage.getIcons().add(image);
+
+
                 alert.showAndWait();
                 return;
             }
@@ -175,6 +193,11 @@ public class SigninController   implements Initializable {
             alert.setTitle("Thành công");
             alert.setHeaderText(null);
             alert.setContentText("Thêm thành công");
+            Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+
+            InputStream iconStream = AppUtils.class.getResourceAsStream("/com/example/qlpmt/images/cong.png");
+            Image image = new Image(iconStream);
+            alertStage.getIcons().add(image);
             alert.showAndWait();
 
             // Clear all input fields
