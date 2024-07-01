@@ -47,59 +47,60 @@ public class QuyenMKController  implements Initializable {
         });
         quenmk.setOnMouseClicked(event -> {
             // Get the current stage
-            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            // Close the stage
-            stage.close();
-
-            // Get the email from the text field
-            String email = username.getText();
-
-            // Connect to the database
-            try {
-                Connection connection = DBConnection.getConnection();
-                String sql = "SELECT * FROM TaiKhoan WHERE Email = ?";
-                PreparedStatement statement = connection.prepareStatement(sql);
-
-
-                statement.setString(1, email);
-                ResultSet rs = statement.executeQuery();
-
-                // Check if a user with the given email exists
-                try
-                {
-                    if (rs.next()) {
-                        // Generate a new random password
-                        String newPassword ="123456";
-
-                        // Update the user's password in the database
-                        String sq2 = "UPDATE TaiKhoan SET mk = ? WHERE email = ?";
-                        PreparedStatement updateStmt = connection.prepareStatement(sq2);
-                            updateStmt.setString(1, newPassword);
-                            updateStmt.setString(2, email);
-                            updateStmt.executeUpdate();
-
-
-                        // Send the new account information to the user's email
-                        sendNewAccountInfo(email, newPassword);
-
-                    } else {
-                        // Handle the case where no user with the given email exists
-                        System.out.println("No user with the given email exists.");
-                    }
-                }
-                catch(SQLException e)
-                {
-                    e.printStackTrace();
-                }
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-            });
+//            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+//            // Close the stage
+//            stage.close();
+//
+//            // Get the email from the text field
+//            String email = username.getText();
+//
+//            // Connect to the database
+//            try {
+//                Connection connection = DBConnection.getConnection();
+//                String sql = "SELECT * FROM TaiKhoan WHERE Email = ?";
+//                PreparedStatement statement = connection.prepareStatement(sql);
+//
+//
+//                statement.setString(1, email);
+//                ResultSet rs = statement.executeQuery();
+//
+//                // Check if a user with the given email exists
+//                try
+//                {
+//                    if (rs.next()) {
+//                        // Generate a new random password
+//                        String newPassword ="123456";
+//
+//                        // Update the user's password in the database
+//                        String sq2 = "UPDATE TaiKhoan SET mk = ? WHERE email = ?";
+//                        PreparedStatement updateStmt = connection.prepareStatement(sq2);
+//                            updateStmt.setString(1, newPassword);
+//                            updateStmt.setString(2, email);
+//                            updateStmt.executeUpdate();
+//
+//
+//                        // Send the new account information to the user's email
+//                        sendNewAccountInfo(email, newPassword);
+//
+//                    } else {
+//                        // Handle the case where no user with the given email exists
+//                        System.out.println("No user with the given email exists.");
+//                    }
+//                }
+//                catch(SQLException e)
+//                {
+//                    e.printStackTrace();
+//                }
+//
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//
+            sendNewAccountInfo("tranquyen2132004@gmail.com", "123456");
+        });
     }
     private void sendNewAccountInfo(String email, String newPassword) {
-        final String fromEmail = "22521225@gm.uit.edu.vn"; //requires valid gmail id
+        final String fromEmail = "tranquyen2132004@gmail.com"; //requires valid gmail id
         final String password = "Quyen@213"; // correct password for gmail id
         final String toEmail = "tranquyen2132004@gmail.com"; // can be any email id
 
