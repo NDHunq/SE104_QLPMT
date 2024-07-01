@@ -143,11 +143,7 @@
          <right>
             <HBox prefHeight="39.0" prefWidth="127.0" BorderPane.alignment="CENTER">
                <children>
-                  <MFXButton fx:id="HoaDon" mnemonicParsing="false" prefHeight="39.0" prefWidth="196.0" style="-fx-background-color: #5CC2F2;" stylesheets="@../../../style.css" text="HÓA ĐƠN">
-                     <styleClass>
-                        <String fx:value="fontButton" />
-                        <String fx:value="TextBorder" />
-                     </styleClass>
+                  <MFXButton fx:id="HoaDon" mnemonicParsing="false" prefHeight="39.0" prefWidth="196.0" style="-fx-background-color: #5CC2F2;" styleClass="fontButton" stylesheets="@../../../style.css" text="HÓA ĐƠN">
                      <HBox.margin>
                         <Insets right="15.0" />
                      </HBox.margin>

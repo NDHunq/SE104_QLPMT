@@ -41,7 +41,7 @@ public class HelloApplication extends Application {
         scene.setFill(Color.TRANSPARENT);
 
         AppUtils.setIcon(stage);
-
+        stage.centerOnScreen();
         stage.show();
     }
 
