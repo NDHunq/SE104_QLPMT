@@ -81,6 +81,9 @@ public class EditPhieuKBController implements Initializable {
     private MFXButton XongBtn = new MFXButton();
 
     @FXML
+    private MFXButton add_butt= new MFXButton();
+
+    @FXML
     private ImageView close = new ImageView();
 
     @FXML
@@ -153,6 +156,13 @@ public class EditPhieuKBController implements Initializable {
             Node source = (Node) event.getSource();
             Stage stage = (Stage) source.getScene().getWindow();
             stage.close();
+        });
+        add_butt.setOnAction((ActionEvent event) -> {
+            try {
+                AddThuoc(event);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
         HuyBtn.setOnAction((ActionEvent event) -> {
             Node source = (Node) event.getSource();
@@ -230,7 +240,29 @@ public class EditPhieuKBController implements Initializable {
         table_thuoc.autosizeColumnsOnInitialization();
         table_thuoc.getTableColumns().get(3).setPrefWidth(200);
     }
-
+    public void AddThuoc(ActionEvent events) throws IOException {
+        FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("add_thuoc_pkb.fxml"));
+        Parent root = loader.load();
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.UNDECORATED);
+//        AddThuocPKBController controller = loader.getController();
+//        controller.InitData(PKB_id);
+//        controller.setAddPhieuKBController(this);
+        root.setOnMousePressed(event -> {
+            x = event.getSceneX();
+            y = event.getSceneY();
+        });
+        root.setOnMouseDragged(event -> {
+            stage.setX(event.getScreenX() - x);
+            stage.setY(event.getScreenY() - y);
+        });
+        Scene scene = new Scene(root, 320, 340);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        AppUtils.setIcon(stage);
+        stage.show();
+    }
     private void setupPaginated() {
 
         //Tao cac cot cua tableview

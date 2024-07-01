@@ -147,8 +147,8 @@ public class NhanVienController implements Initializable {
 
         //Tao cac cot cua tableview
 
-        MFXTableColumn<NhanVien> hoten = new MFXTableColumn<>("Ho Ten", false, Comparator.comparing(NhanVien::getHoten));
-        MFXTableColumn<NhanVien> chucvu = new MFXTableColumn<>("Chuc vu", false, Comparator.comparing(NhanVien::getChucvu));
+        MFXTableColumn<NhanVien> hoten = new MFXTableColumn<>("Họ Tên ", false, Comparator.comparing(NhanVien::getHoten));
+        MFXTableColumn<NhanVien> chucvu = new MFXTableColumn<>("Chức vụ", false, Comparator.comparing(NhanVien::getChucvu));
         MFXTableColumn<NhanVien> username = new MFXTableColumn<>("Username", false, Comparator.comparing(NhanVien::getUsername));
         MFXTableColumn<NhanVien> email = new MFXTableColumn<>("Email", false, Comparator.comparing(NhanVien::getEmail));
 
@@ -227,6 +227,12 @@ public class NhanVienController implements Initializable {
                     deleteAlert.setHeaderText(null);
                     deleteAlert.setContentText("Đã xóa: " + selectedNhanVien.getHoten());
                     this.refreshpage();
+                    Stage alertStage2 = (Stage) deleteAlert.getDialogPane().getScene().getWindow();
+
+                    InputStream iconStream2 = AppUtils.class.getResourceAsStream("/com/example/qlpmt/images/cong.png");
+                    Image image2 = new Image(iconStream2);
+                    alertStage2.getIcons().add(image2);
+
                     deleteAlert.showAndWait();
 
 
