@@ -33,6 +33,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.sql.*;
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import Model.CachDungtable;
 import net.synedra.validatorfx.Validator;
@@ -370,6 +371,7 @@ public class cai_datController implements Initializable {
                 loader.setController(controller);
                 Scene scene = new Scene(loader.load());
                 Stage stage = new Stage();
+                scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
                 stage.setScene(scene);
                 AppUtils.setIcon(stage);stage.initModality(Modality.APPLICATION_MODAL);
                 stage.centerOnScreen();
@@ -426,9 +428,14 @@ public class cai_datController implements Initializable {
                     loader.setController(controller);
                     Scene scene = new Scene(loader.load());
                     Stage stage = new Stage();
-                    stage.setScene(scene); AppUtils.setIcon(stage);
+
+                    scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
+              
+                    stage.setScene(scene); 
+                    AppUtils.setIcon(stage);
                     stage.initModality(Modality.APPLICATION_MODAL);
                     stage.centerOnScreen();
+
                     stage.show();
                     controller.xong.setOnMouseClicked(event1 -> {
 
@@ -508,6 +515,7 @@ public class cai_datController implements Initializable {
                     loader.setController(controller);
                     Scene scene = new Scene(loader.load());
                     Stage stage = new Stage();
+                    scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
                     stage.setScene(scene);
                     AppUtils.setIcon(stage);
                     stage.initModality(Modality.APPLICATION_MODAL);
@@ -589,6 +597,7 @@ Share.getInstance().setSharedVariable("13");
                     loader.setController(controller);
                     Scene scene = new Scene(loader.load());
                     Stage stage = new Stage();
+                    scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
                     stage.setScene(scene);
                     AppUtils.setIcon(stage);
                     stage.initModality(Modality.APPLICATION_MODAL);

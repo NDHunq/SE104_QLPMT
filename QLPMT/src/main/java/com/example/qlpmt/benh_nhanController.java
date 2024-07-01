@@ -348,6 +348,7 @@ public class benh_nhanController implements Initializable{
         Scene scene = new Scene(root, 684, 539);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.initModality(Modality.APPLICATION_MODAL);
+        stage.centerOnScreen();
 
         //reload lai table view sau khi update
         stage.setOnHidden(e -> reloadTableView());

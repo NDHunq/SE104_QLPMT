@@ -26,6 +26,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import net.synedra.validatorfx.Validator;
@@ -316,6 +317,7 @@ public class AddPhieuKBController implements Initializable {
         Scene scene = new Scene(root, 320, 340);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
         AppUtils.setIcon(stage);
         stage.show();
 
@@ -339,6 +341,7 @@ public class AddPhieuKBController implements Initializable {
         Scene scene = new Scene(root, 320, 340);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
         AppUtils.setIcon(stage);
         stage.show();
     }

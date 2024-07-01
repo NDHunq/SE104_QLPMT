@@ -221,3 +221,7 @@
 
 .default-color0.chart-line-symbol { -fx-background-color: #2264D1, white; }
 
+.mfx-password-field:focus-within {
+    -fx-border-color: #2264D1;
+}
+
