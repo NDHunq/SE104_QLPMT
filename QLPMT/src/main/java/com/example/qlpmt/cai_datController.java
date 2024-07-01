@@ -15,11 +15,13 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -91,6 +93,8 @@ public class cai_datController implements Initializable {
 
     private
     ThemcachdungController controller = new ThemcachdungController(this);
+    SuacachdungController suacachdungController = new SuacachdungController(this);
+
 
     boolean validation ;
 
@@ -116,7 +120,7 @@ public class cai_datController implements Initializable {
                     int checkcd=1;
                     for(int i=0;i<cachdung_list.size();i++)
                     {
-                        if(controller.them.getText().equals(cachdung_list.get(i).getTenCachDung()))
+                        if(controller.them.getText().equals(cachdung_list.get(i).getTenCachDung())&&Share.getInstance().getSharedVariable().equals("11"))
                         {
                             checkcd=0;
                             break;
@@ -139,7 +143,7 @@ public class cai_datController implements Initializable {
                     int checkdvt=1;
                     for(int i=0;i<dvt_list.size();i++)
                     {
-                        if(controller.them.getText().equals(dvt_list.get(i).getTenDonVi()))
+                        if(controller.them.getText().equals(dvt_list.get(i).getTenDonVi())&&Share.getInstance().getSharedVariable().equals("12"))
                         {
                             checkdvt=0;
                             break;
@@ -162,7 +166,7 @@ public class cai_datController implements Initializable {
                     int checkbenh=1;
                     for(int i=0;i<loaibenh_list.size();i++)
                     {
-                        if(controller.them.getText().equals(loaibenh_list.get(i).getTenLoaiBenh()))
+                        if(controller.them.getText().equals(loaibenh_list.get(i).getTenLoaiBenh())&&Share.getInstance().getSharedVariable().equals("13") )
                         {
                             checkbenh=0;
                             break;
@@ -413,6 +417,7 @@ public class cai_datController implements Initializable {
         themcd.setOnMouseClicked(event -> {
             if(role.equals("Quản lý"))
             {
+                Share.getInstance().setSharedVariable("11");
                 try {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/themcachdung.fxml"));
                     loader.setController(controller);
@@ -422,6 +427,7 @@ public class cai_datController implements Initializable {
 
                     stage.show();
                     controller.xong.setOnMouseClicked(event1 -> {
+
                         Validation();
                         System.out.println("click vao button xong");
                         try {
@@ -495,7 +501,9 @@ public class cai_datController implements Initializable {
         });
         themdvt.setOnMouseClicked(event -> {
             if(role.equals("Quản lý")) {
+                Share.getInstance().setSharedVariable("12");
                 try {
+
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/themcachdung.fxml"));
                     loader.setController(controller);
                     Scene scene = new Scene(loader.load());
@@ -577,7 +585,7 @@ public class cai_datController implements Initializable {
         });
         thembenh.setOnMouseClicked(event -> {
             if(role.equals("Quản lý")) {
-
+Share.getInstance().setSharedVariable("13");
                 try {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/themcachdung.fxml"));
                     loader.setController(controller);
@@ -691,22 +699,24 @@ public class cai_datController implements Initializable {
             System.out.println("Executed the query...");
             while (rs.next())
             {
+                String xoa = "Sửa";
                 STT1++;
 
-                cachdung_list.add(new CachDungtable(STT1,rs.getString("TenCachDung")));
+                cachdung_list.add(new CachDungtable(STT1,rs.getString("TenCachDung"),xoa));
 
             }
             while (rs1.next())
             {
+                String xoa = "Sửa";
                 STT2++;
 
-                dvt_list.add(new DonViThuocTable(STT2,rs1.getString("TenDVTHuoc")));
+                dvt_list.add(new DonViThuocTable(STT2,rs1.getString("TenDVTHuoc"),xoa  ));
             }
             while (rs2.next())
             {
                 STT3++;
-
-                loaibenh_list.add(new LoaiBenhTable(STT3,rs2.getString("TenBenh")));
+                String xoa = "Sửa";
+                loaibenh_list.add(new LoaiBenhTable(STT3,rs2.getString("TenBenh"),xoa));
             }
 
         } catch (SQLException e) {
@@ -723,23 +733,162 @@ public class cai_datController implements Initializable {
         //Cach dung
         MFXTableColumn<CachDungtable> stt = new MFXTableColumn<>("STT",false, Comparator.comparing(CachDungtable::getSTT));
         MFXTableColumn<CachDungtable> ten_cachdung = new MFXTableColumn<>("Tên Cách Dùng",false, Comparator.comparing(CachDungtable::getTenCachDung));
+        MFXTableColumn<CachDungtable> xoa = new MFXTableColumn<>("Sửa",false, Comparator.comparing(CachDungtable::getXoa));
         stt.setRowCellFactory(device-> new MFXTableRowCell<>(CachDungtable::getSTT));
         ten_cachdung.setRowCellFactory(device-> new MFXTableRowCell<>(CachDungtable::getTenCachDung));
-        tb_cd.getTableColumns().addAll(stt,ten_cachdung);
+        xoa.setRowCellFactory(device -> {
+            MFXTableRowCell<CachDungtable, String> cell = new MFXTableRowCell<>(CachDungtable::getXoa);
+            cell.setTextFill(Color.BLUE);
+            cell.setCursor(Cursor.HAND);
+            cell.setUnderline(true);
+
+            cell.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 1) {
+                    CachDungtable rowData = tb_cd.getSelectionModel().getSelectedValues().get(0);
+                    String thongtin=rowData.getTenCachDung();
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/Suacachdung.fxml"));
+                        loader.setController(suacachdungController);
+                        Scene scene = new Scene(loader.load());
+                        Stage stage = new Stage();
+                        stage.setScene(scene);
+                        AppUtils.setIcon(stage);
+                        stage.show();
+                        suacachdungController.xong.setOnMouseClicked(event1 -> {
+                            Share.getInstance().setSharedVariable("8");
+                            System.out.println(Share.getInstance().getSharedVariable());
+                            suacachdungController.Validator();
+                            if(suacachdungController.validationResult) {
+                                try {
+                                    PreparedStatement pstmt = dbConnection.prepareStatement("UPDATE CachDung SET TenCachDung = ? WHERE TenCachDung = ?");
+                                    pstmt.setString(1, suacachdungController.suathongtin.getText());
+                                    pstmt.setString(2, thongtin);
+                                    pstmt.executeUpdate();
+                                    setData();
+                                    tb_cd.setItems(cachdung_list);
+                                    stage.close();
+                                } catch (SQLException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+
+
+                }
+            });
+            return cell;
+        });
+
+        tb_cd.getTableColumns().addAll(stt,ten_cachdung,xoa);
         tb_cd.setItems(cachdung_list);
         //don vi thuoc
         MFXTableColumn<DonViThuocTable> stt1 = new MFXTableColumn<>("STT",false, Comparator.comparing(DonViThuocTable::getSTT));
         MFXTableColumn<DonViThuocTable> ten_donvi = new MFXTableColumn<>("Tên Đơn Vị",false, Comparator.comparing(DonViThuocTable::getTenDonVi));
+        MFXTableColumn<DonViThuocTable> xoa2 = new MFXTableColumn<>("Sửa",false, Comparator.comparing(DonViThuocTable::getXoa));
         stt1.setRowCellFactory(device-> new MFXTableRowCell<>(DonViThuocTable::getSTT));
         ten_donvi.setRowCellFactory(device-> new MFXTableRowCell<>(DonViThuocTable::getTenDonVi));
-        tb_dvt.getTableColumns().addAll(stt1,ten_donvi);
+        xoa2.setRowCellFactory(device -> {
+            MFXTableRowCell<DonViThuocTable, String> cell = new MFXTableRowCell<>(DonViThuocTable::getXoa);
+            cell.setTextFill(Color.BLUE);
+            cell.setCursor(Cursor.HAND);
+            cell.setUnderline(true);
+            cell.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 1) {
+                    Share.getInstance().setSharedVariable("9");
+                    DonViThuocTable rowData = tb_dvt.getSelectionModel().getSelectedValues().get(0);
+                    String thongtin=rowData.getTenDonVi();
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/Suacachdung.fxml"));
+                        loader.setController(suacachdungController);
+                        Scene scene = new Scene(loader.load());
+                        Stage stage = new Stage();
+                        stage.setScene(scene);
+                        AppUtils.setIcon(stage);
+                        stage.show();
+                        suacachdungController.xong.setOnMouseClicked(event1 -> {
+                            suacachdungController.Validator();
+                            if(suacachdungController.validationResult) {
+                                try {
+                                    PreparedStatement pstmt = dbConnection.prepareStatement("UPDATE DonViThuoc SET TenDVTHuoc = ? WHERE TenDVTHuoc = ?");
+                                    pstmt.setString(1, suacachdungController.suathongtin.getText());
+                                    pstmt.setString(2, thongtin);
+                                    pstmt.executeUpdate();
+                                    setData();
+                                    tb_dvt.setItems(dvt_list);
+                                    stage.close();
+                                } catch (SQLException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            });
+            return cell;
+        });
+        tb_dvt.getTableColumns().addAll(stt1,ten_donvi,xoa2);
         tb_dvt.setItems(dvt_list);
         //loai benh
         MFXTableColumn<LoaiBenhTable> stt2 = new MFXTableColumn<>("STT",false, Comparator.comparing(LoaiBenhTable::getSTT));
-        MFXTableColumn<LoaiBenhTable> ten_benh = new MFXTableColumn<>("Tên Đơn Vị",false, Comparator.comparing(LoaiBenhTable::getTenLoaiBenh));
+        MFXTableColumn<LoaiBenhTable> ten_benh = new MFXTableColumn<>("Tên Bệnh",false, Comparator.comparing(LoaiBenhTable::getTenLoaiBenh));
+        MFXTableColumn<LoaiBenhTable> xoa1 = new MFXTableColumn<>("Sửa",false, Comparator.comparing(LoaiBenhTable::getXoa));
         stt2.setRowCellFactory(device-> new MFXTableRowCell<>(LoaiBenhTable::getSTT));
         ten_benh.setRowCellFactory(device-> new MFXTableRowCell<>(LoaiBenhTable::getTenLoaiBenh));
-        tb_benh.getTableColumns().addAll(stt2,ten_benh);
+        tb_benh.getTableColumns().addAll(stt2,ten_benh,xoa1);
         tb_benh.setItems(loaibenh_list);
+        xoa1.setRowCellFactory(device -> {
+            MFXTableRowCell<LoaiBenhTable, String> cell = new MFXTableRowCell<>(LoaiBenhTable::getXoa);
+            cell.setTextFill(Color.BLUE);
+            cell.setCursor(Cursor.HAND);
+            cell.setUnderline(true);
+            cell.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 1) {
+                    Share.getInstance().setSharedVariable("10");
+                    LoaiBenhTable rowData = tb_benh.getSelectionModel().getSelectedValues().get(0);
+                    String thongtin=rowData.getTenLoaiBenh();
+                    try {
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/qlpmt/Suacachdung.fxml"));
+                        loader.setController(suacachdungController);
+                        Scene scene = new Scene(loader.load());
+                        Stage stage = new Stage();
+                        stage.setScene(scene);
+                        AppUtils.setIcon(stage);
+                        stage.show();
+                        suacachdungController.xong.setOnMouseClicked(event1 -> {
+                            suacachdungController.Validator();
+                            if(suacachdungController.validationResult) {
+                                try {
+                                    PreparedStatement pstmt = dbConnection.prepareStatement("UPDATE LoaiBenh SET TenBenh = ? WHERE TenBenh = ?");
+                                    pstmt.setString(1, suacachdungController.suathongtin.getText());
+                                    pstmt.setString(2, thongtin);
+                                    pstmt.executeUpdate();
+                                    setData();
+                                    tb_benh.setItems(loaibenh_list);
+                                    stage.close();
+                                } catch (SQLException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            });
+            return cell;
+        });
     }
+
 }
