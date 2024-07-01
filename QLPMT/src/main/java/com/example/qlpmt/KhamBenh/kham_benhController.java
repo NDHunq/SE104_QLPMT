@@ -214,12 +214,22 @@ public class kham_benhController implements Initializable {
         MFXTableColumn<KhamBenh> pkb = new MFXTableColumn<>("Phiếu khám bệnh", false, Comparator.comparing( KhamBenh::getImgPkb));
 
         stt.setRowCellFactory(khambenh -> new MFXTableRowCell<>(KhamBenh::getSTT));
+//        hoten.setRowCellFactory(khambenh -> {
+//            MFXTableRowCell<KhamBenh, String> cell = new MFXTableRowCell<>(KhamBenh::getHoTen);
+//            Tooltip tooltip = new Tooltip(cell.getText());
+//            cell.setTooltip(tooltip);
+//             return cell;
+//        });
         hoten.setRowCellFactory(khambenh -> {
             MFXTableRowCell<KhamBenh, String> cell = new MFXTableRowCell<>(KhamBenh::getHoTen);
-            Tooltip tooltip = new Tooltip(cell.getText());
+            Tooltip tooltip = new Tooltip();
+            cell.textProperty().addListener((obs, oldText, newText) -> {
+                tooltip.setText(newText);
+            });
             cell.setTooltip(tooltip);
-             return cell;
-        }); cccd.setRowCellFactory(khambenh -> new MFXTableRowCell<>(KhamBenh::getCCCD));
+            return cell;
+        });
+        cccd.setRowCellFactory(khambenh -> new MFXTableRowCell<>(KhamBenh::getCCCD));
         gioitinh.setRowCellFactory(khambenh -> new MFXTableRowCell<>(KhamBenh::getGioiTinh));
         namsinh.setRowCellFactory(khambenh -> new MFXTableRowCell<>(KhamBenh::getNamSinh));
         diachi.setRowCellFactory(khambenh -> new MFXTableRowCell<>(KhamBenh::getDiaChi));
