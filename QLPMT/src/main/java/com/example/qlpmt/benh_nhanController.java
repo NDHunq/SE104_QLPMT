@@ -29,6 +29,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
@@ -45,6 +46,7 @@ import javafx.stage.Window;
 
 import java.awt.*;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -184,6 +186,46 @@ public class benh_nhanController implements Initializable{
         hoten.setPrefWidth((pkb.getPrefWidth() - (stt.getPrefWidth() + cccd.getPrefWidth() + ngaykham.getPrefWidth())) / 3);
         loaibenh.setPrefWidth(hoten.getPrefWidth());
         trieuchung.setPrefWidth(hoten.getPrefWidth());
+
+        hoten.setRowCellFactory(phieukhambenh -> {
+            MFXTableRowCell<PhieuKhamBenh, String> cell = new MFXTableRowCell<>(PhieuKhamBenh::getHoTen);
+            Tooltip tooltip = new Tooltip();
+            cell.textProperty().addListener((obs, oldText, newText) -> {
+                tooltip.setText(newText);
+            });
+            cell.setTooltip(tooltip);
+            return cell;
+        });
+
+        loaibenh.setRowCellFactory(phieukhambenh -> {
+            MFXTableRowCell<PhieuKhamBenh, String> cell = new MFXTableRowCell<>(PhieuKhamBenh::getTenBenh);
+            Tooltip tooltip = new Tooltip();
+            cell.textProperty().addListener((obs, oldText, newText) -> {
+                tooltip.setText(newText);
+            });
+            cell.setTooltip(tooltip);
+            return cell;
+        });
+
+        cccd.setRowCellFactory(phieukhambenh -> {
+            MFXTableRowCell<PhieuKhamBenh, String> cell = new MFXTableRowCell<>(PhieuKhamBenh::getCccd);
+            Tooltip tooltip = new Tooltip();
+            cell.textProperty().addListener((obs, oldText, newText) -> {
+                tooltip.setText(newText);
+            });
+            cell.setTooltip(tooltip);
+            return cell;
+        });
+
+        trieuchung.setRowCellFactory(phieukhambenh -> {
+            MFXTableRowCell<PhieuKhamBenh, String> cell = new MFXTableRowCell<>(PhieuKhamBenh::getTrieuChung);
+            Tooltip tooltip = new Tooltip();
+            cell.textProperty().addListener((obs, oldText, newText) -> {
+                tooltip.setText(newText);
+            });
+            cell.setTooltip(tooltip);
+            return cell;
+        });
     }
 
     //Ham khoi tao context menu
@@ -214,6 +256,10 @@ public class benh_nhanController implements Initializable{
             alert.setContentText("Bạn có chắc chắn muốn xóa thuốc này không?");
             Window window = alert.getDialogPane().getScene().getWindow();
             window.setOnCloseRequest(e -> alert.close());
+            Stage alertStage = (Stage) alert.getDialogPane().getScene().getWindow();
+            InputStream iconStream = AppUtils.class.getResourceAsStream("/com/example/qlpmt/images/cong.png");
+            Image image = new Image(iconStream);
+            alertStage.getIcons().add(image);
             ButtonType result = alert.showAndWait().orElse(buttonTypeNo);
 
             if (result == buttonTypeYes) {
