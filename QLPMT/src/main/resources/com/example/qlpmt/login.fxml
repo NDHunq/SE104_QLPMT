@@ -43,7 +43,7 @@
          </Text>
          <BorderPane layoutX="16.0" layoutY="157.0" maxWidth="416.0" minWidth="313.0" prefHeight="57.0" prefWidth="313.0">
             <center>
-               <MFXTextField fx:id="usernameField" maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="303.0" prefHeight="40.0" prefWidth="303.0" style="-fx-background-color: #E1F8F6; -fx-font-family: 'Times New Roman'; -fx-font-size: 20px" BorderPane.alignment="CENTER">
+               <MFXTextField fx:id="usernameField" maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="303.0" prefHeight="40.0" prefWidth="303.0" styleClass="fontStd2" BorderPane.alignment="CENTER">
                   <BorderPane.margin>
                      <Insets bottom="2.0" left="5.0" right="5.0" top="2.0" />
                   </BorderPane.margin>
@@ -73,7 +73,7 @@
          </Button>
 
 
-         <MFXPasswordField fx:id="passwordField" layoutX="21.0" layoutY="275.0" maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="303.0" prefHeight="40.0" prefWidth="303.0" style="-fx-background-color: #E1F8F6; -fx-font-family: 'Times New Roman'; -fx-font-size: 20px" BorderPane.alignment="CENTER">
+         <MFXPasswordField fx:id="passwordField" layoutX="21.0" layoutY="275.0" maxHeight="40.0" maxWidth="416.0" minHeight="40.0" minWidth="303.0" prefHeight="40.0" prefWidth="303.0" styleClass="fontStd2" BorderPane.alignment="CENTER">
 
 
               <font>
