@@ -201,7 +201,7 @@ public class NhanVienController implements Initializable {
         delete.setStyle("-fx-text-fill: red; -fx-font-size: 16px; -fx-font-family: 'Times New Roman'");
 
         delete.setOnAction(event -> {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this item?", ButtonType.YES, ButtonType.NO);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Bạn có chắc xóa nhân viên này không?", ButtonType.YES, ButtonType.NO);
             alert.showAndWait();
 
             if (alert.getResult() == ButtonType.YES) {
@@ -214,10 +214,10 @@ public class NhanVienController implements Initializable {
                     pkb_list.remove(selectedNhanVien);
 
                     Alert deleteAlert = new Alert(Alert.AlertType.INFORMATION);
-                    deleteAlert.setTitle("Delete Confirmation");
+                    deleteAlert.setTitle("Xác nhận xóa");
 
                     deleteAlert.setHeaderText(null);
-                    deleteAlert.setContentText("Deleted: " + selectedNhanVien.getHoten());
+                    deleteAlert.setContentText("Đã xóa: " + selectedNhanVien.getHoten());
                     this.refreshpage();
                     deleteAlert.showAndWait();
 
